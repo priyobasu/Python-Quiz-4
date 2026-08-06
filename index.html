@@ -1,745 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐍 Python Arcade Quest Game!</title>
-    <style>
-        :root {
-            --neon-purple: #A855F7;
-            --deep-purple: #3B0764;
-            --electric-blue: #06B6D4;
-            --dark-space: #0F172A;
-            --bright-gold: #FACC15;
-            --laser-green: #22C55E;
-            --lava-red: #EF4444;
-            --card-gray: #1E293B;
-            --text-white: #F8FAFC;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Let's Revise HTML!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka', sans-serif;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    body {
+      background-color: #ffdeeb;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-        body {
-            background-color: var(--dark-space);
-            color: var(--text-white);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
+    /* Pixel Floating Hearts Background */
+    .heart-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
 
-        .arcade-container {
-            width: 100%;
-            max-width: 850px;
-            background: linear-gradient(145deg, #1E1B4B, #0F172A);
-            border: 6px solid var(--neon-purple);
-            border-radius: 24px;
-            box-shadow: 0px 0px 30px rgba(168, 85, 247, 0.4), inset 0px 0px 15px rgba(6, 182, 212, 0.2);
-            overflow: hidden;
-            position: relative;
-        }
+    .pixel-heart {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background-color: #ff69b4;
+      opacity: 0.6;
+      box-shadow: 
+        16px 0 #ff69b4, 
+        -16px 0 #ff69b4, 
+        0 -16px #ff69b4, 
+        0 16px #ff69b4,
+        16px 16px #ff1493,
+        -16px 16px #ff1493,
+        32px -16px #ffb6c1,
+        -32px -16px #ffb6c1;
+      animation: floatUp linear infinite;
+    }
 
-        /* --- SCREEN HEADER --- */
-        .arcade-header {
-            background: rgba(15, 23, 42, 0.8);
-            border-bottom: 4px solid var(--neon-purple);
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) scale(0.8);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
 
-        .game-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--electric-blue);
-            text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
-        }
+    /* Main Container Card */
+    .container {
+      background: #ffffff;
+      border: 6px solid #ff8da1;
+      border-radius: 28px;
+      width: 90%;
+      max-width: 650px;
+      padding: 32px 28px;
+      box-shadow: 0 12px 30px rgba(255, 105, 180, 0.3);
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
 
-        .stat-badge {
-            background: var(--card-gray);
-            border: 2px solid var(--neon-purple);
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: bold;
-        }
+    h1 {
+      color: #d81b60;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
 
-        /* --- PAGES --- */
-        .screen {
-            display: none;
-            padding: 35px;
-        }
+    p.subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+    }
 
-        .screen.active {
-            display: block;
-        }
+    /* Buttons */
+    .btn {
+      background-color: #ff6584;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #c93b58;
+      transition: all 0.1s ease;
+    }
 
-        /* --- HOMEPAGE / DASHBOARD --- */
-        .home-layout {
-            text-align: center;
-            padding: 40px 20px;
-        }
+    .btn:hover {
+      background-color: #ff476c;
+    }
 
-        .hero-banner {
-            font-size: 46px;
-            color: var(--bright-gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-shadow: 0px 4px 0px #9A3412, 0 0 20px rgba(250, 204, 21, 0.4);
-        }
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #c93b58;
+    }
 
-        .hero-subtitle {
-            font-size: 18px;
-            color: #93C5FD;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
+    /* Quiz Header Items */
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px dashed #ffd1dc;
+    }
 
-        .btn-arcade {
-            background: linear-gradient(135deg, var(--bright-gold), #EAB308);
-            color: var(--deep-purple);
-            border: none;
-            padding: 16px 45px;
-            font-size: 22px;
-            font-weight: 900;
-            border-radius: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0px 6px 0px #A16207, 0px 10px 20px rgba(0,0,0,0.4);
-            transition: all 0.1s ease;
-        }
+    .q-count {
+      font-weight: 700;
+      color: #ff476c;
+      font-size: 1.1rem;
+    }
 
-        .btn-arcade:active {
-            transform: translateY(4px);
-            box-shadow: 0px 2px 0px #A16207, 0px 4px 10px rgba(0,0,0,0.4);
-        }
+    .timer-badge {
+      background: #ffe3ec;
+      color: #d81b60;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: 2px solid #ffb6c1;
+    }
 
-        /* --- TIMER & HUD PANEL --- */
-        .hud-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+    .question-box {
+      font-size: 1.3rem;
+      color: #333;
+      margin-bottom: 24px;
+      font-weight: 600;
+      text-align: left;
+      line-height: 1.4;
+    }
 
-        .timer-container {
-            width: 140px;
-            background: #020617;
-            border: 2px solid var(--electric-blue);
-            border-radius: 20px;
-            height: 24px;
-            overflow: hidden;
-            position: relative;
-        }
+    .code-snippet {
+      font-family: monospace;
+      background: #fff0f5;
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #d81b60;
+    }
 
-        .timer-bar {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--electric-blue), #22D3EE);
-            transition: width 1s linear;
-        }
+    /* Options Grid (6 Options) */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
 
-        .level-tag {
-            color: var(--bright-gold);
-            font-weight: bold;
-            font-size: 16px;
-            text-transform: uppercase;
-        }
+    @media (max-width: 500px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        /* --- QUEST CARDS & INTERFACE --- */
-        .question-text {
-            font-size: 19px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            color: #F1F5F9;
-        }
+    .option-btn {
+      background: #fff5f8;
+      border: 3px solid #ffccd8;
+      border-radius: 16px;
+      padding: 14px 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #444;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
 
-        .code-snippet {
-            background: #020617;
-            border: 2px solid #334155;
-            border-radius: 12px;
-            padding: 18px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 15px;
-            color: #A7F3D0;
-            white-space: pre;
-            overflow-x: auto;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
+    .option-btn:hover {
+      background: #ffe3ec;
+      border-color: #ff8da1;
+    }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 14px;
-            margin-bottom: 25px;
-        }
+    .option-btn.selected {
+      background: #ffd1dc;
+      border-color: #ff476c;
+      box-shadow: 0 0 0 2px #ff476c;
+    }
 
-        .option-card {
-            background: var(--card-gray);
-            border: 2px solid #475569;
-            border-radius: 14px;
-            padding: 16px;
-            font-size: 16px;
-            color: var(--text-white);
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-            font-weight: 500;
-        }
+    .option-btn.correct {
+      background: #d4edda !important;
+      border-color: #28a745 !important;
+      color: #155724 !important;
+    }
 
-        .option-card:hover {
-            border-color: var(--electric-blue);
-            background: #334155;
-        }
+    .option-btn.wrong {
+      background: #f8d7da !important;
+      border-color: #dc3545 !important;
+      color: #721c24 !important;
+    }
 
-        .option-card.correct-glow {
-            border-color: var(--laser-green) !important;
-            background: rgba(34, 197, 94, 0.2) !important;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
-        }
+    /* Feedback Box */
+    .explanation-box {
+      background: #f0f8ff;
+      border: 2px dashed #87cefa;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 20px;
+      text-align: left;
+      color: #1e3a8a;
+      font-size: 0.98rem;
+      display: none;
+    }
 
-        .option-card.wrong-glow {
-            border-color: var(--lava-red) !important;
-            background: rgba(239, 68, 68, 0.2) !important;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
-        }
+    .explanation-box.show {
+      display: block;
+    }
 
-        /* --- KNOWLEDGE POPUP BOX --- */
-        .feedback-view {
-            display: none;
-            background: #1E1B4B;
-            border: 2px solid var(--bright-gold);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            animation: slideIn 0.3s ease-out;
-        }
+    /* Actions */
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
 
-        .feedback-header {
-            font-weight: bold;
-            font-size: 18px;
-            color: var(--bright-gold);
-            margin-bottom: 8px;
-        }
+    /* Handwritten Report Card */
+    .report-card {
+      background: #fffdf5;
+      border: 3px dashed #ffd15c;
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 15px;
+      position: relative;
+    }
 
-        .feedback-desc {
-            font-size: 15px;
-            line-height: 1.5;
-            color: #E2E8F0;
-        }
+    .score-circle-container {
+      margin: 20px auto;
+      width: 140px;
+      height: 140px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .action-container {
-            display: flex;
-            justify-content: flex-end;
-        }
+    .score-text {
+      font-family: 'Caveat', cursive;
+      font-size: 3.5rem;
+      color: #d81b60;
+      line-height: 1;
+      transform: rotate(-5deg);
+    }
 
-        .btn-action {
-            background: var(--neon-purple);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0px 4px 0px #6B21A8;
-        }
+    .hand-circle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
 
-        .btn-action:active {
-            transform: translateY(2px);
-            box-shadow: 0px 2px 0px #6B21A8;
-        }
+    .quote-box {
+      font-size: 1.2rem;
+      color: #555;
+      margin-top: 15px;
+      font-weight: 600;
+    }
 
-        /* --- FINAL SCOREBOARD --- */
-        .end-layout {
-            text-align: center;
-            padding: 30px 10px;
-        }
-
-        .score-circle {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: #020617;
-            border: 6px solid var(--bright-gold);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 38px;
-            font-weight: 900;
-            color: var(--bright-gold);
-            margin: 20px auto 30px auto;
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
-        }
-
-        .motivational-msg {
-            font-size: 20px;
-            line-height: 1.6;
-            color: #E2E8F0;
-            margin-bottom: 40px;
-            padding: 0 20px;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="arcade-container">
-        <div class="arcade-header">
-            <div class="game-title">🐍 Python Quiz Arena</div>
-            <div id="hud-score" class="stat-badge">⭐ Score: 0</div>
-        </div>
+  <!-- Floating Hearts Background -->
+  <div class="heart-bg" id="heartContainer"></div>
 
-        <div id="screen-home" class="screen active">
-            <div class="home-layout">
-                <h1 class="hero-banner">Python Quiz Arena</h1>
-                <p class="hero-subtitle">Become a code wizard! Conquer 30 epic challenges across Loops, Functions, and Secret Logic Stories. Answer each within 15 seconds to win!</p>
-                <button class="btn-arcade" onclick="launchQuizMatchGame()">Get Started 🚀</button>
-            </div>
-        </div>
-
-        <div id="screen-arena" class="screen">
-            <div class="hud-panel">
-                <div id="quest-number-tag" class="stat-badge" style="border-color: var(--electric-blue);">Question 1/30</div>
-                <div id="quest-level-tag" class="level-tag">Level 1: Loop Kingdom</div>
-                <div class="timer-container">
-                    <div id="dynamic-timer-fill" class="timer-bar"></div>
-                </div>
-            </div>
-
-            <div id="question-payload-text" class="question-text">Loading question query data...</div>
-            <div id="snippet-code-box" class="code-snippet"></div>
-
-            <div id="choices-grid-layout" class="options-grid"></div>
-
-            <div id="feedback-drawer" class="feedback-view">
-                <div id="feedback-title" class="feedback-header">Let's understand the logic! 💡</div>
-                <div id="feedback-body" class="feedback-desc">Explanation text placeholder goes here.</div>
-            </div>
-
-            <div class="action-container">
-                <button id="next-action-trigger" class="btn-action" onclick="advanceToNextQuestion()" style="display: none;">Next Challenge ➡️</button>
-            </div>
-        </div>
-
-        <div id="screen-victory" class="screen">
-            <div class="end-layout">
-                <h1 class="hero-banner" style="color: var(--electric-blue);">Quest Complete!</h1>
-                <div id="final-score-display" class="score-circle">0/30</div>
-                <p id="final-motivation-text" class="motivational-msg">End game evaluation text loading...</p>
-                <button class="btn-arcade" onclick="restartMatchFromScratch()">Play Again 🔄</button>
-            </div>
-        </div>
+  <div class="container">
+    
+    <!-- HOME SCREEN -->
+    <div id="homeScreen">
+      <h1>Let's Revise HTML! 🎈</h1>
+      <p class="subtitle">10 Fun questions to test your web building power!</p>
+      <button class="btn" onclick="startQuiz()">Start Revision</button>
     </div>
 
-    <script>
-        const questDatabase = [
-            // LEVEL 1: LOOPS INTERMEDIATE (1 - 10)
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "Look closely at this count framework! How many total times will this loop print the word 'Python'?",
-                code: "for i in range(4):\n    print(\"Python\")",
-                options: ["3 times", "4 times", "5 times", "0 times"],
-                correct: 1,
-                explain: "In Python, `range(4)` starts counting at 0 and goes up to 3 (0, 1, 2, 3). That means the loop runs exactly 4 times total!"
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What number will display on the screen when this while loop completes its calculations?",
-                code: "count = 1\nwhile count < 4:\n    count = count + 1\nprint(count)",
-                options: ["3", "4", "2", "5"],
-                correct: 1,
-                explain: "The loop keeps adding 1 while count is less than 4. When count reaches 3, the check passes one last time, adding 1 to make it 4. Then, the loop stops because 4 is not less than 4!"
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What list of items will this code sequence output on your terminal screen?",
-                code: "for num in range(1, 4):\n    print(num)",
-                options: ["1, 2, 3, 4", "1, 2, 3", "0, 1, 2, 3", "3, 2, 1"],
-                correct: 1,
-                explain: "When you give `range(1, 4)` two numbers, it starts at the first one (1) and runs up to, but stops right before, the final endpoint number (4). So it displays 1, 2, and 3!"
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "Oh no! A space station program has an error. What problem happens if we run this loop configuration?",
-                code: "energy = 5\nwhile energy > 0:\n    print(\"Thrusters Online!\")",
-                options: ["It prints 'Thrusters Online!' 5 times", "It throws a syntax error", "It runs forever in an infinite loop", "It doesn't print anything"],
-                correct: 2,
-                explain: "Because we never decrease the `energy` variable inside the block, it stays stuck at 5 forever! This means `energy > 0` remains true indefinitely, locking us into an infinite loop."
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What number value will get stored and printed by the final tracking sum parameter?",
-                code: "total = 0\nfor x in [2, 5]:\n    total = total + x\nprint(total)",
-                options: ["7", "2", "5", "0"],
-                correct: 0,
-                explain: "The loop pulls out each value inside the bracket storage list one by one. First it adds 2 to total, then it adds 5. 0 + 2 + 5 = 7!"
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "How many times will this code stamp a star character onto the console display interface?",
-                code: "stars = 0\nwhile stars != 3:\n    print(\"⭐\")\n    stars = stars + 1",
-                options: ["2 times", "3 times", "4 times", "0 times"],
-                correct: 1,
-                explain: "The loop starts at 0 and increments by 1 each pass. It safely loops when stars is 0, 1, and 2. Once stars reaches 3, the condition stops!"
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What numbers will be outputted on the screen by this string index stepper loop?",
-                code: "for step in range(0, 6, 2):\n    print(step)",
-                options: ["0, 1, 2, 3, 4, 5, 6", "0, 2, 4", "0, 2, 4, 6", "2, 4, 6"],
-                correct: 1,
-                explain: "The third parameter inside `range(0, 6, 2)` represents the step value! This tells Python to skip count by 2s, stopping before reaching 6. So it prints 0, 2, and 4."
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What happens when this loop runs into a value greater than or equal to 3?",
-                code: "for num in [1, 2, 3, 4]:\n    if num >= 3:\n        break\n    print(num)",
-                options: ["It prints 1, 2, 3, 4", "It prints 1, 2", "It prints 3, 4", "It crashes with an error"],
-                correct: 1,
-                explain: "The `break` keyword instantly breaks the loop down! As soon as the numbers hit 3, the check condition triggers `break`, stopping the entire loop immediately and leaving only 1 and 2 printed."
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What value does the item counter reach when this while condition checks its final boundary condition?",
-                code: "item = 10\nwhile item > 7:\n    item = item - 1\nprint(item)",
-                options: ["7", "8", "9", "6"],
-                correct: 0,
-                explain: "The variable decreases by 1 each pass (10 -> 9 -> 8 -> 7). Once it equals 7, `7 > 7` becomes false, ending the execution loop."
-            },
-            {
-                level: "Level 1: Loop Kingdom 🔁",
-                q: "What string outputs are displayed when this list stepper processes the words?",
-                code: "for word in [\"Go\", \"Run\"]:\n    print(word)",
-                options: ["word, word", "Go, Run", "Go Run on one line", "Nothing matches"],
-                correct: 1,
-                explain: "The loop tracks through text item groups inside brackets sequentially, assigning each entry to the variable name. It logs 'Go' first, then logs 'Run' right after."
-            },
+    <!-- QUIZ SCREEN -->
+    <div id="quizScreen" class="hidden">
+      <div class="quiz-header">
+        <span class="q-count" id="qCount">Question 1 / 10</span>
+        <span class="timer-badge" id="timer">⏱️ 30s</span>
+      </div>
 
-            // LEVEL 2: FUNCTIONS CORE CONCEPT (11 - 20) - NO RETURNS, INCORPORATES MISSING PARTS
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "Why do we build custom functions inside our code?",
-                code: "def feed_dinosaur():\n    print(\"🥩 Tossed a steak to the T-Rex!\")\n    print(\"🦖 Happy Dino noises!\")",
-                options: ["To delete variables automatically", "To save a code recipe once so we can reuse it cleanly anytime", "To make the game run slower", "To prevent math from working"],
-                correct: 1,
-                explain: "Functions are like custom code recipes! You build them once, and you can reuse them anywhere without retyping all those lines."
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "Look at this spell-casting block. How many input parameters does this function require inside its parentheses box?",
-                code: "def cast_spell(wand_type, power_level, target_monster):\n    print(\"🪄 Sparkles fly!\")",
-                options: ["1 parameter", "2 parameters", "3 parameters", "0 parameters"],
-                correct: 2,
-                explain: "Parameters are the variable slots inside the function's parentheses. `wand_type`, `power_level`, and `target_monster` make 3 inputs total!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "You want a function that combines basic tokens and bonus gems to print a final score. What action line completes this function's block?",
-                code: "def show_score(tokens, gems):\n    # Story: Add tokens and gems together, then display it!\n    [What code line belongs here?]",
-                options: ["print(tokens - gems)", "print(tokens * gems)", "print(tokens + gems)", "print(\"gems\")"],
-                correct: 2,
-                explain: "To show your total combined score, you want to add the values using the plus (`+`) sign inside your print statement!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "Oh no! This robot greeting code won't run. What essential Python keyword is missing from the very beginning of line 1?",
-                code: "greet_alien():\n    print(\"🛸 Greetings, Earthling!\")",
-                options: ["function", "def", "create", "make"],
-                correct: 1,
-                explain: "In Python, you must always use the `def` keyword (short for define) to let the computer know you are creating a new function box!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "This function is successfully built, but when you run the program, the screen is totally blank! What is missing?",
-                code: "def sound_alarm():\n    print(\"🚨 WOO-WOO! INTRUDER ALERT!\")\n\n# The program ends here!",
-                options: ["The code needs more variables", "A function call statement at the bottom to actually run it", "The print word is misspelled", "The colon symbol is wrong"],
-                correct: 1,
-                explain: "Defining a function just saves the recipe. To make it perform its actions, you have to call it at the bottom by writing `sound_alarm()`!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "We want a function that multiplies your inventory gold coins by 5 whenever you find a magic chest. What line finishes this block?",
-                code: "def open_chest(coins):\n    [Your math print line goes here]",
-                options: ["print(coins + 5)", "print(coins * 5)", "print(coins - 5)", "print(5)"],
-                correct: 1,
-                explain: "To multiply your coins by 5, use the multiplication asterisk operator (`*`) inside your print statement: `print(coins * 5)`."
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "Why will this code trigger an action error when the computer tries to execute line 4?",
-                code: "def build_house(bricks, windows):\n    print(\"🏠 Built with\", bricks, \"bricks!\")\n\nbuild_house(500)",
-                options: ["The word def is capitalized wrong", "The function requires 2 inputs, but the call only gave 1 input", "Bricks must be text", "Indentation is missing"],
-                correct: 1,
-                explain: "The function box expects exactly 2 inputs (`bricks` and `windows`), but when we called it on line 4, we only passed 1 value (500). Python needs both slots filled!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "Look carefully at this function header line. What syntax layout character did the developer forget to include at the end of line 1?",
-                code: "def launch_rocket(fuel_gallons)\n    print(\"🚀 Blastoff!\")",
-                options: ["A semicolon (;)", "A colon (:)", "An exclamation point (!)", "A question mark (?)"],
-                correct: 1,
-                explain: "In Python, whenever you write a function header, an `if` rule, or a loop header, you must always place a colon (`:`) at the end of that starting line!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "Look at the spacing pattern. Why will Python get confused and throw an Indentation Error here?",
-                code: "def splash_water():\nprint(\"🌊 SPLASH!\")\nprint(\"You got wet!\")",
-                options: ["The function has no name", "The print actions are not tab-indented (pushed inside) the function box", "The word def is wrong", "It is missing quotes"],
-                correct: 1,
-                explain: "All lines of code belonging inside a function box must be indented (pushed right by 4 spaces or a tab) so Python knows they belong to that recipe!"
-            },
-            {
-                level: "Level 2: Function Lab ⚙️",
-                q: "What will show up on our terminal screen if we run this entire program setup?",
-                code: "def double_jump():\n    print(\"🦘 Boing!\")\n    print(\"🦘 Boing!\")\n\ndouble_jump()",
-                options: ["It prints 'Boing!' 1 time", "It prints 'Boing!' 2 times on separate lines", "It throws an error", "Nothing prints"],
-                correct: 1,
-                explain: "The function has 2 print statements inside it. When we activate it using `double_jump()`, it executes both commands sequentially!"
-            },
+      <div class="question-box" id="questionText">
+        <!-- Question inserted dynamically -->
+      </div>
 
-            // LEVEL 3: ANALYZE AND UNDERSTAND SYSTEM LOGIC (21 - 30) - KID FRIENDLY STORIES
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "Two friendly dragons want to compare their fire power points to see who can breath a larger flame. What code trick do we use?",
-                code: "# Story: Compare dragon_spark and dragon_blaze scores\n# Find out who has the bigger number!",
-                options: ["A while loop that repeats 100 times", "An `if` statement rule checking if dragon_spark > dragon_blaze", "A math plus calculation step", "A command that deletes both names"],
-                correct: 1,
-                explain: "To compare two values and see which one is larger, an `if` rule statement with a greater-than (`>`) comparison sign is the perfect tool!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "A wizard's secret clubhouse door will open ONLY if you say the secret password 'Abracadabra' AND your wizard level is above 5. What logic keyword binds these two rules together?",
-                code: "if password == \"Abracadabra\" [What goes here?] level > 5:\n    print(\"🔓 Door Unlocks!\")",
-                options: ["or", "and", "not", "plus"],
-                correct: 1,
-                explain: "Since both conditions must be absolutely true at the same exact time to unlock the door, we use the logical `and` keyword!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "A trampoline park lets you jump if you have a golden ticket OR if you pay 5 tokens. What symbol or keyword checks this type of alternative choice?",
-                code: "if ticket == \"gold\" [What goes here?] tokens == 5:\n    print(\"Bounce time! 🤸\")",
-                options: ["and", "or", "not", "=="],
-                correct: 1,
-                explain: "The logical `or` operator is perfect when you only need **at least one** of the rules to pass successfully to get the green light!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "You have three video game heroes: Pixel, Bowser, and Sonic. You want to write a rule that checks if Pixel scored the highest out of all three. How do you construct this?",
-                code: "# Story: Is Pixel's score bigger than Bowser's AND bigger than Sonic's?",
-                options: ["Check if: pixel > bowser and pixel > sonic", "Multiply all three scores together", "Run a for loop 5 times", "Print the word 'Highest'"],
-                correct: 0,
-                explain: "To see if Pixel is the grand champion, you check if his score is bigger than Bowser's **and** simultaneously bigger than Sonic's!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "An arcade machine rates your dancing speed. If your speed is 45, what message will flash on the display screen?",
-                code: "speed = 45\nif speed > 50:\n    print(\"⚡ Super Sonic Speed!\")\nelif speed > 30:\n    print(\"🕺 Cool Grooves!\")\nelse:\n    print(\"🐢 Slow Motion!\")",
-                options: ["⚡ Super Sonic Speed!", "🕺 Cool Grooves!", "🐢 Slow Motion!", "Nothing at all"],
-                correct: 1,
-                explain: "Python checks the rules from top to bottom. 45 is not greater than 50, so it moves to the `elif` line. 45 IS greater than 30, so it prints 'Cool Grooves!'."
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "Your pet alien is packing a lunchbox. It wants 5 space apples and 10 star oranges. If the lunch contains this code below, what does the machine say?",
-                code: "apples = 5\noranges = 10\nif apples == 5 and oranges == 5:\n    print(\"🚀 Perfect Alien Lunch!\")\nelse:\n    print(\"🛸 Wrong Snacks Error!\")",
-                options: ["🚀 Perfect Alien Lunch!", "🛸 Wrong Snacks Error!", "It crashes with a glitch", "It remains blank"],
-                correct: 1,
-                explain: "The `and` rule requires **both** sides to match. While apples is 5, oranges is 10 (not 5). Since one side failed, the `else` path runs and prints 'Wrong Snacks Error!'."
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "A magical island awards you a badge if your player level is over 5, OR if you hold a secret star crystal. What prints out based on these values?",
-                code: "player_level = 3\nhas_crystal = True\nif player_level > 5 or has_crystal == True:\n    print(\"🏆 Unlocked Badge!\")\nelse:\n    print(\"🔒 Locked!\")",
-                options: ["🏆 Unlocked Badge!", "🔒 Locked!", "Line 3 Error", "Nothing logs"],
-                correct: 0,
-                explain: "Since this uses an `or` connector, only one rule needs to be true. `player_level > 5` is false, but `has_crystal == True` is completely true, so it grants the badge!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "What score will be printed out when this trick-or-treat mystery candy bag code runs?",
-                code: "candies = 10\nif candies != 10:\n    candies = candies + 5\nelse:\n    candies = candies * 2\nprint(candies)",
-                options: ["15", "10", "20", "25"],
-                correct: 2,
-                explain: "The rule `candies != 10` asks 'is the candy count NOT equal to 10?' Since candies is exactly 10, that rule is false. The code jumps straight to the `else` block, doing 10 * 2 = 20!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "How does Python decide which lines are part of an unexpected reward event?",
-                code: "if mystery_box == \"Opened\":\n    print(\"🎁 You found a golden egg!\")\nprint(\"💥 Game Continues...\")",
-                options: ["It skips both lines entirely", "Only indented lines run when the condition is true; flush-left lines always run no matter what", "Spacing is ignored", "It breaks down"],
-                correct: 1,
-                explain: "The indented line (the golden egg) only happens if the mystery box is opened. The flush-left line at the margin always executes next because it's outside the rule box!"
-            },
-            {
-                level: "Level 3: Logic Matrix 🧠",
-                q: "A sorting hat checks your wizard code value. If your code is 15, what house team do you get assigned to?",
-                code: "code = 15\nif code < 10:\n    print(\"🦁 Gryffindor\")\nelif code < 20:\n    print(\"🦅 Ravenclaw\")\nelse:\n    print(\"🐍 Slytherin\")",
-                options: ["🦁 Gryffindor", "🦅 Ravenclaw", "🐍 Slytherin", "No team"],
-                correct: 1,
-                explain: "15 is not less than 10, so the first check fails. It goes to the next option line: 15 IS less than 20, so it successfully lands you in Ravenclaw!"
-            }
-        ];
+      <div class="options-grid" id="optionsGrid">
+        <!-- 6 options populated dynamically -->
+      </div>
 
-        let activeQuestionIndex = 0;
-        let runningScore = 0;
-        let countdownTimerInstance = null;
-        let secondsRemaining = 15;
-        let hasSelectedAnswer = false;
+      <div class="explanation-box" id="explanationBox">
+        <!-- Explanation text -->
+      </div>
 
-        const homePageScreen = document.getElementById("screen-home");
-        const arenaPlayScreen = document.getElementById("screen-arena");
-        const finalScoreScreen = document.getElementById("screen-victory");
+      <div class="action-row">
+        <button class="btn" id="submitBtn" onclick="submitAnswer()">Submit</button>
+        <button class="btn hidden" id="nextBtn" onclick="nextQuestion()">Next ➔</button>
+      </div>
+    </div>
 
-        const scoreHUDTracker = document.getElementById("hud-score");
-        const questionNumTag = document.getElementById("quest-number-tag");
-        const questionLvlTag = document.getElementById("quest-level-tag");
-        const timerProgressBar = document.getElementById("dynamic-timer-fill");
-        
-        const textPayloadBox = document.getElementById("question-payload-text");
-        const scriptCodeBox = document.getElementById("snippet-code-box");
-        const targetChoicesGrid = document.getElementById("choices-grid-layout");
-        
-        const feedbackDrawerBox = document.getElementById("feedback-drawer");
-        const feedbackTitleText = document.getElementById("feedback-title");
-        const feedbackBodyText = document.getElementById("feedback-body");
-        const nextActionTriggerBtn = document.getElementById("next-action-trigger");
+    <!-- REPORT CARD SCREEN -->
+    <div id="resultsScreen" class="hidden">
+      <h1>Quiz Completed! 🎉</h1>
+      <p class="subtitle">Here is your HTML Revision Report Card:</p>
 
-        function switchActiveDisplayPage(targetScreenElement) {
-            homePageScreen.classList.remove("active");
-            arenaPlayScreen.classList.remove("active");
-            finalScoreScreen.classList.remove("active");
-            targetScreenElement.classList.add("active");
+      <div class="report-card">
+        <div class="score-circle-container">
+          <!-- Handwritten SVG Circle -->
+          <svg class="hand-circle" viewBox="0 0 100 100">
+            <path d="M 50,10 A 40,38 0 1 0 90,55 A 42,40 0 0 0 46,8" 
+                  fill="none" 
+                  stroke="#ff1493" 
+                  stroke-width="4" 
+                  stroke-linecap="round" 
+                  stroke-dasharray="300"
+                  style="filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.15));"/>
+          </svg>
+          <div class="score-text" id="scoreDisplay">0/10</div>
+        </div>
+
+        <div class="quote-box" id="quoteDisplay">
+          <!-- Quote based on level -->
+        </div>
+      </div>
+
+      <button class="btn" style="margin-top: 24px;" onclick="resetQuiz()">Try Again 🔄</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Create floating pixelated hearts
+    const heartContainer = document.getElementById('heartContainer');
+    for (let i = 0; i < 15; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'pixel-heart';
+      heart.style.left = Math.random() * 95 + 'vw';
+      heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+      heart.style.animationDelay = (Math.random() * 5) + 's';
+      heartContainer.appendChild(heart);
+    }
+
+    // 10 HTML Questions & Options
+    const questionsData = [
+      {
+        question: "What can we create using HTML?",
+        options: ["Website", "Operating System", "Mobile Hardware", "CPU Processor", "Database Server", "Video Game Console"],
+        correct: 0,
+        explanation: "HTML (HyperText Markup Language) is the standard language used to create and structure websites on the web!"
+      },
+      {
+        question: "What do we use to create paragraphs in HTML?",
+        options: ["<para>", "<p>", "<paragraph>", "<text>", "<pg>", "<ptag>"],
+        correct: 1,
+        explanation: "The p tag is specifically used to define paragraphs of text in HTML."
+      },
+      {
+        question: "How many sizes of headings can be created in HTML?",
+        options: ["3", "5", "6", "8", "10", "Unlimited"],
+        correct: 2,
+        explanation: "HTML offers exactly 6 heading levels, from <h1> (largest) to <h6> (smallest)."
+      },
+      {
+        question: "Which tag do we use to add images in a webpage?",
+        options: ["<image>", "<pic>", "<img>", "<picture>", "<photo>", "<imgsrc>"],
+        correct: 2,
+        explanation: "The img tag is used to embed images into an HTML page."
+      },
+      {
+        question: "Which tag helps us see the name of the website on the browser tab?",
+        options: ["<head>", "<tabname>", "<header>", "<title>", "<meta>", "<name>"],
+        correct: 3,
+        explanation: "The title tag defines the title shown in the browser's tab bar."
+      },
+      {
+        question: "Which tag does not have a closing tag?",
+        options: ["<div>", "<p>", "<br>", "<h1>", "<span>", "<body>"],
+        correct: 2,
+        explanation: "The br tag (line break) is a void element and does not require a closing tag."
+      },
+      {
+        question: "Which attribute is used to change font sizes, colors, and make text/images look beautiful?",
+        options: ["design", "style", "color", "format", "css", "theme"],
+        correct: 1,
+        explanation: "The 'style' attribute allows you to add inline CSS rules like color, font-size, and borders."
+      },
+      {
+        question: "What do we use to get different shades of any color?",
+        options: ["Binary code", "Tag code", "Hex code", "HTML number", "Style ID", "Font value"],
+        correct: 2,
+        explanation: "Hex codes (like #FF69B4) represent specific color shades using hexadecimal values."
+      },
+      {
+        question: "How do we mention the property of a border for an image?",
+        options: [
+          "border: pixel style color",
+          "border: color style pixel",
+          "border-color: pixel color",
+          "image-border: pixel style",
+          "style-border: color pixel",
+          "border-pixel: style color"
+        ],
+        correct: 0,
+        explanation: "Border properties follow the format: width (pixels), style (e.g. solid), and color (e.g. border: 2px solid red)."
+      },
+      {
+        question: "Under which tag do we add the website background color?",
+        options: ["<background>", "<html>", "<color>", "<body>", "<head>", "<main>"],
+        correct: 3,
+        explanation: "The body tag holds all visible web page contents, so background colors are applied to it."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let timerInterval = null;
+    let timeLeft = 30;
+
+    // DOM Elements
+    const homeScreen = document.getElementById('homeScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const resultsScreen = document.getElementById('resultsScreen');
+    const qCount = document.getElementById('qCount');
+    const timerElem = document.getElementById('timer');
+    const questionText = document.getElementById('questionText');
+    const optionsGrid = document.getElementById('optionsGrid');
+    const explanationBox = document.getElementById('explanationBox');
+    const submitBtn = document.getElementById('submitBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const quoteDisplay = document.getElementById('quoteDisplay');
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      homeScreen.classList.add('hidden');
+      resultsScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      // Reset state
+      selectedOption = null;
+      explanationBox.classList.remove('show');
+      submitBtn.classList.remove('hidden');
+      nextBtn.classList.add('hidden');
+      
+      const q = questionsData[currentQuestionIndex];
+      qCount.textContent = `Question ${currentQuestionIndex + 1} / ${questionsData.length}`;
+      questionText.innerHTML = q.question;
+      
+      // Render 6 options
+      optionsGrid.innerHTML = '';
+      q.options.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = optText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        btn.onclick = () => selectOption(idx);
+        optionsGrid.appendChild(btn);
+      });
+
+      // Reset and Start Timer
+      startTimer();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 30;
+      timerElem.textContent = `⏱️ ${timeLeft}s`;
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElem.textContent = `⏱️ ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitAnswer(true); // auto-submit on timeout
         }
+      }, 1000);
+    }
 
-        function launchQuizMatchGame() {
-            activeQuestionIndex = 0;
-            runningScore = 0;
-            scoreHUDTracker.innerText = "⭐ Score: 0";
-            switchActiveDisplayPage(arenaPlayScreen);
-            populateQuestionInterfaceCard();
+    function selectOption(index) {
+      if (submitBtn.classList.contains('hidden')) return; // ignore if already submitted
+      
+      selectedOption = index;
+      const buttons = optionsGrid.children;
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('selected');
+      }
+      buttons[index].classList.add('selected');
+    }
+
+    function submitAnswer(timedOut = false) {
+      clearInterval(timerInterval);
+      
+      const q = questionsData[currentQuestionIndex];
+      const buttons = optionsGrid.children;
+
+      if (selectedOption === null && !timedOut) {
+        alert("Please select an option first!");
+        startTimer(); // resume timer
+        return;
+      }
+
+      // Hide submit, show next
+      submitBtn.classList.add('hidden');
+      nextBtn.classList.remove('hidden');
+
+      // Highlight correct/wrong
+      if (selectedOption !== null) {
+        if (selectedOption === q.correct) {
+          buttons[selectedOption].classList.add('correct');
+          score++;
+        } else {
+          buttons[selectedOption].classList.add('wrong');
+          buttons[q.correct].classList.add('correct');
         }
+      } else {
+        // Timed out with no selection
+        buttons[q.correct].classList.add('correct');
+      }
 
-        function populateQuestionInterfaceCard() {
-            hasSelectedAnswer = false;
-            feedbackDrawerBox.style.display = "none";
-            nextActionTriggerBtn.style.display = "none";
-            
-            const questObj = questDatabase[activeQuestionIndex];
-            
-            questionNumTag.innerText = `Question ${activeQuestionIndex + 1}/30`;
-            questionLvlTag.innerText = questObj.level;
-            textPayloadBox.innerText = questObj.q;
-            scriptCodeBox.innerText = questObj.code;
+      // Show explanation
+      explanationBox.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+      explanationBox.classList.add('show');
+    }
 
-            targetChoicesGrid.innerHTML = "";
-            questObj.options.forEach((optText, index) => {
-                const choiceBtn = document.createElement("button");
-                choiceBtn.className = "option-card";
-                choiceBtn.innerText = optText;
-                choiceBtn.onclick = () => registerSelectedChoiceAnswer(index, choiceBtn);
-                targetChoicesGrid.appendChild(choiceBtn);
-            });
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questionsData.length) {
+        loadQuestion();
+      } else {
+        showReportCard();
+      }
+    }
 
-            initClockCountdownSequence();
-        }
+    function showReportCard() {
+      quizScreen.classList.add('hidden');
+      resultsScreen.classList.remove('hidden');
 
-        function initClockCountdownSequence() {
-            clearInterval(countdownTimerInstance);
-            secondsRemaining = 15;
-            timerProgressBar.style.width = "100%";
-            
-            countdownTimerInstance = setInterval(() => {
-                secondsRemaining--;
-                let percentWidth = (secondsRemaining / 15) * 100;
-                timerProgressBar.style.width = `${percentWidth}%`;
+      scoreDisplay.textContent = `${score}/${questionsData.length}`;
 
-                if (secondsRemaining <= 0) {
-                    clearInterval(countdownTimerInstance);
-                    handleExpirationTimeout();
-                }
-            }, 1000);
-        }
+      // Motivational quotes based on performance tier
+      let quote = "";
+      if (score <= 5) {
+        quote = "Keep practicing! Every web developer starts from scratch. You'll master this in no time! 💪✨";
+      } else if (score <= 9) {
+        quote = "Awesome job! You have a super strong foundation in HTML. Just a little more polish and you'll be a pro! 🚀🌟";
+      } else {
+        quote = "Perfect Score! You are an HTML Wizard! Absolutely incredible work! 🧙‍♂️🎉";
+      }
 
-        function registerSelectedChoiceAnswer(selectedIndex, selectedButtonElement) {
-            if (hasSelectedAnswer) return;
-            hasSelectedAnswer = true;
-            clearInterval(countdownTimerInstance);
+      quoteDisplay.textContent = quote;
+    }
 
-            const currentQuest = questDatabase[activeQuestionIndex];
-            const childrenButtons = targetChoicesGrid.children;
-
-            if (selectedIndex === currentQuest.correct) {
-                selectedButtonElement.classList.add("correct-glow");
-                runningScore++;
-                scoreHUDTracker.innerText = `⭐ Score: ${runningScore}`;
-                feedbackTitleText.innerText = "🎯 Spot On! Excellent Job!";
-            } else {
-                selectedButtonElement.classList.add("wrong-glow");
-                childrenButtons[currentQuest.correct].classList.add("correct-glow");
-                feedbackTitleText.innerText = "💡 Let's understand the logic!";
-            }
-
-            revealExplanationDrawer(currentQuest.explain);
-        }
-
-        function handleExpirationTimeout() {
-            hasSelectedAnswer = true;
-            const currentQuest = questDatabase[activeQuestionIndex];
-            const childrenButtons = targetChoicesGrid.children;
-
-            childrenButtons[currentQuest.correct].classList.add("correct-glow");
-            feedbackTitleText.innerText = "⏰ Time's Up! Let's examine the logic:";
-            revealExplanationDrawer(currentQuest.explain);
-        }
-
-        function revealExplanationDrawer(explanationString) {
-            feedbackBodyText.innerText = explanationString;
-            feedbackDrawerBox.style.display = "block";
-            nextActionTriggerBtn.style.display = "inline-block";
-        }
-
-        function advanceToNextQuestion() {
-            activeQuestionIndex++;
-            if (activeQuestionIndex < questDatabase.length) {
-                populateQuestionInterfaceCard();
-            } else {
-                processGameCompletionVictory();
-            }
-        }
-
-        function processGameCompletionVictory() {
-            switchActiveDisplayPage(finalScoreScreen);
-            document.getElementById("final-score-display").innerText = `${runningScore}/30`;
-            
-            const dynamicMotivationPara = document.getElementById("final-motivation-text");
-            
-            if (runningScore >= 25) {
-                dynamicMotivationPara.innerText = "🌟 Spectacular! You are an official Python Master! Your structural code logic skills are unmatched. Keep on inventing awesome tools!";
-            } else if (runningScore >= 15) {
-                dynamicMotivationPara.innerText = "🚀 Fantastic progress! You understand functions and loop flows perfectly. With just a little more practice, you'll be coding games easily!";
-            } else {
-                dynamicMotivationPara.innerText = "👍 Good try! Programming takes practice, just like playing an instrument or learning a sport. Keep practicing and your coding skills will grow!";
-            }
-        }
-
-        function restartMatchFromScratch() {
-            switchActiveDisplayPage(homePageScreen);
-        }
-    </script>
+    function resetQuiz() {
+      startQuiz();
+    }
+  </script>
 </body>
 </html>
