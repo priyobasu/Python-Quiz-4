@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Let's Revise HTML!</title>
+  <title>Revise Computer Vision and Python</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,17 +17,18 @@
     }
 
     body {
-      background-color: #ffdeeb;
+      background-color: #d8f3dc;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       overflow-x: hidden;
+      padding: 20px 10px;
     }
 
-    /* Pixel Floating Hearts Background */
-    .heart-bg {
+    /* Pixel Floating Balloons Background */
+    .balloon-bg {
       position: fixed;
       top: 0;
       left: 0;
@@ -38,34 +39,34 @@
       overflow: hidden;
     }
 
-    .pixel-heart {
+    .pixel-balloon {
       position: absolute;
-      width: 16px;
-      height: 16px;
-      background-color: #ff69b4;
-      opacity: 0.6;
+      width: 20px;
+      height: 24px;
+      background-color: #1b4332;
+      opacity: 0.55;
       box-shadow: 
-        16px 0 #ff69b4, 
-        -16px 0 #ff69b4, 
-        0 -16px #ff69b4, 
-        0 16px #ff69b4,
-        16px 16px #ff1493,
-        -16px 16px #ff1493,
-        32px -16px #ffb6c1,
-        -32px -16px #ffb6c1;
-      animation: floatUp linear infinite;
+        4px -4px 0 #1b4332, 8px -4px 0 #1b4332, 12px -4px 0 #1b4332,
+        -4px 4px 0 #1b4332, 24px 4px 0 #1b4332,
+        -4px 8px 0 #1b4332, 24px 8px 0 #1b4332,
+        -4px 12px 0 #1b4332, 24px 12px 0 #1b4332,
+        0px 16px 0 #1b4332, 20px 16px 0 #1b4332,
+        4px 20px 0 #1b4332, 16px 20px 0 #1b4332,
+        8px 24px 0 #081c15, 12px 24px 0 #081c15, 
+        10px 28px 0 #2d6a4f, 8px 32px 0 #2d6a4f, 12px 36px 0 #2d6a4f, 10px 40px 0 #2d6a4f;
+      animation: floatUpBalloon linear infinite;
     }
 
-    @keyframes floatUp {
+    @keyframes floatUpBalloon {
       0% {
-        transform: translateY(105vh) scale(0.8);
+        transform: translateY(108vh) scale(0.8);
         opacity: 0;
       }
-      20% {
-        opacity: 0.6;
+      15% {
+        opacity: 0.55;
       }
       100% {
-        transform: translateY(-10vh) scale(1.2);
+        transform: translateY(-15vh) scale(1.1);
         opacity: 0;
       }
     }
@@ -73,32 +74,33 @@
     /* Main Container Card */
     .container {
       background: #ffffff;
-      border: 6px solid #ff8da1;
+      border: 6px solid #52b788;
       border-radius: 28px;
-      width: 90%;
-      max-width: 650px;
-      padding: 32px 28px;
-      box-shadow: 0 12px 30px rgba(255, 105, 180, 0.3);
+      width: 100%;
+      max-width: 700px;
+      padding: 32px 24px;
+      box-shadow: 0 12px 30px rgba(45, 106, 79, 0.25);
       position: relative;
       z-index: 10;
       text-align: center;
     }
 
     h1 {
-      color: #d81b60;
-      font-size: 2.2rem;
-      margin-bottom: 12px;
+      color: #1b4332;
+      font-size: 2.1rem;
+      margin-bottom: 10px;
     }
 
     p.subtitle {
-      color: #666;
+      color: #40916c;
       font-size: 1.1rem;
       margin-bottom: 24px;
+      font-weight: 600;
     }
 
     /* Buttons */
     .btn {
-      background-color: #ff6584;
+      background-color: #2d6a4f;
       color: white;
       border: none;
       padding: 14px 28px;
@@ -106,17 +108,17 @@
       font-weight: 700;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 6px 0 #c93b58;
+      box-shadow: 0 6px 0 #1b4332;
       transition: all 0.1s ease;
     }
 
     .btn:hover {
-      background-color: #ff476c;
+      background-color: #40916c;
     }
 
     .btn:active {
       transform: translateY(4px);
-      box-shadow: 0 2px 0 #c93b58;
+      box-shadow: 0 2px 0 #1b4332;
     }
 
     /* Quiz Header Items */
@@ -126,107 +128,140 @@
       align-items: center;
       margin-bottom: 20px;
       padding-bottom: 12px;
-      border-bottom: 3px dashed #ffd1dc;
+      border-bottom: 3px dashed #b7e4c7;
     }
 
     .q-count {
       font-weight: 700;
-      color: #ff476c;
+      color: #2d6a4f;
       font-size: 1.1rem;
     }
 
     .timer-badge {
-      background: #ffe3ec;
-      color: #d81b60;
+      background: #d8f3dc;
+      color: #1b4332;
       padding: 6px 16px;
       border-radius: 20px;
       font-weight: 700;
       font-size: 1.1rem;
-      border: 2px solid #ffb6c1;
+      border: 2px solid #74c69d;
     }
 
     .question-box {
-      font-size: 1.3rem;
-      color: #333;
-      margin-bottom: 24px;
+      font-size: 1.2rem;
+      color: #1b4332;
+      margin-bottom: 16px;
       font-weight: 600;
       text-align: left;
       line-height: 1.4;
     }
 
-    .code-snippet {
-      font-family: monospace;
-      background: #fff0f5;
-      padding: 3px 8px;
-      border-radius: 6px;
-      color: #d81b60;
+    .instruction-note {
+      font-size: 0.95rem;
+      color: #2d6a4f;
+      background: #e8f5e9;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      text-align: left;
+      font-weight: 600;
     }
 
-    /* Options Grid (6 Options) */
+    /* Code Snippet Box with Proper Indentation */
+    pre.code-block {
+      background: #f0fdf4;
+      border: 2px solid #74c69d;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1rem;
+      color: #081c15;
+      text-align: left;
+      margin: 10px 0 20px 0;
+      white-space: pre;
+      overflow-x: auto;
+      font-weight: 700;
+    }
+
+    /* Options Grid Layout */
     .options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 12px;
       margin-bottom: 24px;
     }
 
-    @media (max-width: 500px) {
-      .options-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .option-btn {
-      background: #fff5f8;
-      border: 3px solid #ffccd8;
+    .option-card {
+      background: #f0fdf4;
+      border: 3px solid #b7e4c7;
       border-radius: 16px;
-      padding: 14px 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #444;
+      padding: 14px 16px;
       cursor: pointer;
-      text-align: center;
+      text-align: left;
       transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .option-btn:hover {
-      background: #ffe3ec;
-      border-color: #ff8da1;
+    .option-card:hover {
+      background: #d8f3dc;
+      border-color: #52b788;
     }
 
-    .option-btn.selected {
-      background: #ffd1dc;
-      border-color: #ff476c;
-      box-shadow: 0 0 0 2px #ff476c;
+    .option-card.selected {
+      background: #b7e4c7;
+      border-color: #2d6a4f;
+      box-shadow: 0 0 0 2px #2d6a4f;
     }
 
-    .option-btn.correct {
+    .option-card.correct {
       background: #d4edda !important;
       border-color: #28a745 !important;
-      color: #155724 !important;
     }
 
-    .option-btn.wrong {
+    .option-card.wrong {
       background: #f8d7da !important;
       border-color: #dc3545 !important;
-      color: #721c24 !important;
     }
 
-    /* Feedback Box */
-    .explanation-box {
-      background: #f0f8ff;
-      border: 2px dashed #87cefa;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 20px;
-      text-align: left;
-      color: #1e3a8a;
-      font-size: 0.98rem;
+    .option-text {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1b4332;
+    }
+
+    .option-card.correct .option-text {
+      color: #155724;
+    }
+
+    .option-card.wrong .option-text {
+      color: #721c24;
+    }
+
+    /* Inline Explanation Under Buttons */
+    .inline-explanation {
       display: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 4px;
+      line-height: 1.35;
     }
 
-    .explanation-box.show {
+    .option-card.correct .inline-explanation {
       display: block;
+      background-color: #c3e6cb;
+      color: #155724;
+      border: 1px solid #81c784;
+    }
+
+    .option-card.wrong .inline-explanation {
+      display: block;
+      background-color: #f5c6cb;
+      color: #721c24;
+      border: 1px solid #e57373;
     }
 
     /* Actions */
@@ -238,8 +273,8 @@
 
     /* Handwritten Report Card */
     .report-card {
-      background: #fffdf5;
-      border: 3px dashed #ffd15c;
+      background: #f0fdf4;
+      border: 3px dashed #74c69d;
       border-radius: 20px;
       padding: 24px;
       margin-top: 15px;
@@ -259,7 +294,7 @@
     .score-text {
       font-family: 'Caveat', cursive;
       font-size: 3.5rem;
-      color: #d81b60;
+      color: #1b4332;
       line-height: 1;
       transform: rotate(-5deg);
     }
@@ -275,9 +310,10 @@
 
     .quote-box {
       font-size: 1.2rem;
-      color: #555;
+      color: #2d6a4f;
       margin-top: 15px;
       font-weight: 600;
+      line-height: 1.4;
     }
 
     .hidden {
@@ -287,15 +323,15 @@
 </head>
 <body>
 
-  <!-- Floating Hearts Background -->
-  <div class="heart-bg" id="heartContainer"></div>
+  <!-- Pixelated Balloons Background -->
+  <div class="balloon-bg" id="balloonContainer"></div>
 
   <div class="container">
     
     <!-- HOME SCREEN -->
     <div id="homeScreen">
-      <h1>Let's Revise HTML! 🎈</h1>
-      <p class="subtitle">10 Fun questions to test your web building power!</p>
+      <h1>Revise Computer Vision and Python 🎈</h1>
+      <p class="subtitle">10 revision questions to test your image processing knowledge!</p>
       <button class="btn" onclick="startQuiz()">Start Revision</button>
     </div>
 
@@ -306,17 +342,13 @@
         <span class="timer-badge" id="timer">⏱️ 30s</span>
       </div>
 
-      <div class="question-box" id="questionText">
-        <!-- Question inserted dynamically -->
-      </div>
+      <div class="question-box" id="questionText"></div>
 
-      <div class="options-grid" id="optionsGrid">
-        <!-- 6 options populated dynamically -->
-      </div>
+      <div id="codeContainer"></div>
 
-      <div class="explanation-box" id="explanationBox">
-        <!-- Explanation text -->
-      </div>
+      <div id="instructionNote" class="instruction-note hidden"></div>
+
+      <div class="options-grid" id="optionsGrid"></div>
 
       <div class="action-row">
         <button class="btn" id="submitBtn" onclick="submitAnswer()">Submit</button>
@@ -327,15 +359,14 @@
     <!-- REPORT CARD SCREEN -->
     <div id="resultsScreen" class="hidden">
       <h1>Quiz Completed! 🎉</h1>
-      <p class="subtitle">Here is your HTML Revision Report Card:</p>
+      <p class="subtitle">Here is your Computer Vision and Python Report Card:</p>
 
       <div class="report-card">
         <div class="score-circle-container">
-          <!-- Handwritten SVG Circle -->
           <svg class="hand-circle" viewBox="0 0 100 100">
             <path d="M 50,10 A 40,38 0 1 0 90,55 A 42,40 0 0 0 46,8" 
                   fill="none" 
-                  stroke="#ff1493" 
+                  stroke="#2d6a4f" 
                   stroke-width="4" 
                   stroke-linecap="round" 
                   stroke-dasharray="300"
@@ -344,9 +375,7 @@
           <div class="score-text" id="scoreDisplay">0/10</div>
         </div>
 
-        <div class="quote-box" id="quoteDisplay">
-          <!-- Quote based on level -->
-        </div>
+        <div class="quote-box" id="quoteDisplay"></div>
       </div>
 
       <button class="btn" style="margin-top: 24px;" onclick="resetQuiz()">Try Again 🔄</button>
@@ -355,91 +384,126 @@
   </div>
 
   <script>
-    // Create floating pixelated hearts
-    const heartContainer = document.getElementById('heartContainer');
-    for (let i = 0; i < 15; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'pixel-heart';
-      heart.style.left = Math.random() * 95 + 'vw';
-      heart.style.animationDuration = (6 + Math.random() * 6) + 's';
-      heart.style.animationDelay = (Math.random() * 5) + 's';
-      heartContainer.appendChild(heart);
+    // Create floating pixelated balloons in dark green shades
+    const balloonContainer = document.getElementById('balloonContainer');
+    for (let i = 0; i < 16; i++) {
+      const balloon = document.createElement('div');
+      balloon.className = 'pixel-balloon';
+      balloon.style.left = Math.random() * 92 + 'vw';
+      balloon.style.animationDuration = (7 + Math.random() * 7) + 's';
+      balloon.style.animationDelay = (Math.random() * 5) + 's';
+      balloonContainer.appendChild(balloon);
     }
 
-    // 10 HTML Questions & Options
+    // Questions Data - Correct options are randomly distributed across different positions!
     const questionsData = [
       {
-        question: "What can we create using HTML?",
-        options: ["Website", "Operating System", "Mobile Hardware", "CPU Processor", "Database Server", "Video Game Console"],
-        correct: 0,
-        explanation: "HTML (HyperText Markup Language) is the standard language used to create and structure websites on the web!"
-      },
-      {
-        question: "What do we use to create paragraphs in HTML?",
-        options: ["<para>", "<p>", "<paragraph>", "<text>", "<pg>", "<ptag>"],
-        correct: 1,
-        explanation: "The p tag is specifically used to define paragraphs of text in HTML."
-      },
-      {
-        question: "How many sizes of headings can be created in HTML?",
-        options: ["3", "5", "6", "8", "10", "Unlimited"],
-        correct: 2,
-        explanation: "HTML offers exactly 6 heading levels, from <h1> (largest) to <h6> (smallest)."
-      },
-      {
-        question: "Which tag do we use to add images in a webpage?",
-        options: ["<image>", "<pic>", "<img>", "<picture>", "<photo>", "<imgsrc>"],
-        correct: 2,
-        explanation: "The img tag is used to embed images into an HTML page."
-      },
-      {
-        question: "Which tag helps us see the name of the website on the browser tab?",
-        options: ["<head>", "<tabname>", "<header>", "<title>", "<meta>", "<name>"],
-        correct: 3,
-        explanation: "The title tag defines the title shown in the browser's tab bar."
-      },
-      {
-        question: "Which tag does not have a closing tag?",
-        options: ["<div>", "<p>", "<br>", "<h1>", "<span>", "<body>"],
-        correct: 2,
-        explanation: "The br tag (line break) is a void element and does not require a closing tag."
-      },
-      {
-        question: "Which attribute is used to change font sizes, colors, and make text/images look beautiful?",
-        options: ["design", "style", "color", "format", "css", "theme"],
-        correct: 1,
-        explanation: "The 'style' attribute allows you to add inline CSS rules like color, font-size, and borders."
-      },
-      {
-        question: "What do we use to get different shades of any color?",
-        options: ["Binary code", "Tag code", "Hex code", "HTML number", "Style ID", "Font value"],
-        correct: 2,
-        explanation: "Hex codes (like #FF69B4) represent specific color shades using hexadecimal values."
-      },
-      {
-        question: "How do we mention the property of a border for an image?",
+        question: "Images are made of:",
+        type: "single",
         options: [
-          "border: pixel style color",
-          "border: color style pixel",
-          "border-color: pixel color",
-          "image-border: pixel style",
-          "style-border: color pixel",
-          "border-pixel: style color"
-        ],
-        correct: 0,
-        explanation: "Border properties follow the format: width (pixels), style (e.g. solid), and color (e.g. border: 2px solid red)."
+          { text: "Vectors", isCorrect: false, exp: "Why this is wrong: Vectors use math formulas for lines, not fixed grids of color like digital photos." },
+          { text: "Pixels", isCorrect: true, exp: "Correct! Pixels (picture elements) are the tiny colored squares that build a digital image." },
+          { text: "Matrices only", isCorrect: false, exp: "Why this is wrong: While stored as matrices in code, the visual elements themselves are called pixels." },
+          { text: "Bits", isCorrect: false, exp: "Why this is wrong: Bits are raw binary data (0s and 1s), not the visual picture elements." }
+        ]
       },
       {
-        question: "Under which tag do we add the website background color?",
-        options: ["<background>", "<html>", "<color>", "<body>", "<head>", "<main>"],
-        correct: 3,
-        explanation: "The body tag holds all visible web page contents, so background colors are applied to it."
+        question: "Which library is used to create an empty canvas?",
+        type: "single",
+        options: [
+          { text: "Pandas", isCorrect: false, exp: "Why this is wrong: Pandas is used for tabular data and spreadsheets, not image matrices." },
+          { text: "Matplotlib", isCorrect: false, exp: "Why this is wrong: Matplotlib is used for plotting charts, not generating raw empty canvases." },
+          { text: "NumPy", isCorrect: true, exp: "Correct! NumPy creates array grids like np.zeros() which act as a blank canvas for images." },
+          { text: "PIL", isCorrect: false, exp: "Why this is wrong: While PIL handles images, NumPy is the primary library used for raw array canvases in OpenCV." }
+        ]
+      },
+      {
+        question: "Which is the correct form of syntax for displaying an image?",
+        type: "single",
+        options: [
+          { text: 'cv2.display("window caption", image)', isCorrect: false, exp: 'Why this is wrong: OpenCV does not have a .display() function.' },
+          { text: 'cv2.showImage(image, "window caption")', isCorrect: false, exp: 'Why this is wrong: .showImage() is not an OpenCV function name and arguments are reversed.' },
+          { text: 'cv2.render("window caption", image)', isCorrect: false, exp: 'Why this is wrong: OpenCV uses imshow(), not render(), to show windows.' },
+          { text: 'cv2.imshow("window caption", image)', isCorrect: true, exp: 'Correct! cv2.imshow() takes the window title string first, then the image variable.' }
+        ]
+      },
+      {
+        question: "State true or false: We can change an image to grayscale by reducing the no. of channels to 2 — one for black and one for white.",
+        type: "tf",
+        options: [
+          { text: "True", isCorrect: false, exp: "Why this is wrong: Grayscale images do NOT have 2 channels; they have only 1 channel." },
+          { text: "False", isCorrect: true, exp: "Correct! Grayscale images have only 1 channel containing light intensity values from 0 (black) to 255 (white)." }
+        ]
+      },
+      {
+        question: "If an image is stored in a variable 'picture', what would picture.shape show us?",
+        type: "single",
+        options: [
+          { text: "Width, height and channel", isCorrect: false, exp: "Why this is wrong: OpenCV puts Height (rows) before Width (columns)." },
+          { text: "Height, width and channel", isCorrect: true, exp: "Correct! NumPy/OpenCV returns shape as a tuple: (Height, Width, Channels)." },
+          { text: "Size, resolution and format", isCorrect: false, exp: "Why this is wrong: .shape gives array dimensions, not file format or resolution." },
+          { text: "Channels, width and height", isCorrect: false, exp: "Why this is wrong: Channels come last in the .shape tuple, not first." }
+        ]
+      },
+      {
+        question: "What will be the value of num using the following syntax?",
+        code: `num = 5\nnum = num + 3\nnum = num % 2`,
+        type: "single",
+        options: [
+          { text: "1", isCorrect: false, exp: "Why this is wrong: 8 divided by 2 has no remainder, so 8 % 2 is 0, not 1." },
+          { text: "2", isCorrect: false, exp: "Why this is wrong: % calculates remainder. Dividing 8 by 2 leaves 0." },
+          { text: "0", isCorrect: true, exp: "Correct! First 5 + 3 = 8. Then 8 % 2 gives remainder 0 because 8 is even." },
+          { text: "8", isCorrect: false, exp: "Why this is wrong: 8 is the value before % 2. % 2 calculates the remainder after dividing by 2." }
+        ]
+      },
+      {
+        question: "What is the error in the following code?",
+        code: `if badge = gold:\n    print("you won")\nelse:\n    print("you lost")`,
+        type: "single",
+        options: [
+          { text: "The print statements should not be indented", isCorrect: false, exp: "Why this is wrong: Indentation is required in Python inside if/else blocks." },
+          { text: "Comparative operator should be == and gold is string so should be enclosed in quotation", isCorrect: true, exp: "Correct! '=' assigns values, while '==' compares them. Also, string text needs quotes like 'gold'." },
+          { text: "The else statement needs an equal sign", isCorrect: false, exp: "Why this is wrong: 'else:' only needs a colon, never an equal sign." },
+          { text: "The variable badge is not capitalized", isCorrect: false, exp: "Why this is wrong: Variable names in Python do not need to be capitalized." }
+        ]
+      },
+      {
+        question: "State true or false: OpenCV uses B,G,R sequence for pixel colours.",
+        type: "tf",
+        options: [
+          { text: "True", isCorrect: true, exp: "Correct! OpenCV reads color channels in Blue, Green, Red (BGR) order by default." },
+          { text: "False", isCorrect: false, exp: "Why this is wrong: OpenCV actually uses BGR order instead of standard RGB." }
+        ]
+      },
+      {
+        question: "What is the error in the following code?",
+        code: `def print_detail(name, grade):\n    print("name: ", name)\n    print("detail: ", detail)\n\nprint_detail("Peter Parker")`,
+        type: "single",
+        options: [
+          { text: "The def keyword should be capitalized", isCorrect: false, exp: "Why this is wrong: 'def' must always be lowercase in Python." },
+          { text: "Print statements cannot take two arguments", isCorrect: false, exp: "Why this is wrong: print() can accept multiple arguments separated by commas." },
+          { text: "Function names cannot contain underscores", isCorrect: false, exp: "Why this is wrong: Underscores are completely valid in Python function names." },
+          { text: "Function definition has 2 parameters and function call passes only one argument", isCorrect: true, exp: "Correct! The function requires 2 arguments (name, grade), but only 1 ('Peter Parker') was given." }
+        ]
+      },
+      {
+        question: "Select the different types of blur from the list below:",
+        type: "multi",
+        instruction: "💡 Select the 3 correct types of blur, then click Submit:",
+        options: [
+          { text: "Linear blur", isCorrect: false, exp: "Why this is wrong: Linear blur is not a standard OpenCV blurring filter name." },
+          { text: "Gaussian blur", isCorrect: true, exp: "Correct! Gaussian blur uses a Gaussian function for image smoothing." },
+          { text: "Circular blur", isCorrect: false, exp: "Why this is wrong: Circular blur is not a standard basic OpenCV blur method." },
+          { text: "Median blur", isCorrect: true, exp: "Correct! Median blur replaces pixels with the median of neighbors." },
+          { text: "Motion blur", isCorrect: false, exp: "Why this is wrong: Motion blur is an effect, not one of the 3 primary OpenCV blur functions." },
+          { text: "Bilateral blur", isCorrect: true, exp: "Correct! Bilateral filter smooths images while preserving sharp edges." }
+        ]
       }
     ];
 
     let currentQuestionIndex = 0;
     let score = 0;
-    let selectedOption = null;
+    let selectedIndices = [];
     let timerInterval = null;
     let timeLeft = 30;
 
@@ -450,8 +514,9 @@
     const qCount = document.getElementById('qCount');
     const timerElem = document.getElementById('timer');
     const questionText = document.getElementById('questionText');
+    const codeContainer = document.getElementById('codeContainer');
+    const instructionNote = document.getElementById('instructionNote');
     const optionsGrid = document.getElementById('optionsGrid');
-    const explanationBox = document.getElementById('explanationBox');
     const submitBtn = document.getElementById('submitBtn');
     const nextBtn = document.getElementById('nextBtn');
     const scoreDisplay = document.getElementById('scoreDisplay');
@@ -468,23 +533,49 @@
 
     function loadQuestion() {
       // Reset state
-      selectedOption = null;
-      explanationBox.classList.remove('show');
+      selectedIndices = [];
       submitBtn.classList.remove('hidden');
       nextBtn.classList.add('hidden');
       
       const q = questionsData[currentQuestionIndex];
       qCount.textContent = `Question ${currentQuestionIndex + 1} / ${questionsData.length}`;
       questionText.innerHTML = q.question;
+
+      // Render Code Block if present
+      codeContainer.innerHTML = '';
+      if (q.code) {
+        const pre = document.createElement('pre');
+        pre.className = 'code-block';
+        pre.textContent = q.code;
+        codeContainer.appendChild(pre);
+      }
+
+      // Instruction note for question 10
+      if (q.instruction) {
+        instructionNote.textContent = q.instruction;
+        instructionNote.classList.remove('hidden');
+      } else {
+        instructionNote.classList.add('hidden');
+      }
       
-      // Render 6 options
+      // Render options
       optionsGrid.innerHTML = '';
-      q.options.forEach((optText, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = optText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        btn.onclick = () => selectOption(idx);
-        optionsGrid.appendChild(btn);
+      q.options.forEach((opt, idx) => {
+        const card = document.createElement('div');
+        card.className = 'option-card';
+        card.onclick = () => handleOptionClick(idx);
+
+        const textDiv = document.createElement('div');
+        textDiv.className = 'option-text';
+        textDiv.innerHTML = opt.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        const expDiv = document.createElement('div');
+        expDiv.className = 'inline-explanation';
+        expDiv.innerHTML = opt.exp;
+
+        card.appendChild(textDiv);
+        card.appendChild(expDiv);
+        optionsGrid.appendChild(card);
       });
 
       // Reset and Start Timer
@@ -506,50 +597,88 @@
       }, 1000);
     }
 
-    function selectOption(index) {
-      if (submitBtn.classList.contains('hidden')) return; // ignore if already submitted
+    function handleOptionClick(index) {
+      if (submitBtn.classList.contains('hidden')) return; // ignore clicks after submission
       
-      selectedOption = index;
-      const buttons = optionsGrid.children;
-      for (let i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove('selected');
+      const q = questionsData[currentQuestionIndex];
+      const cards = optionsGrid.children;
+
+      if (q.type === "multi") {
+        // Toggle selection for Question 10
+        const pos = selectedIndices.indexOf(index);
+        if (pos > -1) {
+          selectedIndices.splice(pos, 1);
+          cards[index].classList.remove('selected');
+        } else {
+          selectedIndices.push(index);
+          cards[index].classList.add('selected');
+        }
+      } else {
+        // Single option selection (Q1 - Q9)
+        selectedIndices = [index];
+        for (let i = 0; i < cards.length; i++) {
+          cards[i].classList.remove('selected');
+        }
+        cards[index].classList.add('selected');
       }
-      buttons[index].classList.add('selected');
     }
 
     function submitAnswer(timedOut = false) {
       clearInterval(timerInterval);
       
       const q = questionsData[currentQuestionIndex];
-      const buttons = optionsGrid.children;
+      const cards = optionsGrid.children;
 
-      if (selectedOption === null && !timedOut) {
+      if (selectedIndices.length === 0 && !timedOut) {
         alert("Please select an option first!");
         startTimer(); // resume timer
         return;
       }
 
-      // Hide submit, show next
+      // Hide submit, show next button
       submitBtn.classList.add('hidden');
       nextBtn.classList.remove('hidden');
 
-      // Highlight correct/wrong
-      if (selectedOption !== null) {
-        if (selectedOption === q.correct) {
-          buttons[selectedOption].classList.add('correct');
+      if (q.type === "multi") {
+        // Multi-select evaluation for Question 10
+        let isFullyCorrect = true;
+        let correctCount = 0;
+
+        q.options.forEach((opt, idx) => {
+          const isSelected = selectedIndices.includes(idx);
+          if (opt.isCorrect) {
+            cards[idx].classList.add('correct'); // Highlight correct under correct button
+            if (isSelected) correctCount++;
+            else isFullyCorrect = false;
+          } else {
+            if (isSelected) {
+              cards[idx].classList.add('wrong'); // Highlight wrong under clicked wrong button
+              isFullyCorrect = false;
+            }
+          }
+        });
+
+        if (isFullyCorrect && selectedIndices.length === 3) {
           score++;
-        } else {
-          buttons[selectedOption].classList.add('wrong');
-          buttons[q.correct].classList.add('correct');
         }
       } else {
-        // Timed out with no selection
-        buttons[q.correct].classList.add('correct');
-      }
+        // Single option evaluation (Q1 - Q9)
+        const selectedIdx = selectedIndices[0];
 
-      // Show explanation
-      explanationBox.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
-      explanationBox.classList.add('show');
+        q.options.forEach((opt, idx) => {
+          if (opt.isCorrect) {
+            cards[idx].classList.add('correct'); // Explanation under correct button
+          }
+        });
+
+        if (selectedIdx !== undefined) {
+          if (q.options[selectedIdx].isCorrect) {
+            score++;
+          } else {
+            cards[selectedIdx].classList.add('wrong'); // Explanation under clicked wrong button
+          }
+        }
+      }
     }
 
     function nextQuestion() {
@@ -567,14 +696,14 @@
 
       scoreDisplay.textContent = `${score}/${questionsData.length}`;
 
-      // Motivational quotes based on performance tier
+      // Motivational quotes tailored for Computer Vision and Python
       let quote = "";
       if (score <= 5) {
-        quote = "Keep practicing! Every web developer starts from scratch. You'll master this in no time! 💪✨";
+        quote = "Keep practicing! Computer vision and Python take time to master. Every pixel counts on your coding journey! 🎈🐍";
       } else if (score <= 9) {
-        quote = "Awesome job! You have a super strong foundation in HTML. Just a little more polish and you'll be a pro! 🚀🌟";
+        quote = "Great job! You have a solid understanding of Computer Vision and Python concepts! Keep coding! 🚀🟢";
       } else {
-        quote = "Perfect Score! You are an HTML Wizard! Absolutely incredible work! 🧙‍♂️🎉";
+        quote = "Perfect 10/10 score! You are a Computer Vision and Python Master! Outstanding work! 🏆✨";
       }
 
       quoteDisplay.textContent = quote;
