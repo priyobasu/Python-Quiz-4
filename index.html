@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Revise Computer Vision and Python</title>
+  <title>Revise Python Concepts</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
@@ -330,8 +330,8 @@
     
     <!-- HOME SCREEN -->
     <div id="homeScreen">
-      <h1>Revise Computer Vision and Python 🎈</h1>
-      <p class="subtitle">10 revision questions to test your image processing knowledge!</p>
+      <h1>Revise Python Concepts 🎈</h1>
+      <p class="subtitle">Let's revise Python, gesture recognition, and image processing concepts!</p>
       <button class="btn" onclick="startQuiz()">Start Revision</button>
     </div>
 
@@ -359,7 +359,7 @@
     <!-- REPORT CARD SCREEN -->
     <div id="resultsScreen" class="hidden">
       <h1>Quiz Completed! 🎉</h1>
-      <p class="subtitle">Here is your Computer Vision and Python Report Card:</p>
+      <p class="subtitle">Here is your Python Revision Report Card:</p>
 
       <div class="report-card">
         <div class="score-circle-container">
@@ -395,108 +395,106 @@
       balloonContainer.appendChild(balloon);
     }
 
-    // Questions Data - Correct options are randomly distributed across different positions!
+    // Questions Data - Correct options are placed in varied positions across questions
     const questionsData = [
       {
-        question: "Images are made of:",
+        question: "Which pretrained model is commonly used for face detection and smile detection?",
         type: "single",
         options: [
-          { text: "Vectors", isCorrect: false, exp: "Why this is wrong: Vectors use math formulas for lines, not fixed grids of color like digital photos." },
-          { text: "Pixels", isCorrect: true, exp: "Correct! Pixels (picture elements) are the tiny colored squares that build a digital image." },
-          { text: "Matrices only", isCorrect: false, exp: "Why this is wrong: While stored as matrices in code, the visual elements themselves are called pixels." },
-          { text: "Bits", isCorrect: false, exp: "Why this is wrong: Bits are raw binary data (0s and 1s), not the visual picture elements." }
+          { text: "YOLOv8", isCorrect: false, exp: "Why this is wrong: YOLO is designed for real-time general object detection bounding boxes, not classic Haar feature XML classifiers." },
+          { text: "Haar Cascade", isCorrect: true, exp: "Correct! Haar Cascade classifiers are machine learning object detection models used to identify faces, eyes, and smiles in OpenCV." },
+          { text: "ResNet-50", isCorrect: false, exp: "Why this is wrong: ResNet is a deep convolutional neural network architecture used for image classification." },
+          { text: "MobileNet", isCorrect: false, exp: "Why this is wrong: MobileNet is a lightweight neural network architecture, not the classic OpenCV Haar cascade model." }
         ]
       },
       {
-        question: "Which library is used to create an empty canvas?",
+        question: "Which library is used for gesture recognition and hand landmark detection?",
         type: "single",
         options: [
-          { text: "Pandas", isCorrect: false, exp: "Why this is wrong: Pandas is used for tabular data and spreadsheets, not image matrices." },
-          { text: "Matplotlib", isCorrect: false, exp: "Why this is wrong: Matplotlib is used for plotting charts, not generating raw empty canvases." },
-          { text: "NumPy", isCorrect: true, exp: "Correct! NumPy creates array grids like np.zeros() which act as a blank canvas for images." },
-          { text: "PIL", isCorrect: false, exp: "Why this is wrong: While PIL handles images, NumPy is the primary library used for raw array canvases in OpenCV." }
+          { text: "Matplotlib", isCorrect: false, exp: "Why this is wrong: Matplotlib is a plotting library used for creating charts and graphs." },
+          { text: "Mediapipe", isCorrect: true, exp: "Correct! Mediapipe is Google's open-source framework specifically used for hand tracking, gesture recognition, and face mesh detection." },
+          { text: "SciPy", isCorrect: false, exp: "Why this is wrong: SciPy is used for scientific computing and mathematical routines, not computer vision landmarks." },
+          { text: "Pygame", isCorrect: false, exp: "Why this is wrong: Pygame is used to write 2D video games in Python." }
         ]
       },
       {
-        question: "Which is the correct form of syntax for displaying an image?",
+        question: "Which landmark index number is used to detect the tip of the index finger in gesture recognition?",
         type: "single",
         options: [
-          { text: 'cv2.display("window caption", image)', isCorrect: false, exp: 'Why this is wrong: OpenCV does not have a .display() function.' },
-          { text: 'cv2.showImage(image, "window caption")', isCorrect: false, exp: 'Why this is wrong: .showImage() is not an OpenCV function name and arguments are reversed.' },
-          { text: 'cv2.render("window caption", image)', isCorrect: false, exp: 'Why this is wrong: OpenCV uses imshow(), not render(), to show windows.' },
-          { text: 'cv2.imshow("window caption", image)', isCorrect: true, exp: 'Correct! cv2.imshow() takes the window title string first, then the image variable.' }
+          { text: "Index 4", isCorrect: false, exp: "Why this is wrong: Index 4 represents the tip of the Thumb in Mediapipe." },
+          { text: "Index 12", isCorrect: false, exp: "Why this is wrong: Index 12 represents the tip of the Middle finger in Mediapipe." },
+          { text: "Index 8", isCorrect: true, exp: "Correct! Landmark index 8 corresponds to the Index Finger Tip in Mediapipe's 21 hand landmark model." },
+          { text: "Index 16", isCorrect: false, exp: "Why this is wrong: Index 16 represents the tip of the Ring finger." }
         ]
       },
       {
-        question: "State true or false: We can change an image to grayscale by reducing the no. of channels to 2 — one for black and one for white.",
+        question: "What is the basic sequence of processing frames before any detection model is applied?",
+        type: "single",
+        options: [
+          { text: "Grab frame ➔ Open Webcam ➔ Convert to grayscale", isCorrect: false, exp: "Why this is wrong: You cannot grab a frame before opening the webcam connection!" },
+          { text: "Open Webcam ➔ Grab frame ➔ Convert to grayscale", isCorrect: true, exp: "Correct! First connect to webcam, then capture/read a video frame, and finally convert it to grayscale for processing." },
+          { text: "Convert to grayscale ➔ Open Webcam ➔ Grab frame", isCorrect: false, exp: "Why this is wrong: Grayscale conversion needs an actual frame image that must be grabbed first." },
+          { text: "Open Webcam ➔ Convert to grayscale ➔ Grab frame", isCorrect: false, exp: "Why this is wrong: You must read/grab the frame image from the webcam before applying color conversion." }
+        ]
+      },
+      {
+        question: "State true or false: Grayscale reduces the colour channel to 2.",
         type: "tf",
         options: [
-          { text: "True", isCorrect: false, exp: "Why this is wrong: Grayscale images do NOT have 2 channels; they have only 1 channel." },
-          { text: "False", isCorrect: true, exp: "Correct! Grayscale images have only 1 channel containing light intensity values from 0 (black) to 255 (white)." }
+          { text: "True", isCorrect: false, exp: "Why this is wrong: Grayscale images do NOT have 2 channels; they reduce 3 color channels down to 1 single channel." },
+          { text: "False", isCorrect: true, exp: "Correct! A grayscale image has only 1 channel representing pixel intensity from 0 (black) to 255 (white)." }
         ]
       },
       {
-        question: "If an image is stored in a variable 'picture', what would picture.shape show us?",
+        question: "Which NumPy function is used to create a colored canvas with a specific fill value?",
         type: "single",
         options: [
-          { text: "Width, height and channel", isCorrect: false, exp: "Why this is wrong: OpenCV puts Height (rows) before Width (columns)." },
-          { text: "Height, width and channel", isCorrect: true, exp: "Correct! NumPy/OpenCV returns shape as a tuple: (Height, Width, Channels)." },
-          { text: "Size, resolution and format", isCorrect: false, exp: "Why this is wrong: .shape gives array dimensions, not file format or resolution." },
-          { text: "Channels, width and height", isCorrect: false, exp: "Why this is wrong: Channels come last in the .shape tuple, not first." }
+          { text: "np.zeros()", isCorrect: false, exp: "Why this is wrong: np.zeros() fills the canvas with zeros, creating a purely black image." },
+          { text: "np.empty()", isCorrect: false, exp: "Why this is wrong: np.empty() creates an array without initializing entries to a specific color." },
+          { text: "np.full()", isCorrect: true, exp: "Correct! np.full((height, width, 3), fill_value) creates a canvas filled with your chosen color values!" },
+          { text: "np.ones()", isCorrect: false, exp: "Why this is wrong: np.ones() fills all entries with 1, which appears almost completely black." }
         ]
       },
       {
-        question: "What will be the value of num using the following syntax?",
-        code: `num = 5\nnum = num + 3\nnum = num % 2`,
+        question: "State true or false: OpenCV pixels use R, G, B format for colours.",
+        type: "tf",
+        options: [
+          { text: "True", isCorrect: false, exp: "Why this is wrong: OpenCV does NOT use RGB by default; it reads color images in BGR format." },
+          { text: "False", isCorrect: true, exp: "Correct! OpenCV stores color pixels in BGR (Blue, Green, Red) format sequence." }
+        ]
+      },
+      {
+        question: "What is the starting index value in a Python list?",
         type: "single",
         options: [
-          { text: "1", isCorrect: false, exp: "Why this is wrong: 8 divided by 2 has no remainder, so 8 % 2 is 0, not 1." },
-          { text: "2", isCorrect: false, exp: "Why this is wrong: % calculates remainder. Dividing 8 by 2 leaves 0." },
-          { text: "0", isCorrect: true, exp: "Correct! First 5 + 3 = 8. Then 8 % 2 gives remainder 0 because 8 is even." },
-          { text: "8", isCorrect: false, exp: "Why this is wrong: 8 is the value before % 2. % 2 calculates the remainder after dividing by 2." }
+          { text: "1", isCorrect: false, exp: "Why this is wrong: Python uses zero-based indexing, so 1 is the index of the second item." },
+          { text: "0", isCorrect: true, exp: "Correct! In Python, indexing starts at 0 for the first element in any list or array." },
+          { text: "-1", isCorrect: false, exp: "Why this is wrong: -1 is used in Python to access the last element of a list from the end." },
+          { text: "2", isCorrect: false, exp: "Why this is wrong: 2 refers to the third position in a list." }
         ]
       },
       {
         question: "What is the error in the following code?",
-        code: `if badge = gold:\n    print("you won")\nelse:\n    print("you lost")`,
+        code: `if a % 2 == "0":\n    print("odd")\nelse:\n    print("even")`,
         type: "single",
         options: [
-          { text: "The print statements should not be indented", isCorrect: false, exp: "Why this is wrong: Indentation is required in Python inside if/else blocks." },
-          { text: "Comparative operator should be == and gold is string so should be enclosed in quotation", isCorrect: true, exp: "Correct! '=' assigns values, while '==' compares them. Also, string text needs quotes like 'gold'." },
-          { text: "The else statement needs an equal sign", isCorrect: false, exp: "Why this is wrong: 'else:' only needs a colon, never an equal sign." },
-          { text: "The variable badge is not capitalized", isCorrect: false, exp: "Why this is wrong: Variable names in Python do not need to be capitalized." }
+          { text: "The modulo operator % is invalid in if conditions", isCorrect: false, exp: "Why this is wrong: % is the valid modulo operator used to find the remainder of division." },
+          { text: "0 is an integer and cannot be within quotations '0'", isCorrect: true, exp: "Correct! 'a % 2' produces an integer (0 or 1), so comparing it to the string \"0\" will always be False." },
+          { text: "Print statements inside if statements should not be indented", isCorrect: false, exp: "Why this is wrong: Python requires indentation inside if/else blocks." },
+          { text: "The else block requires a condition statement", isCorrect: false, exp: "Why this is wrong: else blocks never take conditions in Python." }
         ]
       },
       {
-        question: "State true or false: OpenCV uses B,G,R sequence for pixel colours.",
-        type: "tf",
-        options: [
-          { text: "True", isCorrect: true, exp: "Correct! OpenCV reads color channels in Blue, Green, Red (BGR) order by default." },
-          { text: "False", isCorrect: false, exp: "Why this is wrong: OpenCV actually uses BGR order instead of standard RGB." }
-        ]
-      },
-      {
-        question: "What is the error in the following code?",
-        code: `def print_detail(name, grade):\n    print("name: ", name)\n    print("detail: ", detail)\n\nprint_detail("Peter Parker")`,
+        question: "What is the final value of variable 'a' in this code snippet?",
+        code: `a = 2\na = a + 8\na = a ** 2 == 100`,
         type: "single",
         options: [
-          { text: "The def keyword should be capitalized", isCorrect: false, exp: "Why this is wrong: 'def' must always be lowercase in Python." },
-          { text: "Print statements cannot take two arguments", isCorrect: false, exp: "Why this is wrong: print() can accept multiple arguments separated by commas." },
-          { text: "Function names cannot contain underscores", isCorrect: false, exp: "Why this is wrong: Underscores are completely valid in Python function names." },
-          { text: "Function definition has 2 parameters and function call passes only one argument", isCorrect: true, exp: "Correct! The function requires 2 arguments (name, grade), but only 1 ('Peter Parker') was given." }
-        ]
-      },
-      {
-        question: "Select the different types of blur from the list below:",
-        type: "multi",
-        instruction: "💡 Select the 3 correct types of blur, then click Submit:",
-        options: [
-          { text: "Linear blur", isCorrect: false, exp: "Why this is wrong: Linear blur is not a standard OpenCV blurring filter name." },
-          { text: "Gaussian blur", isCorrect: true, exp: "Correct! Gaussian blur uses a Gaussian function for image smoothing." },
-          { text: "Circular blur", isCorrect: false, exp: "Why this is wrong: Circular blur is not a standard basic OpenCV blur method." },
-          { text: "Median blur", isCorrect: true, exp: "Correct! Median blur replaces pixels with the median of neighbors." },
-          { text: "Motion blur", isCorrect: false, exp: "Why this is wrong: Motion blur is an effect, not one of the 3 primary OpenCV blur functions." },
-          { text: "Bilateral blur", isCorrect: true, exp: "Correct! Bilateral filter smooths images while preserving sharp edges." }
+          { text: "10", isCorrect: false, exp: "Why this is wrong: 2 + 8 is 10, but the third line performs 'a ** 2 == 100', assigning a Boolean comparison result to 'a'." },
+          { text: "100", isCorrect: false, exp: "Why this is wrong: 10 ** 2 equals 100, but '100 == 100' evaluates to a Boolean value (True or False), not integer 100." },
+          { text: "True", isCorrect: true, exp: "Correct! First a = 2 + 8 = 10. Then 10 ** 2 is 100. Finally 100 == 100 evaluates to True!" },
+          { text: "False", isCorrect: false, exp: "Why this is wrong: Since 10 squared is 100, 100 == 100 evaluates to True, not False." },
+          { text: "64", isCorrect: false, exp: "Why this is wrong: 2 + 8 = 10, not 8." },
+          { text: "2", isCorrect: false, exp: "Why this is wrong: 2 was only the initial starting value of variable 'a'." }
         ]
       }
     ];
@@ -550,7 +548,7 @@
         codeContainer.appendChild(pre);
       }
 
-      // Instruction note for question 10
+      // Instruction note if needed
       if (q.instruction) {
         instructionNote.textContent = q.instruction;
         instructionNote.classList.remove('hidden');
@@ -603,24 +601,11 @@
       const q = questionsData[currentQuestionIndex];
       const cards = optionsGrid.children;
 
-      if (q.type === "multi") {
-        // Toggle selection for Question 10
-        const pos = selectedIndices.indexOf(index);
-        if (pos > -1) {
-          selectedIndices.splice(pos, 1);
-          cards[index].classList.remove('selected');
-        } else {
-          selectedIndices.push(index);
-          cards[index].classList.add('selected');
-        }
-      } else {
-        // Single option selection (Q1 - Q9)
-        selectedIndices = [index];
-        for (let i = 0; i < cards.length; i++) {
-          cards[i].classList.remove('selected');
-        }
-        cards[index].classList.add('selected');
+      selectedIndices = [index];
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.remove('selected');
       }
+      cards[index].classList.add('selected');
     }
 
     function submitAnswer(timedOut = false) {
@@ -639,44 +624,20 @@
       submitBtn.classList.add('hidden');
       nextBtn.classList.remove('hidden');
 
-      if (q.type === "multi") {
-        // Multi-select evaluation for Question 10
-        let isFullyCorrect = true;
-        let correctCount = 0;
+      const selectedIdx = selectedIndices[0];
 
-        q.options.forEach((opt, idx) => {
-          const isSelected = selectedIndices.includes(idx);
-          if (opt.isCorrect) {
-            cards[idx].classList.add('correct'); // Highlight correct under correct button
-            if (isSelected) correctCount++;
-            else isFullyCorrect = false;
-          } else {
-            if (isSelected) {
-              cards[idx].classList.add('wrong'); // Highlight wrong under clicked wrong button
-              isFullyCorrect = false;
-            }
-          }
-        });
-
-        if (isFullyCorrect && selectedIndices.length === 3) {
-          score++;
+      // Highlight explanations under correct and wrong buttons
+      q.options.forEach((opt, idx) => {
+        if (opt.isCorrect) {
+          cards[idx].classList.add('correct'); // Explanation under correct button
         }
-      } else {
-        // Single option evaluation (Q1 - Q9)
-        const selectedIdx = selectedIndices[0];
+      });
 
-        q.options.forEach((opt, idx) => {
-          if (opt.isCorrect) {
-            cards[idx].classList.add('correct'); // Explanation under correct button
-          }
-        });
-
-        if (selectedIdx !== undefined) {
-          if (q.options[selectedIdx].isCorrect) {
-            score++;
-          } else {
-            cards[selectedIdx].classList.add('wrong'); // Explanation under clicked wrong button
-          }
+      if (selectedIdx !== undefined) {
+        if (q.options[selectedIdx].isCorrect) {
+          score++;
+        } else {
+          cards[selectedIdx].classList.add('wrong'); // Explanation under clicked wrong button
         }
       }
     }
@@ -696,14 +657,14 @@
 
       scoreDisplay.textContent = `${score}/${questionsData.length}`;
 
-      // Motivational quotes tailored for Computer Vision and Python
+      // Motivational quotes tailored for Python Concepts
       let quote = "";
       if (score <= 5) {
-        quote = "Keep practicing! Computer vision and Python take time to master. Every pixel counts on your coding journey! 🎈🐍";
+        quote = "Keep practicing! Python and Computer Vision take patience to master. Every line of code brings you closer to your goal! 🎈🐍";
       } else if (score <= 9) {
-        quote = "Great job! You have a solid understanding of Computer Vision and Python concepts! Keep coding! 🚀🟢";
+        quote = "Great work! You have a solid grasp of Python concepts and computer vision fundamentals! Keep building! 🚀🟢";
       } else {
-        quote = "Perfect 10/10 score! You are a Computer Vision and Python Master! Outstanding work! 🏆✨";
+        quote = "Perfect 10/10 score! You are a Python and Computer Vision Master! Outstanding work! 🏆✨";
       }
 
       quoteDisplay.textContent = quote;
