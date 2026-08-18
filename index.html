@@ -2,676 +2,899 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Revise Python Concepts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Revision - 16 Year Old Workbench</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts for Handwritten Report & Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Fredoka', sans-serif;
-    }
-
     body {
-      background-color: #d8f3dc;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fef08a; /* Warm Yellow */
       overflow-x: hidden;
-      padding: 20px 10px;
     }
 
-    /* Pixel Floating Balloons Background */
-    .balloon-bg {
+    .font-code {
+      font-family: 'Fira Code', monospace;
+    }
+
+    .font-handwritten {
+      font-family: 'Caveat', cursive;
+    }
+
+    .font-note {
+      font-family: 'Patrick Hand', cursive;
+    }
+
+    /* Falling Canvas Background */
+    #fallingTreesCanvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
-      overflow: hidden;
-    }
-
-    .pixel-balloon {
-      position: absolute;
-      width: 20px;
-      height: 24px;
-      background-color: #1b4332;
-      opacity: 0.55;
-      box-shadow: 
-        4px -4px 0 #1b4332, 8px -4px 0 #1b4332, 12px -4px 0 #1b4332,
-        -4px 4px 0 #1b4332, 24px 4px 0 #1b4332,
-        -4px 8px 0 #1b4332, 24px 8px 0 #1b4332,
-        -4px 12px 0 #1b4332, 24px 12px 0 #1b4332,
-        0px 16px 0 #1b4332, 20px 16px 0 #1b4332,
-        4px 20px 0 #1b4332, 16px 20px 0 #1b4332,
-        8px 24px 0 #081c15, 12px 24px 0 #081c15, 
-        10px 28px 0 #2d6a4f, 8px 32px 0 #2d6a4f, 12px 36px 0 #2d6a4f, 10px 40px 0 #2d6a4f;
-      animation: floatUpBalloon linear infinite;
-    }
-
-    @keyframes floatUpBalloon {
-      0% {
-        transform: translateY(108vh) scale(0.8);
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.55;
-      }
-      100% {
-        transform: translateY(-15vh) scale(1.1);
-        opacity: 0;
-      }
-    }
-
-    /* Main Container Card */
-    .container {
-      background: #ffffff;
-      border: 6px solid #52b788;
-      border-radius: 28px;
-      width: 100%;
-      max-width: 700px;
-      padding: 32px 24px;
-      box-shadow: 0 12px 30px rgba(45, 106, 79, 0.25);
-      position: relative;
-      z-index: 10;
-      text-align: center;
-    }
-
-    h1 {
-      color: #1b4332;
-      font-size: 2.1rem;
-      margin-bottom: 10px;
-    }
-
-    p.subtitle {
-      color: #40916c;
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-      font-weight: 600;
-    }
-
-    /* Buttons */
-    .btn {
-      background-color: #2d6a4f;
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 6px 0 #1b4332;
-      transition: all 0.1s ease;
-    }
-
-    .btn:hover {
-      background-color: #40916c;
-    }
-
-    .btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 #1b4332;
-    }
-
-    /* Quiz Header Items */
-    .quiz-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 3px dashed #b7e4c7;
-    }
-
-    .q-count {
-      font-weight: 700;
-      color: #2d6a4f;
-      font-size: 1.1rem;
-    }
-
-    .timer-badge {
-      background: #d8f3dc;
-      color: #1b4332;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      border: 2px solid #74c69d;
-    }
-
-    .question-box {
-      font-size: 1.2rem;
-      color: #1b4332;
-      margin-bottom: 16px;
-      font-weight: 600;
-      text-align: left;
-      line-height: 1.4;
-    }
-
-    .instruction-note {
-      font-size: 0.95rem;
-      color: #2d6a4f;
-      background: #e8f5e9;
-      padding: 8px 12px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      text-align: left;
-      font-weight: 600;
-    }
-
-    /* Code Snippet Box with Proper Indentation */
-    pre.code-block {
-      background: #f0fdf4;
-      border: 2px solid #74c69d;
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 1rem;
-      color: #081c15;
-      text-align: left;
-      margin: 10px 0 20px 0;
-      white-space: pre;
-      overflow-x: auto;
-      font-weight: 700;
-    }
-
-    /* Options Grid Layout */
-    .options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .option-card {
-      background: #f0fdf4;
-      border: 3px solid #b7e4c7;
-      border-radius: 16px;
-      padding: 14px 16px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .option-card:hover {
-      background: #d8f3dc;
-      border-color: #52b788;
-    }
-
-    .option-card.selected {
-      background: #b7e4c7;
-      border-color: #2d6a4f;
-      box-shadow: 0 0 0 2px #2d6a4f;
-    }
-
-    .option-card.correct {
-      background: #d4edda !important;
-      border-color: #28a745 !important;
-    }
-
-    .option-card.wrong {
-      background: #f8d7da !important;
-      border-color: #dc3545 !important;
-    }
-
-    .option-text {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1b4332;
-    }
-
-    .option-card.correct .option-text {
-      color: #155724;
-    }
-
-    .option-card.wrong .option-text {
-      color: #721c24;
-    }
-
-    /* Inline Explanation Under Buttons */
-    .inline-explanation {
-      display: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 8px 12px;
-      border-radius: 8px;
-      margin-top: 4px;
-      line-height: 1.35;
-    }
-
-    .option-card.correct .inline-explanation {
-      display: block;
-      background-color: #c3e6cb;
-      color: #155724;
-      border: 1px solid #81c784;
-    }
-
-    .option-card.wrong .inline-explanation {
-      display: block;
-      background-color: #f5c6cb;
-      color: #721c24;
-      border: 1px solid #e57373;
-    }
-
-    /* Actions */
-    .action-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-    }
-
-    /* Handwritten Report Card */
-    .report-card {
-      background: #f0fdf4;
-      border: 3px dashed #74c69d;
-      border-radius: 20px;
-      padding: 24px;
-      margin-top: 15px;
-      position: relative;
-    }
-
-    .score-circle-container {
-      margin: 20px auto;
-      width: 140px;
-      height: 140px;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .score-text {
-      font-family: 'Caveat', cursive;
-      font-size: 3.5rem;
-      color: #1b4332;
-      line-height: 1;
-      transform: rotate(-5deg);
-    }
-
-    .hand-circle {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       pointer-events: none;
+      opacity: 0.28;
     }
 
-    .quote-box {
-      font-size: 1.2rem;
-      color: #2d6a4f;
-      margin-top: 15px;
-      font-weight: 600;
-      line-height: 1.4;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fef08a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #eab308;
+      border-radius: 4px;
     }
 
-    .hidden {
-      display: none !important;
+    /* Notebook Paper Texture for Handwritten Report Card */
+    .notebook-paper {
+      background: #fffdf0;
+      background-image: linear-gradient(#f3e8ff 1px, transparent 1px);
+      background-size: 100% 2.2rem;
+      box-shadow: 0 20px 40px rgba(161, 98, 7, 0.2);
+      border-left: 6px double #eab308;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen text-slate-900 flex flex-col justify-between relative selection:bg-amber-300">
 
-  <!-- Pixelated Balloons Background -->
-  <div class="balloon-bg" id="balloonContainer"></div>
+  <!-- Falling Dead Trees Canvas Background -->
+  <canvas id="fallingTreesCanvas"></canvas>
 
-  <div class="container">
-    
-    <!-- HOME SCREEN -->
-    <div id="homeScreen">
-      <h1>Revise Python Concepts 🎈</h1>
-      <p class="subtitle">Let's revise Python, gesture recognition, and image processing concepts!</p>
-      <button class="btn" onclick="startQuiz()">Start Revision</button>
-    </div>
-
-    <!-- QUIZ SCREEN -->
-    <div id="quizScreen" class="hidden">
-      <div class="quiz-header">
-        <span class="q-count" id="qCount">Question 1 / 10</span>
-        <span class="timer-badge" id="timer">⏱️ 30s</span>
+  <!-- Top Navigation Header -->
+  <header class="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-slate-900 shadow-lg py-4 px-6 relative z-10 border-b-4 border-amber-600">
+    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-slate-900 text-yellow-400 p-2.5 rounded-2xl text-xl shadow-md border border-yellow-300 font-code font-bold">
+          🐍
+        </div>
+        <div>
+          <h1 class="font-extrabold text-xl md:text-2xl tracking-tight text-slate-950 flex items-center gap-2">
+            PYTHON REVISION
+          </h1>
+          <p class="text-xs font-bold text-slate-800 uppercase tracking-wider">Level 16 Workbench • 10 Challenges</p>
+        </div>
       </div>
 
-      <div class="question-box" id="questionText"></div>
+      <!-- Header Score Badge -->
+      <div id="quizHeaderBadge" class="hidden items-center gap-3 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-amber-400/40 shadow-inner">
+        <div class="text-xs text-amber-300 font-semibold">
+          <span>Current Score:</span>
+          <span id="headerLiveScore" class="text-white block font-extrabold text-sm">0 / 10</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-      <div id="codeContainer"></div>
+  <!-- Main Interactive Canvas Workspace -->
+  <main class="max-w-3xl w-full mx-auto p-4 md:p-6 flex-1 flex flex-col justify-center relative z-10">
 
-      <div id="instructionNote" class="instruction-note hidden"></div>
+    <!-- START SCREEN -->
+    <div id="startScreen" class="bg-white/95 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-amber-400 text-center space-y-8">
+      <div>
+        <h2 class="text-4xl md:text-6xl font-black text-slate-950 tracking-tight uppercase">
+          PYTHON REVISION
+        </h2>
+        <p class="text-sm md:text-base font-semibold text-slate-600 mt-3">
+          Predict code outputs & calculate loop iterations
+        </p>
+      </div>
 
-      <div class="options-grid" id="optionsGrid"></div>
+      <button onclick="startQuiz()" class="w-full max-w-md py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xl rounded-2xl shadow-lg shadow-amber-500/30 transform hover:-translate-y-0.5 transition duration-150 active:translate-y-0 border-2 border-amber-300">
+        🚀 Start Revision
+      </button>
+    </div>
 
-      <div class="action-row">
-        <button class="btn" id="submitBtn" onclick="submitAnswer()">Submit</button>
-        <button class="btn hidden" id="nextBtn" onclick="nextQuestion()">Next ➔</button>
+    <!-- QUIZ CARD -->
+    <div id="quizScreen" class="hidden bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-amber-400 flex-col space-y-6">
+      
+      <!-- Progress Bar & Category Header -->
+      <div class="flex items-center justify-between border-b-2 border-amber-100 pb-4">
+        <div>
+          <span id="questionCategoryTag" class="px-3.5 py-1 bg-amber-100 text-amber-900 font-extrabold text-xs rounded-full uppercase tracking-wider border border-amber-300">
+            Predict the Output
+          </span>
+          <h3 id="questionProgressText" class="text-xs md:text-sm font-bold text-slate-500 mt-1.5">
+            Question 1 of 10
+          </h3>
+        </div>
+
+        <div class="text-right">
+          <span class="text-xs font-bold text-amber-700 block uppercase">Section</span>
+          <span id="sectionIndicator" class="text-sm font-extrabold text-slate-900">1 / 2</span>
+        </div>
+      </div>
+
+      <!-- Question Text & Code Snippet -->
+      <div class="space-y-4">
+        <h2 id="questionText" class="text-lg md:text-xl font-black text-slate-900 leading-snug">
+          Question prompt will appear here...
+        </h2>
+
+        <!-- Code Snippet Box -->
+        <div id="codeBlockContainer" class="bg-slate-950 text-slate-100 p-4 md:p-5 rounded-2xl font-code text-xs md:text-sm shadow-inner border border-slate-800 relative">
+          <div class="flex items-center gap-1.5 absolute top-3 right-4 opacity-50">
+            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+          </div>
+          <pre id="codeBlock" class="leading-relaxed mt-1"># Python snippet</pre>
+        </div>
+      </div>
+
+      <!-- 4 Option Cards Grid -->
+      <div id="optionsContainer" class="grid grid-cols-1 gap-3.5 pt-1">
+        <!-- Dynamic option buttons inserted via JS -->
+      </div>
+
+      <!-- Footer Control Bar -->
+      <div class="flex items-center justify-end pt-4 border-t-2 border-amber-100">
+        <button id="nextBtn" onclick="nextQuestion()" disabled class="px-6 py-3 bg-slate-200 text-slate-400 font-bold rounded-xl cursor-not-allowed transition flex items-center gap-2">
+          <span>Next Question</span>
+          <span>➔</span>
+        </button>
       </div>
     </div>
 
     <!-- REPORT CARD SCREEN -->
-    <div id="resultsScreen" class="hidden">
-      <h1>Quiz Completed! 🎉</h1>
-      <p class="subtitle">Here is your Python Revision Report Card:</p>
-
-      <div class="report-card">
-        <div class="score-circle-container">
-          <svg class="hand-circle" viewBox="0 0 100 100">
-            <path d="M 50,10 A 40,38 0 1 0 90,55 A 42,40 0 0 0 46,8" 
-                  fill="none" 
-                  stroke="#2d6a4f" 
-                  stroke-width="4" 
-                  stroke-linecap="round" 
-                  stroke-dasharray="300"
-                  style="filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.15));"/>
-          </svg>
-          <div class="score-text" id="scoreDisplay">0/10</div>
+    <div id="reportCardScreen" class="hidden">
+      <div class="notebook-paper max-w-2xl mx-auto rounded-3xl p-6 md:p-10 relative overflow-hidden border-2 border-amber-300">
+        
+        <!-- Official Teacher Grade Stamp -->
+        <div class="absolute top-6 right-6 border-4 border-dashed border-red-600 rounded-full w-24 h-24 flex flex-col items-center justify-center transform rotate-12 bg-red-100/60 backdrop-blur-xs shadow-md">
+          <span id="stampGrade" class="font-handwritten text-4xl font-extrabold text-red-600 leading-none">A+</span>
+          <span id="stampTitle" class="font-bold text-[9px] uppercase tracking-wider text-red-700 mt-0.5">PYTHON PRO</span>
         </div>
 
-        <div class="quote-box" id="quoteDisplay"></div>
-      </div>
+        <!-- Sheet Header -->
+        <div class="border-b-2 border-amber-400 pb-4 mb-6">
+          <div class="flex items-center gap-2 text-amber-800 font-extrabold text-xs uppercase tracking-widest">
+            <span>📝 Final Assessment Summary</span>
+          </div>
+          <h2 class="font-handwritten text-4xl md:text-5xl font-bold text-slate-900 mt-1">
+            Python Report Card
+          </h2>
+          <p class="font-note text-base text-slate-600 mt-1">Senior Track (Age 16) • Evaluation Note</p>
+        </div>
 
-      <button class="btn" style="margin-top: 24px;" onclick="resetQuiz()">Try Again 🔄</button>
+        <!-- Handwritten Score Box -->
+        <div class="bg-amber-100/90 border-2 border-amber-300 rounded-2xl p-5 mb-6 flex items-center justify-between shadow-sm">
+          <div>
+            <span class="font-note text-slate-700 text-sm font-bold uppercase tracking-wider block">Handwritten Score</span>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="finalScoreHandwritten" class="font-handwritten text-5xl font-black text-amber-900">10</span>
+              <span class="font-handwritten text-3xl font-bold text-amber-700">/ 10</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="font-note text-slate-700 text-sm font-bold uppercase tracking-wider block">Accuracy Rate</span>
+            <span id="finalPercent" class="font-handwritten text-4xl font-black text-amber-800">100%</span>
+          </div>
+        </div>
+
+        <!-- Topic Wise Breakdown -->
+        <div class="space-y-4 mb-8">
+          <h3 class="font-note text-2xl font-bold text-slate-800 border-b border-slate-200 pb-1">
+            Section Breakdown:
+          </h3>
+
+          <!-- Section 1 Breakdown -->
+          <div>
+            <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
+              <span>Section 1: Output Prediction (Q1–Q5)</span>
+              <span id="scoreSec1">5 / 5</span>
+            </div>
+            <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+              <div id="barSec1" class="bg-amber-500 h-full w-full transition-all duration-700"></div>
+            </div>
+          </div>
+
+          <!-- Section 2 Breakdown -->
+          <div>
+            <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
+              <span>Section 2: Loop Iteration Counts (Q6–Q10)</span>
+              <span id="scoreSec2">5 / 5</span>
+            </div>
+            <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+              <div id="barSec2" class="bg-yellow-500 h-full w-full transition-all duration-700"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback Note -->
+        <div class="bg-amber-50/90 border border-amber-300 rounded-2xl p-5 mb-8 relative">
+          <div class="text-xs uppercase font-extrabold text-amber-800 mb-1 tracking-wider">
+            Feedback Note:
+          </div>
+          <p id="handwrittenRemark" class="font-handwritten text-2xl text-slate-800 leading-snug">
+            "Outstanding performance! You have a firm grasp of list mutation, tuple structures, function scope, and exact loop counting!"
+          </p>
+          <div class="text-right mt-3 font-handwritten text-xl font-bold text-amber-900">
+            — Tutor Priyadarshini 🐍
+          </div>
+        </div>
+
+        <!-- Retake Button -->
+        <div class="flex gap-3">
+          <button onclick="restartQuiz()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-base rounded-2xl shadow-md transition text-center border border-amber-300">
+            🔄 Retake Revision
+          </button>
+        </div>
+
+      </div>
     </div>
 
-  </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-yellow-300 text-center py-3.5 text-xs relative z-10 border-t-2 border-amber-500">
+    <p>Python Revision Workbench • Yellow Theme with Falling Dead Trees</p>
+  </footer>
 
   <script>
-    // Create floating pixelated balloons in dark green shades
-    const balloonContainer = document.getElementById('balloonContainer');
-    for (let i = 0; i < 16; i++) {
-      const balloon = document.createElement('div');
-      balloon.className = 'pixel-balloon';
-      balloon.style.left = Math.random() * 92 + 'vw';
-      balloon.style.animationDuration = (7 + Math.random() * 7) + 's';
-      balloon.style.animationDelay = (Math.random() * 5) + 's';
-      balloonContainer.appendChild(balloon);
+    // -------------------------------------------------------------
+    // FALLING DEAD TREES CANVAS ANIMATION
+    // -------------------------------------------------------------
+    const canvas = document.getElementById('fallingTreesCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Falling Dead Tree Shape Object
+    class FallingDeadTree {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = -100 - Math.random() * 200;
+        this.speed = Math.random() * 1.2 + 0.6;
+        this.size = Math.random() * 25 + 25; // Tree height scale
+        this.angle = (Math.random() - 0.5) * 0.4; // Rotation angle
+        this.rotSpeed = (Math.random() - 0.5) * 0.01;
+        this.opacity = Math.random() * 0.4 + 0.3;
+      }
+
+      update() {
+        this.y += this.speed;
+        this.angle += this.rotSpeed;
+        if (this.y > canvas.height + 120) {
+          this.reset();
+        }
+      }
+
+      // Draw a bare / dead tree silhouette
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.strokeStyle = `rgba(51, 65, 85, ${this.opacity})`; // Dark slate gray branch
+        ctx.fillStyle = `rgba(51, 65, 85, ${this.opacity})`;
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+
+        const h = this.size;
+
+        // Main Trunk
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -h);
+        ctx.stroke();
+
+        // Lower Left Main Branch
+        ctx.beginPath();
+        ctx.moveTo(0, -h * 0.35);
+        ctx.lineTo(-h * 0.35, -h * 0.6);
+        // Sub-twig
+        ctx.lineTo(-h * 0.5, -h * 0.75);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(-h * 0.35, -h * 0.6);
+        ctx.lineTo(-h * 0.2, -h * 0.8);
+        ctx.stroke();
+
+        // Lower Right Main Branch
+        ctx.beginPath();
+        ctx.moveTo(0, -h * 0.5);
+        ctx.lineTo(h * 0.35, -h * 0.75);
+        // Sub-twig
+        ctx.lineTo(h * 0.5, -h * 0.9);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(h * 0.35, -h * 0.75);
+        ctx.lineTo(h * 0.2, -h * 0.95);
+        ctx.stroke();
+
+        // Top Crown Split
+        ctx.beginPath();
+        ctx.moveTo(0, -h);
+        ctx.lineTo(-h * 0.25, -h * 1.25);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, -h);
+        ctx.lineTo(h * 0.2, -h * 1.2);
+        ctx.stroke();
+
+        ctx.restore();
+      }
     }
 
-    // Questions Data - Correct options are placed in varied positions across questions
-    const questionsData = [
+    // Spawn falling dead tree instances
+    const deadTrees = Array.from({ length: 24 }, () => new FallingDeadTree());
+
+    function animateDeadTrees() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      deadTrees.forEach(tree => {
+        tree.update();
+        tree.draw();
+      });
+      requestAnimationFrame(animateDeadTrees);
+    }
+    animateDeadTrees();
+
+
+    // -------------------------------------------------------------
+    // 10 REVISION QUESTIONS (AGE 16 TARGET)
+    // -------------------------------------------------------------
+    const quizQuestions = [
+      // QUESTION 1: Predict Output (List mutation & Loop)
       {
-        question: "Which pretrained model is commonly used for face detection and smile detection?",
-        type: "single",
+        id: 1,
+        category: "Predict the Output",
+        section: "Section 1 of 2",
+        question: "What will be printed when this Python code runs?",
+        code: "nums = [2, 4, 6]\ntotal = 0\nfor n in nums:\n    total += n * 2\nnums.append(total)\nprint(nums)",
         options: [
-          { text: "YOLOv8", isCorrect: false, exp: "Why this is wrong: YOLO is designed for real-time general object detection bounding boxes, not classic Haar feature XML classifiers." },
-          { text: "Haar Cascade", isCorrect: true, exp: "Correct! Haar Cascade classifiers are machine learning object detection models used to identify faces, eyes, and smiles in OpenCV." },
-          { text: "ResNet-50", isCorrect: false, exp: "Why this is wrong: ResNet is a deep convolutional neural network architecture used for image classification." },
-          { text: "MobileNet", isCorrect: false, exp: "Why this is wrong: MobileNet is a lightweight neural network architecture, not the classic OpenCV Haar cascade model." }
+          {
+            text: "[2, 4, 6, 12]",
+            isCorrect: false,
+            explanation: "Incorrect. The total adds (2*2) + (4*2) + (6*2) = 4 + 8 + 12 = 24, not 12."
+          },
+          {
+            text: "[2, 4, 6, 24]",
+            isCorrect: true,
+            explanation: "Correct! The loop doubles each number in the list and adds them together: 4 + 8 + 12 = 24. Then append(24) puts 24 at the end of the original list."
+          },
+          {
+            text: "[4, 8, 12, 24]",
+            isCorrect: false,
+            explanation: "Incorrect. The loop does not overwrite the numbers inside nums; it only calculates a running sum in total."
+          },
+          {
+            text: "[24]",
+            isCorrect: false,
+            explanation: "Incorrect. append() attaches the value 24 to the existing list [2, 4, 6] rather than replacing it."
+          }
         ]
       },
+
+      // QUESTION 2: Predict Output (Tuple unpacking & Function)
       {
-        question: "Which library is used for gesture recognition and hand landmark detection?",
-        type: "single",
+        id: 2,
+        category: "Predict the Output",
+        section: "Section 1 of 2",
+        question: "What will be printed on the screen?",
+        code: "def process_pair(data):\n    a, b = data\n    return (b, a + b)\n\npoint = (3, 5)\nresult = process_pair(point)\nprint(result)",
         options: [
-          { text: "Matplotlib", isCorrect: false, exp: "Why this is wrong: Matplotlib is a plotting library used for creating charts and graphs." },
-          { text: "Mediapipe", isCorrect: true, exp: "Correct! Mediapipe is Google's open-source framework specifically used for hand tracking, gesture recognition, and face mesh detection." },
-          { text: "SciPy", isCorrect: false, exp: "Why this is wrong: SciPy is used for scientific computing and mathematical routines, not computer vision landmarks." },
-          { text: "Pygame", isCorrect: false, exp: "Why this is wrong: Pygame is used to write 2D video games in Python." }
+          {
+            text: "(3, 8)",
+            isCorrect: false,
+            explanation: "Incorrect. The function returns b first, which is 5, not a which is 3."
+          },
+          {
+            text: "(8, 5)",
+            isCorrect: false,
+            explanation: "Incorrect. The returned tuple format is (b, a + b), so 5 comes first and 3+5=8 comes second."
+          },
+          {
+            text: "(5, 8)",
+            isCorrect: true,
+            explanation: "Correct! point is (3, 5), so a=3 and b=5. The return statement builds a new tuple (5, 3+5) which gives (5, 8)."
+          },
+          {
+            text: "[5, 8]",
+            isCorrect: false,
+            explanation: "Incorrect. The function uses parentheses () to return a tuple, not square brackets [] for a list."
+          }
         ]
       },
+
+      // QUESTION 3: Predict Output (Function without return statement)
       {
-        question: "Which landmark index number is used to detect the tip of the index finger in gesture recognition?",
-        type: "single",
+        id: 3,
+        category: "Predict the Output",
+        section: "Section 1 of 2",
+        question: "What is the final printed output of this script?",
+        code: "def add_bonus(scores):\n    for i in range(len(scores)):\n        scores[i] += 5\n\nmy_scores = [10, 20]\nval = add_bonus(my_scores)\nprint(my_scores, val)",
         options: [
-          { text: "Index 4", isCorrect: false, exp: "Why this is wrong: Index 4 represents the tip of the Thumb in Mediapipe." },
-          { text: "Index 12", isCorrect: false, exp: "Why this is wrong: Index 12 represents the tip of the Middle finger in Mediapipe." },
-          { text: "Index 8", isCorrect: true, exp: "Correct! Landmark index 8 corresponds to the Index Finger Tip in Mediapipe's 21 hand landmark model." },
-          { text: "Index 16", isCorrect: false, exp: "Why this is wrong: Index 16 represents the tip of the Ring finger." }
+          {
+            text: "[15, 25] None",
+            isCorrect: true,
+            explanation: "Correct! The list is modified directly inside the function so it becomes [15, 25]. Because there is no return statement, val receives None."
+          },
+          {
+            text: "[10, 20] None",
+            isCorrect: false,
+            explanation: "Incorrect. Lists are mutable objects in Python, so changes made to scores[i] directly modify my_scores."
+          },
+          {
+            text: "[15, 25] [15, 25]",
+            isCorrect: false,
+            explanation: "Incorrect. The function does not have a return statement, so val does not receive the list."
+          },
+          {
+            text: "[15, 25] 0",
+            isCorrect: false,
+            explanation: "Incorrect. When a function finishes without a return line, Python defaults to returning None, not 0."
+          }
         ]
       },
+
+      // QUESTION 4: Predict Output (List Slicing & Negative Indexing)
       {
-        question: "What is the basic sequence of processing frames before any detection model is applied?",
-        type: "single",
+        id: 4,
+        category: "Predict the Output",
+        section: "Section 1 of 2",
+        question: "What value will be printed after slicing and indexing?",
+        code: "items = [10, 20, 30, 40]\nsub = items[1:3]\npair = (sub[0], items[-1])\nprint(pair)",
         options: [
-          { text: "Grab frame ➔ Open Webcam ➔ Convert to grayscale", isCorrect: false, exp: "Why this is wrong: You cannot grab a frame before opening the webcam connection!" },
-          { text: "Open Webcam ➔ Grab frame ➔ Convert to grayscale", isCorrect: true, exp: "Correct! First connect to webcam, then capture/read a video frame, and finally convert it to grayscale for processing." },
-          { text: "Convert to grayscale ➔ Open Webcam ➔ Grab frame", isCorrect: false, exp: "Why this is wrong: Grayscale conversion needs an actual frame image that must be grabbed first." },
-          { text: "Open Webcam ➔ Convert to grayscale ➔ Grab frame", isCorrect: false, exp: "Why this is wrong: You must read/grab the frame image from the webcam before applying color conversion." }
+          {
+            text: "(10, 40)",
+            isCorrect: false,
+            explanation: "Incorrect. The slice items[1:3] gets elements at index 1 and 2, which is [20, 30]. So sub[0] is 20, not 10."
+          },
+          {
+            text: "(20, 30)",
+            isCorrect: false,
+            explanation: "Incorrect. items[-1] selects the last element of the original list, which is 40."
+          },
+          {
+            text: "(30, 40)",
+            isCorrect: false,
+            explanation: "Incorrect. sub[0] gets the first item of the slice [20, 30], which is 20."
+          },
+          {
+            text: "(20, 40)",
+            isCorrect: true,
+            explanation: "Correct! items[1:3] creates [20, 30]. sub[0] is 20, and items[-1] gets the last item 40. Combined into a tuple, it prints (20, 40)."
+          }
         ]
       },
+
+      // QUESTION 5: Predict Output (Loop String Transformation & Length)
       {
-        question: "State true or false: Grayscale reduces the colour channel to 2.",
-        type: "tf",
+        id: 5,
+        category: "Predict the Output",
+        section: "Section 1 of 2",
+        question: "Predict the two values printed by this program.",
+        code: "colors = ['red', 'blue']\nout = []\nfor c in colors:\n    out.append(c.upper())\nprint(len(out), out[1])",
         options: [
-          { text: "True", isCorrect: false, exp: "Why this is wrong: Grayscale images do NOT have 2 channels; they reduce 3 color channels down to 1 single channel." },
-          { text: "False", isCorrect: true, exp: "Correct! A grayscale image has only 1 channel representing pixel intensity from 0 (black) to 255 (white)." }
+          {
+            text: "2 RED",
+            isCorrect: false,
+            explanation: "Incorrect. out[1] refers to the second item in out, which is 'BLUE'."
+          },
+          {
+            text: "2 BLUE",
+            isCorrect: true,
+            explanation: "Correct! The loop converts 'red' and 'blue' to uppercase and adds them to out. len(out) is 2, and index 1 gives 'BLUE'."
+          },
+          {
+            text: "7 BLUE",
+            isCorrect: false,
+            explanation: "Incorrect. len(out) counts the number of list elements (2), not the total number of letters in the strings."
+          },
+          {
+            text: "2 blue",
+            isCorrect: false,
+            explanation: "Incorrect. c.upper() changes the text to all capital letters, making it 'BLUE'."
+          }
         ]
       },
+
+      // QUESTION 6: Loop Iterations (For loop with break)
       {
-        question: "Which NumPy function is used to create a colored canvas with a specific fill value?",
-        type: "single",
+        id: 6,
+        category: "Loop Iteration Count",
+        section: "Section 2 of 2",
+        question: "How many times does the loop body execute before stopping?",
+        code: "count = 0\nfor i in range(1, 10):\n    if i == 4:\n        break\n    count += 1",
         options: [
-          { text: "np.zeros()", isCorrect: false, exp: "Why this is wrong: np.zeros() fills the canvas with zeros, creating a purely black image." },
-          { text: "np.empty()", isCorrect: false, exp: "Why this is wrong: np.empty() creates an array without initializing entries to a specific color." },
-          { text: "np.full()", isCorrect: true, exp: "Correct! np.full((height, width, 3), fill_value) creates a canvas filled with your chosen color values!" },
-          { text: "np.ones()", isCorrect: false, exp: "Why this is wrong: np.ones() fills all entries with 1, which appears almost completely black." }
+          {
+            text: "4 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. When i reaches 4, the break runs immediately before count += 1 occurs for that turn."
+          },
+          {
+            text: "9 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. The break statement exits the loop early when i equals 4."
+          },
+          {
+            text: "3 iterations",
+            isCorrect: true,
+            explanation: "Correct! The loop runs for i = 1, i = 2, and i = 3 (3 full turns). When i = 4, break stops the loop immediately."
+          },
+          {
+            text: "10 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. range(1, 10) would only go up to 9, but break stops it even earlier at i = 4."
+          }
         ]
       },
+
+      // QUESTION 7: Loop Iterations (While loop with step reduction)
       {
-        question: "State true or false: OpenCV pixels use R, G, B format for colours.",
-        type: "tf",
+        id: 7,
+        category: "Loop Iteration Count",
+        section: "Section 2 of 2",
+        question: "How many times will this while loop run its body?",
+        code: "n = 15\niterations = 0\nwhile n > 3:\n    n -= 4\n    iterations += 1",
         options: [
-          { text: "True", isCorrect: false, exp: "Why this is wrong: OpenCV does NOT use RGB by default; it reads color images in BGR format." },
-          { text: "False", isCorrect: true, exp: "Correct! OpenCV stores color pixels in BGR (Blue, Green, Red) format sequence." }
+          {
+            text: "3 iterations",
+            isCorrect: true,
+            explanation: "Correct! Turn 1: n becomes 11. Turn 2: n becomes 7. Turn 3: n becomes 3. Now n > 3 is False (3 is not > 3), so it stops after 3 turns."
+          },
+          {
+            text: "4 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. After 3 turns, n equals 3. Since 3 > 3 is False, the loop does not run a 4th time."
+          },
+          {
+            text: "5 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. Subtracting 4 three times reduces 15 down to 3, stopping the loop."
+          },
+          {
+            text: "2 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. After 2 turns n is 7, which is still greater than 3, so it runs a 3rd time."
+          }
         ]
       },
+
+      // QUESTION 8: Loop Iterations (For loop with continue)
       {
-        question: "What is the starting index value in a Python list?",
-        type: "single",
+        id: 8,
+        category: "Loop Iteration Count",
+        section: "Section 2 of 2",
+        question: "How many total iterations does the for loop complete in this code?",
+        code: "passes = 0\nfor x in range(6):\n    if x % 2 == 0:\n        continue\n    passes += 1",
         options: [
-          { text: "1", isCorrect: false, exp: "Why this is wrong: Python uses zero-based indexing, so 1 is the index of the second item." },
-          { text: "0", isCorrect: true, exp: "Correct! In Python, indexing starts at 0 for the first element in any list or array." },
-          { text: "-1", isCorrect: false, exp: "Why this is wrong: -1 is used in Python to access the last element of a list from the end." },
-          { text: "2", isCorrect: false, exp: "Why this is wrong: 2 refers to the third position in a list." }
+          {
+            text: "3 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. 3 is the value of passes (for odd numbers), but the for loop itself still loops through all 6 numbers."
+          },
+          {
+            text: "5 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. range(6) produces 6 numbers (0 through 5), so the loop header runs 6 times."
+          },
+          {
+            text: "0 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. continue skips to the next turn, but does not cancel the remaining iterations."
+          },
+          {
+            text: "6 iterations",
+            isCorrect: true,
+            explanation: "Correct! range(6) generates 0, 1, 2, 3, 4, 5. The continue statement skips lines for even numbers, but the loop still completes all 6 turns."
+          }
         ]
       },
+
+      // QUESTION 9: Loop Iterations (While loop with condition & break)
       {
-        question: "What is the error in the following code?",
-        code: `if a % 2 == "0":\n    print("odd")\nelse:\n    print("even")`,
-        type: "single",
+        id: 9,
+        category: "Loop Iteration Count",
+        section: "Section 2 of 2",
+        question: "How many times does the while loop body run before breaking?",
+        code: "energy = 20\nsteps = 0\nwhile energy > 0:\n    steps += 1\n    energy -= 6\n    if steps == 3:\n        break",
         options: [
-          { text: "The modulo operator % is invalid in if conditions", isCorrect: false, exp: "Why this is wrong: % is the valid modulo operator used to find the remainder of division." },
-          { text: "0 is an integer and cannot be within quotations '0'", isCorrect: true, exp: "Correct! 'a % 2' produces an integer (0 or 1), so comparing it to the string \"0\" will always be False." },
-          { text: "Print statements inside if statements should not be indented", isCorrect: false, exp: "Why this is wrong: Python requires indentation inside if/else blocks." },
-          { text: "The else block requires a condition statement", isCorrect: false, exp: "Why this is wrong: else blocks never take conditions in Python." }
+          {
+            text: "4 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. The break condition activates when steps reaches 3, stopping the loop before a 4th turn."
+          },
+          {
+            text: "3 iterations",
+            isCorrect: true,
+            explanation: "Correct! Turn 1: energy=14, steps=1. Turn 2: energy=8, steps=2. Turn 3: energy=2, steps=3 -> triggers break. Exactly 3 iterations complete."
+          },
+          {
+            text: "2 iterations",
+            isCorrect: false,
+            explanation: "Incorrect. After 2 turns steps is 2, so break does not trigger yet and it runs a 3rd time."
+          },
+          {
+            text: "1 iteration",
+            isCorrect: false,
+            explanation: "Incorrect. The loop needs 3 turns to reach steps == 3."
+          }
         ]
       },
+
+      // QUESTION 10: Loop Iterations (Nested for loops)
       {
-        question: "What is the final value of variable 'a' in this code snippet?",
-        code: `a = 2\na = a + 8\na = a ** 2 == 100`,
-        type: "single",
+        id: 10,
+        category: "Loop Iteration Count",
+        section: "Section 2 of 2",
+        question: "How many times does the innermost line (rounds += 1) execute?",
+        code: "rounds = 0\nfor i in range(3):\n    for j in range(2):\n        rounds += 1",
         options: [
-          { text: "10", isCorrect: false, exp: "Why this is wrong: 2 + 8 is 10, but the third line performs 'a ** 2 == 100', assigning a Boolean comparison result to 'a'." },
-          { text: "100", isCorrect: false, exp: "Why this is wrong: 10 ** 2 equals 100, but '100 == 100' evaluates to a Boolean value (True or False), not integer 100." },
-          { text: "True", isCorrect: true, exp: "Correct! First a = 2 + 8 = 10. Then 10 ** 2 is 100. Finally 100 == 100 evaluates to True!" },
-          { text: "False", isCorrect: false, exp: "Why this is wrong: Since 10 squared is 100, 100 == 100 evaluates to True, not False." },
-          { text: "64", isCorrect: false, exp: "Why this is wrong: 2 + 8 = 10, not 8." },
-          { text: "2", isCorrect: false, exp: "Why this is wrong: 2 was only the initial starting value of variable 'a'." }
+          {
+            text: "5 times",
+            isCorrect: false,
+            explanation: "Incorrect. You don't add 3 + 2; nested loops multiply the iterations together."
+          },
+          {
+            text: "3 times",
+            isCorrect: false,
+            explanation: "Incorrect. 3 is only the number of outer loop turns."
+          },
+          {
+            text: "6 times",
+            isCorrect: true,
+            explanation: "Correct! The outer loop runs 3 times. For every single outer turn, the inner loop runs 2 times. 3 × 2 = 6 total executions."
+          },
+          {
+            text: "9 times",
+            isCorrect: false,
+            explanation: "Incorrect. The inner loop range is range(2), which means 2 turns per outer loop."
+          }
         ]
       }
     ];
 
+    // -------------------------------------------------------------
+    // QUIZ STATE MANAGEMENT
+    // -------------------------------------------------------------
     let currentQuestionIndex = 0;
     let score = 0;
-    let selectedIndices = [];
-    let timerInterval = null;
-    let timeLeft = 30;
+    let sec1Score = 0; // Q1-Q5
+    let sec2Score = 0; // Q6-Q10
 
     // DOM Elements
-    const homeScreen = document.getElementById('homeScreen');
+    const startScreen = document.getElementById('startScreen');
     const quizScreen = document.getElementById('quizScreen');
-    const resultsScreen = document.getElementById('resultsScreen');
-    const qCount = document.getElementById('qCount');
-    const timerElem = document.getElementById('timer');
-    const questionText = document.getElementById('questionText');
-    const codeContainer = document.getElementById('codeContainer');
-    const instructionNote = document.getElementById('instructionNote');
-    const optionsGrid = document.getElementById('optionsGrid');
-    const submitBtn = document.getElementById('submitBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const quoteDisplay = document.getElementById('quoteDisplay');
+    const reportCardScreen = document.getElementById('reportCardScreen');
+    const quizHeaderBadge = document.getElementById('quizHeaderBadge');
+    const headerLiveScore = document.getElementById('headerLiveScore');
 
+    const questionCategoryTag = document.getElementById('questionCategoryTag');
+    const questionProgressText = document.getElementById('questionProgressText');
+    const sectionIndicator = document.getElementById('sectionIndicator');
+    const questionText = document.getElementById('questionText');
+    const codeBlockContainer = document.getElementById('codeBlockContainer');
+    const codeBlock = document.getElementById('codeBlock');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // START QUIZ
     function startQuiz() {
+      startScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      quizScreen.classList.add('flex');
+      quizHeaderBadge.classList.remove('hidden');
+      quizHeaderBadge.classList.add('flex');
+
       currentQuestionIndex = 0;
       score = 0;
-      homeScreen.classList.add('hidden');
-      resultsScreen.classList.add('hidden');
-      quizScreen.classList.remove('hidden');
+      sec1Score = 0;
+      sec2Score = 0;
+
       loadQuestion();
     }
 
+    // LOAD QUESTION
     function loadQuestion() {
-      // Reset state
-      selectedIndices = [];
-      submitBtn.classList.remove('hidden');
-      nextBtn.classList.add('hidden');
-      
-      const q = questionsData[currentQuestionIndex];
-      qCount.textContent = `Question ${currentQuestionIndex + 1} / ${questionsData.length}`;
-      questionText.innerHTML = q.question;
+      const q = quizQuestions[currentQuestionIndex];
 
-      // Render Code Block if present
-      codeContainer.innerHTML = '';
-      if (q.code) {
-        const pre = document.createElement('pre');
-        pre.className = 'code-block';
-        pre.textContent = q.code;
-        codeContainer.appendChild(pre);
-      }
+      // Update Header Tags
+      questionCategoryTag.innerText = q.category;
+      sectionIndicator.innerText = q.section;
+      questionProgressText.innerText = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+      headerLiveScore.innerText = `${score} / ${quizQuestions.length}`;
 
-      // Instruction note if needed
-      if (q.instruction) {
-        instructionNote.textContent = q.instruction;
-        instructionNote.classList.remove('hidden');
-      } else {
-        instructionNote.classList.add('hidden');
-      }
-      
-      // Render options
-      optionsGrid.innerHTML = '';
+      questionText.innerText = q.question;
+      codeBlock.innerText = q.code;
+
+      // Reset Options
+      optionsContainer.innerHTML = '';
+      nextBtn.disabled = true;
+      nextBtn.className = "px-6 py-3 bg-slate-200 text-slate-400 font-bold rounded-xl cursor-not-allowed transition flex items-center gap-2";
+
+      // Render 4 Options
       q.options.forEach((opt, idx) => {
-        const card = document.createElement('div');
-        card.className = 'option-card';
-        card.onclick = () => handleOptionClick(idx);
+        const wrapper = document.createElement('div');
+        wrapper.className = 'space-y-2';
 
-        const textDiv = document.createElement('div');
-        textDiv.className = 'option-text';
-        textDiv.innerHTML = opt.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const btn = document.createElement('button');
+        btn.id = `opt-btn-${idx}`;
+        btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/60 text-slate-800 font-semibold text-sm md:text-base transition-all duration-200 flex items-start gap-3 shadow-xs';
+        
+        btn.innerHTML = `
+          <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center font-bold text-xs text-slate-700 shrink-0 mt-0.5">
+            ${String.fromCharCode(65 + idx)}
+          </span>
+          <span class="flex-1">${escapeHtml(opt.text)}</span>
+        `;
 
-        const expDiv = document.createElement('div');
-        expDiv.className = 'inline-explanation';
-        expDiv.innerHTML = opt.exp;
+        btn.onclick = () => selectOption(idx);
 
-        card.appendChild(textDiv);
-        card.appendChild(expDiv);
-        optionsGrid.appendChild(card);
+        // Explanation Box (Hidden initially)
+        const expBox = document.createElement('div');
+        expBox.id = `exp-box-${idx}`;
+        expBox.className = 'hidden p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border shadow-xs';
+
+        wrapper.appendChild(btn);
+        wrapper.appendChild(expBox);
+        optionsContainer.appendChild(wrapper);
       });
-
-      // Reset and Start Timer
-      startTimer();
     }
 
-    function startTimer() {
-      clearInterval(timerInterval);
-      timeLeft = 30;
-      timerElem.textContent = `⏱️ ${timeLeft}s`;
+    // SELECT OPTION HANDLER
+    function selectOption(selectedIndex) {
+      const q = quizQuestions[currentQuestionIndex];
 
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        timerElem.textContent = `⏱️ ${timeLeft}s`;
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          submitAnswer(true); // auto-submit on timeout
-        }
-      }, 1000);
-    }
-
-    function handleOptionClick(index) {
-      if (submitBtn.classList.contains('hidden')) return; // ignore clicks after submission
-      
-      const q = questionsData[currentQuestionIndex];
-      const cards = optionsGrid.children;
-
-      selectedIndices = [index];
-      for (let i = 0; i < cards.length; i++) {
-        cards[i].classList.remove('selected');
-      }
-      cards[index].classList.add('selected');
-    }
-
-    function submitAnswer(timedOut = false) {
-      clearInterval(timerInterval);
-      
-      const q = questionsData[currentQuestionIndex];
-      const cards = optionsGrid.children;
-
-      if (selectedIndices.length === 0 && !timedOut) {
-        alert("Please select an option first!");
-        startTimer(); // resume timer
-        return;
+      // Disable all option buttons
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`opt-btn-${i}`);
+        if (btn) btn.disabled = true;
       }
 
-      // Hide submit, show next button
-      submitBtn.classList.add('hidden');
-      nextBtn.classList.remove('hidden');
+      const selectedOpt = q.options[selectedIndex];
 
-      const selectedIdx = selectedIndices[0];
+      // Update Scores
+      if (selectedOpt.isCorrect) {
+        score++;
+        if (currentQuestionIndex < 5) sec1Score++;
+        else sec2Score++;
+      }
 
-      // Highlight explanations under correct and wrong buttons
+      headerLiveScore.innerText = `${score} / ${quizQuestions.length}`;
+
+      // Highlight options and reveal literal explanations
       q.options.forEach((opt, idx) => {
-        if (opt.isCorrect) {
-          cards[idx].classList.add('correct'); // Explanation under correct button
-        }
-      });
+        const btn = document.getElementById(`opt-btn-${idx}`);
+        const expBox = document.getElementById(`exp-box-${idx}`);
 
-      if (selectedIdx !== undefined) {
-        if (q.options[selectedIdx].isCorrect) {
-          score++;
+        if (idx === selectedIndex) {
+          if (opt.isCorrect) {
+            // SELECTED CORRECT (GREEN)
+            btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-sm md:text-base flex items-start gap-3 shadow-md ring-2 ring-emerald-300';
+            expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-emerald-100 border-emerald-300 text-emerald-950 block mt-1';
+            expBox.innerHTML = `<strong>✅ Correct!</strong> ${opt.explanation}`;
+          } else {
+            // SELECTED INCORRECT (RED)
+            btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-red-500 bg-red-50 text-red-950 font-bold text-sm md:text-base flex items-start gap-3 shadow-md ring-2 ring-red-300';
+            expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-red-100 border-red-300 text-red-950 block mt-1';
+            expBox.innerHTML = `<strong>❌ Incorrect!</strong> ${opt.explanation}`;
+          }
+        } else if (opt.isCorrect) {
+          // HIGHLIGHT CORRECT ANSWER IN GREEN IF USER PICKED WRONG
+          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50/80 text-emerald-950 font-bold text-sm md:text-base flex items-start gap-3 opacity-95 ring-1 ring-emerald-400';
+          expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-emerald-100/80 border-emerald-300 text-emerald-950 block mt-1';
+          expBox.innerHTML = `<strong>💡 Correct Answer:</strong> ${opt.explanation}`;
         } else {
-          cards[selectedIdx].classList.add('wrong'); // Explanation under clicked wrong button
+          btn.classList.add('opacity-40');
         }
+      });
+
+      // Enable Next Button
+      nextBtn.disabled = false;
+      nextBtn.className = "px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-extrabold rounded-xl shadow-md transition cursor-pointer flex items-center gap-2 transform hover:scale-105 border border-amber-300";
+      if (currentQuestionIndex === quizQuestions.length - 1) {
+        nextBtn.querySelector('span:first-child').innerText = "View Final Report";
       }
     }
 
+    // NEXT QUESTION OR SHOW REPORT
     function nextQuestion() {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questionsData.length) {
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
         loadQuestion();
       } else {
         showReportCard();
       }
     }
 
+    // GENERATE REPORT CARD
     function showReportCard() {
       quizScreen.classList.add('hidden');
-      resultsScreen.classList.remove('hidden');
+      quizHeaderBadge.classList.add('hidden');
+      reportCardScreen.classList.remove('hidden');
 
-      scoreDisplay.textContent = `${score}/${questionsData.length}`;
+      const percent = ((score / quizQuestions.length) * 100).toFixed(0);
 
-      // Motivational quotes tailored for Python Concepts
-      let quote = "";
-      if (score <= 5) {
-        quote = "Keep practicing! Python and Computer Vision take patience to master. Every line of code brings you closer to your goal! 🎈🐍";
-      } else if (score <= 9) {
-        quote = "Great work! You have a solid grasp of Python concepts and computer vision fundamentals! Keep building! 🚀🟢";
+      document.getElementById('finalScoreHandwritten').innerText = score;
+      document.getElementById('finalPercent').innerText = `${percent}%`;
+
+      // Section Scores
+      document.getElementById('scoreSec1').innerText = `${sec1Score} / 5`;
+      document.getElementById('scoreSec2').innerText = `${sec2Score} / 5`;
+
+      document.getElementById('barSec1').style.width = `${(sec1Score / 5) * 100}%`;
+      document.getElementById('barSec2').style.width = `${(sec2Score / 5) * 100}%`;
+
+      // Grade & Remarks
+      const stampGrade = document.getElementById('stampGrade');
+      const stampTitle = document.getElementById('stampTitle');
+      const handwrittenRemark = document.getElementById('handwrittenRemark');
+
+      if (score >= 9) {
+        stampGrade.innerText = "A+";
+        stampTitle.innerText = "PYTHON PRO";
+        handwrittenRemark.innerText = `"Exceptional job! You demonstrated complete mastery of Python output prediction, string and list manipulation, and accurate loop counting."`;
+      } else if (score >= 7) {
+        stampGrade.innerText = "A";
+        stampTitle.innerText = "SENIOR CODER";
+        handwrittenRemark.innerText = `"Great effort! Strong grasp of Python execution steps. Pay close attention to loop break conditions and non-returning functions."`;
+      } else if (score >= 5) {
+        stampGrade.innerText = "B";
+        stampTitle.innerText = "DEVELOPER";
+        handwrittenRemark.innerText = `"Solid work! Good understanding of Python syntax. Review list slicing boundaries and nested loop multiplication."`;
       } else {
-        quote = "Perfect 10/10 score! You are a Python and Computer Vision Master! Outstanding work! 🏆✨";
+        stampGrade.innerText = "C";
+        stampTitle.innerText = "LEARNER";
+        handwrittenRemark.innerText = `"Keep practicing! Trace Python code line by line and double check how while loop conditions update."`;
       }
-
-      quoteDisplay.textContent = quote;
     }
 
-    function resetQuiz() {
+    // RESTART QUIZ
+    function restartQuiz() {
+      reportCardScreen.classList.add('hidden');
       startQuiz();
+    }
+
+    // HELPER: ESCAPE HTML
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&#039;");
     }
   </script>
 </body>
