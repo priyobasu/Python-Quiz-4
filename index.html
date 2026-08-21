@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTML Revision Workbench</title>
+  <title>Python Revision - 14 Year Old Workbench</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts for Handwritten Report & Code -->
+  <!-- Google Fonts for Code & Handwritten Report Card -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #fef08a; /* Warm Yellow */
+      background-color: #dcfce7; /* Light Emerald Green */
       overflow-x: hidden;
     }
 
@@ -33,7 +33,7 @@
     }
 
     /* Falling Canvas Background */
-    #fallingFlowersCanvas {
+    #fallingTetrisCanvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -41,7 +41,7 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.8;
+      opacity: 0.35;
     }
 
     /* Custom Scrollbar */
@@ -49,50 +49,49 @@
       width: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #fef08a;
+      background: #dcfce7;
     }
     ::-webkit-scrollbar-thumb {
-      background: #eab308;
+      background: #16a34a;
       border-radius: 4px;
     }
 
     /* Notebook Paper Texture for Report Card */
     .notebook-paper {
-      background: #fffdf0;
-      background-image: linear-gradient(#f3e8ff 1px, transparent 1px);
+      background: #f0fdf4;
+      background-image: linear-gradient(#dcfce7 1px, transparent 1px);
       background-size: 100% 2.2rem;
-      box-shadow: 0 20px 40px rgba(161, 98, 7, 0.2);
-      border-left: 6px double #eab308;
+      box-shadow: 0 20px 40px rgba(22, 101, 52, 0.15);
+      border-left: 6px double #22c55e;
     }
 
-    /* Countdown Timer Animation Ring */
+    /* Countdown Timer Circle Animation */
     .timer-circle {
       transition: stroke-dashoffset 1s linear;
     }
   </style>
 </head>
-<body class="min-h-screen text-slate-900 flex flex-col justify-between relative selection:bg-amber-300">
+<body class="min-h-screen text-slate-900 flex flex-col justify-between relative selection:bg-emerald-200">
 
-  <canvas id="fallingFlowersCanvas"></canvas>
+  <canvas id="fallingTetrisCanvas"></canvas>
 
-  <!-- Top Navigation Header -->
-  <header class="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-slate-900 shadow-lg py-4 px-6 relative z-10 border-b-4 border-amber-600">
+  <header class="bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-700 text-white shadow-md py-4 px-6 relative z-10 border-b-4 border-emerald-700">
     <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="bg-slate-900 text-yellow-400 p-2.5 rounded-2xl text-xl shadow-md border border-yellow-300 font-code font-bold">
-          🌐
+        <div class="bg-white text-emerald-700 p-2.5 rounded-2xl text-xl shadow-md font-code font-bold">
+          🐍
         </div>
         <div>
-          <h1 class="font-extrabold text-xl md:text-2xl tracking-tight text-slate-950 flex items-center gap-2">
-            HTML REVISION
+          <h1 class="font-extrabold text-xl md:text-2xl tracking-tight text-white flex items-center gap-2">
+            PYTHON REVISION
           </h1>
-          <p class="text-xs font-bold text-slate-800 uppercase tracking-wider">Level 11 Workbench • 10 Challenges</p>
+          <p class="text-xs font-bold text-emerald-100 uppercase tracking-wider">Level 14 Workbench • 10 Challenges</p>
         </div>
       </div>
 
-      <!-- Live Score Display -->
-      <div id="quizHeaderBadge" class="hidden items-center gap-3 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-amber-400/40 shadow-inner">
-        <div class="text-xs text-amber-300 font-semibold">
+      <!-- Live Score Badge -->
+      <div id="quizHeaderBadge" class="hidden items-center gap-3 bg-emerald-950/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-emerald-400/40 shadow-inner">
+        <div class="text-xs text-emerald-300 font-semibold">
           <span>Current Score:</span>
           <span id="headerLiveScore" class="text-white block font-extrabold text-sm">0 / 10</span>
         </div>
@@ -103,37 +102,37 @@
   <main class="max-w-3xl w-full mx-auto p-4 md:p-6 flex-1 flex flex-col justify-center relative z-10">
 
     <!-- START SCREEN -->
-    <div id="startScreen" class="bg-white/95 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-amber-400 text-center space-y-8">
-      <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner border-2 border-amber-300">
-        🌼
+    <div id="startScreen" class="bg-white/95 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-emerald-400 text-center space-y-8">
+      <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner border-2 border-emerald-300">
+        🧩
       </div>
       <div>
-        <h2 class="text-4xl md:text-5xl font-black text-slate-950 tracking-tight uppercase">
-          HTML REVISION
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight uppercase">
+          PYTHON REVISION
         </h2>
         <p class="text-sm md:text-base font-semibold text-slate-600 mt-3 max-w-md mx-auto">
-          Test your web building knowledge! Select all correct choices, submit your answers, and earn your report card grade.
+          Test your Python knowledge! Solve code outputs, spot syntax errors, and choose the right coding structures.
         </p>
       </div>
 
-      <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 text-xs font-bold text-amber-900 max-w-md mx-auto space-y-1">
-        <p>⏱️ You have <strong>30 seconds</strong> per question.</p>
-        <p>💡 Click on options to select them, then press <strong>Submit Answer</strong>!</p>
+      <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4 text-xs font-bold text-emerald-900 max-w-md mx-auto space-y-1">
+        <p>⏱️ You have <strong>30 seconds</strong> for each question.</p>
+        <p>💡 Click an option to answer and view clear, instant feedback!</p>
       </div>
 
-      <button onclick="startQuiz()" class="w-full max-w-md py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xl rounded-2xl shadow-lg shadow-amber-500/30 transform hover:-translate-y-0.5 transition duration-150 active:translate-y-0 border-2 border-amber-300">
-        🚀 Start Quiz
+      <button onclick="startQuiz()" class="w-full max-w-md py-4 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-emerald-500/30 transform hover:-translate-y-0.5 transition duration-150 active:translate-y-0 border-2 border-emerald-300">
+        🚀 Start Revision
       </button>
     </div>
 
     <!-- QUIZ CARD -->
-    <div id="quizScreen" class="hidden bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-amber-400 flex-col space-y-6">
+    <div id="quizScreen" class="hidden bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-emerald-400 flex-col space-y-6">
       
       <!-- Progress Bar & Category Header -->
-      <div class="flex items-center justify-between border-b-2 border-amber-100 pb-4">
+      <div class="flex items-center justify-between border-b-2 border-emerald-100 pb-4">
         <div>
-          <span id="questionCategoryTag" class="px-3.5 py-1 bg-amber-100 text-amber-900 font-extrabold text-xs rounded-full uppercase tracking-wider border border-amber-300">
-            Select Choices
+          <span id="questionCategoryTag" class="px-3.5 py-1 bg-emerald-100 text-emerald-900 font-extrabold text-xs rounded-full uppercase tracking-wider border border-emerald-300">
+            Loop Outputs
           </span>
           <h3 id="questionProgressText" class="text-xs md:text-sm font-bold text-slate-500 mt-1.5">
             Question 1 of 10
@@ -143,27 +142,27 @@
         <!-- 30-Second Countdown Timer Circle -->
         <div class="relative flex items-center justify-center w-14 h-14">
           <svg class="w-full h-full transform -rotate-90">
-            <circle cx="28" cy="28" r="22" stroke="#fef08a" stroke-width="4" fill="transparent" />
-            <circle id="timerProgressCircle" cx="28" cy="28" r="22" stroke="#eab308" stroke-width="4" fill="transparent" stroke-dasharray="140" stroke-dashoffset="0" class="timer-circle" />
+            <circle cx="28" cy="28" r="22" stroke="#bbf7d0" stroke-width="4" fill="transparent" />
+            <circle id="timerProgressCircle" cx="28" cy="28" r="22" stroke="#16a34a" stroke-width="4" fill="transparent" stroke-dasharray="140" stroke-dashoffset="0" class="timer-circle" />
           </svg>
-          <span id="timerText" class="absolute font-black text-sm text-amber-950">30</span>
+          <span id="timerText" class="absolute font-black text-sm text-emerald-950">30</span>
         </div>
       </div>
 
-      <!-- Question Text & Black Syntax Box Container -->
+      <!-- Question Text & Code Snippet Container -->
       <div class="space-y-4">
         <h2 id="questionText" class="text-lg md:text-xl font-black text-slate-900 leading-snug">
           Question prompt appears here...
         </h2>
 
-        <!-- Code Snippet Box (Shows only when question has code syntax) -->
+        <!-- Code Block Container -->
         <div id="codeBlockContainer" class="hidden bg-slate-950 text-emerald-400 p-4 rounded-2xl font-code text-xs md:text-sm shadow-inner border border-slate-800 relative">
           <div class="flex items-center gap-1.5 absolute top-3 right-4 opacity-50">
             <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
             <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
           </div>
-          <pre id="codeBlock" class="leading-relaxed mt-1 text-yellow-300"># Code syntax snippet</pre>
+          <pre id="codeBlock" class="leading-relaxed mt-1 text-emerald-300"># Code snippet</pre>
         </div>
       </div>
 
@@ -172,18 +171,8 @@
         <!-- Dynamic options injected via JS -->
       </div>
 
-      <!-- Overall Explanation Box (After Submission) -->
-      <div id="overallExplanationBox" class="hidden p-4 rounded-2xl text-xs md:text-sm font-semibold leading-relaxed border-2 bg-amber-50 border-amber-300 text-amber-950 shadow-sm">
-        <!-- Main question feedback summary -->
-      </div>
-
       <!-- Footer Control Bar -->
-      <div class="flex items-center justify-between pt-4 border-t-2 border-amber-100">
-        <button id="submitBtn" onclick="submitAnswer()" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-sm rounded-xl shadow-md transition flex items-center gap-2 border border-amber-300">
-          <span>Submit Answer</span>
-          <span>✓</span>
-        </button>
-
+      <div class="flex items-center justify-end pt-4 border-t-2 border-emerald-100">
         <button id="nextBtn" onclick="nextQuestion()" disabled class="px-6 py-3 bg-slate-200 text-slate-400 font-bold text-sm rounded-xl cursor-not-allowed transition flex items-center gap-2">
           <span>Next Question</span>
           <span>➔</span>
@@ -193,57 +182,57 @@
 
     <!-- REPORT CARD SCREEN -->
     <div id="reportCardScreen" class="hidden">
-      <div class="notebook-paper max-w-2xl mx-auto rounded-3xl p-6 md:p-10 relative overflow-hidden border-2 border-amber-300">
+      <div class="notebook-paper max-w-2xl mx-auto rounded-3xl p-6 md:p-10 relative overflow-hidden border-2 border-emerald-300">
         
         <!-- Official Teacher Grade Stamp -->
         <div class="absolute top-6 right-6 border-4 border-dashed border-red-600 rounded-full w-24 h-24 flex flex-col items-center justify-center transform rotate-12 bg-red-100/60 backdrop-blur-xs shadow-md">
           <span id="stampGrade" class="font-handwritten text-4xl font-extrabold text-red-600 leading-none">A+</span>
-          <span id="stampTitle" class="font-bold text-[9px] uppercase tracking-wider text-red-700 mt-0.5">HTML CHAMP</span>
+          <span id="stampTitle" class="font-bold text-[9px] uppercase tracking-wider text-red-700 mt-0.5">PYTHON STAR</span>
         </div>
 
         <!-- Sheet Header -->
-        <div class="border-b-2 border-amber-400 pb-4 mb-6">
-          <div class="flex items-center gap-2 text-amber-800 font-extrabold text-xs uppercase tracking-widest">
-            <span>📝 Final Assessment Summary</span>
+        <div class="border-b-2 border-emerald-400 pb-4 mb-6">
+          <div class="flex items-center gap-2 text-emerald-800 font-extrabold text-xs uppercase tracking-widest">
+            <span>📝 Revision Assessment Summary</span>
           </div>
           <h2 class="font-handwritten text-4xl md:text-5xl font-bold text-slate-900 mt-1">
-            HTML Revision Report
+            Python Revision Report
           </h2>
-          <p class="font-note text-base text-slate-600 mt-1">Evaluation Note • Age 11</p>
+          <p class="font-note text-base text-slate-600 mt-1">Level 14 Evaluation Note</p>
         </div>
 
         <!-- Handwritten Score Box -->
-        <div class="bg-amber-100/90 border-2 border-amber-300 rounded-2xl p-5 mb-6 flex items-center justify-between shadow-sm">
+        <div class="bg-emerald-100/90 border-2 border-emerald-300 rounded-2xl p-5 mb-6 flex items-center justify-between shadow-sm">
           <div>
-            <span class="font-note text-slate-700 text-sm font-bold uppercase tracking-wider block">Score Achieved</span>
+            <span class="font-note text-slate-700 text-sm font-bold uppercase tracking-wider block">Handwritten Marks</span>
             <div class="flex items-baseline gap-2 mt-1">
-              <span id="finalScoreHandwritten" class="font-handwritten text-5xl font-black text-amber-900">10</span>
-              <span class="font-handwritten text-3xl font-bold text-amber-700">/ 10</span>
+              <span id="finalScoreHandwritten" class="font-handwritten text-5xl font-black text-emerald-900">10</span>
+              <span class="font-handwritten text-3xl font-bold text-emerald-700">/ 10</span>
             </div>
           </div>
           <div class="text-right">
             <span class="font-note text-slate-700 text-sm font-bold uppercase tracking-wider block">Accuracy Rate</span>
-            <span id="finalPercent" class="font-handwritten text-4xl font-black text-amber-800">100%</span>
+            <span id="finalPercent" class="font-handwritten text-4xl font-black text-emerald-800">100%</span>
           </div>
         </div>
 
-        <!-- Feedback Note Section -->
-        <div class="bg-amber-50/90 border border-amber-300 rounded-2xl p-5 mb-8 relative">
-          <div class="text-xs uppercase font-extrabold text-amber-800 mb-1 tracking-wider">
-            Feedback:
+        <!-- Motivational Note Section -->
+        <div class="bg-emerald-50/90 border border-emerald-300 rounded-2xl p-5 mb-8 relative">
+          <div class="text-xs uppercase font-extrabold text-emerald-800 mb-1 tracking-wider">
+            Motivational Note:
           </div>
           <p id="handwrittenRemark" class="font-handwritten text-2xl text-slate-800 leading-snug">
-            "Awesome work! You know your HTML tags, attributes, and CSS styling rules really well!"
+            "Awesome work! You have a great understanding of basic math, loops, functions, and key coding concepts!"
           </p>
-          <div class="text-right mt-3 font-handwritten text-xl font-bold text-amber-900">
-            — Tutor Priyadarshini 🌼
+          <div class="text-right mt-3 font-handwritten text-xl font-bold text-emerald-900">
+            — Tutor Priyadarshini 🧩
           </div>
         </div>
 
         <!-- Retake Button -->
         <div class="flex gap-3">
-          <button onclick="restartQuiz()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-base rounded-2xl shadow-md transition text-center border border-amber-300">
-            🔄 Retake Quiz
+          <button onclick="restartQuiz()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-black text-base rounded-2xl shadow-md transition text-center border border-emerald-300">
+            🔄 Retake Revision
           </button>
         </div>
 
@@ -252,13 +241,15 @@
 
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-slate-900 text-yellow-300 text-center py-3.5 text-xs relative z-10 border-t-2 border-amber-500">
-    <p>HTML Revision Workbench • Age 11 Learning Edition</p>
+  <footer class="bg-slate-900 text-emerald-300 text-center py-3.5 text-xs relative z-10 border-t-2 border-emerald-500">
+    <p>Python Revision Workbench • Age 14 Edition with Falling Tetris Blocks</p>
   </footer>
 
   <script>
-    const canvas = document.getElementById('fallingFlowersCanvas');
+    // -------------------------------------------------------------
+    // FALLING TETRIS BLOCKS CANVAS ANIMATION
+    // -------------------------------------------------------------
+    const canvas = document.getElementById('fallingTetrisCanvas');
     const ctx = canvas.getContext('2d');
 
     function resizeCanvas() {
@@ -268,30 +259,45 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Falling Flower Class
-    class FallingFlower {
+    // Standard Tetromino shapes (4x4 grids)
+    const TETROMINOES = [
+      // I Shape (Cyan)
+      { matrix: [[1,1,1,1]], color: '#06b6d4' },
+      // J Shape (Blue)
+      { matrix: [[1,0,0],[1,1,1]], color: '#3b82f6' },
+      // L Shape (Orange)
+      { matrix: [[0,0,1],[1,1,1]], color: '#f97316' },
+      // O Shape (Yellow)
+      { matrix: [[1,1],[1,1]], color: '#eab308' },
+      // S Shape (Green)
+      { matrix: [[0,1,1],[1,1,0]], color: '#22c55e' },
+      // T Shape (Purple)
+      { matrix: [[0,1,0],[1,1,1]], color: '#a855f7' },
+      // Z Shape (Red)
+      { matrix: [[1,1,0],[0,1,1]], color: '#ef4444' }
+    ];
+
+    class FallingTetrisBlock {
       constructor() {
         this.reset();
       }
 
       reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = -20 - Math.random() * 100;
-        this.speed = Math.random() * 1.5 + 0.8;
-        this.size = Math.random() * 12 + 12; // Radius
-        this.angle = Math.random() * Math.PI * 2;
-        this.spinSpeed = (Math.random() - 0.5) * 0.03;
-        this.petals = Math.floor(Math.random() * 2) + 5; // 5 or 6 petals
-        // Warm flower colors (orange, pink, bright yellow, coral)
-        const colors = ['#f59e0b', '#ec4899', '#fbbf24', '#f43f5e', '#a855f7'];
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.centerColor = '#fef08a';
+        const piece = TETROMINOES[Math.floor(Math.random() * TETROMINOES.length)];
+        this.matrix = piece.matrix;
+        this.color = piece.color;
+        this.blockSize = Math.floor(Math.random() * 8) + 12; // 12px to 20px per square
+        this.x = Math.random() * (canvas.width - 100);
+        this.y = -60 - Math.random() * 150;
+        this.speed = Math.random() * 1.2 + 0.8;
+        this.angle = 0;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.02;
       }
 
       update() {
         this.y += this.speed;
-        this.angle += this.spinSpeed;
-        if (this.y > canvas.height + 40) {
+        this.angle += this.rotationSpeed;
+        if (this.y > canvas.height + 100) {
           this.reset();
         }
       }
@@ -301,210 +307,186 @@
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        // Draw Petals
         ctx.fillStyle = this.color;
-        for (let i = 0; i < this.petals; i++) {
-          ctx.beginPath();
-          const petalAngle = (i * 2 * Math.PI) / this.petals;
-          const px = Math.cos(petalAngle) * (this.size * 0.7);
-          const py = Math.sin(petalAngle) * (this.size * 0.7);
-          ctx.arc(px, py, this.size * 0.45, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
 
-        // Draw Center Disc
-        ctx.beginPath();
-        ctx.fillStyle = this.centerColor;
-        ctx.arc(0, 0, this.size * 0.35, 0, Math.PI * 2);
-        ctx.fill();
+        for (let r = 0; r < this.matrix.length; r++) {
+          for (let c = 0; c < this.matrix[r].length; c++) {
+            if (this.matrix[r][c] === 1) {
+              const px = c * this.blockSize;
+              const py = r * this.blockSize;
+              
+              ctx.fillRect(px, py, this.blockSize, this.blockSize);
+              ctx.strokeRect(px, py, this.blockSize, this.blockSize);
+            }
+          }
+        }
 
         ctx.restore();
       }
     }
 
-    const flowers = Array.from({ length: 28 }, () => new FallingFlower());
+    const tetrisBlocks = Array.from({ length: 22 }, () => new FallingTetrisBlock());
 
-    function animateFlowers() {
+    function animateTetris() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      flowers.forEach(flower => {
-        flower.update();
-        flower.draw();
+      tetrisBlocks.forEach(block => {
+        block.update();
+        block.draw();
       });
-      requestAnimationFrame(animateFlowers);
+      requestAnimationFrame(animateTetris);
     }
-    animateFlowers();
+    animateTetris();
 
 
     const quizQuestions = [
-      // QUESTION 1: Identify Tags
+      // Q1: Loop Output
       {
         id: 1,
-        category: "Select All Correct Tags",
-        question: "Which of the following are HTML tags?",
-        code: null,
-        type: "multi",
+        category: "Loop Outputs",
+        question: "What is the final value printed on the screen when this code runs?",
+        code: "total = 0\nfor i in range(1, 4):\n    total += i\nprint(total)",
         options: [
-          { id: "border-size", text: "border-size", isCorrect: false, explanation: "Wrong! 'border-size' is not a tag (it's similar to a CSS styling property)." },
-          { id: "align-text", text: "align-text", isCorrect: false, explanation: "Wrong! 'align-text' is not an HTML tag." },
-          { id: "html", text: "html", isCorrect: true, explanation: "Correct! <html> is the main tag that wraps all webpage code!" },
-          { id: "body", text: "body", isCorrect: true, explanation: "Correct! <body> is the tag where all visible content goes!" },
-          { id: "p", text: "p", isCorrect: true, explanation: "Correct! <p> is the paragraph tag used for writing text blocks!" },
-          { id: "color", text: "color", isCorrect: false, explanation: "Wrong! 'color' is a CSS style property used for text colors, not a tag." }
-        ],
-        mainExplanation: "HTML tags are keywords enclosed inside angle brackets like <html>, <body>, and <p> that build the structure of a webpage."
+          { text: "10", isCorrect: false, explanation: "Incorrect. range(1, 4) stops right before 4, so 4 is not added." },
+          { text: "6", isCorrect: true, explanation: "Correct! range(1, 4) gives numbers 1, 2, and 3. Adding them: 1 + 2 + 3 = 6!" },
+          { text: "4", isCorrect: false, explanation: "Incorrect. The loop adds up all the numbers in the range together." },
+          { text: "3", isCorrect: false, explanation: "Incorrect. 3 is just the last number in the range, but total accumulates 1 + 2 + 3." }
+        ]
       },
 
-      // QUESTION 2: Identify Attributes
+      // Q2: Function Error
       {
         id: 2,
-        category: "Select All Correct Attributes",
-        question: "Which of the following are HTML attributes?",
-        code: null,
-        type: "multi",
+        category: "Syntax Errors",
+        question: "Why will this function definition cause an error in Python?",
+        code: "def greet(name)\n    print('Hello ' + name)",
         options: [
-          { id: "src", text: "src", isCorrect: true, explanation: "Correct! 'src' is an attribute used in <img> tags to point to an image location!" },
-          { id: "h1", text: "h1", isCorrect: false, explanation: "Wrong! <h1> is a heading tag, not an attribute!" },
-          { id: "type", text: "type", isCorrect: true, explanation: "Correct! 'type' is an attribute used in <input> tags (like type='text')!" },
-          { id: "head", text: "head", isCorrect: false, explanation: "Wrong! <head> is an HTML tag that holds webpage information." },
-          { id: "bgcolor", text: "bgcolor", isCorrect: true, explanation: "Correct! 'bgcolor' is an attribute used to set background color!" },
-          { id: "title", text: "title", isCorrect: false, explanation: "Wrong! <title> is a tag used inside the <head> block to set the tab name." }
-        ],
-        mainExplanation: "Attributes give extra information to HTML tags. 'src', 'type', and 'bgcolor' are all attributes!"
+          { text: "Function names cannot be 'greet'", isCorrect: false, explanation: "Incorrect. 'greet' is a completely valid function name in Python." },
+          { text: "Missing a colon (:) at the end of def greet(name)", isCorrect: true, explanation: "Correct! Every function header line in Python must end with a colon (:)." },
+          { text: "Single quotes cannot be used for strings", isCorrect: false, explanation: "Incorrect. Single quotes like 'Hello ' work perfectly fine in Python." },
+          { text: "Print statements are not allowed inside functions", isCorrect: false, explanation: "Incorrect. Printing inside functions is standard practice." }
+        ]
       },
 
-      // QUESTION 3: List Types
+      // Q3: Equation Value (Modulo)
       {
         id: 3,
-        category: "HTML Lists",
-        question: "How many types of lists are available in HTML?",
-        code: null,
-        type: "single",
+        category: "Variables & Modulo",
+        question: "What value will be printed after performing these operations?",
+        code: "x = 10\nx = x + 5\nresult = x % 4\nprint(result)",
         options: [
-          { id: "ordered_unordered", text: "ordered and unordered list", isCorrect: true, explanation: "Correct! HTML gives us two main list types: Ordered Lists (<ol>) and Unordered Lists (<ul>)!" },
-          { id: "bullet_only", text: "bulleted lists only", isCorrect: false, explanation: "Wrong! HTML also supports numbered (ordered) lists!" },
-          { id: "three_lists", text: "ordered, unordered, and image lists", isCorrect: false, explanation: "Wrong! Standard lists are ordered (<ol>) and unordered (<ul>)." },
-          { id: "heading_lists", text: "header and footer lists", isCorrect: false, explanation: "Wrong! 'header' and 'footer' are structural tags, not list types." }
-        ],
-        mainExplanation: "HTML provides two primary list types: Ordered Lists (<ol>) for numbered steps, and Unordered Lists (<ul>) for bullet points!"
+          { text: "3", isCorrect: true, explanation: "Correct! First x becomes 15 (10 + 5). 15 divided by 4 leaves a remainder of 3!" },
+          { text: "15", isCorrect: false, explanation: "Incorrect. Don't forget the last step where result = x % 4 calculates the remainder." },
+          { text: "3.75", isCorrect: false, explanation: "Incorrect. The % operator gives the leftover remainder, not the decimal division." },
+          { text: "0", isCorrect: false, explanation: "Incorrect. 4 * 3 = 12. So 15 - 12 leaves a remainder of 3." }
+        ]
       },
 
-      // QUESTION 4: Unordered List Styles
+      // Q4: Boolean Output
       {
         id: 4,
-        category: "Unordered List Types",
-        question: "Select the valid bullet style options for unordered lists:",
-        code: null,
-        type: "multi",
+        category: "Boolean Expressions",
+        question: "What boolean value will be printed on the screen?",
+        code: "a = 8\nb = 12\nans = (a < 10) and (b == 10)\nprint(ans)",
         options: [
-          { id: "square", text: "square", isCorrect: true, explanation: "Correct! 'square' makes solid square bullets!" },
-          { id: "triangle", text: "triangle", isCorrect: false, explanation: "Wrong! 'triangle' is not a standard list bullet type." },
-          { id: "round", text: "round", isCorrect: false, explanation: "Wrong! The keyword is 'circle', not 'round'." },
-          { id: "circle", text: "circle", isCorrect: true, explanation: "Correct! 'circle' creates hollow circle bullets!" },
-          { id: "disc", text: "disc", isCorrect: true, explanation: "Correct! 'disc' is the default filled-circle bullet!" },
-          { id: "bullet", text: "bullet", isCorrect: false, explanation: "Wrong! 'bullet' is not a valid CSS/HTML list-style keyword." }
-        ],
-        mainExplanation: "The three standard bullet styles for unordered lists are 'square', 'circle', and 'disc'!"
+          { text: "True", isCorrect: false, explanation: "Incorrect. Both conditions must be True for 'and' to result in True. Here b == 10 is False." },
+          { text: "Error", isCorrect: false, explanation: "Incorrect. This syntax is fully valid Python code." },
+          { text: "False", isCorrect: true, explanation: "Correct! (a < 10) is True, but (b == 10) is False. True AND False equals False!" },
+          { text: "None", isCorrect: false, explanation: "Incorrect. The output of a boolean comparison is either True or False." }
+        ]
       },
 
-      // QUESTION 5: True/False - Website Content Inside Body Tag
+      // Q5: Equation Value (Exponent & Floor Division)
       {
         id: 5,
-        category: "True or False",
-        question: "State True or False: The visible content of the website is created inside the <body> tag.",
-        code: null,
-        type: "single",
+        category: "Math Operations",
+        question: "What is the final value printed for 'val'?",
+        code: "val = 4\nval = val ** 2\nval = val // 3\nprint(val)",
         options: [
-          { id: "true", text: "True", isCorrect: true, explanation: "Correct! Everything you see on a website—like text, pictures, buttons, and videos—goes inside the <body> tag!" },
-          { id: "false", text: "False", isCorrect: false, explanation: "Wrong! All visible content must go inside <body>. The <head> tag only holds hidden settings!" }
-        ],
-        mainExplanation: "True! The <body> tag is like the main canvas of your webpage where all visible items live."
+          { text: "5.33", isCorrect: false, explanation: "Incorrect. Double slash // is floor division, which strips away the decimal portion." },
+          { text: "16", isCorrect: false, explanation: "Incorrect. 16 is val after 4 ** 2, but the next line divides it by 3." },
+          { text: "5", isCorrect: true, explanation: "Correct! 4 ** 2 equals 16. Floor division 16 // 3 strips decimals and gives 5!" },
+          { text: "1", isCorrect: false, explanation: "Incorrect. 16 divided by 3 is 5 with remainder 1. Floor division keeps the whole number 5." }
+        ]
       },
 
-      // QUESTION 6: True/False - background-color attribute
+      // Q6: Concept - Conditionals
       {
         id: 6,
-        category: "True or False",
-        question: "State True or False: 'background-color' is an attribute of the <body> tag.",
+        category: "Python Concepts",
+        question: "I want to compare two values in my code and make a decision based on whether it is true or false. What should I use?",
         code: null,
-        type: "single",
         options: [
-          { id: "true", text: "True", isCorrect: false, explanation: "Wrong! 'background-color' is a CSS styling property, not an HTML attribute! 'bgcolor' was the old attribute." },
-          { id: "false", text: "False", isCorrect: true, explanation: "Correct! 'background-color' is a CSS property used inside a style attribute (e.g. style='background-color: yellow;')." }
-        ],
-        mainExplanation: "False! 'background-color' belongs to CSS styles. The old HTML attribute was 'bgcolor'."
+          { text: "Functions", isCorrect: false, explanation: "Incorrect. Functions are used to group reusable code blocks." },
+          { text: "Conditional statements (if / else)", isCorrect: true, explanation: "Correct! 'if' and 'else' statements let your code make decisions based on comparisons!" },
+          { text: "Variables", isCorrect: false, explanation: "Incorrect. Variables store data values, but don't make decisions by themselves." },
+          { text: "Import modules", isCorrect: false, explanation: "Incorrect. Modules bring in extra libraries, not comparison logic." }
+        ]
       },
 
-      // QUESTION 7: True/False - Style Attribute Syntax
+      // Q7: Concept - Functions
       {
         id: 7,
-        category: "Syntax Check",
-        question: "State True or False: This is the correct way to write an inline style inside a tag:",
-        code: '<tag_name style="color=green">',
-        type: "single",
+        category: "Python Concepts",
+        question: "I want to create a named block of code and reuse it again and again anywhere in my program. What should I use?",
+        code: null,
         options: [
-          { id: "true", text: "True", isCorrect: false, explanation: "Wrong! In CSS styles we use a colon (:), not an equals sign (=)!" },
-          { id: "false", text: "False", isCorrect: true, explanation: "Correct! CSS properties use colons (:), so it should be style='color: green;'!" }
-        ],
-        mainExplanation: "False! In CSS styling, property names and values are separated by a colon (:), like style=\"color: green;\"."
+          { text: "Functions", isCorrect: true, explanation: "Correct! Functions (def) allow you to write code once and run it whenever you need it!" },
+          { text: "Comments", isCorrect: false, explanation: "Incorrect. Comments are notes for humans and are ignored by Python." },
+          { text: "Comparison Operators", isCorrect: false, explanation: "Incorrect. Operators like > or == are used for math or comparisons." },
+          { text: "Indentation", isCorrect: false, explanation: "Incorrect. Indentation aligns code inside blocks, but doesn't define reusable routines." }
+        ]
       },
 
-      // QUESTION 8: Rounded Corners Property
+      // Q8: Concept - Dictionaries
       {
         id: 8,
-        category: "CSS Properties",
-        question: "If I want rounded corners on an image, which CSS property should I change?",
+        category: "Data Structures",
+        question: "I want to store a set of data as Key-Value pairs (for example, mapping a student's name to their score). What should I use?",
         code: null,
-        type: "single",
         options: [
-          { id: "border-radius", text: "border-radius", isCorrect: true, explanation: "Correct! 'border-radius' curves the corners of images and boxes!" },
-          { id: "image-round", text: "image-round", isCorrect: false, explanation: "Wrong! 'image-round' is not a real CSS property." },
-          { id: "corner-style", text: "corner-style", isCorrect: false, explanation: "Wrong! 'corner-style' does not exist in standard CSS." },
-          { id: "border-curve", text: "border-curve", isCorrect: false, explanation: "Wrong! The proper property name is 'border-radius'." }
-        ],
-        mainExplanation: "'border-radius' is the CSS magic property that turns sharp square corners into smooth rounded corners!"
+          { text: "Tuples", isCorrect: false, explanation: "Incorrect. Tuples are ordered, unchangeable lists enclosed in parentheses ()." },
+          { text: "For Loops", isCorrect: false, explanation: "Incorrect. Loops repeat actions, they do not store data." },
+          { text: "Dictionaries", isCorrect: true, explanation: "Correct! Dictionaries store data as Key:Value pairs inside curly braces {}!" },
+          { text: "Strings", isCorrect: false, explanation: "Incorrect. Strings are plain text sequences enclosed in quotes." }
+        ]
       },
 
-      // QUESTION 9: Border Style Options
+      // Q9: Concept - Loops
       {
         id: 9,
-        category: "Select All Correct Border Styles",
-        question: "Select all valid border style options from the list below:",
+        category: "Control Flow",
+        question: "I want to repeat a set of coding instructions multiple times or go through a list of items. What should I use?",
         code: null,
-        type: "multi",
         options: [
-          { id: "dotted", text: "dotted", isCorrect: true, explanation: "Correct! 'dotted' draws a border made of small dots!" },
-          { id: "dashed", text: "dashed", isCorrect: true, explanation: "Correct! 'dashed' creates a border made of short line dashes!" },
-          { id: "line", text: "line", isCorrect: false, explanation: "Wrong! 'line' is not a valid border style keyword." },
-          { id: "double", text: "double", isCorrect: true, explanation: "Correct! 'double' draws two thin parallel lines!" },
-          { id: "broken", text: "broken", isCorrect: false, explanation: "Wrong! 'broken' is not a real border style." },
-          { id: "solid", text: "solid", isCorrect: true, explanation: "Correct! 'solid' creates a smooth continuous border line!" }
-        ],
-        mainExplanation: "The standard border styles in CSS include 'dotted', 'dashed', 'double', and 'solid'!"
+          { text: "Constant variables", isCorrect: false, explanation: "Incorrect. Variables store single values, they don't repeat code." },
+          { text: "Loops (for / while)", isCorrect: true, explanation: "Correct! 'for' and 'while' loops allow you to repeat actions easily!" },
+          { text: "Print statements", isCorrect: false, explanation: "Incorrect. Print statements only display text once per call." },
+          { text: "Return keyword", isCorrect: false, explanation: "Incorrect. 'return' sends a result back from a function." }
+        ]
       },
 
-      // QUESTION 10: Font Style Property
+      // Q10: Concept - Lists
       {
         id: 10,
-        category: "CSS Properties",
-        question: "If I want to change the font style (font face) of text, which property should I use inside the style attribute?",
+        category: "Data Structures",
+        question: "I want to store an ordered sequence of items where I can easily add, remove, or change elements later. What should I use?",
         code: null,
-        type: "single",
         options: [
-          { id: "font-family", text: "font-family", isCorrect: true, explanation: "Correct! 'font-family' lets you pick fonts like Arial, Courier, or Comic Sans!" },
-          { id: "text-font", text: "text-font", isCorrect: false, explanation: "Wrong! 'text-font' is not a valid CSS property." },
-          { id: "font-style-name", text: "font-style-name", isCorrect: false, explanation: "Wrong! 'font-style-name' is invalid." },
-          { id: "text-type", text: "text-type", isCorrect: false, explanation: "Wrong! You use 'font-family' to choose font styles." }
-        ],
-        mainExplanation: "'font-family' is the CSS property used to change font styles (like font-family: 'Arial';)!"
+          { text: "Strings", isCorrect: false, explanation: "Incorrect. Strings store text characters and cannot be changed element by element." },
+          { text: "Integers", isCorrect: false, explanation: "Incorrect. Integers represent single whole numbers." },
+          { text: "Tuples", isCorrect: false, explanation: "Incorrect. Tuples are immutable and cannot be changed once created." },
+          { text: "Lists", isCorrect: true, explanation: "Correct! Lists [] store ordered items that can be changed, added, or removed!" }
+        ]
       }
     ];
 
     let currentQuestionIndex = 0;
     let score = 0;
-    let selectedOptionIds = new Set();
     let timerInterval = null;
     let timeLeft = 30;
-    let isSubmitted = false;
+    let isAnswered = false;
 
     // DOM Elements
     const startScreen = document.getElementById('startScreen');
@@ -519,10 +501,8 @@
     const codeBlockContainer = document.getElementById('codeBlockContainer');
     const codeBlock = document.getElementById('codeBlock');
     const optionsContainer = document.getElementById('optionsContainer');
-    const overallExplanationBox = document.getElementById('overallExplanationBox');
-
-    const submitBtn = document.getElementById('submitBtn');
     const nextBtn = document.getElementById('nextBtn');
+
     const timerText = document.getElementById('timerText');
     const timerProgressCircle = document.getElementById('timerProgressCircle');
 
@@ -541,12 +521,11 @@
 
     function loadQuestion() {
       clearInterval(timerInterval);
-      isSubmitted = false;
-      selectedOptionIds.clear();
+      isAnswered = false;
 
       const q = quizQuestions[currentQuestionIndex];
 
-      // Update Tags & Header
+      // Update Header & Category Tags
       questionCategoryTag.innerText = q.category;
       questionProgressText.innerText = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
       headerLiveScore.innerText = `${score} / ${quizQuestions.length}`;
@@ -561,49 +540,34 @@
         codeBlockContainer.classList.add('hidden');
       }
 
-      // Hide Explanation Box
-      overallExplanationBox.classList.add('hidden');
-      overallExplanationBox.innerHTML = '';
-
-      // Reset Buttons
-      submitBtn.classList.remove('hidden');
-      submitBtn.disabled = false;
-      submitBtn.className = "px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-sm rounded-xl shadow-md transition flex items-center gap-2 border border-amber-300";
-
+      // Reset Next Button
       nextBtn.disabled = true;
       nextBtn.className = "px-6 py-3 bg-slate-200 text-slate-400 font-bold text-sm rounded-xl cursor-not-allowed transition flex items-center gap-2";
 
       // Render Options Grid
       optionsContainer.innerHTML = '';
-      if (q.options.length <= 2) {
-        optionsContainer.className = "grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1";
-      } else if (q.options.length > 4) {
-        optionsContainer.className = "grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1";
-      } else {
-        optionsContainer.className = "grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1";
-      }
 
       q.options.forEach((opt, idx) => {
         const optionWrapper = document.createElement('div');
         optionWrapper.className = 'space-y-2';
 
         const btn = document.createElement('button');
-        btn.id = `opt-btn-${opt.id}`;
+        btn.id = `opt-btn-${idx}`;
         btn.type = 'button';
-        btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/60 text-slate-800 font-bold text-sm md:text-base transition-all duration-200 flex items-start gap-3 shadow-xs';
+        btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/60 text-slate-800 font-bold text-sm md:text-base transition-all duration-200 flex items-start gap-3 shadow-xs';
 
         btn.innerHTML = `
-          <span id="opt-badge-${opt.id}" class="w-6 h-6 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center font-bold text-xs text-slate-700 shrink-0 mt-0.5">
+          <span id="opt-badge-${idx}" class="w-6 h-6 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center font-bold text-xs text-slate-700 shrink-0 mt-0.5">
             ${String.fromCharCode(65 + idx)}
           </span>
           <span class="flex-1">${escapeHtml(opt.text)}</span>
         `;
 
-        btn.onclick = () => toggleOption(opt.id, q.type);
+        btn.onclick = () => selectOption(idx);
 
-        // Individual Explanation Box
+        // Explanation Box (Hidden initially)
         const expBox = document.createElement('div');
-        expBox.id = `exp-box-${opt.id}`;
+        expBox.id = `exp-box-${idx}`;
         expBox.className = 'hidden p-3 rounded-xl text-xs md:text-sm font-semibold leading-relaxed border shadow-xs';
 
         optionWrapper.appendChild(btn);
@@ -612,36 +576,6 @@
       });
 
       startTimer();
-    }
-
-    function toggleOption(optId, type) {
-      if (isSubmitted) return;
-
-      if (type === 'single') {
-        selectedOptionIds.clear();
-        selectedOptionIds.add(optId);
-      } else {
-        if (selectedOptionIds.has(optId)) {
-          selectedOptionIds.delete(optId);
-        } else {
-          selectedOptionIds.add(optId);
-        }
-      }
-
-      // Update Button Visual Selection Styles
-      const q = quizQuestions[currentQuestionIndex];
-      q.options.forEach(opt => {
-        const btn = document.getElementById(`opt-btn-${opt.id}`);
-        const badge = document.getElementById(`opt-badge-${opt.id}`);
-
-        if (selectedOptionIds.has(opt.id)) {
-          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-amber-500 bg-amber-100 text-amber-950 font-bold text-sm md:text-base transition-all duration-200 flex items-start gap-3 shadow-md ring-2 ring-amber-300';
-          badge.className = 'w-6 h-6 rounded-full bg-amber-500 border border-amber-600 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5';
-        } else {
-          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/60 text-slate-800 font-bold text-sm md:text-base transition-all duration-200 flex items-start gap-3 shadow-xs';
-          badge.className = 'w-6 h-6 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center font-bold text-xs text-slate-700 shrink-0 mt-0.5';
-        }
-      });
     }
 
     function startTimer() {
@@ -656,7 +590,7 @@
 
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
-          submitAnswer();
+          autoTimeOut();
         }
       }, 1000);
     }
@@ -670,50 +604,37 @@
         timerProgressCircle.style.stroke = '#ef4444'; // Red alert
         timerText.className = 'absolute font-black text-sm text-red-600 animate-pulse';
       } else {
-        timerProgressCircle.style.stroke = '#eab308';
-        timerText.className = 'absolute font-black text-sm text-amber-950';
+        timerProgressCircle.style.stroke = '#16a34a';
+        timerText.className = 'absolute font-black text-sm text-emerald-950';
       }
     }
 
-    function submitAnswer() {
-      if (isSubmitted) return;
-      isSubmitted = true;
+    function selectOption(selectedIndex) {
+      if (isAnswered) return;
+      isAnswered = true;
       clearInterval(timerInterval);
 
       const q = quizQuestions[currentQuestionIndex];
 
-      // Disable option buttons
-      q.options.forEach(opt => {
-        const btn = document.getElementById(`opt-btn-${opt.id}`);
+      // Disable all option buttons
+      q.options.forEach((_, idx) => {
+        const btn = document.getElementById(`opt-btn-${idx}`);
         btn.disabled = true;
       });
 
-      // Calculate correctness
-      const correctOptIds = new Set(q.options.filter(o => o.isCorrect).map(o => o.id));
-      
-      let isFullyCorrect = false;
-      if (selectedOptionIds.size === correctOptIds.size) {
-        isFullyCorrect = true;
-        for (let id of selectedOptionIds) {
-          if (!correctOptIds.has(id)) {
-            isFullyCorrect = false;
-            break;
-          }
-        }
-      }
+      const selectedOpt = q.options[selectedIndex];
 
-      if (isFullyCorrect) {
+      if (selectedOpt.isCorrect) {
         score++;
         headerLiveScore.innerText = `${score} / ${quizQuestions.length}`;
       }
 
       // Highlight options in Red/Green & Reveal Explanations
-      q.options.forEach(opt => {
-        const btn = document.getElementById(`opt-btn-${opt.id}`);
-        const expBox = document.getElementById(`exp-box-${opt.id}`);
-        const isSelected = selectedOptionIds.has(opt.id);
+      q.options.forEach((opt, idx) => {
+        const btn = document.getElementById(`opt-btn-${idx}`);
+        const expBox = document.getElementById(`exp-box-${idx}`);
 
-        if (isSelected) {
+        if (idx === selectedIndex) {
           if (opt.isCorrect) {
             // Correctly selected (GREEN)
             btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-sm md:text-base flex items-start gap-3 shadow-md ring-2 ring-emerald-300';
@@ -735,21 +656,36 @@
         }
       });
 
-      // Show Overall Explanation Summary
-      overallExplanationBox.classList.remove('hidden');
-      overallExplanationBox.innerHTML = `
-        <div class="text-xs uppercase font-extrabold text-amber-800 mb-1 tracking-wider">💡 Key Summary:</div>
-        <div>${q.mainExplanation}</div>
-      `;
-
-      // Disable Submit Button & Enable Next Button
-      submitBtn.classList.add('hidden');
+      // Enable Next Button
       nextBtn.disabled = false;
-      nextBtn.className = "px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-sm rounded-xl shadow-md transition cursor-pointer flex items-center gap-2 border border-amber-300 transform hover:scale-105";
+      nextBtn.className = "px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-black text-sm rounded-xl shadow-md transition cursor-pointer flex items-center gap-2 border border-emerald-300 transform hover:scale-105";
 
       if (currentQuestionIndex === quizQuestions.length - 1) {
         nextBtn.querySelector('span:first-child').innerText = "View Final Report";
       }
+    }
+
+    function autoTimeOut() {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const q = quizQuestions[currentQuestionIndex];
+      q.options.forEach((opt, idx) => {
+        const btn = document.getElementById(`opt-btn-${idx}`);
+        const expBox = document.getElementById(`exp-box-${idx}`);
+        btn.disabled = true;
+
+        if (opt.isCorrect) {
+          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-sm md:text-base flex items-start gap-3 shadow-md ring-2 ring-emerald-300';
+          expBox.className = 'p-3 rounded-xl text-xs md:text-sm font-semibold leading-relaxed border bg-emerald-100 border-emerald-300 text-emerald-950 block';
+          expBox.innerHTML = `<strong>⏳ Time's Up!</strong> ${opt.explanation}`;
+        } else {
+          btn.classList.add('opacity-40');
+        }
+      });
+
+      nextBtn.disabled = false;
+      nextBtn.className = "px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-black text-sm rounded-xl shadow-md transition cursor-pointer flex items-center gap-2 border border-emerald-300 transform hover:scale-105";
     }
 
     function nextQuestion() {
@@ -771,31 +707,31 @@
       document.getElementById('finalScoreHandwritten').innerText = score;
       document.getElementById('finalPercent').innerText = `${percent}%`;
 
-      // Assign Grade & Remarks
+      // Assign Grade & Motivational Remarks
       const stampGrade = document.getElementById('stampGrade');
       const stampTitle = document.getElementById('stampTitle');
       const handwrittenRemark = document.getElementById('handwrittenRemark');
 
       if (score === 10) {
         stampGrade.innerText = "A+";
-        stampTitle.innerText = "HTML MASTER";
-        handwrittenRemark.innerText = `"Outstanding job! You scored a perfect 10/10! You have completely mastered HTML tags, attributes, and styling properties!"`;
+        stampTitle.innerText = "PYTHON STAR";
+        handwrittenRemark.innerText = `"Outstanding job! You scored a perfect 10/10! You have completely mastered Python loops, function syntax, and data structure concepts!"`;
       } else if (score >= 8) {
         stampGrade.innerText = "A";
-        stampTitle.innerText = "WEB BUILDER";
-        handwrittenRemark.innerText = `"Great work! You scored ${score}/10! You really understand how tags, attributes, and CSS border and font properties work."`;
+        stampTitle.innerText = "CODE CHAMP";
+        handwrittenRemark.innerText = `"Great work! You scored ${score}/10! You really understand how modulo math, logic conditions, and functions work."`;
       } else if (score >= 6) {
         stampGrade.innerText = "B+";
-        stampTitle.innerText = "CODER";
-        handwrittenRemark.innerText = `"Good effort! You scored ${score}/10. Keep practicing the difference between HTML tags and CSS properties!"`;
+        stampTitle.innerText = "BUILDER";
+        handwrittenRemark.innerText = `"Good effort! You scored ${score}/10. Keep practicing Python syntax colons and dictionary key-value structures!"`;
       } else if (score >= 4) {
         stampGrade.innerText = "B";
         stampTitle.innerText = "LEARNER";
-        handwrittenRemark.innerText = `"Nice try! Review HTML list types, border-radius, and font-family properties to improve your score!"`;
+        handwrittenRemark.innerText = `"Nice try! Review modulo (%) remainders, floor division (//), and conditional statements to boost your score!"`;
       } else {
         stampGrade.innerText = "C";
         stampTitle.innerText = "BEGINNER";
-        handwrittenRemark.innerText = `"Keep practicing! Remember that content goes inside <body>, and CSS inline styles use colons like style='color: green;'."`;
+        handwrittenRemark.innerText = `"Keep practicing! Remember that functions use 'def' and colons, and lists store changeable collections of items."`;
       }
     }
 
