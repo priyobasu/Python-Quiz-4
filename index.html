@@ -3,969 +3,1072 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Explorer Quiz & Handwritten Report Card</title>
+  <title>Python Ultimate 30-Question Challenge</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Caveat for handwritten notes, Fira Code for code, Outfit for UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@400;500;600&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: 'Nunito', sans-serif;
-      background-color: #fffaf0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%2Ffb923c' fill-opacity='0.12'%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3Cpath d='M40 22 C37 30 30 37 22 40 C30 43 37 50 40 58 C43 50 50 43 58 40 C50 37 43 30 40 22 Z'/%3E%3Ccircle cx='40' cy='20' r='4'/%3E%3Ccircle cx='40' cy='60' r='4'/%3E%3Ccircle cx='20' cy='40' r='4'/%3E%3Ccircle cx='60' cy='40' r='4'/%3E%3C/g%3E%3C/svg%3E");
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
     }
-
     .font-code {
       font-family: 'Fira Code', monospace;
     }
-
-    .font-handwritten {
+    .font-handwriting {
       font-family: 'Caveat', cursive;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #fff3e0;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #fb923c;
-      border-radius: 4px;
-    }
-
-    /* Floating Flower Animations */
-    .bg-flower {
+    /* Floating Ball Animation */
+    .floating-ball {
       position: absolute;
+      border-radius: 50%;
       pointer-events: none;
-      opacity: 0.25;
-      animation: floatSlow 12s infinite ease-in-out alternate;
+      opacity: 0.45;
+      animation: floatAround infinite alternate ease-in-out;
+      filter: blur(2px);
     }
 
-    @keyframes floatSlow {
-      0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-25px) rotate(15deg); }
+    @keyframes floatAround {
+      0% {
+        transform: translateY(0px) translateX(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-40px) translateX(30px) scale(1.1);
+      }
+      100% {
+        transform: translateY(30px) translateX(-25px) scale(0.95);
+      }
     }
 
-    /* Notebook Paper Styling for Report Card */
+    /* Notebook paper background for handwritten final report */
     .notebook-paper {
-      background: #fffdf9;
-      background-image: linear-gradient(#e5e7eb 1px, transparent 1px);
+      background-color: #fffef0;
+      background-image: linear-gradient(#e1e8ed 1px, transparent 1px);
       background-size: 100% 2rem;
-      box-shadow: 0 10px 30px rgba(234, 88, 12, 0.15);
-      border-left: 4px double #f97316;
+      border-left: 3px double #ffb6c1;
     }
 
-    /* Timer Animation Ring */
-    .timer-circle {
-      transition: stroke-dashoffset 1s linear;
+    /* Custom Scrollbar for Code Blocks */
+    pre::-webkit-scrollbar {
+      height: 6px;
+    }
+    pre::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 4px;
     }
   </style>
 </head>
-<body class="min-h-screen text-slate-800 flex flex-col justify-between relative overflow-x-hidden">
+<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 text-white min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-900">
 
-  <!-- Background Floating Decorative Flowers -->
-  <div class="bg-flower top-10 left-8 text-amber-500 text-5xl">🌼</div>
-  <div class="bg-flower top-1/3 right-12 text-orange-400 text-6xl" style="animation-delay: -3s;">🌸</div>
-  <div class="bg-flower bottom-20 left-16 text-orange-500 text-5xl" style="animation-delay: -6s;">🌼</div>
-  <div class="bg-flower bottom-1/4 right-8 text-amber-400 text-6xl" style="animation-delay: -4s;">🌸</div>
+  <!-- Background Floating Colored Balls Container -->
+  <div id="balls-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 text-white shadow-lg py-4 px-6 relative z-10">
-    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl">🌸</span>
-        <div>
-          <h1 class="font-extrabold text-xl md:text-2xl tracking-wide flex items-center gap-2">
-            Python Explorer Quiz
-          </h1>
-          <p class="text-xs text-orange-100 font-medium">30 Code Output Challenges • Ages 10–14</p>
-        </div>
-      </div>
+  <!-- Main Container -->
+  <div class="relative z-10 container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center">
 
-      <!-- Live Quiz Badge Summary -->
-      <div id="quizHeaderInfo" class="hidden items-center gap-4 bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20">
-        <div class="text-xs font-semibold">
-          <span class="text-orange-200">Category:</span>
-          <span id="currentCategoryText" class="text-white block font-bold">Operators</span>
-        </div>
-        <div class="h-8 w-px bg-white/20"></div>
-        <div class="text-xs font-semibold">
-          <span class="text-orange-200">Score:</span>
-          <span id="liveScoreText" class="text-white block font-bold text-sm">0 / 30</span>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Workspace -->
-  <main class="max-w-4xl w-full mx-auto p-4 md:p-6 flex-1 flex flex-col justify-center relative z-10">
-
-    <!-- START SCREEN -->
-    <div id="startScreen" class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl border-2 border-orange-200 text-center space-y-6 max-w-2xl mx-auto">
-      <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner">
-        🐍
-      </div>
-      <div>
-        <h2 class="text-3xl font-extrabold text-orange-900 mb-2">Ready to Test Your Python Skills?</h2>
-        <p class="text-slate-600 text-sm md:text-base leading-relaxed">
-          Welcome young coder! This quiz consists of <strong class="text-orange-600">30 python challenges</strong> split into 3 sections:
-        </p>
-      </div>
-
-      <!-- Section Features -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-left">
-        <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4">
-          <span class="text-2xl">⚡</span>
-          <h4 class="font-bold text-orange-900 text-sm mt-1">1. Variables & Math</h4>
-          <p class="text-xs text-slate-600 mt-1">Swapping, modulo (%), powers (**), and math tricks.</p>
-        </div>
-        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4">
-          <span class="text-2xl">🔄</span>
-          <h4 class="font-bold text-amber-900 text-sm mt-1">2. Loops & Control</h4>
-          <p class="text-xs text-slate-600 mt-1">For, while, breaks, continues, and counter outputs.</p>
-        </div>
-        <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4">
-          <span class="text-2xl">🧩</span>
-          <h4 class="font-bold text-orange-900 text-sm mt-1">3. Functions & Errors</h4>
-          <p class="text-xs text-slate-600 mt-1">Predict outputs or spot subtle bugs in simple terms!</p>
-        </div>
-      </div>
-
-      <div class="bg-amber-100/70 border border-amber-300 rounded-xl p-3 text-xs text-amber-900 flex items-center justify-center gap-2">
-        <span>⏱️</span>
-        <span>You will have <strong>50 seconds</strong> per question. Earn 1 point for each correct answer!</span>
-      </div>
-
-      <button onclick="startQuiz()" class="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold text-lg rounded-2xl shadow-lg shadow-orange-500/30 transform hover:-translate-y-0.5 transition active:translate-y-0">
-        🚀 Start Python Challenge
-      </button>
-    </div>
-
-    <!-- QUIZ CARD -->
-    <div id="quizScreen" class="hidden bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-2 border-orange-200 flex-col space-y-6">
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen" class="w-full">
       
-      <!-- Question Header Bar -->
-      <div class="flex items-center justify-between border-b border-orange-100 pb-4">
-        <div>
-          <span id="questionCategoryTag" class="px-3 py-1 bg-orange-100 text-orange-700 font-bold text-xs rounded-full uppercase tracking-wider">
-            Section 1: Operators
-          </span>
-          <h3 id="questionProgressText" class="text-sm font-bold text-slate-400 mt-1">
-            Question 1 of 30
-          </h3>
-        </div>
-
-        <!-- Circular 50-Second Countdown Timer -->
-        <div class="relative flex items-center justify-center w-14 h-14">
-          <svg class="w-full h-full transform -rotate-90">
-            <circle cx="28" cy="28" r="24" stroke="#fed7aa" stroke-width="4" fill="transparent" />
-            <circle id="timerProgressCircle" cx="28" cy="28" r="24" stroke="#ea580c" stroke-width="4" fill="transparent" stroke-dasharray="150" stroke-dashoffset="0" class="timer-circle" />
-          </svg>
-          <span id="timerText" class="absolute font-extrabold text-sm text-orange-900">50</span>
-        </div>
-      </div>
-
-      <!-- Question Prompt & Code Snippet -->
-      <div class="space-y-4">
-        <h2 id="questionText" class="text-lg md:text-xl font-extrabold text-slate-800">
-          What will be the final value of the variables?
-        </h2>
-
-        <!-- Code Block -->
-        <div class="bg-slate-900 text-slate-100 p-4 md:p-5 rounded-2xl font-code text-sm shadow-inner border border-slate-800 overflow-x-auto relative">
-          <div class="flex items-center gap-1.5 absolute top-3 right-4 opacity-60">
-            <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-          </div>
-          <pre id="codeBlock" class="leading-relaxed mt-1">x = 10&#10;y = 20&#10;x, y = y, x</pre>
-        </div>
-      </div>
-
-      <!-- 4 Options Grid -->
-      <div id="optionsContainer" class="grid grid-cols-1 gap-3.5 pt-2">
-        <!-- Dynamic option buttons injected here -->
-      </div>
-
-      <!-- Footer Navigation Controls -->
-      <div class="flex items-center justify-between pt-4 border-t border-orange-100">
-        <div class="text-xs text-slate-400 italic">
+      <!-- Top Header Bar -->
+      <div class="bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-4 md:p-6 mb-6 shadow-2xl">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
           
+          <!-- Category Badge & Question Tracker -->
+          <div>
+            <span id="section-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 uppercase tracking-wider">
+              Section 1: Variable Names
+            </span>
+            <h1 class="text-xl sm:text-2xl font-bold mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-300">
+              Question <span id="q-num">1</span> <span class="text-slate-400 font-normal text-lg">/ 30</span>
+            </h1>
+          </div>
+
+          <!-- Timer & Score Display -->
+          <div class="flex items-center gap-4">
+            <!-- Score -->
+            <div class="text-right">
+              <span class="text-xs text-slate-400 uppercase tracking-wider block">Score</span>
+              <span id="live-score" class="text-xl font-bold text-yellow-400">0 pts</span>
+            </div>
+
+            <!-- Timer Circle / Badge -->
+            <div class="relative w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-cyan-500 shadow-inner">
+              <span id="timer-text" class="text-xl font-extrabold text-cyan-400 font-code">50</span>
+              <span class="text-[9px] text-slate-400 absolute bottom-1">sec</span>
+            </div>
+          </div>
         </div>
-        <button id="nextBtn" onclick="nextQuestion()" disabled class="px-6 py-3 bg-slate-300 text-slate-500 font-bold rounded-xl cursor-not-allowed transition flex items-center gap-2">
-          <span>Next Challenge</span>
-          <span>➔</span>
-        </button>
+
+        <!-- Timer Progress Bar -->
+        <div class="w-full bg-slate-800 h-2.5 rounded-full mt-4 overflow-hidden border border-slate-700">
+          <div id="timer-bar" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-1000 ease-linear w-full"></div>
+        </div>
       </div>
-    </div>
 
-    <!-- REPORT CARD SCREEN -->
-    <div id="reportCardScreen" class="hidden">
-      <div class="notebook-paper max-w-2xl mx-auto rounded-3xl p-8 md:p-10 relative overflow-hidden border border-orange-200">
+      <!-- Question Card -->
+      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 md:p-8 shadow-2xl relative overflow-hidden">
         
-        <!-- Teacher Grade Stamp -->
-        <div class="absolute top-6 right-6 border-4 border-dashed border-red-500 rounded-full w-24 h-24 flex flex-col items-center justify-center transform rotate-12 bg-red-50/50 backdrop-blur-xs">
-          <span id="stampGrade" class="font-handwritten text-4xl font-bold text-red-600 leading-none">A+</span>
-          <span id="stampTitle" class="font-bold text-[9px] uppercase tracking-wider text-red-500 mt-0.5">Wizard</span>
-        </div>
-
-        <!-- Header -->
-        <div class="border-b-2 border-orange-400 pb-4 mb-6">
-          <div class="flex items-center gap-2 text-orange-600 font-extrabold text-sm uppercase tracking-widest">
-            <span>🌸 Official Evaluation</span>
-          </div>
-          <h2 class="font-handwritten text-4xl md:text-5xl font-bold text-slate-900 mt-1">
-            Python Report Card
+        <!-- Question Text -->
+        <div class="mb-6">
+          <h2 id="question-text" class="text-lg md:text-xl font-semibold text-slate-100 leading-relaxed">
+            Question text goes here...
           </h2>
-          <p class="text-xs text-slate-500 mt-1">Student Assessment • Python Foundations</p>
-        </div>
 
-        <!-- Overall Score Box -->
-        <div class="bg-orange-100/80 border border-orange-300 rounded-2xl p-5 mb-6 flex items-center justify-between">
-          <div>
-            <span class="text-xs font-bold text-orange-800 uppercase tracking-wider block">Total Performance Score</span>
-            <div class="flex items-baseline gap-1 mt-1">
-              <span id="finalScoreNum" class="text-4xl font-extrabold text-orange-900">28</span>
-              <span class="text-lg font-bold text-orange-700">/ 30</span>
-            </div>
-          </div>
-          <div class="text-right">
-            <span class="text-xs font-bold text-orange-800 uppercase tracking-wider block">Percentage</span>
-            <span id="finalPercent" class="text-3xl font-black text-orange-600">93.3%</span>
+          <!-- Code Snippet Block -->
+          <div id="code-container" class="hidden mt-4">
+            <pre class="bg-slate-950 border border-cyan-500/20 rounded-xl p-4 font-code text-sm sm:text-base text-cyan-300 overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
           </div>
         </div>
 
-        <!-- Category Breakdown -->
-        <div class="space-y-4 mb-8">
-          <h3 class="font-handwritten text-2xl font-bold text-slate-800 border-b border-slate-200 pb-1">
-            Topic Wise Breakdown
-          </h3>
+        <!-- Multi-select Notice (Conditional) -->
+        <div id="multiselect-notice" class="hidden mb-4 p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-cyan-300 text-sm flex items-center gap-2">
+          <span>💡</span> <span>Select <strong>ALL</strong> valid options below, then click <strong>Submit Answer</strong>!</span>
+        </div>
 
-          <!-- Section 1 -->
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-              <span>Section 1: Variables & Operations (Q1–Q10)</span>
-              <span id="scoreSec1">10 / 10</span>
-            </div>
-            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-              <div id="barSec1" class="bg-orange-500 h-full w-full transition-all duration-700"></div>
-            </div>
-          </div>
+        <!-- Option Buttons Grid -->
+        <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+          <!-- Buttons dynamically rendered here -->
+        </div>
 
-          <!-- Section 2 -->
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-              <span>Section 2: Loops & Counter Logic (Q11–Q20)</span>
-              <span id="scoreSec2">9 / 10</span>
-            </div>
-            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-              <div id="barSec2" class="bg-amber-500 h-full w-full transition-all duration-700"></div>
-            </div>
-          </div>
+        <!-- Multi-Select Submit Button -->
+        <div id="multiselect-actions" class="hidden mb-6">
+          <button id="submit-multiselect-btn" class="w-full py-3 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl shadow-lg transition transform active:scale-95">
+            Submit My Selections
+          </button>
+        </div>
 
-          <!-- Section 3 -->
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-              <span>Section 3: Functions & Error Spotting (Q21–Q30)</span>
-              <span id="scoreSec3">9 / 10</span>
-            </div>
-            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-              <div id="barSec3" class="bg-orange-600 h-full w-full transition-all duration-700"></div>
+        <!-- Explanation Panel -->
+        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6">
+          <div class="flex items-start gap-3">
+            <span id="explanation-icon" class="text-2xl">💡</span>
+            <div>
+              <h4 id="explanation-title" class="font-bold text-base">Explanation</h4>
+              <p id="explanation-text" class="text-sm mt-1 leading-relaxed text-slate-200">
+                Detailed explanation will appear right here under the buttons.
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Handwritten Teacher Remarks -->
-        <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-5 mb-8">
-          <h4 class="font-handwritten text-2xl font-bold text-amber-900 mb-1">
-           Remarks:
-          </h4>
-          <p id="handwrittenRemark" class="font-handwritten text-2xl text-slate-800 leading-snug">
-            "Outstanding work! You showed a remarkable understanding of Python syntax, swapping logic, and debugging tricky loop conditions."
-          </p>
-          <div class="text-right mt-3 font-handwritten text-xl font-bold text-orange-700">
-            — Tutor Priyadarshini 🌸
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-3">
-          <button onclick="restartQuiz()" class="flex-1 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm rounded-xl shadow-md transition text-center">
-            Retake Quiz
+        <!-- Next / Continue Button -->
+        <div class="flex justify-end">
+          <button id="next-btn" class="hidden py-3 px-8 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-extrabold rounded-xl shadow-xl transition transform active:scale-95 flex items-center gap-2">
+            <span>Next Question</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
 
       </div>
     </div>
 
-  </main>
+    <!-- FINAL RESULT SCREEN (Handwritten Note & Breakdown) -->
+    <div id="result-screen" class="hidden w-full my-6">
+      <div class="notebook-paper rounded-2xl p-6 sm:p-10 shadow-2xl text-slate-900 border-t-8 border-cyan-600 relative overflow-hidden">
+        
+        <!-- Header / Date Tag -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-300 pb-4 mb-6">
+          <div>
+            <h1 class="font-handwriting text-4xl sm:text-5xl font-bold text-blue-900">Python Progress Report</h1>
+            <p class="text-sm text-slate-600 font-medium mt-1">Student: Python Explorer (11 Years Old)</p>
+          </div>
+          <div class="mt-2 sm:mt-0 bg-blue-100 border border-blue-300 rounded-lg px-4 py-2 text-center">
+            <span class="text-xs uppercase text-blue-700 tracking-wider block font-bold">Final Score</span>
+            <span id="final-total-score" class="text-3xl font-extrabold text-blue-950">0 / 30</span>
+          </div>
+        </div>
+
+        <!-- Teacher's Handwritten Note -->
+        <div class="mb-8 bg-amber-50/80 p-5 rounded-xl border border-amber-200/80 shadow-sm">
+          <h3 class="font-handwriting text-3xl font-bold text-amber-900 mb-2">Teacher's Note:</h3>
+          <p id="handwritten-note-text" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed">
+            Loading handwritten evaluation note...
+          </p>
+        </div>
+
+        <!-- Section-by-Section Score Breakdown -->
+        <h3 class="font-bold text-lg text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <span>📊</span> Section-by-Section Performance
+        </h3>
+        
+        <div id="sections-breakdown-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <!-- Dynamically filled with section cards -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4 border-t border-slate-300 pt-6">
+          <button id="restart-btn" class="py-3.5 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <span>Retake Challenge</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-orange-950 text-orange-200 text-center py-4 text-xs relative z-10 border-t border-orange-800">
-    <p>Python Learning Workbench • Designed for Young Programmers 🌼</p>
+  <footer class="relative z-10 py-4 text-center text-xs text-slate-400 border-t border-slate-800/60 bg-slate-950/60">
+    <p>Python Learning Quest • Designed for Young Coders 🚀</p>
   </footer>
 
   <script>
-    // 30 PRECISE PYTHON QUESTIONS FOR 12-YEAR-OLD STUDENTS
-    const quizData = [
-      // SECTION 1: OPERATORS & VARIABLES (Q1 - Q10)
+    // -------------------------------------------------------------
+    // QUESTION DATABASE (30 QUESTIONS ACROSS 6 SECTIONS)
+    // -------------------------------------------------------------
+    const rawQuestionsDatabase = [
+
+      // --- SECTION 1: VARIABLE NAMES (Q1 - Q4) ---
       {
-        id: 1,
-        category: "Section 1: Operators & Variables",
-        code: "x = 10\ny = 20\nx, y = y, x",
-        question: "What are the final values of x and y?",
+        section: "Variable Names",
+        isMultiSelect: true,
+        question: "Which of the following options are VALID variable names in Python? Select all correct ones!",
+        code: null,
         options: [
-          { text: "x = 10, y = 20", isCorrect: false, explanation: "Incorrect! The line 'x, y = y, x' swaps the two variables, so they do not keep their original values." },
-          { text: "x = 20, y = 10", isCorrect: true, explanation: "Correct! Python evaluates 'y, x' first (20, 10) and assigns them simultaneously to 'x, y', swapping their values!" },
-          { text: "x = 20, y = 20", isCorrect: false, explanation: "Incorrect! Both variables do not become 20 because Python evaluates the right side before reassigning." },
-          { text: "x = 10, y = 10", isCorrect: false, explanation: "Incorrect! Neither variable gets overwritten by 10 before the swap completes." }
-        ]
+          { text: "user_age", isCorrect: true },
+          { text: "2nd_place", isCorrect: false },
+          { text: "my-score", isCorrect: false },
+          { text: "total_points", isCorrect: true },
+          { text: "class", isCorrect: false },
+          { text: "superStar", isCorrect: true }
+        ],
+        explanation: "In Python, valid variable names start with a letter or underscore, contain only letters, numbers, and underscores, and CANNOT be reserved keywords (like 'class') or use hyphens/start with numbers!"
       },
       {
-        id: 2,
-        category: "Section 1: Operators & Variables",
-        code: "a = 2 ** 4\nb = 15 % 4",
-        question: "What are the final values of a and b?",
+        section: "Variable Names",
+        isMultiSelect: false,
+        question: "Out of these 6 options, click the INVALID variable name that will cause a Syntax Error in Python:",
+        code: null,
         options: [
-          { text: "a = 8, b = 3", isCorrect: false, explanation: "Incorrect! The '**' operator is exponentiation (2 * 2 * 2 * 2 = 16), not multiplication (2 * 4)." },
-          { text: "a = 16, b = 3.75", isCorrect: false, explanation: "Incorrect! The '%' (modulo) operator returns the integer remainder (3), not floating point division (3.75)." },
-          { text: "a = 16, b = 3", isCorrect: true, explanation: "Correct! 2 ** 4 = 16 (2 to the power 4), and 15 % 4 = 3 (the remainder when 15 is divided by 4)." },
-          { text: "a = 8, b = 0", isCorrect: false, explanation: "Incorrect! 2 ** 4 equals 16, and 15 divided by 4 leaves a remainder of 3." }
-        ]
+          { text: "player_1", isCorrect: false },
+          { text: "_secret_key", isCorrect: false },
+          { text: "first name", isCorrect: true },
+          { text: "score2", isCorrect: false },
+          { text: "totalAmount", isCorrect: false },
+          { text: "IS_ACTIVE", isCorrect: false }
+        ],
+        explanation: "'first name' has a space in it! Python variable names cannot contain spaces. Use an underscore like 'first_name' instead."
       },
       {
-        id: 3,
-        category: "Section 1: Operators & Variables",
-        code: "p = 7\nq = 3\nr = p // q",
-        question: "What is the final value of r?",
+        section: "Variable Names",
+        isMultiSelect: false,
+        question: "Which of these 6 variable names follows Python's recommended 'snake_case' convention best?",
+        code: null,
         options: [
-          { text: "r = 2.33", isCorrect: false, explanation: "Incorrect! Double slash '//' is floor division, which strips away decimals and keeps only the whole number." },
-          { text: "r = 2", isCorrect: true, explanation: "Correct! Floor division '//' calculates 7 divided by 3 (= 2.333...) and rounds DOWN to the integer 2." },
-          { text: "r = 1", isCorrect: false, explanation: "Incorrect! 3 fits into 7 twice, so the floor division result is 2, not 1." },
-          { text: "r = 3", isCorrect: false, explanation: "Incorrect! 3 * 3 is 9 which exceeds 7, so 7 // 3 is 2." }
-        ]
+          { text: "HighScore", isCorrect: false },
+          { text: "high-score", isCorrect: false },
+          { text: "high_score", isCorrect: true },
+          { text: "HIGHSCORE", isCorrect: false },
+          { text: "1stHighScore", isCorrect: false },
+          { text: "highScore!", isCorrect: false }
+        ],
+        explanation: "'high_score' uses lower-case words separated by underscores, which is Python's standard 'snake_case' style rule!"
       },
       {
-        id: 4,
-        category: "Section 1: Operators & Variables",
-        code: "x = '5'\ny = 3\nresult = x * y",
-        question: "What is the value of result?",
+        section: "Variable Names",
+        isMultiSelect: false,
+        question: "Which option CANNOT be used as a variable name because it is a reserved Python keyword?",
+        code: null,
         options: [
-          { text: "result = 15", isCorrect: false, explanation: "Incorrect! 'x' is a String ('5'), not a Number. Multiplying a string repeats it instead of doing math." },
-          { text: "result = 53", isCorrect: false, explanation: "Incorrect! String multiplication repeats the string text 3 times ('555'), it does not append the number 3." },
-          { text: "Error: Cannot multiply string and number", isCorrect: false, explanation: "Incorrect! Python ALLOWS multiplying a string by an integer to duplicate text." },
-          { text: "result = '555'", isCorrect: true, explanation: "Correct! In Python, multiplying a string by an integer repeats the text 3 times, giving '555'." }
-        ]
-      },
-      {
-        id: 5,
-        category: "Section 1: Operators & Variables",
-        code: "a = 17\nb = 5\nc = a % b ** 2",
-        question: "What is the final value of c?",
-        options: [
-          { text: "c = 17", isCorrect: true, explanation: "Correct! Power '**' has higher precedence than '%'. So b**2 = 25. Then 17 % 25 = 17 (since 25 goes into 17 zero times with 17 remainder)." },
-          { text: "c = 4", isCorrect: false, explanation: "Incorrect! You calculated (17 % 5)**2 = 2**2 = 4. But '**' happens BEFORE '%' in standard math precedence!" },
-          { text: "c = 2", isCorrect: false, explanation: "Incorrect! Remember that b ** 2 is calculated first (5 ** 2 = 25), then 17 % 25 is evaluated." },
-          { text: "c = 0", isCorrect: false, explanation: "Incorrect! 17 % 25 leaves a remainder of 17." }
-        ]
-      },
-      {
-        id: 6,
-        category: "Section 1: Operators & Variables",
-        code: "x = 12\nx += 8\nx //= 5",
-        question: "What is the final value of x?",
-        options: [
-          { text: "x = 4.0", isCorrect: false, explanation: "Incorrect! Floor division '//=' returns an integer (4), not a float (4.0)." },
-          { text: "x = 20", isCorrect: false, explanation: "Incorrect! The second line 'x //= 5' updates x again after adding 8." },
-          { text: "x = 4", isCorrect: true, explanation: "Correct! First x += 8 makes x = 20. Then x //= 5 divides 20 by 5 with floor division, resulting in 4." },
-          { text: "x = 2.4", isCorrect: false, explanation: "Incorrect! Regular division '/' gives 4.0, but '//' gives the integer 4." }
-        ]
-      },
-      {
-        id: 7,
-        category: "Section 1: Operators & Variables",
-        code: "a, b = 5, 10\na = a + b\nb = a - b\na = a - b",
-        question: "What are the final values of a and b?",
-        options: [
-          { text: "a = 15, b = 5", isCorrect: false, explanation: "Incorrect! Line 3 'a = a - b' subtracts b (5) from a (15), updating a to 10." },
-          { text: "a = 10, b = 5", isCorrect: true, explanation: "Correct! This classic arithmetic formula swaps two numbers! Step 1: a=15. Step 2: b=15-10=5. Step 3: a=15-5=10." },
-          { text: "a = 5, b = 10", isCorrect: false, explanation: "Incorrect! The values did not remain unchanged; they were swapped through subtraction." },
-          { text: "a = 0, b = 0", isCorrect: false, explanation: "Incorrect! Work through the steps carefully: 5+10=15, 15-10=5, 15-5=10." }
-        ]
-      },
-      {
-        id: 8,
-        category: "Section 1: Operators & Variables",
-        code: "num = 23\nrem = num % 10\ntens = num // 10",
-        question: "What are the values of rem and tens?",
-        options: [
-          { text: "rem = 2, tens = 3", isCorrect: false, explanation: "Incorrect! You swapped the two: modulo % gives the remainder (3), floor division // gives quotient (2)." },
-          { text: "rem = 3, tens = 2.3", isCorrect: false, explanation: "Incorrect! '//' floor division truncates decimals, returning integer 2." },
-          { text: "rem = 0, tens = 2", isCorrect: false, explanation: "Incorrect! 23 divided by 10 has a remainder of 3, not 0." },
-          { text: "rem = 3, tens = 2", isCorrect: true, explanation: "Correct! 23 % 10 gives the last digit (3), and 23 // 10 gives the tens digit (2)." }
-        ]
-      },
-      {
-        id: 9,
-        category: "Section 1: Operators & Variables",
-        code: "a = 3\nb = 2\nans = a ** b ** 2",
-        question: "What is the final value of ans?",
-        options: [
-          { text: "ans = 81", isCorrect: true, explanation: "Correct! Power operators '**' group from RIGHT to LEFT! So b**2 = 2**2 = 4. Then a**4 = 3**4 = 81." },
-          { text: "ans = 36", isCorrect: false, explanation: "Incorrect! Exponentiation evaluates right-to-left: 3**(2**2) = 3**4 = 81." },
-          { text: "ans = 12", isCorrect: false, explanation: "Incorrect! Exponentiation is not simple multiplication (3 * 2 * 2)." },
-          { text: "ans = 64", isCorrect: false, explanation: "Incorrect! 3 to the power of 4 is 3 * 3 * 3 * 3 = 81." }
-        ]
-      },
-      {
-        id: 10,
-        category: "Section 1: Operators & Variables",
-        code: "x = 15\ny = 4\nz = x / y",
-        question: "What is the final value of z?",
-        options: [
-          { text: "z = 3", isCorrect: false, explanation: "Incorrect! Single slash '/' creates float numbers (3.75). Double slash '//' would produce 3." },
-          { text: "z = 3.0", isCorrect: false, explanation: "Incorrect! Single division does not drop decimal fractions (15 / 4 is exactly 3.75)." },
-          { text: "z = 3.75", isCorrect: true, explanation: "Correct! Single slash '/' in Python ALWAYS performs float division, producing 3.75." },
-          { text: "z = 4", isCorrect: false, explanation: "Incorrect! Python does not round up 3.75 to 4 automatically." }
-        ]
+          { text: "number", isCorrect: false },
+          { text: "greeting", isCorrect: false },
+          { text: "my_var", isCorrect: false },
+          { text: "while", isCorrect: true },
+          { text: "python_game", isCorrect: false },
+          { text: "counter", isCorrect: false }
+        ],
+        explanation: "'while' is a built-in Python keyword reserved for creating loops, so Python will throw a Syntax Error if you try to use it as a variable name!"
       },
 
-      // SECTION 2: LOOPS & CONTROL FLOW (Q11 - Q20)
+      // --- SECTION 2: DATA TYPES (Q5 - Q8) ---
       {
-        id: 11,
-        category: "Section 2: Loops & Control Flow",
-        code: "total = 0\nfor i in range(1, 5):\n    total += i",
-        question: "What is the final value of total?",
+        section: "Data Types",
+        isMultiSelect: false,
+        question: "What is the exact data type of the variable `x = 99.5` in Python?",
+        code: "x = 99.5",
         options: [
-          { text: "total = 15", isCorrect: false, explanation: "Incorrect! range(1, 5) stops BEFORE 5, so 5 is not included in the sum." },
-          { text: "total = 5", isCorrect: false, explanation: "Incorrect! The loop runs 4 times adding 1+2+3+4, not just the last number." },
-          { text: "total = 0", isCorrect: false, explanation: "Incorrect! The loop updates 'total' on each iteration." },
-          { text: "total = 10", isCorrect: true, explanation: "Correct! range(1, 5) generates values 1, 2, 3, 4 (stops before 5). 1 + 2 + 3 + 4 = 10." }
-        ]
+          { text: "int", isCorrect: false },
+          { text: "float", isCorrect: true },
+          { text: "str", isCorrect: false },
+          { text: "bool", isCorrect: false },
+          { text: "list", isCorrect: false },
+          { text: "dict", isCorrect: false }
+        ],
+        explanation: "Numbers with decimal points like 99.5 are stored as 'float' (floating-point numbers) in Python!"
       },
       {
-        id: 12,
-        category: "Section 2: Loops & Control Flow",
-        code: "count = 0\nwhile count < 5:\n    if count == 3:\n        break\n    count += 1",
-        question: "What is the final value of count when the loop ends?",
+        section: "Data Types",
+        isMultiSelect: false,
+        question: "What is the data type of `inventory = ['sword', 'shield', 'potion']`?",
+        code: "inventory = ['sword', 'shield', 'potion']",
         options: [
-          { text: "count = 3", isCorrect: true, explanation: "Correct! When count reaches 3, the condition 'count == 3' becomes True, triggering 'break' immediately." },
-          { text: "count = 5", isCorrect: false, explanation: "Incorrect! The 'break' statement stops the loop early at 3 before it ever reaches 5." },
-          { text: "count = 4", isCorrect: false, explanation: "Incorrect! The loop stops as soon as count becomes 3." },
-          { text: "count = 0", isCorrect: false, explanation: "Incorrect! 'count' increments 1 -> 2 -> 3 before breaking." }
-        ]
+          { text: "int", isCorrect: false },
+          { text: "str", isCorrect: false },
+          { text: "bool", isCorrect: false },
+          { text: "list", isCorrect: true },
+          { text: "float", isCorrect: false },
+          { text: "dict", isCorrect: false }
+        ],
+        explanation: "Items enclosed in square brackets `[...]` separated by commas represent a 'list'."
       },
       {
-        id: 13,
-        category: "Section 2: Loops & Control Flow",
-        code: "sum_val = 0\nfor x in range(1, 6):\n    if x % 2 == 0:\n        continue\n    sum_val += x",
-        question: "What is the final value of sum_val?",
+        section: "Data Types",
+        isMultiSelect: false,
+        question: "What is the data type of `player = {'name': 'Alex', 'level': 10}`?",
+        code: "player = {'name': 'Alex', 'level': 10}",
         options: [
-          { text: "sum_val = 15", isCorrect: false, explanation: "Incorrect! 15 is the sum of ALL numbers from 1 to 5, but even numbers are skipped by 'continue'." },
-          { text: "sum_val = 6", isCorrect: false, explanation: "Incorrect! 6 is the sum of even numbers (2+4). But even numbers are skipped!" },
-          { text: "sum_val = 9", isCorrect: true, explanation: "Correct! 'continue' skips even numbers (2 and 4). So sum_val adds odd numbers 1 + 3 + 5 = 9." },
-          { text: "sum_val = 5", isCorrect: false, explanation: "Incorrect! Sum includes 1 + 3 + 5 = 9." }
-        ]
+          { text: "int", isCorrect: false },
+          { text: "float", isCorrect: false },
+          { text: "str", isCorrect: false },
+          { text: "bool", isCorrect: false },
+          { text: "list", isCorrect: false },
+          { text: "dict", isCorrect: true }
+        ],
+        explanation: "Key-value pairs surrounded by curly braces `{...}` form a 'dict' (dictionary)."
       },
       {
-        id: 14,
-        category: "Section 2: Loops & Control Flow",
-        code: "c = 1\nfor i in range(3):\n    for j in range(2):\n        c += 1",
-        question: "What is the final value of c?",
+        section: "Data Types",
+        isMultiSelect: false,
+        question: "What data type is produced by evaluating the expression `5 > 3`?",
+        code: "result = (5 > 3)",
         options: [
-          { text: "c = 6", isCorrect: false, explanation: "Incorrect! Remember 'c' starts at 1, so adding 6 increments brings it to 7." },
-          { text: "c = 7", isCorrect: true, explanation: "Correct! The outer loop runs 3 times, inner loop runs 2 times -> 3 x 2 = 6 additions. Starting at 1, 1 + 6 = 7." },
-          { text: "c = 5", isCorrect: false, explanation: "Incorrect! Nested loop runs 3 * 2 = 6 times total." },
-          { text: "c = 8", isCorrect: false, explanation: "Incorrect! range(3) is 3 iterations, range(2) is 2 iterations." }
-        ]
-      },
-      {
-        id: 15,
-        category: "Section 2: Loops & Control Flow",
-        code: "n = 10\nwhile n > 0:\n    n -= 3",
-        question: "What is the value of n immediately after the while loop finishes?",
-        options: [
-          { text: "n = -2", isCorrect: true, explanation: "Correct! Steps: 10 -> 7 -> 4 -> 1 -> -2. When n = -2, condition 'n > 0' is False, so loop ends with n = -2." },
-          { text: "n = 0", isCorrect: false, explanation: "Incorrect! Subtracting 3 repeatedly from 10 goes: 7, 4, 1, then 1 - 3 = -2." },
-          { text: "n = 1", isCorrect: false, explanation: "Incorrect! When n = 1, 'n > 0' is STILL True, so the loop subtracts 3 one more time to make n = -2." },
-          { text: "n = 3", isCorrect: false, explanation: "Incorrect! The loop continues as long as n > 0." }
-        ]
-      },
-      {
-        id: 16,
-        category: "Section 2: Loops & Control Flow",
-        code: "ans = ''\nfor ch in 'python':\n    if ch == 'h':\n        break\n    ans += ch",
-        question: "What is the value of the string ans?",
-        options: [
-          { text: "ans = 'pyth'", isCorrect: false, explanation: "Incorrect! 'break' happens BEFORE 'ans += ch' runs for letter 'h'." },
-          { text: "ans = 'python'", isCorrect: false, explanation: "Incorrect! The break statement terminates the loop early." },
-          { text: "ans = 'pyton'", isCorrect: false, explanation: "Incorrect! 'break' stops the loop entirely, it does not just skip 'h' (that would be continue)." },
-          { text: "ans = 'pyt'", isCorrect: true, explanation: "Correct! The loop appends 'p', 'y', 't'. When ch == 'h', 'break' exits immediately before adding 'h'." }
-        ]
-      },
-      {
-        id: 17,
-        category: "Section 2: Loops & Control Flow",
-        code: "x = 0\nfor i in range(5):\n    if i == 2:\n        continue\n    x += i",
-        question: "What is the final value of x?",
-        options: [
-          { text: "x = 10", isCorrect: false, explanation: "Incorrect! 10 is the sum including 2 (0+1+2+3+4). But i=2 is skipped by 'continue'!" },
-          { text: "x = 8", isCorrect: true, explanation: "Correct! range(5) produces 0, 1, 2, 3, 4. When i=2, 'continue' skips adding 2. So x = 0 + 1 + 3 + 4 = 8." },
-          { text: "x = 3", isCorrect: false, explanation: "Incorrect! 'continue' skips only number 2 and keeps looping for 3 and 4." },
-          { text: "x = 6", isCorrect: false, explanation: "Incorrect! The loop processes 0, 1, (skips 2), 3, 4." }
-        ]
-      },
-      {
-        id: 18,
-        category: "Section 2: Loops & Control Flow",
-        code: "a = 1\nwhile a < 10:\n    a *= 2",
-        question: "What is the final value of a?",
-        options: [
-          { text: "a = 8", isCorrect: false, explanation: "Incorrect! When a = 8, condition '8 < 10' is STILL True, so it multiplies by 2 one more time to 16." },
-          { text: "a = 10", isCorrect: false, explanation: "Incorrect! Powers of 2 double each step (1, 2, 4, 8, 16), so 'a' never equals 10." },
-          { text: "a = 16", isCorrect: true, explanation: "Correct! Values of a: 1 -> 2 -> 4 -> 8 -> 16. When a becomes 16, 16 < 10 is False, loop stops!" },
-          { text: "a = 32", isCorrect: false, explanation: "Incorrect! At 16, the loop condition fails so it doesn't double to 32." }
-        ]
-      },
-      {
-        id: 19,
-        category: "Section 2: Loops & Control Flow",
-        code: "cnt = 0\nfor i in range(2, 8, 2):\n    cnt += i",
-        question: "What is the final value of cnt?",
-        options: [
-          { text: "cnt = 12", isCorrect: true, explanation: "Correct! range(2, 8, 2) starts at 2, steps by 2, and stops before 8 -> values are 2, 4, 6. Sum = 2 + 4 + 6 = 12." },
-          { text: "cnt = 20", isCorrect: false, explanation: "Incorrect! range(2, 8, 2) excludes the stop value 8." },
-          { text: "cnt = 14", isCorrect: false, explanation: "Incorrect! The numbers added are 2, 4, 6." },
-          { text: "cnt = 6", isCorrect: false, explanation: "Incorrect! cnt accumulates the sum of 2 + 4 + 6." }
-        ]
-      },
-      {
-        id: 20,
-        category: "Section 2: Loops & Control Flow",
-        code: "num = 0\nwhile num < 4:\n    num += 1\n    if num == 2:\n        break\nelse:\n    num = 100",
-        question: "What is the final value of num?",
-        options: [
-          { text: "num = 100", isCorrect: false, explanation: "Incorrect! The 'else:' block only runs if the while loop finishes naturally without hitting a 'break'." },
-          { text: "num = 4", isCorrect: false, explanation: "Incorrect! The loop broke when num reached 2." },
-          { text: "num = 0", isCorrect: false, explanation: "Incorrect! 'num += 1' increased num to 1, then to 2 before breaking." },
-          { text: "num = 2", isCorrect: true, explanation: "Correct! The loop breaks when num == 2. When a loop exits via 'break', the 'else:' block is SKIPPED entirely!" }
-        ]
+          { text: "int", isCorrect: false },
+          { text: "float", isCorrect: false },
+          { text: "str", isCorrect: false },
+          { text: "bool", isCorrect: true },
+          { text: "list", isCorrect: false },
+          { text: "dict", isCorrect: false }
+        ],
+        explanation: "Comparison expressions like `5 > 3` evaluate to either True or False, which belongs to the 'bool' (Boolean) data type."
       },
 
-      // SECTION 3: FUNCTIONS & ERROR PREDICTION (Q21 - Q30)
+      // --- SECTION 3: REAL-WORLD SITUATIONS & CONCEPTS (Q9 - Q12) ---
       {
-        id: 21,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def greet(name, age):\n    print('Hello', name)\n\ngreet('Alex')",
-        question: "What happens when you run this code?",
+        section: "Real-World Concepts",
+        isMultiSelect: false,
+        question: "Situation: You are coding a game. You want your character's run animation to repeat OVER AND OVER continuously as long as the player holds down the right arrow key. Which concept should you use?",
+        code: null,
         options: [
-          { text: "Prints 'Hello Alex'", isCorrect: false, explanation: "Incorrect! Python will fail before printing because the required 'age' parameter is missing." },
-          { text: "Missing argument error: The function expects 2 items (name, age) but only 1 was provided.", isCorrect: true, explanation: "Correct! 'greet' defines 2 parameters, but greet('Alex') only passed 1 argument, causing a missing positional argument error." },
-          { text: "Prints 'Hello Alex None'", isCorrect: false, explanation: "Incorrect! Python doesn't automatically fill missing parameters with None unless default values are set." },
-          { text: "Syntax error: Function names cannot use capital letters.", isCorrect: false, explanation: "Incorrect! Function names CAN contain letters of any case." }
-        ]
+          { text: "Dictionary", isCorrect: false },
+          { text: "While Loop", isCorrect: true },
+          { text: "Float Variable", isCorrect: false },
+          { text: "Import statement", isCorrect: false },
+          { text: "String Slicing", isCorrect: false },
+          { text: "Integer division", isCorrect: false }
+        ],
+        explanation: "A 'While Loop' repeats code repeatedly as long as a condition (holding the key) remains True!"
       },
       {
-        id: 22,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def add(a, b):\n    result = a + b\n\nval = add(4, 5)\nprint(val)",
-        question: "What will be printed on the screen?",
+        section: "Real-World Concepts",
+        isMultiSelect: false,
+        question: "Situation: You want to build a Phonebook app where you can type a friend's Name (Key) and instantly get their Phone Number (Value). Which Python structure is designed for this?",
+        code: null,
         options: [
-          { text: "9", isCorrect: false, explanation: "Incorrect! Even though a + b is 9, the function forgot to 'return result', so val receives None." },
-          { text: "0", isCorrect: false, explanation: "Incorrect! Python returns None when return is omitted, not 0." },
-          { text: "None", isCorrect: true, explanation: "Correct! The function lacks a 'return' statement! In Python, functions without an explicit return statement return 'None' by default." },
-          { text: "Indentation error", isCorrect: false, explanation: "Incorrect! Indentation is valid here." }
-        ]
+          { text: "For Loop", isCorrect: false },
+          { text: "Boolean", isCorrect: false },
+          { text: "Dictionary", isCorrect: true },
+          { text: "Float Variable", isCorrect: false },
+          { text: "If-Else Statement", isCorrect: false },
+          { text: "Print Function", isCorrect: false }
+        ],
+        explanation: "A 'Dictionary' stores data in key-value pairs (like Name ➔ Phone Number), making lookups fast and simple!"
       },
       {
-        id: 23,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def check():\n  x = 10\n print(x)",
-        question: "What issue exists in this code snippet?",
+        section: "Real-World Concepts",
+        isMultiSelect: false,
+        question: "Situation: Your smart house system checks the sensor. IF temperature > 75 degrees, turn ON Air Conditioner; ELSE, keep it OFF. What programming structure handles this decision?",
+        code: null,
         options: [
-          { text: "Indentation Error: The print line is not aligned properly with the line above it.", isCorrect: true, explanation: "Correct! 'x = 10' has 2 spaces, but 'print(x)' has 1 space. Python requires consistent indentation within the same block!" },
-          { text: "Name Error: Variable x is not defined.", isCorrect: false, explanation: "Incorrect! x is defined, but the line alignment (indentation) is broken." },
-          { text: "Type Error: Cannot print variables inside functions.", isCorrect: false, explanation: "Incorrect! Printing inside functions is completely valid." },
-          { text: "Outputs 10 with no issues.", isCorrect: false, explanation: "Incorrect! Unaligned spaces will trigger an IndentationError." }
-        ]
+          { text: "Random Number Generator", isCorrect: false },
+          { text: "List Indexing", isCorrect: false },
+          { text: "Loop Counting", isCorrect: false },
+          { text: "If-Else Conditional", isCorrect: true },
+          { text: "Function Parameter", isCorrect: false },
+          { text: "String Concatenation", isCorrect: false }
+        ],
+        explanation: "If-Else statements allow code to make decisions based on whether conditions are true or false!"
       },
       {
-        id: 24,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def double(n):\n    return n * 2\n\nprint(double(7))",
-        question: "What is the output of this code?",
+        section: "Real-World Concepts",
+        isMultiSelect: false,
+        question: "Situation: You wrote 10 lines of code to calculate tax and discounts. You need to perform this EXACT calculation in 5 different parts of your online store program. What should you create?",
+        code: null,
         options: [
-          { text: "77", isCorrect: false, explanation: "Incorrect! 7 is an integer, so 7 * 2 is math multiplication (14), not string repetition ('77')." },
-          { text: "None", isCorrect: false, explanation: "Incorrect! The function clearly has 'return n * 2', so it returns 14." },
-          { text: "Error: Function parameter must be a string.", isCorrect: false, explanation: "Incorrect! Python parameters accept any valid data type." },
-          { text: "14", isCorrect: true, explanation: "Correct! double(7) passes 7 to n, returns 7 * 2 = 14, and prints 14." }
-        ]
+          { text: "A While Loop", isCorrect: false },
+          { text: "A Float Variable", isCorrect: false },
+          { text: "A List", isCorrect: false },
+          { text: "A Syntax Error", isCorrect: false },
+          { text: "A Function", isCorrect: true },
+          { text: "A Boolean Value", isCorrect: false }
+        ],
+        explanation: "A 'Function' lets you wrap code into a reusable block that can be called anytime with different inputs!"
+      },
+
+      // --- SECTION 4: LOOPS, LISTS & DICTIONARIES (Q13 - Q19) ---
+      {
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "How many times will this loop print 'Hello'?",
+        code: "for i in range(3, 8):\n    print('Hello')",
+        options: [
+          { text: "8 times", isCorrect: false },
+          { text: "5 times", isCorrect: true },
+          { text: "3 times", isCorrect: false },
+          { text: "6 times", isCorrect: false },
+          { text: "4 times", isCorrect: false },
+          { text: "0 times", isCorrect: false }
+        ],
+        explanation: "`range(3, 8)` generates values 3, 4, 5, 6, 7 (stops BEFORE 8). Counting these gives exactly 5 iterations!"
       },
       {
-        id: 25,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def Multiply(a, b):\n    return a * b\n\nprint(multiply(3, 4))",
-        question: "What issue will Python report for this code?",
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "What will be printed by this Python code?",
+        code: "total = 0\nfor x in range(1, 4):\n    total += x\nprint(total)",
         options: [
-          { text: "Syntax Error: Function names must be lowercase.", isCorrect: false, explanation: "Incorrect! Capital letters are allowed, but you must call the EXACT name used in def." },
-          { text: "Name Error: 'multiply' with lowercase 'm' is not defined (case sensitivity issue).", isCorrect: true, explanation: "Correct! Python is strictly case-sensitive! 'Multiply' with capital M is different from 'multiply' with lowercase m." },
-          { text: "Type Error: Cannot multiply 3 and 4.", isCorrect: false, explanation: "Incorrect! 3 * 4 is valid math." },
-          { text: "Outputs 12 successfully.", isCorrect: false, explanation: "Incorrect! Mismatched capitalization triggers a NameError." }
-        ]
+          { text: "10", isCorrect: false },
+          { text: "4", isCorrect: false },
+          { text: "6", isCorrect: true },
+          { text: "3", isCorrect: false },
+          { text: "7", isCorrect: false },
+          { text: "0", isCorrect: false }
+        ],
+        explanation: "`range(1, 4)` gives numbers 1, 2, and 3. `total` starts at 0 ➔ 0 + 1 + 2 + 3 = 6."
       },
       {
-        id: 26,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def calc(x):\n    return x + 5\n\nprint(calc(10, 20))",
-        question: "What happens when running this snippet?",
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "What is the output of this list indexing code?",
+        code: "colors = ['red', 'green', 'blue', 'yellow']\nprint(colors[2])",
         options: [
-          { text: "Prints 15", isCorrect: false, explanation: "Incorrect! It won't ignore 20; Python throws a positional argument error." },
-          { text: "Prints 35", isCorrect: false, explanation: "Incorrect! Python doesn't automatically sum extra arguments." },
-          { text: "Too many arguments error: Function accepts 1 input, but 2 were passed.", isCorrect: true, explanation: "Correct! 'def calc(x)' specifies 1 parameter, but calc(10, 20) provided 2 arguments!" },
-          { text: "Prints (15, 20)", isCorrect: false, explanation: "Incorrect! The extra parameter breaks the function call." }
-        ]
+          { text: "'green'", isCorrect: false },
+          { text: "'red'", isCorrect: false },
+          { text: "'yellow'", isCorrect: false },
+          { text: "'blue'", isCorrect: true },
+          { text: "IndexError", isCorrect: false },
+          { text: "'2'", isCorrect: false }
+        ],
+        explanation: "Python list indices start at 0! Index 0='red', index 1='green', index 2='blue'."
       },
       {
-        id: 27,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def Secret():\n    msg = 'Hidden'\n\nSecret()\nprint(msg)",
-        question: "What happens when trying to print msg?",
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "What will `nums` contain after executing this code?",
+        code: "nums = [10, 20, 30]\nnums.append(40)\nnums.pop(0)\nprint(nums)",
         options: [
-          { text: "Scope Error: 'msg' was created inside the function and cannot be accessed outside.", isCorrect: true, explanation: "Correct! Variables defined inside a function are local to that function. Outside code cannot see local variables!" },
-          { text: "Prints 'Hidden'", isCorrect: false, explanation: "Incorrect! 'msg' is local to Secret() and does not exist in global scope." },
-          { text: "Prints 'None'", isCorrect: false, explanation: "Incorrect! Python raises a NameError because 'msg' isn't recognized globally." },
-          { text: "Prints '' (empty string)", isCorrect: false, explanation: "Incorrect! Local variable scope prevents outside access." }
-        ]
+          { text: "[10, 20, 30, 40]", isCorrect: false },
+          { text: "[10, 20, 30]", isCorrect: false },
+          { text: "[20, 30]", isCorrect: false },
+          { text: "[40, 30, 20]", isCorrect: false },
+          { text: "[10, 30, 40]", isCorrect: false },
+          { text: "[20, 30, 40]", isCorrect: true }
+        ],
+        explanation: "`append(40)` makes list `[10, 20, 30, 40]`. Then `pop(0)` removes index 0 (the number 10), leaving `[20, 30, 40]`!"
       },
       {
-        id: 28,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def show_num(n):\n    return n ** 2\n    print('Done')\n\nprint(show_num(3))",
-        question: "What will be printed on the console?",
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "What value does `pet.get('age')` print here?",
+        code: "pet = {'name': 'Fluffy', 'age': 4, 'type': 'cat'}\nprint(pet.get('age'))",
         options: [
-          { text: "Done then 9", isCorrect: false, explanation: "Incorrect! Code AFTER 'return' inside a function is ignored because return exits immediately." },
-          { text: "9 then Done", isCorrect: false, explanation: "Incorrect! print('Done') can never execute after return." },
-          { text: "Syntax error due to print after return.", isCorrect: false, explanation: "Incorrect! Python allows unreachable code without throwing a syntax error, but it won't run." },
-          { text: "Only 9", isCorrect: true, explanation: "Correct! 'return' immediately exits the function! The line print('Done') is unreachable code and never runs." }
-        ]
+          { text: "'Fluffy'", isCorrect: false },
+          { text: "4", isCorrect: true },
+          { text: "'type'", isCorrect: false },
+          { text: "'cat'", isCorrect: false },
+          { text: "None", isCorrect: false },
+          { text: "KeyError", isCorrect: false }
+        ],
+        explanation: "The key 'age' maps directly to the integer value 4 in the dictionary."
       },
       {
-        id: 29,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def mystery(a, b=5):\n    return a * b\n\nprint(mystery(4))",
-        question: "What is the output of this code?",
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "What is printed after updating the dictionary value?",
+        code: "scores = {'Alice': 50, 'Bob': 70}\nscores['Bob'] = 85\nprint(scores['Bob'])",
         options: [
-          { text: "Missing argument error for b.", isCorrect: false, explanation: "Incorrect! 'b=5' is a default parameter, so providing b is optional!" },
-          { text: "20", isCorrect: true, explanation: "Correct! Parameter 'b' has a default value of 5. Calling mystery(4) sets a=4 and uses default b=5, so 4 * 5 = 20." },
-          { text: "4", isCorrect: false, explanation: "Incorrect! The calculation is 4 * 5 (default b) = 20." },
-          { text: "None", isCorrect: false, explanation: "Incorrect! The function returns 20." }
-        ]
+          { text: "70", isCorrect: false },
+          { text: "155", isCorrect: false },
+          { text: "85", isCorrect: true },
+          { text: "50", isCorrect: false },
+          { text: "KeyError", isCorrect: false },
+          { text: "None", isCorrect: false }
+        ],
+        explanation: "`scores['Bob'] = 85` overwrites Bob's previous score of 70 with 85."
       },
       {
-        id: 30,
-        category: "Section 3: Functions & Error Spotting",
-        code: "def say_hi()\n    print('Hi')\n\nsay_hi()",
-        question: "What mistake causes this code to fail?",
+        section: "Loops, Lists & Dicts",
+        isMultiSelect: false,
+        question: "What will be output by this loop over a list of strings?",
+        code: "fruits = ['apple', 'banana']\nfor f in fruits:\n    print(f.upper())",
         options: [
-          { text: "Indentation Error: print('Hi') should not be indented.", isCorrect: false, explanation: "Incorrect! Function bodies MUST be indented." },
-          { text: "Name Error: say_hi is not defined.", isCorrect: false, explanation: "Incorrect! The error occurs at line 1 during parsing because of the missing colon." },
-          { text: "Syntax Error: Missing a colon (:) at the end of the def say_hi() line.", isCorrect: true, explanation: "Correct! In Python, function definitions must end with a colon (:). Without it, Python gives a SyntaxError!" },
-          { text: "Outputs 'Hi' with a warning.", isCorrect: false, explanation: "Incorrect! Python strictly enforces colons on header lines." }
-        ]
+          { text: "apple then banana", isCorrect: false },
+          { text: "APPLE BANANA", isCorrect: false },
+          { text: "2", isCorrect: false },
+          { text: "['APPLE', 'BANANA']", isCorrect: false },
+          { text: "APPLE then BANANA", isCorrect: true },
+          { text: "SyntaxError", isCorrect: false }
+        ],
+        explanation: "The loop iterates through each string and prints it in uppercase letters (`APPLE`, then `BANANA`)."
+      },
+
+      // --- SECTION 5: FUNCTIONS & LOGIC / IF-ELSE (Q20 - Q25) ---
+      {
+        section: "Functions & Logic",
+        isMultiSelect: false,
+        question: "What does this function call output?",
+        code: "def double(num):\n    return num * 2\n\nresult = double(7)\nprint(result)",
+        options: [
+          { text: "7", isCorrect: false },
+          { text: "72", isCorrect: false },
+          { text: "14", isCorrect: true },
+          { text: "None", isCorrect: false },
+          { text: "28", isCorrect: false },
+          { text: "Error", isCorrect: false }
+        ],
+        explanation: "Calling `double(7)` passes 7 as `num`, returning `7 * 2 = 14`."
+      },
+      {
+        section: "Functions & Logic",
+        isMultiSelect: false,
+        question: "What string is returned by `check_speed(65)`?",
+        code: "def check_speed(speed):\n    if speed > 70:\n        return 'Fast'\n    elif speed >= 50:\n        return 'Normal'\n    else:\n        return 'Slow'",
+        options: [
+          { text: "'Fast'", isCorrect: false },
+          { text: "'Normal'", isCorrect: true },
+          { text: "'Slow'", isCorrect: false },
+          { text: "True", isCorrect: false },
+          { text: "65", isCorrect: false },
+          { text: "None", isCorrect: false }
+        ],
+        explanation: "65 is not greater than 70, but 65 >= 50 is True, so it executes `return 'Normal'`!"
+      },
+      {
+        section: "Functions & Logic",
+        isMultiSelect: false,
+        question: "What boolean output does this logical expression produce?",
+        code: "x = 15\ny = 20\nprint(not (x > 10 and y < 15))",
+        options: [
+          { text: "False", isCorrect: false },
+          { text: "15", isCorrect: false },
+          { text: "20", isCorrect: false },
+          { text: "True", isCorrect: true },
+          { text: "None", isCorrect: false },
+          { text: "SyntaxError", isCorrect: false }
+        ],
+        explanation: "`x > 10` is True, but `y < 15` is False. Thus `(True and False)` is False. Finally, `not (False)` flips to True!"
+      },
+      {
+        section: "Functions & Logic",
+        isMultiSelect: false,
+        question: "Spot the Error: What error will Python raise when parsing this function definition?",
+        code: "def greet(name)\n    print('Hello ' + name)",
+        options: [
+          { text: "NameError", isCorrect: false },
+          { text: "TypeError", isCorrect: false },
+          { text: "SyntaxError (missing colon ':' after function header)", isCorrect: true },
+          { text: "IndentationError", isCorrect: false },
+          { text: "ZeroDivisionError", isCorrect: false },
+          { text: "No Error", isCorrect: false }
+        ],
+        explanation: "In Python, function header lines must end with a colon `:` (e.g., `def greet(name):`). Omitting it causes a SyntaxError!"
+      },
+      {
+        section: "Functions & Logic",
+        isMultiSelect: false,
+        question: "What will `add_bonus(10)` output when using the default argument?",
+        code: "def add_bonus(score, bonus=5):\n    return score + bonus\n\nprint(add_bonus(10))",
+        options: [
+          { text: "10", isCorrect: false },
+          { text: "5", isCorrect: false },
+          { text: "50", isCorrect: false },
+          { text: "15", isCorrect: true },
+          { text: "TypeError", isCorrect: false },
+          { text: "0", isCorrect: false }
+        ],
+        explanation: "Since no second parameter is passed, `bonus` takes its default value of 5. `10 + 5 = 15`."
+      },
+      {
+        section: "Functions & Logic",
+        isMultiSelect: false,
+        question: "Predict the output of this conditional statement:",
+        code: "age = 11\nhas_ticket = True\nif age >= 10 and has_ticket:\n    print('Welcome!')\nelse:\n    print('Denied')",
+        options: [
+          { text: "'Denied'", isCorrect: false },
+          { text: "True", isCorrect: false },
+          { text: "11", isCorrect: false },
+          { text: "SyntaxError", isCorrect: false },
+          { text: "Nothing", isCorrect: false },
+          { text: "'Welcome!'", isCorrect: true }
+        ],
+        explanation: "Both `age >= 10` (11 >= 10 is True) AND `has_ticket` (True) are satisfied, so it prints 'Welcome!'."
+      },
+
+      // --- SECTION 6: RANDOM MODULE & TRUE/FALSE (Q26 - Q30) ---
+      {
+        section: "Random & True/False",
+        isMultiSelect: false,
+        question: "What range of values does `random.random()` return in Python?",
+        code: "import random\nnum = random.random()",
+        options: [
+          { text: "A random integer between 0 and 100", isCorrect: false },
+          { text: "Strictly either 0 or 1", isCorrect: false },
+          { text: "A random float from 0.0 up to (but not including) 1.0", isCorrect: true },
+          { text: "A random string", isCorrect: false },
+          { text: "A number between 1 and 10", isCorrect: false },
+          { text: "Any negative float", isCorrect: false }
+        ],
+        explanation: "`random.random()` produces floating point numbers in the range `[0.0, 1.0)`."
+      },
+      {
+        section: "Random & True/False",
+        isMultiSelect: false,
+        question: "If you execute `random.randint(1, 6)`, what are the potential returned values?",
+        code: "import random\ndice = random.randint(1, 6)",
+        options: [
+          { text: "Integers 1 to 5 only (excluding 6)", isCorrect: false },
+          { text: "Any decimal number between 1 and 6", isCorrect: false },
+          { text: "Any integer from 1 to 6 inclusive (1, 2, 3, 4, 5, 6)", isCorrect: true },
+          { text: "Only 1 or 6", isCorrect: false },
+          { text: "Random float starting at 0", isCorrect: false },
+          { text: "0 or 1", isCorrect: false }
+        ],
+        explanation: "Unlike Python `range()`, `random.randint(a, b)` INCLUDES both endpoints `a` and `b`!"
+      },
+      {
+        section: "Random & True/False",
+        isMultiSelect: false,
+        question: "True or False: `random.choice(['apple', 'banana', 'cherry'])` randomly picks one element from the list.",
+        code: "import random\nfruit = random.choice(['apple', 'banana', 'cherry'])",
+        options: [
+          { text: "False (It causes a TypeError)", isCorrect: false },
+          { text: "True (Selects one random item from a non-empty list)", isCorrect: true }
+        ],
+        explanation: "True! `random.choice()` is built to pick a random item from any sequence like a list."
+      },
+      {
+        section: "Random & True/False",
+        isMultiSelect: false,
+        question: "True or False: Python list indices start at 1 (so the first element is `my_list[1]`).",
+        code: null,
+        options: [
+          { text: "True (Indices start at 1)", isCorrect: false },
+          { text: "False (Python lists are 0-indexed; first element is index 0)", isCorrect: true }
+        ],
+        explanation: "False! Python lists start indexing at 0. The first item is always `my_list[0]`."
+      },
+      {
+        section: "Random & True/False",
+        isMultiSelect: false,
+        question: "True or False: `random.random()` can return the float number `1.5`.",
+        code: "import random\nval = random.random()",
+        options: [
+          { text: "True", isCorrect: false },
+          { text: "False (`random.random()` NEVER returns numbers >= 1.0)", isCorrect: true }
+        ],
+        explanation: "False! `random.random()` always stays strictly below 1.0 (range 0.0 to 0.9999...)."
       }
     ];
 
-    // QUIZ STATE MANAGEMENT
-    let currentQuestionIndex = 0;
+    // Deep clone and shuffle option order for every question dynamically
+    let questionsDatabase = [];
+
+    function prepareQuestions() {
+      questionsDatabase = rawQuestionsDatabase.map(q => {
+        const clonedOptions = [...q.options];
+        // Fisher-Yates shuffle options
+        for (let i = clonedOptions.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [clonedOptions[i], clonedOptions[j]] = [clonedOptions[j], clonedOptions[i]];
+        }
+
+        if (q.isMultiSelect) {
+          const correctAnswers = [];
+          clonedOptions.forEach((opt, idx) => {
+            if (opt.isCorrect) correctAnswers.push(idx);
+          });
+          return {
+            ...q,
+            options: clonedOptions.map(o => o.text),
+            correctAnswers: correctAnswers
+          };
+        } else {
+          const correctAnswerIdx = clonedOptions.findIndex(o => o.isCorrect);
+          return {
+            ...q,
+            options: clonedOptions.map(o => o.text),
+            correctAnswer: correctAnswerIdx
+          };
+        }
+      });
+    }
+
+    // STATE VARIABLES
+    let currentQuestionIdx = 0;
     let score = 0;
-    let userAnswers = []; // Store selected index for each question
     let timerInterval = null;
     let timeLeft = 50;
+    let selectedMultiIndices = [];
+    let questionAnswered = false;
 
-    // SECTION SCORES FOR REPORT CARD
-    let sec1Score = 0; // Q1 - 10
-    let sec2Score = 0; // Q11 - 20
-    let sec3Score = 0; // Q21 - 30
+    // Track score by section
+    const sectionScores = {
+      "Variable Names": { correct: 0, total: 4 },
+      "Data Types": { correct: 0, total: 4 },
+      "Real-World Concepts": { correct: 0, total: 4 },
+      "Loops, Lists & Dicts": { correct: 0, total: 7 },
+      "Functions & Logic": { correct: 0, total: 6 },
+      "Random & True/False": { correct: 0, total: 5 }
+    };
 
     // DOM ELEMENTS
-    const startScreen = document.getElementById('startScreen');
-    const quizScreen = document.getElementById('quizScreen');
-    const reportCardScreen = document.getElementById('reportCardScreen');
-    const quizHeaderInfo = document.getElementById('quizHeaderInfo');
-    
-    const questionCategoryTag = document.getElementById('questionCategoryTag');
-    const questionProgressText = document.getElementById('questionProgressText');
-    const currentCategoryText = document.getElementById('currentCategoryText');
-    const liveScoreText = document.getElementById('liveScoreText');
-    const questionText = document.getElementById('questionText');
-    const codeBlock = document.getElementById('codeBlock');
-    const optionsContainer = document.getElementById('optionsContainer');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    const timerText = document.getElementById('timerText');
-    const timerProgressCircle = document.getElementById('timerProgressCircle');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const qNumEl = document.getElementById('q-num');
+    const sectionBadgeEl = document.getElementById('section-badge');
+    const liveScoreEl = document.getElementById('live-score');
+    const timerTextEl = document.getElementById('timer-text');
+    const timerBarEl = document.getElementById('timer-bar');
+    const questionTextEl = document.getElementById('question-text');
+    const codeContainer = document.getElementById('code-container');
+    const codeSnippetEl = document.getElementById('code-snippet');
+    const optionsGrid = document.getElementById('options-grid');
+    const multiselectNotice = document.getElementById('multiselect-notice');
+    const multiselectActions = document.getElementById('multiselect-actions');
+    const submitMultiselectBtn = document.getElementById('submit-multiselect-btn');
+    const explanationBox = document.getElementById('explanation-box');
+    const explanationTitle = document.getElementById('explanation-title');
+    const explanationText = document.getElementById('explanation-text');
+    const nextBtn = document.getElementById('next-btn');
+    const handwrittenNoteText = document.getElementById('handwritten-note-text');
+    const sectionsBreakdownGrid = document.getElementById('sections-breakdown-grid');
+    const finalTotalScore = document.getElementById('final-total-score');
+    const restartBtn = document.getElementById('restart-btn');
 
-    // START QUIZ
-    function startQuiz() {
-      startScreen.classList.add('hidden');
-      quizScreen.classList.remove('hidden');
-      quizScreen.classList.add('flex');
-      quizHeaderInfo.classList.remove('hidden');
-      quizHeaderInfo.classList.add('flex');
+    function initFloatingBalls() {
+      const container = document.getElementById('balls-container');
+      container.innerHTML = '';
+      const colors = ['#3b82f6', '#06b6d4', '#6366f1', '#38bdf8', '#818cf8', '#0284c7'];
+      const ballCount = 18;
 
-      currentQuestionIndex = 0;
-      score = 0;
-      sec1Score = 0;
-      sec2Score = 0;
-      sec3Score = 0;
-      userAnswers = new Array(quizData.length).fill(null);
-
-      loadQuestion();
-    }
-
-    // LOAD QUESTION
-    function loadQuestion() {
-      clearInterval(timerInterval);
-      const q = quizData[currentQuestionIndex];
-
-      // Update Header & Category Tags
-      questionCategoryTag.innerText = q.category;
-      currentCategoryText.innerText = q.category.split(':')[1] || q.category;
-      questionProgressText.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
-      liveScoreText.innerText = `${score} / ${quizData.length}`;
-
-      // Update Question & Code
-      questionText.innerText = q.question;
-      codeBlock.innerText = q.code;
-
-      // Reset Options Container
-      optionsContainer.innerHTML = '';
-      nextBtn.disabled = true;
-      nextBtn.className = "px-6 py-3 bg-slate-200 text-slate-400 font-bold rounded-xl cursor-not-allowed transition flex items-center gap-2";
-
-      // Render 4 Options
-      q.options.forEach((opt, idx) => {
-        const optionWrapper = document.createElement('div');
-        optionWrapper.className = 'space-y-2';
-
-        const btn = document.createElement('button');
-        btn.id = `opt-btn-${idx}`;
-        btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-orange-300 hover:bg-orange-50/50 text-slate-700 font-semibold text-sm md:text-base transition-all duration-200 flex items-start gap-3 shadow-sm';
+      for (let i = 0; i < ballCount; i++) {
+        const ball = document.createElement('div');
+        ball.classList.add('floating-ball');
         
-        btn.innerHTML = `
-          <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center font-bold text-xs text-slate-600 shrink-0 mt-0.5">
-            ${String.fromCharCode(65 + idx)}
-          </span>
-          <span class="flex-1">${escapeHtml(opt.text)}</span>
-        `;
+        const size = Math.floor(Math.random() * 80) + 40;
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const duration = Math.floor(Math.random() * 6) + 6;
+        const delay = Math.random() * 4;
 
-        btn.onclick = () => selectOption(idx);
+        ball.style.width = `${size}px`;
+        ball.style.height = `${size}px`;
+        ball.style.left = `${left}%`;
+        ball.style.top = `${top}%`;
+        ball.style.backgroundColor = color;
+        ball.style.animationDuration = `${duration}s`;
+        ball.style.animationDelay = `${delay}s`;
 
-        // Explanation Box (Hidden initially)
-        const expBox = document.createElement('div');
-        expBox.id = `exp-box-${idx}`;
-        expBox.className = 'hidden p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border shadow-xs ml-2';
-
-        optionWrapper.appendChild(btn);
-        optionWrapper.appendChild(expBox);
-        optionsContainer.appendChild(optionWrapper);
-      });
-
-      // Start 50s Timer
-      startTimer();
+        container.appendChild(ball);
+      }
     }
 
-    // TIMER LOGIC
     function startTimer() {
+      clearInterval(timerInterval);
       timeLeft = 50;
-      timerText.innerText = timeLeft;
-      updateTimerCircle();
+      updateTimerUI();
 
       timerInterval = setInterval(() => {
         timeLeft--;
-        timerText.innerText = timeLeft;
-        updateTimerCircle();
+        updateTimerUI();
 
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
-          handleTimeOut();
+          handleTimeout();
         }
       }, 1000);
     }
 
-    function updateTimerCircle() {
-      const circumference = 150; // 2 * pi * 24 approx
-      const offset = circumference - (timeLeft / 50) * circumference;
-      timerProgressCircle.style.strokeDashoffset = offset;
+    function updateTimerUI() {
+      timerTextEl.textContent = timeLeft;
+      const percentage = (timeLeft / 50) * 100;
+      timerBarEl.style.width = `${percentage}%`;
 
       if (timeLeft <= 10) {
-        timerProgressCircle.style.stroke = '#ef4444'; // Red alert
-        timerText.className = 'absolute font-extrabold text-sm text-red-600 animate-pulse';
+        timerTextEl.classList.remove('text-cyan-400');
+        timerTextEl.classList.add('text-rose-500', 'animate-pulse');
+        timerBarEl.classList.remove('from-cyan-400', 'to-blue-500');
+        timerBarEl.classList.add('from-amber-500', 'to-rose-600');
       } else {
-        timerProgressCircle.style.stroke = '#ea580c';
-        timerText.className = 'absolute font-extrabold text-sm text-orange-900';
+        timerTextEl.classList.remove('text-rose-500', 'animate-pulse');
+        timerTextEl.classList.add('text-cyan-400');
+        timerBarEl.classList.remove('from-amber-500', 'to-rose-600');
+        timerBarEl.classList.add('from-cyan-400', 'to-blue-500');
       }
     }
 
-    // TIMEOUT HANDLER
-    function handleTimeOut() {
-      const q = quizData[currentQuestionIndex];
-      // Disable all buttons
-      disableAllOptions();
-
-      // Show correct answer explanation
-      q.options.forEach((opt, idx) => {
-        const btn = document.getElementById(`opt-btn-${idx}`);
-        const expBox = document.getElementById(`exp-box-${idx}`);
-        
-        if (opt.isCorrect) {
-          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-sm md:text-base flex items-start gap-3 shadow-sm';
-          expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-emerald-100 border-emerald-300 text-emerald-950 block';
-          expBox.innerText = `⏳ Time's Up! ${opt.explanation}`;
-        }
-      });
-
-      enableNextButton();
-    }
-
-    // SELECT OPTION HANDLER
-    function selectOption(selectedIndex) {
+    function stopTimer() {
       clearInterval(timerInterval);
-      const q = quizData[currentQuestionIndex];
-      userAnswers[currentQuestionIndex] = selectedIndex;
+    }
 
-      disableAllOptions();
+    function loadQuestion() {
+      questionAnswered = false;
+      selectedMultiIndices = [];
+      const currentQ = questionsDatabase[currentQuestionIdx];
 
-      const selectedOpt = q.options[selectedIndex];
+      qNumEl.textContent = currentQuestionIdx + 1;
+      sectionBadgeEl.textContent = `Section ${getSectionNumber(currentQ.section)}: ${currentQ.section}`;
+      liveScoreEl.textContent = `${score} pts`;
 
-      // Update Section Scores & Overall Score
-      if (selectedOpt.isCorrect) {
-        score++;
-        if (currentQuestionIndex < 10) sec1Score++;
-        else if (currentQuestionIndex < 20) sec2Score++;
-        else sec3Score++;
+      explanationBox.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+
+      questionTextEl.textContent = currentQ.question;
+
+      if (currentQ.code) {
+        codeSnippetEl.textContent = currentQ.code;
+        codeContainer.classList.remove('hidden');
+      } else {
+        codeContainer.classList.add('hidden');
       }
 
-      liveScoreText.innerText = `${score} / ${quizData.length}`;
+      if (currentQ.isMultiSelect) {
+        multiselectNotice.classList.remove('hidden');
+        multiselectActions.classList.remove('hidden');
+      } else {
+        multiselectNotice.classList.add('hidden');
+        multiselectActions.classList.add('hidden');
+      }
 
-      // Highlight selected option and reveal explanations
-      q.options.forEach((opt, idx) => {
-        const btn = document.getElementById(`opt-btn-${idx}`);
-        const expBox = document.getElementById(`exp-box-${idx}`);
+      optionsGrid.innerHTML = '';
+      
+      if (currentQ.options.length <= 2) {
+        optionsGrid.className = "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6";
+      } else {
+        optionsGrid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6";
+      }
 
-        if (idx === selectedIndex) {
-          if (opt.isCorrect) {
-            // TURN GREEN IF CORRECT
-            btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-sm md:text-base flex items-start gap-3 shadow-md ring-2 ring-emerald-300';
-            expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-emerald-100 border-emerald-300 text-emerald-950 block mt-1';
-            expBox.innerHTML = `<strong>✅ Correct!</strong> ${opt.explanation}`;
-          } else {
-            // TURN RED IF WRONG
-            btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-red-500 bg-red-50 text-red-900 font-bold text-sm md:text-base flex items-start gap-3 shadow-md ring-2 ring-red-300';
-            expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-red-100 border-red-300 text-red-950 block mt-1';
-            expBox.innerHTML = `<strong>❌ Incorrect!</strong> ${opt.explanation}`;
-          }
-        } else if (opt.isCorrect) {
-          // ALSO REVEAL THE CORRECT OPTION IN GREEN BELOW IF USER PICKED WRONG
-          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-50/60 text-emerald-900 font-semibold text-sm md:text-base flex items-start gap-3 opacity-90';
-          expBox.className = 'p-3.5 rounded-xl text-xs md:text-sm font-medium leading-relaxed border bg-emerald-100/70 border-emerald-300 text-emerald-950 block mt-1';
-          expBox.innerHTML = `<strong>💡 Correct Answer:</strong> ${opt.explanation}`;
+      currentQ.options.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.dataset.index = idx;
+
+        if (currentQ.isMultiSelect) {
+          btn.className = "option-btn p-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-left text-slate-100 font-medium transition transform active:scale-98 flex items-center justify-between shadow-md";
+          btn.innerHTML = `
+            <span class="font-code text-sm sm:text-base">${optText}</span>
+            <span class="checkbox-indicator w-6 h-6 rounded-md border-2 border-slate-500 flex items-center justify-center text-xs font-bold"></span>
+          `;
+          btn.addEventListener('click', () => toggleMultiSelect(idx, btn));
         } else {
-          btn.classList.add('opacity-50');
+          btn.className = "option-btn p-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-cyan-900/40 hover:border-cyan-500 text-left text-slate-100 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-md";
+          btn.innerHTML = `
+            <span class="w-7 h-7 rounded-lg bg-slate-700/60 border border-slate-600 text-cyan-400 font-bold text-xs flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
+            <span class="font-code text-sm sm:text-base leading-snug">${optText}</span>
+          `;
+          btn.addEventListener('click', () => selectSingleAnswer(idx));
+        }
+
+        optionsGrid.appendChild(btn);
+      });
+
+      startTimer();
+    }
+
+    function getSectionNumber(sectionName) {
+      const sections = [
+        "Variable Names",
+        "Data Types",
+        "Real-World Concepts",
+        "Loops, Lists & Dicts",
+        "Functions & Logic",
+        "Random & True/False"
+      ];
+      return sections.indexOf(sectionName) + 1;
+    }
+
+    function toggleMultiSelect(idx, btnEl) {
+      if (questionAnswered) return;
+
+      const pos = selectedMultiIndices.indexOf(idx);
+      const checkbox = btnEl.querySelector('.checkbox-indicator');
+
+      if (pos === -1) {
+        selectedMultiIndices.push(idx);
+        btnEl.classList.remove('border-slate-700', 'bg-slate-800/80');
+        btnEl.classList.add('border-cyan-400', 'bg-cyan-950/60');
+        checkbox.classList.remove('border-slate-500');
+        checkbox.classList.add('border-cyan-400', 'bg-cyan-500', 'text-slate-950');
+        checkbox.textContent = '✓';
+      } else {
+        selectedMultiIndices.splice(pos, 1);
+        btnEl.classList.remove('border-cyan-400', 'bg-cyan-950/60');
+        btnEl.classList.add('border-slate-700', 'bg-slate-800/80');
+        checkbox.classList.remove('border-cyan-400', 'bg-cyan-500', 'text-slate-950');
+        checkbox.classList.add('border-slate-500');
+        checkbox.textContent = '';
+      }
+    }
+
+    submitMultiselectBtn.addEventListener('click', () => {
+      if (questionAnswered) return;
+      stopTimer();
+      questionAnswered = true;
+
+      const currentQ = questionsDatabase[currentQuestionIdx];
+      const correctList = currentQ.correctAnswers.sort().join(',');
+      const userList = selectedMultiIndices.sort().join(',');
+
+      const isCorrect = (correctList === userList);
+      evaluateAnswer(isCorrect, currentQ.explanation);
+    });
+
+    function selectSingleAnswer(selectedIdx) {
+      if (questionAnswered) return;
+      stopTimer();
+      questionAnswered = true;
+
+      const currentQ = questionsDatabase[currentQuestionIdx];
+      const isCorrect = (selectedIdx === currentQ.correctAnswer);
+
+      const buttons = optionsGrid.querySelectorAll('.option-btn');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === currentQ.correctAnswer) {
+          btn.classList.remove('border-slate-700', 'bg-slate-800/80');
+          btn.classList.add('border-emerald-500', 'bg-emerald-950/80', 'text-emerald-200');
+        } else if (idx === selectedIdx && !isCorrect) {
+          btn.classList.remove('border-slate-700', 'bg-slate-800/80');
+          btn.classList.add('border-rose-500', 'bg-rose-950/80', 'text-rose-200');
         }
       });
 
-      enableNextButton();
+      evaluateAnswer(isCorrect, currentQ.explanation);
     }
 
-    function disableAllOptions() {
-      for (let i = 0; i < 4; i++) {
-        const btn = document.getElementById(`opt-btn-${i}`);
-        if (btn) btn.disabled = true;
+    function handleTimeout() {
+      if (questionAnswered) return;
+      questionAnswered = true;
+
+      const currentQ = questionsDatabase[currentQuestionIdx];
+      
+      const buttons = optionsGrid.querySelectorAll('.option-btn');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (!currentQ.isMultiSelect && idx === currentQ.correctAnswer) {
+          btn.classList.add('border-emerald-500', 'bg-emerald-950/80');
+        }
+      });
+
+      showExplanation(false, "⏳ Time's up! You ran out of 50 seconds for this question. " + currentQ.explanation);
+      nextBtn.classList.remove('hidden');
+    }
+
+    function evaluateAnswer(isCorrect, explanationTextContent) {
+      const currentQ = questionsDatabase[currentQuestionIdx];
+
+      if (isCorrect) {
+        score += 10;
+        liveScoreEl.textContent = `${score} pts`;
+        sectionScores[currentQ.section].correct++;
+        showExplanation(true, "🎉 Spot on! " + explanationTextContent);
+      } else {
+        showExplanation(false, "❌ Not quite right. " + explanationTextContent);
       }
+
+      multiselectActions.classList.add('hidden');
+      nextBtn.classList.remove('hidden');
     }
 
-    function enableNextButton() {
-      nextBtn.disabled = false;
-      nextBtn.className = "px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold rounded-xl shadow-md transition cursor-pointer flex items-center gap-2 transform hover:scale-105";
-      if (currentQuestionIndex === quizData.length - 1) {
-        nextBtn.querySelector('span:first-child').innerText = "View Final Report Card";
+    function showExplanation(isCorrect, message) {
+      explanationBox.classList.remove('hidden', 'bg-emerald-950/60', 'border-emerald-500/50', 'bg-rose-950/60', 'border-rose-500/50');
+      
+      if (isCorrect) {
+        explanationBox.classList.add('bg-emerald-950/60', 'border-emerald-500/50', 'text-emerald-200');
+        explanationTitle.textContent = "Great Job!";
+        explanationTitle.className = "font-bold text-base text-emerald-400";
+      } else {
+        explanationBox.classList.add('bg-rose-950/60', 'border-rose-500/50', 'text-rose-200');
+        explanationTitle.textContent = "Explanation & Revision Tip";
+        explanationTitle.className = "font-bold text-base text-rose-400";
       }
+
+      explanationText.textContent = message;
     }
 
-    // NEXT QUESTION OR FINISH
-    function nextQuestion() {
-      if (currentQuestionIndex < quizData.length - 1) {
-        currentQuestionIndex++;
+    nextBtn.addEventListener('click', () => {
+      currentQuestionIdx++;
+      if (currentQuestionIdx < questionsDatabase.length) {
         loadQuestion();
       } else {
-        showReportCard();
+        showResultsScreen();
       }
-    }
+    });
 
-    // GENERATE HANDWRITTEN REPORT CARD
-    function showReportCard() {
-      clearInterval(timerInterval);
+    function showResultsScreen() {
       quizScreen.classList.add('hidden');
-      quizHeaderInfo.classList.add('hidden');
-      reportCardScreen.classList.remove('hidden');
+      resultScreen.classList.remove('hidden');
 
-      const percent = ((score / quizData.length) * 100).toFixed(1);
+      const totalCorrect = Object.values(sectionScores).reduce((acc, curr) => acc + curr.correct, 0);
+      finalTotalScore.textContent = `${totalCorrect} / 30`;
 
-      document.getElementById('finalScoreNum').innerText = score;
-      document.getElementById('finalPercent').innerText = `${percent}%`;
+      let noteContent = "";
+      const percent = (totalCorrect / 30) * 100;
 
-      // Topic Breakdown Scores
-      document.getElementById('scoreSec1').innerText = `${sec1Score} / 10`;
-      document.getElementById('scoreSec2').innerText = `${sec2Score} / 10`;
-      document.getElementById('scoreSec3').innerText = `${sec3Score} / 10`;
-
-      document.getElementById('barSec1').style.width = `${(sec1Score / 10) * 100}%`;
-      document.getElementById('barSec2').style.width = `${(sec2Score / 10) * 100}%`;
-      document.getElementById('barSec3').style.width = `${(sec3Score / 10) * 100}%`;
-
-      // Grade & Handwritten Remarks Logic
-      const stampGrade = document.getElementById('stampGrade');
-      const stampTitle = document.getElementById('stampTitle');
-      const handwrittenRemark = document.getElementById('handwrittenRemark');
-
-      if (score >= 27) {
-        stampGrade.innerText = "A+";
-        stampTitle.innerText = "Python Wizard";
-        handwrittenRemark.innerText = `"Exceptional performance! You have mastered variable swapping, tricky modulo operations, loops, and function error spotting!"`;
-      } else if (score >= 22) {
-        stampGrade.innerText = "A";
-        stampTitle.innerText = "Star Coder";
-        handwrittenRemark.innerText = `"Great job! You possess solid Python fundamentals. Just pay extra attention to return values and scope rules."`;
-      } else if (score >= 16) {
-        stampGrade.innerText = "B";
-        stampTitle.innerText = "Developer";
-        handwrittenRemark.innerText = `"Good effort! You understand basic syntax well, but practice loop counters and break/continue statements a bit more."`;
+      if (percent >= 90) {
+        noteContent = `Dear Explorer! 🌟 Outstanding work! You scored an impressive ${totalCorrect}/30! You showed total mastery over variable names, data types, loops, and functions. You think like a true Python programmer! Keep building awesome projects!`;
+      } else if (percent >= 70) {
+        noteContent = `Great effort! 🚀 You scored ${totalCorrect}/30! You have a really solid grasp on Python basics, logic, and random operations. Review the loop counting and function return rules above to become 100% unstoppable!`;
+      } else if (percent >= 50) {
+        noteContent = `Good start! 👍 You got ${totalCorrect}/30 correct! You did well on identifying data types and real-world concepts. Take a quick look back at variable naming rules and dictionary lookups, then try again for a higher score!`;
       } else {
-        stampGrade.innerText = "C";
-        stampTitle.innerText = "Learner";
-        handwrittenRemark.innerText = `"Keep practicing! Review operator precedence like exponentiation (**), modulo (%), and function return statements."`;
+        noteContent = `Nice try! 💡 You scored ${totalCorrect}/30. Don't worry at all—coding takes practice! Focus on mastering lists, simple for-loops, and if-else statements. Give it another try and watch your score double!`;
+      }
+
+      handwrittenNoteText.textContent = noteContent;
+
+      sectionsBreakdownGrid.innerHTML = '';
+      for (const [secName, secData] of Object.entries(sectionScores)) {
+        const secRatio = (secData.correct / secData.total) * 100;
+        let badgeColor = "bg-emerald-100 text-emerald-800 border-emerald-300";
+        if (secRatio < 50) badgeColor = "bg-rose-100 text-rose-800 border-rose-300";
+        else if (secRatio < 75) badgeColor = "bg-amber-100 text-amber-800 border-amber-300";
+
+        const card = document.createElement('div');
+        card.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center";
+        card.innerHTML = `
+          <div>
+            <span class="text-xs text-slate-500 font-bold uppercase tracking-wider block">Section</span>
+            <span class="font-bold text-slate-800 text-sm sm:text-base">${secName}</span>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg border ${badgeColor} font-extrabold text-sm font-code">
+            ${secData.correct} / ${secData.total}
+          </div>
+        `;
+        sectionsBreakdownGrid.appendChild(card);
       }
     }
 
-    // RESTART QUIZ
-    function restartQuiz() {
-      reportCardScreen.classList.add('hidden');
-      startQuiz();
-    }
+    restartBtn.addEventListener('click', () => {
+      currentQuestionIdx = 0;
+      score = 0;
+      for (const key in sectionScores) {
+        sectionScores[key].correct = 0;
+      }
+      prepareQuestions();
+      resultScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      loadQuestion();
+    });
 
-    // HELPER: ESCAPE HTML
-    function escapeHtml(text) {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+    // INIT APPLICATION
+    initFloatingBalls();
+    prepareQuestions();
+    loadQuestion();
   </script>
 </body>
 </html>
