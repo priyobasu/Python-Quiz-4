@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Ultimate 30-Question Challenge</title>
+  <title>HTML Revision</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Caveat for handwritten notes, Fira Code for code, Outfit for UI -->
+  <!-- Google Fonts: Caveat for handwritten notes, Outfit for UI, Fira Code for HTML code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -23,141 +23,119 @@
       font-family: 'Caveat', cursive;
     }
 
-    /* Floating Ball Animation */
-    .floating-ball {
-      position: absolute;
-      border-radius: 50%;
+    /* Falling Yellow Flowers Animation */
+    .flower {
+      position: fixed;
+      top: -40px;
       pointer-events: none;
-      opacity: 0.45;
-      animation: floatAround infinite alternate ease-in-out;
-      filter: blur(2px);
+      z-index: 1;
+      animation: fallDown linear infinite;
     }
 
-    @keyframes floatAround {
+    @keyframes fallDown {
       0% {
-        transform: translateY(0px) translateX(0px) scale(1);
+        transform: translateY(-20px) rotate(0deg) translateX(0px);
+        opacity: 0.9;
       }
       50% {
-        transform: translateY(-40px) translateX(30px) scale(1.1);
+        transform: translateY(50vh) rotate(180deg) translateX(25px);
+        opacity: 0.8;
       }
       100% {
-        transform: translateY(30px) translateX(-25px) scale(0.95);
+        transform: translateY(105vh) rotate(360deg) translateX(-20px);
+        opacity: 0;
       }
     }
 
-    /* Notebook paper background for handwritten final report */
-    .notebook-paper {
-      background-color: #fffef0;
-      background-image: linear-gradient(#e1e8ed 1px, transparent 1px);
-      background-size: 100% 2rem;
-      border-left: 3px double #ffb6c1;
-    }
-
-    /* Custom Scrollbar for Code Blocks */
-    pre::-webkit-scrollbar {
-      height: 6px;
-    }
-    pre::-webkit-scrollbar-thumb {
-      background: #3b82f6;
-      border-radius: 4px;
+    /* Lined Notebook Paper for Teacher's Note */
+    .notebook-sheet {
+      background-color: #fffdf5;
+      background-image: linear-gradient(#fed7aa 1px, transparent 1px);
+      background-size: 100% 2.1rem;
+      border-left: 4px double #ea580c;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 text-white min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-900">
+<body class="bg-gradient-to-br from-amber-600 via-orange-600 to-amber-700 text-white min-h-screen relative flex flex-col justify-between selection:bg-yellow-300 selection:text-orange-950">
 
-  <!-- Background Floating Colored Balls Container -->
-  <div id="balls-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+  <!-- Falling Flowers Background Container -->
+  <div id="flowers-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
   <!-- Main Container -->
-  <div class="relative z-10 container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center">
+  <div class="relative z-10 container mx-auto px-4 py-6 max-w-3xl flex-grow flex flex-col justify-center">
+
+    <!-- Header (Strictly "HTML Revision") -->
+    <header class="text-center mb-6">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-wide drop-shadow-md">
+        HTML Revision
+      </h1>
+    </header>
 
     <!-- QUIZ SCREEN -->
     <div id="quiz-screen" class="w-full">
       
-      <!-- Top Header Bar -->
-      <div class="bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-4 md:p-6 mb-6 shadow-2xl">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+      <!-- Top Info Bar: Question Counter, Timer, Live Score -->
+      <div class="bg-orange-950/70 backdrop-blur-md border border-orange-400/40 rounded-2xl p-4 sm:p-5 mb-5 shadow-2xl">
+        <div class="flex justify-between items-center gap-3">
           
-          <!-- Category Badge & Question Tracker -->
+          <!-- Question Number Tracker -->
           <div>
-            <span id="section-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 uppercase tracking-wider">
-              Section 1: Variable Names
-            </span>
-            <h1 class="text-xl sm:text-2xl font-bold mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-300">
-              Question <span id="q-num">1</span> <span class="text-slate-400 font-normal text-lg">/ 30</span>
-            </h1>
+            <span class="text-xs uppercase font-bold text-amber-300 tracking-wider block">Question</span>
+            <div class="text-2xl font-black text-yellow-200 font-code">
+              <span id="q-num">1</span> <span class="text-orange-300 text-lg font-normal">/ 10</span>
+            </div>
           </div>
 
-          <!-- Timer & Score Display -->
-          <div class="flex items-center gap-4">
-            <!-- Score -->
-            <div class="text-right">
-              <span class="text-xs text-slate-400 uppercase tracking-wider block">Score</span>
-              <span id="live-score" class="text-xl font-bold text-yellow-400">0 pts</span>
-            </div>
+          <!-- Live Score -->
+          <div class="text-center bg-orange-900/80 px-4 py-2 rounded-xl border border-orange-400/30">
+            <span class="text-[11px] uppercase tracking-wider text-orange-200 block font-semibold">Points</span>
+            <span id="live-score" class="text-xl font-extrabold text-yellow-300 font-code">0 / 10</span>
+          </div>
 
-            <!-- Timer Circle / Badge -->
-            <div class="relative w-16 h-16 flex items-center justify-center bg-slate-800 rounded-full border-2 border-cyan-500 shadow-inner">
-              <span id="timer-text" class="text-xl font-extrabold text-cyan-400 font-code">50</span>
-              <span class="text-[9px] text-slate-400 absolute bottom-1">sec</span>
+          <!-- 30-Second Timer -->
+          <div class="flex items-center gap-2">
+            <div class="relative w-14 h-14 flex items-center justify-center bg-orange-900/90 rounded-full border-2 border-yellow-400 shadow-inner">
+              <span id="timer-text" class="text-xl font-black text-yellow-300 font-code">30</span>
+              <span class="text-[8px] text-orange-200 absolute bottom-1 font-bold">sec</span>
             </div>
           </div>
         </div>
 
-        <!-- Timer Progress Bar -->
-        <div class="w-full bg-slate-800 h-2.5 rounded-full mt-4 overflow-hidden border border-slate-700">
-          <div id="timer-bar" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-1000 ease-linear w-full"></div>
+        <!-- Timer Progress Bar (30 seconds) -->
+        <div class="w-full bg-orange-950 h-2.5 rounded-full mt-3 overflow-hidden border border-orange-500/40">
+          <div id="timer-bar" class="h-full bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 transition-all duration-1000 ease-linear w-full"></div>
         </div>
       </div>
 
-      <!-- Question Card -->
-      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 md:p-8 shadow-2xl relative overflow-hidden">
+      <!-- Question Box -->
+      <div class="bg-orange-950/85 backdrop-blur-md border border-orange-400/30 rounded-2xl p-5 sm:p-7 shadow-2xl relative">
         
-        <!-- Question Text -->
-        <div class="mb-6">
-          <h2 id="question-text" class="text-lg md:text-xl font-semibold text-slate-100 leading-relaxed">
-            Question text goes here...
-          </h2>
+        <!-- Question Title -->
+        <h2 id="question-text" class="text-lg sm:text-xl font-bold text-amber-50 leading-relaxed mb-6">
+          Question loading...
+        </h2>
 
-          <!-- Code Snippet Block -->
-          <div id="code-container" class="hidden mt-4">
-            <pre class="bg-slate-950 border border-cyan-500/20 rounded-xl p-4 font-code text-sm sm:text-base text-cyan-300 overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
-          </div>
+        <!-- Dynamic Options Grid -->
+        <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          <!-- Option buttons rendered here dynamically -->
         </div>
 
-        <!-- Multi-select Notice (Conditional) -->
-        <div id="multiselect-notice" class="hidden mb-4 p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-cyan-300 text-sm flex items-center gap-2">
-          <span>💡</span> <span>Select <strong>ALL</strong> valid options below, then click <strong>Submit Answer</strong>!</span>
-        </div>
-
-        <!-- Option Buttons Grid -->
-        <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
-          <!-- Buttons dynamically rendered here -->
-        </div>
-
-        <!-- Multi-Select Submit Button -->
-        <div id="multiselect-actions" class="hidden mb-6">
-          <button id="submit-multiselect-btn" class="w-full py-3 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl shadow-lg transition transform active:scale-95">
-            Submit My Selections
-          </button>
-        </div>
-
-        <!-- Explanation Panel -->
-        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6">
+        <!-- Explanation Container (Under Buttons) -->
+        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6 shadow-md">
           <div class="flex items-start gap-3">
-            <span id="explanation-icon" class="text-2xl">💡</span>
+            <span id="explanation-icon" class="text-2xl shrink-0">💡</span>
             <div>
               <h4 id="explanation-title" class="font-bold text-base">Explanation</h4>
-              <p id="explanation-text" class="text-sm mt-1 leading-relaxed text-slate-200">
-                Detailed explanation will appear right here under the buttons.
+              <p id="explanation-text" class="text-sm mt-1 leading-relaxed text-amber-50">
+                Explanation text here.
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Next / Continue Button -->
+        <!-- Next Question Button -->
         <div class="flex justify-end">
-          <button id="next-btn" class="hidden py-3 px-8 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-extrabold rounded-xl shadow-xl transition transform active:scale-95 flex items-center gap-2">
+          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-orange-950 font-black rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
             <span>Next Question</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
@@ -166,44 +144,45 @@
       </div>
     </div>
 
-    <!-- FINAL RESULT SCREEN (Handwritten Note & Breakdown) -->
-    <div id="result-screen" class="hidden w-full my-6">
-      <div class="notebook-paper rounded-2xl p-6 sm:p-10 shadow-2xl text-slate-900 border-t-8 border-cyan-600 relative overflow-hidden">
+    <!-- RESULT SCREEN (Teacher's Handwritten Note) -->
+    <div id="result-screen" class="hidden w-full my-4">
+      <div class="notebook-sheet rounded-2xl p-6 sm:p-9 shadow-2xl text-slate-900 border-t-8 border-orange-600 relative overflow-hidden">
         
-        <!-- Header / Date Tag -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-300 pb-4 mb-6">
+        <!-- Top Title Bar -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-orange-300/70 pb-4 mb-6">
           <div>
-            <h1 class="font-handwriting text-4xl sm:text-5xl font-bold text-blue-900">Python Progress Report</h1>
-            <p class="text-sm text-slate-600 font-medium mt-1">Student: Python Explorer (11 Years Old)</p>
+            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-orange-950">Teacher's Note</h2>
+            <p class="text-xs text-orange-800 font-semibold tracking-wide uppercase mt-1">HTML Revision & Concept Review</p>
           </div>
-          <div class="mt-2 sm:mt-0 bg-blue-100 border border-blue-300 rounded-lg px-4 py-2 text-center">
-            <span class="text-xs uppercase text-blue-700 tracking-wider block font-bold">Final Score</span>
-            <span id="final-total-score" class="text-3xl font-extrabold text-blue-950">0 / 30</span>
+          <div class="mt-3 sm:mt-0 bg-orange-100 border-2 border-orange-400 rounded-xl px-4 py-2 text-center shadow-sm">
+            <span class="text-[11px] uppercase tracking-wider text-orange-900 font-bold block">Final Score</span>
+            <span id="final-total-score" class="text-3xl font-black text-orange-900 font-code">0 / 10</span>
           </div>
         </div>
 
-        <!-- Teacher's Handwritten Note -->
-        <div class="mb-8 bg-amber-50/80 p-5 rounded-xl border border-amber-200/80 shadow-sm">
-          <h3 class="font-handwriting text-3xl font-bold text-amber-900 mb-2">Teacher's Note:</h3>
-          <p id="handwritten-note-text" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed">
-            Loading handwritten evaluation note...
+        <!-- Handwritten Evaluation Note -->
+        <div class="mb-6 bg-white/70 p-5 rounded-xl border border-orange-200 shadow-sm">
+          <p id="handwritten-note" class="font-handwriting text-2xl sm:text-3xl text-slate-900 leading-relaxed">
+            Generating note...
           </p>
         </div>
 
-        <!-- Section-by-Section Score Breakdown -->
-        <h3 class="font-bold text-lg text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <span>📊</span> Section-by-Section Performance
-        </h3>
-        
-        <div id="sections-breakdown-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-          <!-- Dynamically filled with section cards -->
+        <!-- Concept Reminder Table -->
+        <div class="mb-6 p-4 rounded-xl bg-orange-50 border border-orange-300">
+          <h3 class="font-bold text-sm text-orange-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>📌</span> Remember the Difference:
+          </h3>
+          <ul class="text-xs sm:text-sm text-orange-900 space-y-1.5 leading-relaxed">
+            <li>• <strong>Attribute</strong>: Goes inside the opening tag (like <code class="bg-orange-200/70 px-1.5 py-0.5 rounded font-code text-orange-950 font-bold">style="..."</code> or <code class="bg-orange-200/70 px-1.5 py-0.5 rounded font-code text-orange-950 font-bold">src="..."</code>).</li>
+            <li>• <strong>Property</strong>: Goes <em>inside</em> the style attribute to change looks (like <code class="bg-orange-200/70 px-1.5 py-0.5 rounded font-code text-orange-950 font-bold">color</code>, <code class="bg-orange-200/70 px-1.5 py-0.5 rounded font-code text-orange-950 font-bold">border-radius</code>, <code class="bg-orange-200/70 px-1.5 py-0.5 rounded font-code text-orange-950 font-bold">text-align</code>).</li>
+          </ul>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row justify-center gap-4 border-t border-slate-300 pt-6">
-          <button id="restart-btn" class="py-3.5 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            <span>Retake Challenge</span>
+        <!-- Retake Button -->
+        <div class="flex justify-center border-t border-orange-200 pt-5">
+          <button id="restart-btn" class="py-3 px-8 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <span>Retake Revision</span>
           </button>
         </div>
 
@@ -213,862 +192,384 @@
   </div>
 
   <!-- Footer -->
-  <footer class="relative z-10 py-4 text-center text-xs text-slate-400 border-t border-slate-800/60 bg-slate-950/60">
-    <p>Python Learning Quest • Designed for Young Coders 🚀</p>
+  <footer class="relative z-10 py-3 text-center text-xs text-orange-200/80 bg-orange-950/70 border-t border-orange-500/30">
+    <p>HTML Revision Quiz • Attributes & Properties Edition</p>
   </footer>
 
   <script>
     // -------------------------------------------------------------
-    // QUESTION DATABASE (30 QUESTIONS ACROSS 6 SECTIONS)
+    // 10 QUESTIONS - Tags presented cleanly without parenthetical names
+    // True/False questions contain exactly two options (True / False).
     // -------------------------------------------------------------
-    const rawQuestionsDatabase = [
-
-      // --- SECTION 1: VARIABLE NAMES (Q1 - Q4) ---
+    const questionsRaw = [
       {
-        section: "Variable Names",
-        isMultiSelect: true,
-        question: "Which of the following options are VALID variable names in Python? Select all correct ones!",
-        code: null,
+        question: "I want to add regular text or a paragraph in my website. Which tag do I use?",
         options: [
-          { text: "user_age", isCorrect: true },
-          { text: "2nd_place", isCorrect: false },
-          { text: "my-score", isCorrect: false },
-          { text: "total_points", isCorrect: true },
-          { text: "class", isCorrect: false },
-          { text: "superStar", isCorrect: true }
+          { text: "<p>", isCorrect: true },
+          { text: "<text>", isCorrect: false },
+          { text: "<h1>", isCorrect: false },
+          { text: "<span>", isCorrect: false }
         ],
-        explanation: "In Python, valid variable names start with a letter or underscore, contain only letters, numbers, and underscores, and CANNOT be reserved keywords (like 'class') or use hyphens/start with numbers!"
+        explanation: "The <p> tag stands for paragraph and is the primary HTML tag used to add regular body text."
       },
       {
-        section: "Variable Names",
-        isMultiSelect: false,
-        question: "Out of these 6 options, click the INVALID variable name that will cause a Syntax Error in Python:",
-        code: null,
+        question: "I want to add an image to my website and round its corners. What should I do?",
         options: [
-          { text: "player_1", isCorrect: false },
-          { text: "_secret_key", isCorrect: false },
-          { text: "first name", isCorrect: true },
-          { text: "score2", isCorrect: false },
-          { text: "totalAmount", isCorrect: false },
-          { text: "IS_ACTIVE", isCorrect: false }
+          { text: "Use property border-radius inside the style attribute of <img>", isCorrect: true },
+          { text: "Use attribute border-radius directly inside the <style> tag", isCorrect: false },
+          { text: "Use property corner-round inside the style attribute of <img>", isCorrect: false },
+          { text: "Wrap the <img> inside a <border-radius> tag", isCorrect: false }
         ],
-        explanation: "'first name' has a space in it! Python variable names cannot contain spaces. Use an underscore like 'first_name' instead."
+        explanation: "'style' is the attribute written inside the <img> tag, and 'border-radius' is the CSS styling property written inside that style attribute!"
       },
       {
-        section: "Variable Names",
-        isMultiSelect: false,
-        question: "Which of these 6 variable names follows Python's recommended 'snake_case' convention best?",
-        code: null,
+        question: "I want to create a bulleted list without numbers on my web page. Which tag do I use?",
         options: [
-          { text: "HighScore", isCorrect: false },
-          { text: "high-score", isCorrect: false },
-          { text: "high_score", isCorrect: true },
-          { text: "HIGHSCORE", isCorrect: false },
-          { text: "1stHighScore", isCorrect: false },
-          { text: "highScore!", isCorrect: false }
+          { text: "<ul>", isCorrect: true },
+          { text: "<ol>", isCorrect: false },
+          { text: "<list>", isCorrect: false },
+          { text: "<li>", isCorrect: false }
         ],
-        explanation: "'high_score' uses lower-case words separated by underscores, which is Python's standard 'snake_case' style rule!"
+        explanation: "The <ul> tag creates an 'Unordered List', which displays bullet points. The <ol> tag creates numbered lists, and <li> is for each individual item."
       },
       {
-        section: "Variable Names",
-        isMultiSelect: false,
-        question: "Which option CANNOT be used as a variable name because it is a reserved Python keyword?",
-        code: null,
+        question: "I want to add a border all the way around my web page. What should I do?",
         options: [
-          { text: "number", isCorrect: false },
-          { text: "greeting", isCorrect: false },
-          { text: "my_var", isCorrect: false },
-          { text: "while", isCorrect: true },
-          { text: "python_game", isCorrect: false },
-          { text: "counter", isCorrect: false }
+          { text: "Add a style attribute to the <body> tag and use the border property", isCorrect: true },
+          { text: "Add a border attribute directly under the <html> tag without style", isCorrect: false },
+          { text: "Add a style property inside the <border> tag", isCorrect: false },
+          { text: "Use a <border> tag placed inside the <head> section", isCorrect: false }
         ],
-        explanation: "'while' is a built-in Python keyword reserved for creating loops, so Python will throw a Syntax Error if you try to use it as a variable name!"
-      },
-
-      // --- SECTION 2: DATA TYPES (Q5 - Q8) ---
-      {
-        section: "Data Types",
-        isMultiSelect: false,
-        question: "What is the exact data type of the variable `x = 99.5` in Python?",
-        code: "x = 99.5",
-        options: [
-          { text: "int", isCorrect: false },
-          { text: "float", isCorrect: true },
-          { text: "str", isCorrect: false },
-          { text: "bool", isCorrect: false },
-          { text: "list", isCorrect: false },
-          { text: "dict", isCorrect: false }
-        ],
-        explanation: "Numbers with decimal points like 99.5 are stored as 'float' (floating-point numbers) in Python!"
+        explanation: "The <body> tag represents the entire visible page. You give it the 'style' attribute, and inside you write the 'border' property (e.g., style='border: 5px solid black;')."
       },
       {
-        section: "Data Types",
-        isMultiSelect: false,
-        question: "What is the data type of `inventory = ['sword', 'shield', 'potion']`?",
-        code: "inventory = ['sword', 'shield', 'potion']",
+        question: "I want to change the color of my text. What is the correct way?",
         options: [
-          { text: "int", isCorrect: false },
-          { text: "str", isCorrect: false },
-          { text: "bool", isCorrect: false },
-          { text: "list", isCorrect: true },
-          { text: "float", isCorrect: false },
-          { text: "dict", isCorrect: false }
+          { text: "Add the color property inside the style attribute", isCorrect: true },
+          { text: "Add the text-color attribute inside the <font> tag", isCorrect: false },
+          { text: "Add the font-color property outside the style attribute", isCorrect: false },
+          { text: "Wrap the text with a <color> closing tag", isCorrect: false }
         ],
-        explanation: "Items enclosed in square brackets `[...]` separated by commas represent a 'list'."
+        explanation: "'style' is the attribute placed inside the tag. 'color' is the property inside style that defines text color (e.g., style='color: orange;')."
       },
       {
-        section: "Data Types",
-        isMultiSelect: false,
-        question: "What is the data type of `player = {'name': 'Alex', 'level': 10}`?",
-        code: "player = {'name': 'Alex', 'level': 10}",
+        question: "I want my image to select its height by itself when I mention the width in styling. What should I do?",
         options: [
-          { text: "int", isCorrect: false },
-          { text: "float", isCorrect: false },
-          { text: "str", isCorrect: false },
-          { text: "bool", isCorrect: false },
-          { text: "list", isCorrect: false },
-          { text: "dict", isCorrect: true }
+          { text: "Set the height property to 'auto' inside the style attribute", isCorrect: true },
+          { text: "Set the height property to 'natural' inside the style attribute", isCorrect: false },
+          { text: "Add the auto-height attribute directly inside the <img> tag", isCorrect: false },
+          { text: "Leave both width and height properties completely blank", isCorrect: false }
         ],
-        explanation: "Key-value pairs surrounded by curly braces `{...}` form a 'dict' (dictionary)."
+        explanation: "Setting 'height: auto;' tells the browser to automatically calculate the height proportionally based on the width, preventing the image from getting stretched."
       },
       {
-        section: "Data Types",
-        isMultiSelect: false,
-        question: "What data type is produced by evaluating the expression `5 > 3`?",
-        code: "result = (5 > 3)",
+        question: "I want to align my main heading to the center of the screen. What should I do?",
         options: [
-          { text: "int", isCorrect: false },
-          { text: "float", isCorrect: false },
-          { text: "str", isCorrect: false },
-          { text: "bool", isCorrect: true },
-          { text: "list", isCorrect: false },
-          { text: "dict", isCorrect: false }
+          { text: "Use property text-align and set it to 'center' inside style", isCorrect: true },
+          { text: "Use property align-text and set it to 'middle' inside style", isCorrect: false },
+          { text: "Add the center attribute directly inside the <title> tag", isCorrect: false },
+          { text: "Use property heading-center directly inside the <body> tag", isCorrect: false }
         ],
-        explanation: "Comparison expressions like `5 > 3` evaluate to either True or False, which belongs to the 'bool' (Boolean) data type."
-      },
-
-      // --- SECTION 3: REAL-WORLD SITUATIONS & CONCEPTS (Q9 - Q12) ---
-      {
-        section: "Real-World Concepts",
-        isMultiSelect: false,
-        question: "Situation: You are coding a game. You want your character's run animation to repeat OVER AND OVER continuously as long as the player holds down the right arrow key. Which concept should you use?",
-        code: null,
-        options: [
-          { text: "Dictionary", isCorrect: false },
-          { text: "While Loop", isCorrect: true },
-          { text: "Float Variable", isCorrect: false },
-          { text: "Import statement", isCorrect: false },
-          { text: "String Slicing", isCorrect: false },
-          { text: "Integer division", isCorrect: false }
-        ],
-        explanation: "A 'While Loop' repeats code repeatedly as long as a condition (holding the key) remains True!"
+        explanation: "'text-align' is the CSS property used inside the style attribute, and its value is set to 'center' (e.g., <h1 style='text-align: center;'>)."
       },
       {
-        section: "Real-World Concepts",
-        isMultiSelect: false,
-        question: "Situation: You want to build a Phonebook app where you can type a friend's Name (Key) and instantly get their Phone Number (Value). Which Python structure is designed for this?",
-        code: null,
+        question: "State True or False: The <body> tag is created inside the <html> tag.",
         options: [
-          { text: "For Loop", isCorrect: false },
-          { text: "Boolean", isCorrect: false },
-          { text: "Dictionary", isCorrect: true },
-          { text: "Float Variable", isCorrect: false },
-          { text: "If-Else Statement", isCorrect: false },
-          { text: "Print Function", isCorrect: false }
-        ],
-        explanation: "A 'Dictionary' stores data in key-value pairs (like Name ➔ Phone Number), making lookups fast and simple!"
-      },
-      {
-        section: "Real-World Concepts",
-        isMultiSelect: false,
-        question: "Situation: Your smart house system checks the sensor. IF temperature > 75 degrees, turn ON Air Conditioner; ELSE, keep it OFF. What programming structure handles this decision?",
-        code: null,
-        options: [
-          { text: "Random Number Generator", isCorrect: false },
-          { text: "List Indexing", isCorrect: false },
-          { text: "Loop Counting", isCorrect: false },
-          { text: "If-Else Conditional", isCorrect: true },
-          { text: "Function Parameter", isCorrect: false },
-          { text: "String Concatenation", isCorrect: false }
-        ],
-        explanation: "If-Else statements allow code to make decisions based on whether conditions are true or false!"
-      },
-      {
-        section: "Real-World Concepts",
-        isMultiSelect: false,
-        question: "Situation: You wrote 10 lines of code to calculate tax and discounts. You need to perform this EXACT calculation in 5 different parts of your online store program. What should you create?",
-        code: null,
-        options: [
-          { text: "A While Loop", isCorrect: false },
-          { text: "A Float Variable", isCorrect: false },
-          { text: "A List", isCorrect: false },
-          { text: "A Syntax Error", isCorrect: false },
-          { text: "A Function", isCorrect: true },
-          { text: "A Boolean Value", isCorrect: false }
-        ],
-        explanation: "A 'Function' lets you wrap code into a reusable block that can be called anytime with different inputs!"
-      },
-
-      // --- SECTION 4: LOOPS, LISTS & DICTIONARIES (Q13 - Q19) ---
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "How many times will this loop print 'Hello'?",
-        code: "for i in range(3, 8):\n    print('Hello')",
-        options: [
-          { text: "8 times", isCorrect: false },
-          { text: "5 times", isCorrect: true },
-          { text: "3 times", isCorrect: false },
-          { text: "6 times", isCorrect: false },
-          { text: "4 times", isCorrect: false },
-          { text: "0 times", isCorrect: false }
-        ],
-        explanation: "`range(3, 8)` generates values 3, 4, 5, 6, 7 (stops BEFORE 8). Counting these gives exactly 5 iterations!"
-      },
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "What will be printed by this Python code?",
-        code: "total = 0\nfor x in range(1, 4):\n    total += x\nprint(total)",
-        options: [
-          { text: "10", isCorrect: false },
-          { text: "4", isCorrect: false },
-          { text: "6", isCorrect: true },
-          { text: "3", isCorrect: false },
-          { text: "7", isCorrect: false },
-          { text: "0", isCorrect: false }
-        ],
-        explanation: "`range(1, 4)` gives numbers 1, 2, and 3. `total` starts at 0 ➔ 0 + 1 + 2 + 3 = 6."
-      },
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "What is the output of this list indexing code?",
-        code: "colors = ['red', 'green', 'blue', 'yellow']\nprint(colors[2])",
-        options: [
-          { text: "'green'", isCorrect: false },
-          { text: "'red'", isCorrect: false },
-          { text: "'yellow'", isCorrect: false },
-          { text: "'blue'", isCorrect: true },
-          { text: "IndexError", isCorrect: false },
-          { text: "'2'", isCorrect: false }
-        ],
-        explanation: "Python list indices start at 0! Index 0='red', index 1='green', index 2='blue'."
-      },
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "What will `nums` contain after executing this code?",
-        code: "nums = [10, 20, 30]\nnums.append(40)\nnums.pop(0)\nprint(nums)",
-        options: [
-          { text: "[10, 20, 30, 40]", isCorrect: false },
-          { text: "[10, 20, 30]", isCorrect: false },
-          { text: "[20, 30]", isCorrect: false },
-          { text: "[40, 30, 20]", isCorrect: false },
-          { text: "[10, 30, 40]", isCorrect: false },
-          { text: "[20, 30, 40]", isCorrect: true }
-        ],
-        explanation: "`append(40)` makes list `[10, 20, 30, 40]`. Then `pop(0)` removes index 0 (the number 10), leaving `[20, 30, 40]`!"
-      },
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "What value does `pet.get('age')` print here?",
-        code: "pet = {'name': 'Fluffy', 'age': 4, 'type': 'cat'}\nprint(pet.get('age'))",
-        options: [
-          { text: "'Fluffy'", isCorrect: false },
-          { text: "4", isCorrect: true },
-          { text: "'type'", isCorrect: false },
-          { text: "'cat'", isCorrect: false },
-          { text: "None", isCorrect: false },
-          { text: "KeyError", isCorrect: false }
-        ],
-        explanation: "The key 'age' maps directly to the integer value 4 in the dictionary."
-      },
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "What is printed after updating the dictionary value?",
-        code: "scores = {'Alice': 50, 'Bob': 70}\nscores['Bob'] = 85\nprint(scores['Bob'])",
-        options: [
-          { text: "70", isCorrect: false },
-          { text: "155", isCorrect: false },
-          { text: "85", isCorrect: true },
-          { text: "50", isCorrect: false },
-          { text: "KeyError", isCorrect: false },
-          { text: "None", isCorrect: false }
-        ],
-        explanation: "`scores['Bob'] = 85` overwrites Bob's previous score of 70 with 85."
-      },
-      {
-        section: "Loops, Lists & Dicts",
-        isMultiSelect: false,
-        question: "What will be output by this loop over a list of strings?",
-        code: "fruits = ['apple', 'banana']\nfor f in fruits:\n    print(f.upper())",
-        options: [
-          { text: "apple then banana", isCorrect: false },
-          { text: "APPLE BANANA", isCorrect: false },
-          { text: "2", isCorrect: false },
-          { text: "['APPLE', 'BANANA']", isCorrect: false },
-          { text: "APPLE then BANANA", isCorrect: true },
-          { text: "SyntaxError", isCorrect: false }
-        ],
-        explanation: "The loop iterates through each string and prints it in uppercase letters (`APPLE`, then `BANANA`)."
-      },
-
-      // --- SECTION 5: FUNCTIONS & LOGIC / IF-ELSE (Q20 - Q25) ---
-      {
-        section: "Functions & Logic",
-        isMultiSelect: false,
-        question: "What does this function call output?",
-        code: "def double(num):\n    return num * 2\n\nresult = double(7)\nprint(result)",
-        options: [
-          { text: "7", isCorrect: false },
-          { text: "72", isCorrect: false },
-          { text: "14", isCorrect: true },
-          { text: "None", isCorrect: false },
-          { text: "28", isCorrect: false },
-          { text: "Error", isCorrect: false }
-        ],
-        explanation: "Calling `double(7)` passes 7 as `num`, returning `7 * 2 = 14`."
-      },
-      {
-        section: "Functions & Logic",
-        isMultiSelect: false,
-        question: "What string is returned by `check_speed(65)`?",
-        code: "def check_speed(speed):\n    if speed > 70:\n        return 'Fast'\n    elif speed >= 50:\n        return 'Normal'\n    else:\n        return 'Slow'",
-        options: [
-          { text: "'Fast'", isCorrect: false },
-          { text: "'Normal'", isCorrect: true },
-          { text: "'Slow'", isCorrect: false },
-          { text: "True", isCorrect: false },
-          { text: "65", isCorrect: false },
-          { text: "None", isCorrect: false }
-        ],
-        explanation: "65 is not greater than 70, but 65 >= 50 is True, so it executes `return 'Normal'`!"
-      },
-      {
-        section: "Functions & Logic",
-        isMultiSelect: false,
-        question: "What boolean output does this logical expression produce?",
-        code: "x = 15\ny = 20\nprint(not (x > 10 and y < 15))",
-        options: [
-          { text: "False", isCorrect: false },
-          { text: "15", isCorrect: false },
-          { text: "20", isCorrect: false },
           { text: "True", isCorrect: true },
-          { text: "None", isCorrect: false },
-          { text: "SyntaxError", isCorrect: false }
+          { text: "False", isCorrect: false }
         ],
-        explanation: "`x > 10` is True, but `y < 15` is False. Thus `(True and False)` is False. Finally, `not (False)` flips to True!"
+        explanation: "True! In every HTML document, <html> is the top-level container tag, and both <head> and <body> are nested inside it."
       },
       {
-        section: "Functions & Logic",
-        isMultiSelect: false,
-        question: "Spot the Error: What error will Python raise when parsing this function definition?",
-        code: "def greet(name)\n    print('Hello ' + name)",
-        options: [
-          { text: "NameError", isCorrect: false },
-          { text: "TypeError", isCorrect: false },
-          { text: "SyntaxError (missing colon ':' after function header)", isCorrect: true },
-          { text: "IndentationError", isCorrect: false },
-          { text: "ZeroDivisionError", isCorrect: false },
-          { text: "No Error", isCorrect: false }
-        ],
-        explanation: "In Python, function header lines must end with a colon `:` (e.g., `def greet(name):`). Omitting it causes a SyntaxError!"
-      },
-      {
-        section: "Functions & Logic",
-        isMultiSelect: false,
-        question: "What will `add_bonus(10)` output when using the default argument?",
-        code: "def add_bonus(score, bonus=5):\n    return score + bonus\n\nprint(add_bonus(10))",
-        options: [
-          { text: "10", isCorrect: false },
-          { text: "5", isCorrect: false },
-          { text: "50", isCorrect: false },
-          { text: "15", isCorrect: true },
-          { text: "TypeError", isCorrect: false },
-          { text: "0", isCorrect: false }
-        ],
-        explanation: "Since no second parameter is passed, `bonus` takes its default value of 5. `10 + 5 = 15`."
-      },
-      {
-        section: "Functions & Logic",
-        isMultiSelect: false,
-        question: "Predict the output of this conditional statement:",
-        code: "age = 11\nhas_ticket = True\nif age >= 10 and has_ticket:\n    print('Welcome!')\nelse:\n    print('Denied')",
-        options: [
-          { text: "'Denied'", isCorrect: false },
-          { text: "True", isCorrect: false },
-          { text: "11", isCorrect: false },
-          { text: "SyntaxError", isCorrect: false },
-          { text: "Nothing", isCorrect: false },
-          { text: "'Welcome!'", isCorrect: true }
-        ],
-        explanation: "Both `age >= 10` (11 >= 10 is True) AND `has_ticket` (True) are satisfied, so it prints 'Welcome!'."
-      },
-
-      // --- SECTION 6: RANDOM MODULE & TRUE/FALSE (Q26 - Q30) ---
-      {
-        section: "Random & True/False",
-        isMultiSelect: false,
-        question: "What range of values does `random.random()` return in Python?",
-        code: "import random\nnum = random.random()",
-        options: [
-          { text: "A random integer between 0 and 100", isCorrect: false },
-          { text: "Strictly either 0 or 1", isCorrect: false },
-          { text: "A random float from 0.0 up to (but not including) 1.0", isCorrect: true },
-          { text: "A random string", isCorrect: false },
-          { text: "A number between 1 and 10", isCorrect: false },
-          { text: "Any negative float", isCorrect: false }
-        ],
-        explanation: "`random.random()` produces floating point numbers in the range `[0.0, 1.0)`."
-      },
-      {
-        section: "Random & True/False",
-        isMultiSelect: false,
-        question: "If you execute `random.randint(1, 6)`, what are the potential returned values?",
-        code: "import random\ndice = random.randint(1, 6)",
-        options: [
-          { text: "Integers 1 to 5 only (excluding 6)", isCorrect: false },
-          { text: "Any decimal number between 1 and 6", isCorrect: false },
-          { text: "Any integer from 1 to 6 inclusive (1, 2, 3, 4, 5, 6)", isCorrect: true },
-          { text: "Only 1 or 6", isCorrect: false },
-          { text: "Random float starting at 0", isCorrect: false },
-          { text: "0 or 1", isCorrect: false }
-        ],
-        explanation: "Unlike Python `range()`, `random.randint(a, b)` INCLUDES both endpoints `a` and `b`!"
-      },
-      {
-        section: "Random & True/False",
-        isMultiSelect: false,
-        question: "True or False: `random.choice(['apple', 'banana', 'cherry'])` randomly picks one element from the list.",
-        code: "import random\nfruit = random.choice(['apple', 'banana', 'cherry'])",
-        options: [
-          { text: "False (It causes a TypeError)", isCorrect: false },
-          { text: "True (Selects one random item from a non-empty list)", isCorrect: true }
-        ],
-        explanation: "True! `random.choice()` is built to pick a random item from any sequence like a list."
-      },
-      {
-        section: "Random & True/False",
-        isMultiSelect: false,
-        question: "True or False: Python list indices start at 1 (so the first element is `my_list[1]`).",
-        code: null,
-        options: [
-          { text: "True (Indices start at 1)", isCorrect: false },
-          { text: "False (Python lists are 0-indexed; first element is index 0)", isCorrect: true }
-        ],
-        explanation: "False! Python lists start indexing at 0. The first item is always `my_list[0]`."
-      },
-      {
-        section: "Random & True/False",
-        isMultiSelect: false,
-        question: "True or False: `random.random()` can return the float number `1.5`.",
-        code: "import random\nval = random.random()",
+        question: "State True or False: The break tag (<br>) has a closing tag (</br>).",
         options: [
           { text: "True", isCorrect: false },
-          { text: "False (`random.random()` NEVER returns numbers >= 1.0)", isCorrect: true }
+          { text: "False", isCorrect: true }
         ],
-        explanation: "False! `random.random()` always stays strictly below 1.0 (range 0.0 to 0.9999...)."
+        explanation: "False! The <br> tag is an empty tag with no content inside it, so it does not require a closing </br> tag."
+      },
+      {
+        question: "State True or False: 'bgcolor' used for adding background color to the body is a property.",
+        options: [
+          { text: "True", isCorrect: false },
+          { text: "False", isCorrect: true }
+        ],
+        explanation: "False! 'bgcolor' is an old HTML attribute (like <body bgcolor='red'>). The CSS property used inside the style attribute is 'background-color'."
       }
     ];
 
-    // Deep clone and shuffle option order for every question dynamically
-    let questionsDatabase = [];
+    // Helper: Safely escape HTML characters for visible text inside button spans
+    function escapeHTML(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Prepare Questions with shuffled options
+    let questionsList = [];
 
     function prepareQuestions() {
-      questionsDatabase = rawQuestionsDatabase.map(q => {
-        const clonedOptions = [...q.options];
+      questionsList = questionsRaw.map(q => {
+        const clonedOpts = [...q.options];
         // Fisher-Yates shuffle options
-        for (let i = clonedOptions.length - 1; i > 0; i--) {
+        for (let i = clonedOpts.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
-          [clonedOptions[i], clonedOptions[j]] = [clonedOptions[j], clonedOptions[i]];
+          [clonedOpts[i], clonedOpts[j]] = [clonedOpts[j], clonedOpts[i]];
         }
-
-        if (q.isMultiSelect) {
-          const correctAnswers = [];
-          clonedOptions.forEach((opt, idx) => {
-            if (opt.isCorrect) correctAnswers.push(idx);
-          });
-          return {
-            ...q,
-            options: clonedOptions.map(o => o.text),
-            correctAnswers: correctAnswers
-          };
-        } else {
-          const correctAnswerIdx = clonedOptions.findIndex(o => o.isCorrect);
-          return {
-            ...q,
-            options: clonedOptions.map(o => o.text),
-            correctAnswer: correctAnswerIdx
-          };
-        }
+        return {
+          question: q.question,
+          options: clonedOpts.map(o => o.text),
+          correctIndex: clonedOpts.findIndex(o => o.isCorrect),
+          explanation: q.explanation
+        };
       });
     }
 
     // STATE VARIABLES
-    let currentQuestionIdx = 0;
+    let currentIndex = 0;
     let score = 0;
-    let timerInterval = null;
-    let timeLeft = 50;
-    let selectedMultiIndices = [];
-    let questionAnswered = false;
-
-    // Track score by section
-    const sectionScores = {
-      "Variable Names": { correct: 0, total: 4 },
-      "Data Types": { correct: 0, total: 4 },
-      "Real-World Concepts": { correct: 0, total: 4 },
-      "Loops, Lists & Dicts": { correct: 0, total: 7 },
-      "Functions & Logic": { correct: 0, total: 6 },
-      "Random & True/False": { correct: 0, total: 5 }
-    };
+    let timeLeft = 30;
+    let timerId = null;
+    let isAnswered = false;
 
     // DOM ELEMENTS
-    const quizScreen = document.getElementById('quiz-screen');
-    const resultScreen = document.getElementById('result-screen');
     const qNumEl = document.getElementById('q-num');
-    const sectionBadgeEl = document.getElementById('section-badge');
     const liveScoreEl = document.getElementById('live-score');
     const timerTextEl = document.getElementById('timer-text');
     const timerBarEl = document.getElementById('timer-bar');
     const questionTextEl = document.getElementById('question-text');
-    const codeContainer = document.getElementById('code-container');
-    const codeSnippetEl = document.getElementById('code-snippet');
     const optionsGrid = document.getElementById('options-grid');
-    const multiselectNotice = document.getElementById('multiselect-notice');
-    const multiselectActions = document.getElementById('multiselect-actions');
-    const submitMultiselectBtn = document.getElementById('submit-multiselect-btn');
     const explanationBox = document.getElementById('explanation-box');
     const explanationTitle = document.getElementById('explanation-title');
     const explanationText = document.getElementById('explanation-text');
+    const explanationIcon = document.getElementById('explanation-icon');
     const nextBtn = document.getElementById('next-btn');
-    const handwrittenNoteText = document.getElementById('handwritten-note-text');
-    const sectionsBreakdownGrid = document.getElementById('sections-breakdown-grid');
+
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
     const finalTotalScore = document.getElementById('final-total-score');
+    const handwrittenNote = document.getElementById('handwritten-note');
     const restartBtn = document.getElementById('restart-btn');
 
-    function initFloatingBalls() {
-      const container = document.getElementById('balls-container');
+    // -------------------------------------------------------------
+    // FALLING YELLOW FLOWERS GENERATOR
+    // -------------------------------------------------------------
+    function createFallingFlowers() {
+      const container = document.getElementById('flowers-container');
       container.innerHTML = '';
-      const colors = ['#3b82f6', '#06b6d4', '#6366f1', '#38bdf8', '#818cf8', '#0284c7'];
-      const ballCount = 18;
+      const flowerSVGs = [
+        `<svg width="28" height="28" viewBox="0 0 24 24" fill="#facc15"><circle cx="12" cy="7" r="4"/><circle cx="12" cy="17" r="4"/><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><circle cx="12" cy="12" r="3" fill="#f59e0b"/></svg>`,
+        `<svg width="34" height="34" viewBox="0 0 24 24" fill="#fef08a"><circle cx="12" cy="6" r="3.5"/><circle cx="12" cy="18" r="3.5"/><circle cx="6" cy="12" r="3.5"/><circle cx="18" cy="12" r="3.5"/><circle cx="12" cy="12" r="3.5" fill="#d97706"/></svg>`,
+        `<svg width="22" height="22" viewBox="0 0 24 24" fill="#fde047"><path d="M12 2C9 7 4 9 4 12s5 5 8 10c3-5 8-7 8-10s-5-5-8-10z"/></svg>`
+      ];
 
-      for (let i = 0; i < ballCount; i++) {
-        const ball = document.createElement('div');
-        ball.classList.add('floating-ball');
+      for (let i = 0; i < 24; i++) {
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.innerHTML = flowerSVGs[i % flowerSVGs.length];
         
-        const size = Math.floor(Math.random() * 80) + 40;
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const duration = Math.floor(Math.random() * 6) + 6;
-        const delay = Math.random() * 4;
+        const leftPos = Math.random() * 100;
+        const duration = Math.random() * 6 + 6;
+        const delay = Math.random() * 8;
+        const sizeScale = (Math.random() * 0.6 + 0.7).toFixed(2);
 
-        ball.style.width = `${size}px`;
-        ball.style.height = `${size}px`;
-        ball.style.left = `${left}%`;
-        ball.style.top = `${top}%`;
-        ball.style.backgroundColor = color;
-        ball.style.animationDuration = `${duration}s`;
-        ball.style.animationDelay = `${delay}s`;
+        flower.style.left = `${leftPos}%`;
+        flower.style.animationDuration = `${duration}s`;
+        flower.style.animationDelay = `${delay}s`;
+        flower.style.transform = `scale(${sizeScale})`;
 
-        container.appendChild(ball);
+        container.appendChild(flower);
       }
     }
 
+    // -------------------------------------------------------------
+    // TIMER (30 SECONDS)
+    // -------------------------------------------------------------
     function startTimer() {
-      clearInterval(timerInterval);
-      timeLeft = 50;
-      updateTimerUI();
+      clearInterval(timerId);
+      timeLeft = 30;
+      renderTimer();
 
-      timerInterval = setInterval(() => {
+      timerId = setInterval(() => {
         timeLeft--;
-        updateTimerUI();
+        renderTimer();
 
         if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          handleTimeout();
+          clearInterval(timerId);
+          onTimeout();
         }
       }, 1000);
     }
 
-    function updateTimerUI() {
+    function renderTimer() {
       timerTextEl.textContent = timeLeft;
-      const percentage = (timeLeft / 50) * 100;
-      timerBarEl.style.width = `${percentage}%`;
+      const pct = (timeLeft / 30) * 100;
+      timerBarEl.style.width = `${pct}%`;
 
-      if (timeLeft <= 10) {
-        timerTextEl.classList.remove('text-cyan-400');
-        timerTextEl.classList.add('text-rose-500', 'animate-pulse');
-        timerBarEl.classList.remove('from-cyan-400', 'to-blue-500');
-        timerBarEl.classList.add('from-amber-500', 'to-rose-600');
+      if (timeLeft <= 7) {
+        timerTextEl.classList.add('text-red-400', 'animate-pulse');
+        timerBarEl.classList.remove('from-yellow-300', 'via-amber-400', 'to-yellow-500');
+        timerBarEl.classList.add('from-red-500', 'to-amber-600');
       } else {
-        timerTextEl.classList.remove('text-rose-500', 'animate-pulse');
-        timerTextEl.classList.add('text-cyan-400');
-        timerBarEl.classList.remove('from-amber-500', 'to-rose-600');
-        timerBarEl.classList.add('from-cyan-400', 'to-blue-500');
+        timerTextEl.classList.remove('text-red-400', 'animate-pulse');
+        timerBarEl.classList.remove('from-red-500', 'to-amber-600');
+        timerBarEl.classList.add('from-yellow-300', 'via-amber-400', 'to-yellow-500');
       }
     }
 
-    function stopTimer() {
-      clearInterval(timerInterval);
-    }
+    // -------------------------------------------------------------
+    // LOAD QUESTION
+    // -------------------------------------------------------------
+    function displayQuestion() {
+      isAnswered = false;
+      const q = questionsList[currentIndex];
 
-    function loadQuestion() {
-      questionAnswered = false;
-      selectedMultiIndices = [];
-      const currentQ = questionsDatabase[currentQuestionIdx];
-
-      qNumEl.textContent = currentQuestionIdx + 1;
-      sectionBadgeEl.textContent = `Section ${getSectionNumber(currentQ.section)}: ${currentQ.section}`;
-      liveScoreEl.textContent = `${score} pts`;
+      qNumEl.textContent = currentIndex + 1;
+      liveScoreEl.textContent = `${score} / 10`;
 
       explanationBox.classList.add('hidden');
       nextBtn.classList.add('hidden');
 
-      questionTextEl.textContent = currentQ.question;
-
-      if (currentQ.code) {
-        codeSnippetEl.textContent = currentQ.code;
-        codeContainer.classList.remove('hidden');
-      } else {
-        codeContainer.classList.add('hidden');
-      }
-
-      if (currentQ.isMultiSelect) {
-        multiselectNotice.classList.remove('hidden');
-        multiselectActions.classList.remove('hidden');
-      } else {
-        multiselectNotice.classList.add('hidden');
-        multiselectActions.classList.add('hidden');
-      }
-
+      questionTextEl.textContent = q.question;
       optionsGrid.innerHTML = '';
-      
-      if (currentQ.options.length <= 2) {
-        optionsGrid.className = "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6";
-      } else {
-        optionsGrid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6";
-      }
 
-      currentQ.options.forEach((optText, idx) => {
+      q.options.forEach((optText, idx) => {
         const btn = document.createElement('button');
-        btn.dataset.index = idx;
+        btn.dataset.idx = idx;
+        btn.className = "option-btn p-4 rounded-xl border border-orange-400/40 bg-orange-900/60 hover:bg-orange-800/80 hover:border-yellow-400 text-left text-amber-50 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-sm";
+        
+        btn.innerHTML = `
+          <span class="w-8 h-8 rounded-lg bg-orange-950/80 border border-orange-400/50 text-yellow-300 font-bold text-sm flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
+          <span class="text-sm sm:text-base leading-snug font-code">${escapeHTML(optText)}</span>
+        `;
 
-        if (currentQ.isMultiSelect) {
-          btn.className = "option-btn p-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 text-left text-slate-100 font-medium transition transform active:scale-98 flex items-center justify-between shadow-md";
-          btn.innerHTML = `
-            <span class="font-code text-sm sm:text-base">${optText}</span>
-            <span class="checkbox-indicator w-6 h-6 rounded-md border-2 border-slate-500 flex items-center justify-center text-xs font-bold"></span>
-          `;
-          btn.addEventListener('click', () => toggleMultiSelect(idx, btn));
-        } else {
-          btn.className = "option-btn p-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-cyan-900/40 hover:border-cyan-500 text-left text-slate-100 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-md";
-          btn.innerHTML = `
-            <span class="w-7 h-7 rounded-lg bg-slate-700/60 border border-slate-600 text-cyan-400 font-bold text-xs flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
-            <span class="font-code text-sm sm:text-base leading-snug">${optText}</span>
-          `;
-          btn.addEventListener('click', () => selectSingleAnswer(idx));
-        }
-
+        btn.addEventListener('click', () => handleOptionClick(idx));
         optionsGrid.appendChild(btn);
       });
 
       startTimer();
     }
 
-    function getSectionNumber(sectionName) {
-      const sections = [
-        "Variable Names",
-        "Data Types",
-        "Real-World Concepts",
-        "Loops, Lists & Dicts",
-        "Functions & Logic",
-        "Random & True/False"
-      ];
-      return sections.indexOf(sectionName) + 1;
-    }
+    // -------------------------------------------------------------
+    // HANDLE USER SELECTION
+    // -------------------------------------------------------------
+    function handleOptionClick(selectedIdx) {
+      if (isAnswered) return;
+      isAnswered = true;
+      clearInterval(timerId);
 
-    function toggleMultiSelect(idx, btnEl) {
-      if (questionAnswered) return;
+      const q = questionsList[currentIndex];
+      const isCorrect = (selectedIdx === q.correctIndex);
 
-      const pos = selectedMultiIndices.indexOf(idx);
-      const checkbox = btnEl.querySelector('.checkbox-indicator');
-
-      if (pos === -1) {
-        selectedMultiIndices.push(idx);
-        btnEl.classList.remove('border-slate-700', 'bg-slate-800/80');
-        btnEl.classList.add('border-cyan-400', 'bg-cyan-950/60');
-        checkbox.classList.remove('border-slate-500');
-        checkbox.classList.add('border-cyan-400', 'bg-cyan-500', 'text-slate-950');
-        checkbox.textContent = '✓';
-      } else {
-        selectedMultiIndices.splice(pos, 1);
-        btnEl.classList.remove('border-cyan-400', 'bg-cyan-950/60');
-        btnEl.classList.add('border-slate-700', 'bg-slate-800/80');
-        checkbox.classList.remove('border-cyan-400', 'bg-cyan-500', 'text-slate-950');
-        checkbox.classList.add('border-slate-500');
-        checkbox.textContent = '';
-      }
-    }
-
-    submitMultiselectBtn.addEventListener('click', () => {
-      if (questionAnswered) return;
-      stopTimer();
-      questionAnswered = true;
-
-      const currentQ = questionsDatabase[currentQuestionIdx];
-      const correctList = currentQ.correctAnswers.sort().join(',');
-      const userList = selectedMultiIndices.sort().join(',');
-
-      const isCorrect = (correctList === userList);
-      evaluateAnswer(isCorrect, currentQ.explanation);
-    });
-
-    function selectSingleAnswer(selectedIdx) {
-      if (questionAnswered) return;
-      stopTimer();
-      questionAnswered = true;
-
-      const currentQ = questionsDatabase[currentQuestionIdx];
-      const isCorrect = (selectedIdx === currentQ.correctAnswer);
-
+      // Highlight Buttons
       const buttons = optionsGrid.querySelectorAll('.option-btn');
       buttons.forEach((btn, idx) => {
         btn.disabled = true;
-        if (idx === currentQ.correctAnswer) {
-          btn.classList.remove('border-slate-700', 'bg-slate-800/80');
-          btn.classList.add('border-emerald-500', 'bg-emerald-950/80', 'text-emerald-200');
+        if (idx === q.correctIndex) {
+          btn.classList.remove('border-orange-400/40', 'bg-orange-900/60');
+          btn.classList.add('border-emerald-400', 'bg-emerald-900/90', 'text-emerald-100', 'ring-2', 'ring-emerald-400');
         } else if (idx === selectedIdx && !isCorrect) {
-          btn.classList.remove('border-slate-700', 'bg-slate-800/80');
-          btn.classList.add('border-rose-500', 'bg-rose-950/80', 'text-rose-200');
+          btn.classList.remove('border-orange-400/40', 'bg-orange-900/60');
+          btn.classList.add('border-rose-500', 'bg-rose-950/90', 'text-rose-100', 'ring-2', 'ring-rose-500');
         }
       });
 
-      evaluateAnswer(isCorrect, currentQ.explanation);
-    }
+      if (isCorrect) {
+        score += 1;
+        liveScoreEl.textContent = `${score} / 10`;
+        showExplanation(true, "Great job! " + q.explanation);
+      } else {
+        showExplanation(false, "Not quite! " + q.explanation);
+      }
 
-    function handleTimeout() {
-      if (questionAnswered) return;
-      questionAnswered = true;
-
-      const currentQ = questionsDatabase[currentQuestionIdx];
-      
-      const buttons = optionsGrid.querySelectorAll('.option-btn');
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (!currentQ.isMultiSelect && idx === currentQ.correctAnswer) {
-          btn.classList.add('border-emerald-500', 'bg-emerald-950/80');
-        }
-      });
-
-      showExplanation(false, "⏳ Time's up! You ran out of 50 seconds for this question. " + currentQ.explanation);
       nextBtn.classList.remove('hidden');
     }
 
-    function evaluateAnswer(isCorrect, explanationTextContent) {
-      const currentQ = questionsDatabase[currentQuestionIdx];
+    function onTimeout() {
+      if (isAnswered) return;
+      isAnswered = true;
 
-      if (isCorrect) {
-        score += 10;
-        liveScoreEl.textContent = `${score} pts`;
-        sectionScores[currentQ.section].correct++;
-        showExplanation(true, "🎉 Spot on! " + explanationTextContent);
-      } else {
-        showExplanation(false, "❌ Not quite right. " + explanationTextContent);
-      }
+      const q = questionsList[currentIndex];
+      const buttons = optionsGrid.querySelectorAll('.option-btn');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.correctIndex) {
+          btn.classList.add('border-emerald-400', 'bg-emerald-900/90', 'text-emerald-100', 'ring-2', 'ring-emerald-400');
+        }
+      });
 
-      multiselectActions.classList.add('hidden');
+      showExplanation(false, "⏳ Time is up! You had 30 seconds for this question. " + q.explanation);
       nextBtn.classList.remove('hidden');
     }
 
     function showExplanation(isCorrect, message) {
-      explanationBox.classList.remove('hidden', 'bg-emerald-950/60', 'border-emerald-500/50', 'bg-rose-950/60', 'border-rose-500/50');
-      
+      explanationBox.classList.remove('hidden', 'bg-emerald-950/70', 'border-emerald-400/60', 'bg-rose-950/70', 'border-rose-400/60');
+
       if (isCorrect) {
-        explanationBox.classList.add('bg-emerald-950/60', 'border-emerald-500/50', 'text-emerald-200');
-        explanationTitle.textContent = "Great Job!";
-        explanationTitle.className = "font-bold text-base text-emerald-400";
+        explanationBox.classList.add('bg-emerald-950/70', 'border-emerald-400/60');
+        explanationIcon.textContent = "🌟";
+        explanationTitle.textContent = "Correct Answer!";
+        explanationTitle.className = "font-bold text-base text-emerald-300";
       } else {
-        explanationBox.classList.add('bg-rose-950/60', 'border-rose-500/50', 'text-rose-200');
-        explanationTitle.textContent = "Explanation & Revision Tip";
-        explanationTitle.className = "font-bold text-base text-rose-400";
+        explanationBox.classList.add('bg-rose-950/70', 'border-rose-400/60');
+        explanationIcon.textContent = "💡";
+        explanationTitle.textContent = "Explanation & Key Concept";
+        explanationTitle.className = "font-bold text-base text-rose-300";
       }
 
       explanationText.textContent = message;
     }
 
+    // -------------------------------------------------------------
+    // NEXT BUTTON & RESULTS
+    // -------------------------------------------------------------
     nextBtn.addEventListener('click', () => {
-      currentQuestionIdx++;
-      if (currentQuestionIdx < questionsDatabase.length) {
-        loadQuestion();
+      currentIndex++;
+      if (currentIndex < questionsList.length) {
+        displayQuestion();
       } else {
-        showResultsScreen();
+        showTeacherReport();
       }
     });
 
-    function showResultsScreen() {
+    function showTeacherReport() {
       quizScreen.classList.add('hidden');
       resultScreen.classList.remove('hidden');
 
-      const totalCorrect = Object.values(sectionScores).reduce((acc, curr) => acc + curr.correct, 0);
-      finalTotalScore.textContent = `${totalCorrect} / 30`;
+      finalTotalScore.textContent = `${score} / 10`;
 
-      let noteContent = "";
-      const percent = (totalCorrect / 30) * 100;
-
-      if (percent >= 90) {
-        noteContent = `Dear Explorer! 🌟 Outstanding work! You scored an impressive ${totalCorrect}/30! You showed total mastery over variable names, data types, loops, and functions. You think like a true Python programmer! Keep building awesome projects!`;
-      } else if (percent >= 70) {
-        noteContent = `Great effort! 🚀 You scored ${totalCorrect}/30! You have a really solid grasp on Python basics, logic, and random operations. Review the loop counting and function return rules above to become 100% unstoppable!`;
-      } else if (percent >= 50) {
-        noteContent = `Good start! 👍 You got ${totalCorrect}/30 correct! You did well on identifying data types and real-world concepts. Take a quick look back at variable naming rules and dictionary lookups, then try again for a higher score!`;
+      let note = "";
+      if (score >= 9) {
+        note = `Brilliant work! 🌟 You scored an impressive ${score} out of 10! You have completely mastered the difference between HTML tags, style attributes, and CSS properties like border, color, and text-align. You're building websites like a true web developer!`;
+      } else if (score >= 7) {
+        note = `Well done! 🚀 You scored ${score} out of 10! You have a really good understanding of HTML elements and how the style attribute works. Just take a quick second look at empty tags like <br> and remember that attributes wrap properties!`;
+      } else if (score >= 5) {
+        note = `Good effort! 👍 You scored ${score} out of 10! You know your main tags like <p> and <ul> well. Spend a little time revising that 'style' is the attribute, while 'color', 'border', and 'text-align' are properties inside it!`;
       } else {
-        noteContent = `Nice try! 💡 You scored ${totalCorrect}/30. Don't worry at all—coding takes practice! Focus on mastering lists, simple for-loops, and if-else statements. Give it another try and watch your score double!`;
+        note = `Nice try! 🌻 You scored ${score} out of 10. Web development takes practice, so don't worry at all! Remember: Attributes go inside tags, and properties go inside the style attribute. Review the table below and give it another go!`;
       }
 
-      handwrittenNoteText.textContent = noteContent;
-
-      sectionsBreakdownGrid.innerHTML = '';
-      for (const [secName, secData] of Object.entries(sectionScores)) {
-        const secRatio = (secData.correct / secData.total) * 100;
-        let badgeColor = "bg-emerald-100 text-emerald-800 border-emerald-300";
-        if (secRatio < 50) badgeColor = "bg-rose-100 text-rose-800 border-rose-300";
-        else if (secRatio < 75) badgeColor = "bg-amber-100 text-amber-800 border-amber-300";
-
-        const card = document.createElement('div');
-        card.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center";
-        card.innerHTML = `
-          <div>
-            <span class="text-xs text-slate-500 font-bold uppercase tracking-wider block">Section</span>
-            <span class="font-bold text-slate-800 text-sm sm:text-base">${secName}</span>
-          </div>
-          <div class="px-3 py-1.5 rounded-lg border ${badgeColor} font-extrabold text-sm font-code">
-            ${secData.correct} / ${secData.total}
-          </div>
-        `;
-        sectionsBreakdownGrid.appendChild(card);
-      }
+      handwrittenNote.textContent = note;
     }
 
     restartBtn.addEventListener('click', () => {
-      currentQuestionIdx = 0;
+      currentIndex = 0;
       score = 0;
-      for (const key in sectionScores) {
-        sectionScores[key].correct = 0;
-      }
       prepareQuestions();
       resultScreen.classList.add('hidden');
       quizScreen.classList.remove('hidden');
-      loadQuestion();
+      displayQuestion();
     });
 
-    // INIT APPLICATION
-    initFloatingBalls();
+    // -------------------------------------------------------------
+    // INITIALIZATION
+    // -------------------------------------------------------------
+    createFallingFlowers();
     prepareQuestions();
-    loadQuestion();
+    displayQuestion();
   </script>
 </body>
 </html>
