@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Revision</title>
+  <title>Python Revision - Real-World Software Engineering Challenge</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Caveat for Teacher's Feedback, Fira Code for code, Outfit for UI -->
+  <!-- Google Fonts: Caveat for teacher's note, Fira Code for code blocks, Outfit for UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -23,127 +23,100 @@
       font-family: 'Caveat', cursive;
     }
 
-    /* Flying Unicorns Animation */
-    .flying-unicorn {
-      position: fixed;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.75;
-      animation: floatUnicorn linear infinite;
+    /* Ambient background grid pattern */
+    .bg-grid-pattern {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     }
 
-    @keyframes floatUnicorn {
-      0% {
-        transform: translateX(-120px) translateY(0px) rotate(0deg) scale(0.9);
-      }
-      25% {
-        transform: translateX(25vw) translateY(-25px) rotate(4deg) scale(1.05);
-      }
-      50% {
-        transform: translateX(50vw) translateY(15px) rotate(-3deg) scale(0.95);
-      }
-      75% {
-        transform: translateX(75vw) translateY(-20px) rotate(3deg) scale(1.02);
-      }
-      100% {
-        transform: translateX(105vw) translateY(0px) rotate(0deg) scale(0.9);
-      }
-    }
-
-    /* Notebook sheet background for feedback */
-    .feedback-sheet {
-      background-color: #fff5f8;
-      background-image: linear-gradient(#fbcfe8 1px, transparent 1px);
-      background-size: 100% 2.1rem;
-      border-left: 5px double #db2777;
+    /* Report Card Notebook Paper */
+    .report-paper {
+      background-color: #fffdf5;
+      background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
+      background-size: 100% 2.2rem;
+      border-left: 5px double #3b82f6;
     }
 
     pre::-webkit-scrollbar {
       height: 6px;
     }
     pre::-webkit-scrollbar-thumb {
-      background: #ec4899;
+      background: #0284c7;
       border-radius: 4px;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-pink-900 via-fuchsia-950 to-rose-950 text-white min-h-screen relative flex flex-col justify-between selection:bg-pink-400 selection:text-pink-950">
+<body class="bg-slate-950 bg-grid-pattern text-slate-100 min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
 
-  <!-- Background Flying Unicorns Container -->
-  <div id="unicorns-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+  <!-- Glow Accents in Background -->
+  <div class="fixed top-10 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="fixed bottom-10 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-  <!-- Main Container -->
-  <div class="relative z-10 container mx-auto px-4 py-6 max-w-3xl flex-grow flex flex-col justify-center">
+  <!-- Main Application Wrapper -->
+  <div class="relative z-10 container mx-auto px-4 py-8 max-w-3xl flex-grow flex flex-col justify-center">
 
-    <!-- Header (Strictly "Python Revision") -->
-    <header class="text-center mb-6">
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-fuchsia-200 tracking-tight drop-shadow-md">
+    <!-- Global Header -->
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-widest mb-2">
+        <span>⚡ Self-Paced Revision</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-cyan-200 to-blue-400 tracking-tight">
         Python Revision
       </h1>
-      <p class="text-xs sm:text-sm font-semibold text-pink-300/80 mt-1">Loops, Outputs, Conditions & Errors</p>
+      <p class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">5 Questions • No Timer Pressure</p>
     </header>
 
     <!-- QUIZ SCREEN -->
     <div id="quiz-screen" class="w-full">
       
-      <!-- Top Info Bar: Question Counter, Live Score, 30s Timer -->
-      <div class="bg-pink-950/80 backdrop-blur-md border border-pink-500/30 rounded-2xl p-4 sm:p-5 mb-5 shadow-2xl">
+      <!-- Top Status Bar -->
+      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-4 sm:p-5 mb-5 shadow-2xl">
         <div class="flex justify-between items-center gap-3">
           
-          <!-- Question Number Tracker -->
+          <!-- Question Counter -->
           <div>
-            <span class="text-xs uppercase font-bold text-pink-300 tracking-wider block">Question</span>
-            <div class="text-xl sm:text-2xl font-black text-pink-100 font-code">
-              <span id="q-num">1</span> <span class="text-pink-400 text-lg font-normal">/ 10</span>
+            <span class="text-[11px] uppercase font-bold text-cyan-400 tracking-wider block">Software Engineering Logic</span>
+            <div class="text-xl sm:text-2xl font-black text-slate-100 font-code mt-0.5">
+              Question <span id="q-num" class="text-cyan-400">1</span> <span class="text-slate-500 text-base font-normal">/ 5</span>
             </div>
           </div>
 
-          <!-- Live Score -->
-          <div class="text-center bg-pink-900/80 px-4 py-2 rounded-xl border border-pink-500/30 shadow-inner">
-            <span class="text-[11px] uppercase tracking-wider text-pink-300 block font-bold">Score</span>
-            <span id="live-score" class="text-xl font-extrabold text-amber-300 font-code">0 / 10</span>
+          <!-- Live Score Badge -->
+          <div class="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-right">
+            <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Live Score</span>
+            <span id="live-score" class="text-xl font-extrabold text-amber-400 font-code">0 / 5</span>
           </div>
 
-          <!-- 30-Second Timer -->
-          <div class="flex items-center gap-2">
-            <div class="relative w-14 h-14 flex items-center justify-center bg-pink-900/90 rounded-full border-2 border-pink-400 shadow-inner">
-              <span id="timer-text" class="text-xl font-black text-pink-200 font-code">30</span>
-              <span class="text-[8px] text-pink-300 absolute bottom-1 font-bold">sec</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Timer Progress Bar -->
-        <div class="w-full bg-pink-950 h-2.5 rounded-full mt-3 overflow-hidden border border-pink-800">
-          <div id="timer-bar" class="h-full bg-gradient-to-r from-pink-400 via-fuchsia-400 to-rose-400 transition-all duration-1000 ease-linear w-full"></div>
         </div>
       </div>
 
-      <!-- Question Box -->
-      <div class="bg-pink-950/85 backdrop-blur-md border border-pink-500/30 rounded-2xl p-5 sm:p-7 shadow-2xl relative">
+      <!-- Question Card -->
+      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-7 shadow-2xl relative">
         
-        <!-- Question Scenario / Text -->
-        <h2 id="question-text" class="text-base sm:text-lg font-bold text-pink-100 leading-relaxed mb-4">
-          Question loading...
+        <!-- Question Scenario / Prompt -->
+        <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-100 leading-relaxed mb-4">
+          Scenario question loading...
         </h2>
 
         <!-- Code Snippet Area -->
-        <div id="code-container" class="mb-5 hidden">
-          <pre class="bg-pink-950/90 text-pink-200 border border-pink-500/40 rounded-xl p-4 font-code text-sm sm:text-base overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
+        <div id="code-container" class="mb-5">
+          <pre class="bg-slate-950 text-cyan-200 border border-cyan-500/30 rounded-xl p-4 font-code text-xs sm:text-sm overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
         </div>
 
-        <!-- 4 Options Grid -->
-        <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-          <!-- Options rendered dynamically -->
+        <!-- 4 Option Buttons Grid -->
+        <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          <!-- Rendered dynamically -->
         </div>
 
-        <!-- Explanation Container (Placed Directly Below Buttons) -->
-        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-5 shadow-md">
+        <!-- Explanation Container (Under Option Buttons) -->
+        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6 shadow-md">
           <div class="flex items-start gap-3">
             <span id="explanation-icon" class="text-2xl shrink-0">💡</span>
             <div>
-              <h4 id="explanation-title" class="font-bold text-base">Explanation</h4>
-              <p id="explanation-text" class="text-xs sm:text-sm mt-1 leading-relaxed text-pink-100">
+              <h4 id="explanation-title" class="font-bold text-sm sm:text-base">Explanation</h4>
+              <p id="explanation-text" class="text-xs sm:text-sm mt-1 leading-relaxed text-slate-200">
                 Explanation text appears here.
               </p>
             </div>
@@ -152,55 +125,51 @@
 
         <!-- Next Question Button -->
         <div class="flex justify-end">
-          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-pink-400 via-fuchsia-400 to-rose-400 hover:from-pink-300 hover:to-rose-300 text-pink-950 font-black rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
             <span>Next Question</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
 
       </div>
     </div>
 
-    <!-- RESULT SCREEN -->
+    <!-- REPORT CARD SCREEN -->
     <div id="result-screen" class="hidden w-full my-4">
-      <div class="feedback-sheet rounded-2xl p-6 sm:p-9 shadow-2xl text-pink-950 border-t-8 border-pink-600 relative overflow-hidden">
+      <div class="report-paper rounded-3xl p-6 sm:p-9 shadow-2xl text-slate-900 border-t-8 border-blue-600 relative overflow-hidden">
         
-        <!-- Result Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-pink-300 pb-4 mb-6">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-300 pb-4 mb-6">
           <div>
-            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-pink-950">Teacher's Feedback</h2>
-            <p class="text-xs text-pink-800 font-semibold tracking-wide uppercase mt-1">Python Loops & Logic Revision</p>
+            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-slate-950">Teacher's Feedback</h2>
+            <p class="text-xs text-slate-600 font-semibold tracking-wide uppercase mt-1">Python Engineering Logic Assessment</p>
           </div>
-          <div class="mt-3 sm:mt-0 bg-pink-100 border-2 border-pink-400 rounded-xl px-4 py-2 text-center shadow-sm">
-            <span class="text-[11px] uppercase tracking-wider text-pink-900 font-bold block">Final Score</span>
-            <span id="final-total-score" class="text-3xl font-black text-pink-950 font-code">0 / 10</span>
+          <div class="mt-3 sm:mt-0 bg-blue-100 border-2 border-blue-400 rounded-xl px-5 py-2.5 text-center shadow-sm">
+            <span class="text-[11px] uppercase tracking-wider text-blue-900 font-bold block">Final Score</span>
+            <span id="final-total-score" class="text-3xl font-black text-blue-950 font-code">0 / 5</span>
           </div>
         </div>
 
-        <!-- Teacher's Feedback Body (Handwritten Font) -->
-        <div class="mb-6 bg-white/80 p-6 rounded-xl border border-pink-200 shadow-sm">
-          <p id="teacher-feedback-text" class="font-handwriting text-2xl sm:text-3xl text-pink-950 leading-relaxed">
+        <!-- Handwritten Feedback Note -->
+        <div class="mb-6 bg-white/90 p-5 rounded-xl border border-slate-300 shadow-sm">
+          <p id="tutor-feedback-text" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed">
             Generating feedback note...
           </p>
         </div>
 
-        <!-- Quick Summary Box -->
-        <div class="mb-6 p-4 rounded-xl bg-pink-100/70 border border-pink-300">
-          <h3 class="font-bold text-xs text-pink-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <span>📌</span> Key Python Rules:
-          </h3>
-          <ul class="text-xs sm:text-sm text-pink-900 space-y-1.5 leading-relaxed">
-            <li>• <strong>range(4)</strong>: Runs 4 times with numbers 0, 1, 2, 3.</li>
-            <li>• <strong>range(1, 6)</strong>: Starts at 1 and stops before 6 (runs 5 times).</li>
-            <li>• <strong>Colon (:)</strong>: Always put a colon at the end of <code class="bg-pink-200 px-1 rounded font-code">if</code> and <code class="bg-pink-200 px-1 rounded font-code">def</code> lines!</li>
-            <li>• <strong>Variables</strong>: Names cannot start with numbers like <code class="bg-pink-200 px-1 rounded font-code">1st</code>.</li>
-            <li>• <strong>Logical AND/OR</strong>: <code class="bg-pink-200 px-1 rounded font-code">and</code> needs both sides True; <code class="bg-pink-200 px-1 rounded font-code">or</code> needs only one side True!</li>
+        <!-- Engineering Key Concepts Summary -->
+        <div class="mb-6 bg-blue-50/80 p-4 rounded-xl border border-blue-200 text-xs text-blue-950 leading-relaxed">
+          <span class="font-bold text-sm block mb-1">📌 Engineering Key Takeaways:</span>
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>Exponential Backoff:</strong> Doubling delay counters in loops (`delay *= 2`) prevents server overload.</li>
+            <li><strong>List Slicing Mutability:</strong> Slicing a list (`lst[:2]`) creates a new copy, leaving the original list untouched.</li>
+            <li><strong>Variable Scope:</strong> Reassigning a variable inside a function without `global` creates a local variable instead of modifying the outer variable.</li>
           </ul>
         </div>
 
-        <!-- Retake Button -->
-        <div class="flex justify-center border-t border-pink-300 pt-5">
-          <button id="restart-btn" class="py-3 px-8 bg-pink-700 hover:bg-pink-800 text-white font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+        <!-- Action Button -->
+        <div class="flex justify-center border-t border-slate-300 pt-5">
+          <button id="restart-btn" class="py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             <span>Retake Revision</span>
           </button>
@@ -212,156 +181,100 @@
   </div>
 
   <!-- Footer -->
-  <footer class="relative z-10 py-3 text-center text-xs text-pink-300/80 bg-pink-950/80 border-t border-pink-900/50">
-    <p>Python Revision • Flying Unicorns Edition 🦄</p>
+  <footer class="relative z-10 py-3 text-center text-xs text-slate-500 bg-slate-950 border-t border-slate-900">
+    <p>Python Revision • Software Systems & Logic</p>
   </footer>
 
   <script>
     // -------------------------------------------------------------
-    // 10 VERY SIMPLE & VARIED QUESTIONS FOR YOUNG LEARNERS
+    // 5 SHORT, ACCESSIBLE QUESTIONS FOR QUICK COMPLETION
     // -------------------------------------------------------------
-    const questionsRaw = [
-
-      // --- 3 DISTINCT PREDICT THE LOOP QUESTIONS (STORY / NUMBER BASED) ---
+    const rawQuestionsDatabase = [
       {
-        question: "Predict the Loop: A helper robot takes steps in a loop. How many times will it print 'Step'?",
-        code: "for step in range(4):\n    print('Step')",
+        question: "Exponential Backoff: An API retry loop doubles the wait delay on each step. What is the value of `delay` printed at the end?",
+        code: "delay = 1\nfor _ in range(3):\n    delay *= 2\n\nprint(delay)",
         options: [
-          { text: "4 times", isCorrect: true },
-          { text: "3 times", isCorrect: false },
-          { text: "5 times", isCorrect: false },
-          { text: "1 time", isCorrect: false }
+          { text: "8", isCorrect: true },
+          { text: "6", isCorrect: false },
+          { text: "4", isCorrect: false },
+          { text: "16", isCorrect: false }
         ],
-        explanation: "range(4) creates 4 steps: 0, 1, 2, and 3. So it prints 'Step' 4 times!"
+        explanation: "Loop runs 3 times. Step 1: 1 * 2 = 2. Step 2: 2 * 2 = 4. Step 3: 4 * 2 = 8!"
       },
       {
-        question: "Predict the Loop: A player collects gold coins until they have 3 coins. How many times will this while loop run?",
-        code: "coins = 0\nwhile coins < 3:\n    coins = coins + 1",
+        question: "API Health Scanner: A monitoring tool checks HTTP status codes (`200` = Healthy). How many healthy servers are counted?",
+        code: "statuses = [200, 500, 200]\nonline = 0\nfor status in statuses:\n    if status == 200:\n        online += 1\n\nprint(online)",
         options: [
-          { text: "3 times", isCorrect: true },
-          { text: "1 time", isCorrect: false },
-          { text: "4 times", isCorrect: false },
-          { text: "0 times", isCorrect: false }
-        ],
-        explanation: "coins starts at 0, goes to 1, then 2, then 3. When it reaches 3, coins < 3 becomes False and the loop stops. That is 3 loops!"
-      },
-      {
-        question: "Predict the Loop: A magic wand draws stars on the screen. How many stars '*' will be printed?",
-        code: "for star in range(1, 6):\n    print('*')",
-        options: [
-          { text: "5 stars", isCorrect: true },
-          { text: "6 stars", isCorrect: false },
-          { text: "1 star", isCorrect: false },
-          { text: "4 stars", isCorrect: false }
-        ],
-        explanation: "range(1, 6) counts from 1 up to 5 (it stops before 6). So it prints 5 stars!"
-      },
-
-      // --- 3 PREDICT FINAL OUTPUT QUESTIONS ---
-      {
-        question: "Predict the Output: A piggy bank starts with $0. We add coins in a loop. What is the final total?",
-        code: "total = 0\nfor coin in [1, 2, 3]:\n    total = total + coin\nprint(total)",
-        options: [
-          { text: "6", isCorrect: true },
+          { text: "2", isCorrect: true },
           { text: "3", isCorrect: false },
-          { text: "5", isCorrect: false },
+          { text: "1", isCorrect: false },
           { text: "0", isCorrect: false }
         ],
-        explanation: "total starts at 0. It adds 1, then 2, then 3: 0 + 1 + 2 + 3 = 6!"
+        explanation: "There are two `200` status codes in the list, so `online` increments twice to output 2."
       },
       {
-        question: "Predict the Output: A pet cat makes a sound by joining letters together. What will this code print?",
-        code: "letters = ['m', 'e', 'o', 'w']\nsound = ''\nfor letter in letters:\n    sound = sound + letter\nprint(sound)",
+        question: "List Slicing Mutability: An active user session list is created from `users[:2]`. What is `len(users)` at the end?",
+        code: "users = ['Alice', 'Bob', 'Charlie']\nactive = users[:2]\nactive.append('Dave')\n\nprint(len(users))",
         options: [
-          { text: "meow", isCorrect: true },
-          { text: "m e o w", isCorrect: false },
-          { text: "woem", isCorrect: false },
-          { text: "letters", isCorrect: false }
+          { text: "3", isCorrect: true },
+          { text: "4", isCorrect: false },
+          { text: "2", isCorrect: false },
+          { text: "5", isCorrect: false }
         ],
-        explanation: "It joins the letters together one by one: 'm' + 'e' + 'o' + 'w' = 'meow'!"
+        explanation: "Slicing `users[:2]` creates a separate copy. Appending 'Dave' to `active` does NOT change the original `users` list, which stays 3 items long."
       },
       {
-        question: "Predict the Output: A superhero function doubles your power score! What will this function print?",
-        code: "def double_power(score):\n    return score * 2\n\nfinal_power = double_power(5)\nprint(final_power)",
+        question: "Variable Scope: A function creates a local variable `count`. What is output when `print(count)` runs?",
+        code: "count = 10\n\ndef update():\n    count = 5\n\nupdate()\nprint(count)",
         options: [
           { text: "10", isCorrect: true },
           { text: "5", isCorrect: false },
-          { text: "52", isCorrect: false },
-          { text: "25", isCorrect: false }
+          { text: "15", isCorrect: false },
+          { text: "UnboundLocalError", isCorrect: false }
         ],
-        explanation: "double_power(5) takes 5 and multiplies it by 2. 5 * 2 = 10!"
-      },
-
-      // --- 2 CONDITION & BOOLEAN QUESTIONS ---
-      {
-        question: "Condition Check: What is the Boolean output (True or False) of this code?",
-        code: "apples = 5\noranges = 10\nprint(apples > 2 and oranges < 8)",
-        options: [
-          { text: "False", isCorrect: true },
-          { text: "True", isCorrect: false }
-        ],
-        explanation: "apples > 2 is True (5 > 2), but oranges < 8 is False (10 is not smaller than 8). With 'and', BOTH sides must be True, so the final answer is False!"
+        explanation: "`count = 5` inside `update()` creates a local variable. The global `count` variable outside remains 10!"
       },
       {
-        question: "Condition Check: A game checks if you have a key OR a magic spell to open a door. What is the output?",
-        code: "has_key = True\nhas_spell = False\nprint(has_key == True or has_spell == True)",
+        question: "Feature Flag Logic: An admin portal checks access rights. What boolean value does `can_access` hold?",
+        code: "is_admin = True\nhas_key = False\n\ncan_access = is_admin or has_key\nprint(can_access)",
         options: [
           { text: "True", isCorrect: true },
-          { text: "False", isCorrect: false }
+          { text: "False", isCorrect: false },
+          { text: "None", isCorrect: false },
+          { text: "Error", isCorrect: false }
         ],
-        explanation: "has_key == True is True. With 'or', if at least ONE side is True, the whole answer is True!"
-      },
-
-      // --- 2 SPOT THE ERROR QUESTIONS ---
-      {
-        question: "Spot the Error: What is wrong with this code?",
-        code: "if age > 10\n    print('Welcome')",
-        options: [
-          { text: "Missing colon (:) after 'age > 10'", isCorrect: true },
-          { text: "The word print is spelled wrong", isCorrect: false },
-          { text: "age must be inside quotes", isCorrect: false },
-          { text: "There is no error in this code", isCorrect: false }
-        ],
-        explanation: "In Python, every 'if' line MUST end with a colon (:), like this: if age > 10:"
-      },
-      {
-        question: "Spot the Error: Why does Python give an error for this variable?",
-        code: "1st_player = 'Alex'",
-        options: [
-          { text: "Variable names cannot start with a number", isCorrect: true },
-          { text: "You cannot use single quotes for names", isCorrect: false },
-          { text: "The word player is not allowed", isCorrect: false },
-          { text: "Variable names must be in capital letters", isCorrect: false }
-        ],
-        explanation: "In Python, variable names cannot start with numbers like '1st'. You can name it 'player_1' instead!"
+        explanation: "With the `or` operator, if at least one condition is `True` (`is_admin` is True), the entire expression evaluates to `True`!"
       }
     ];
 
-    // Helper: Safely escape HTML characters
-    function escapeHTML(str) {
-      return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    let questionsDatabase = [];
+
+    function prepareQuestions() {
+      questionsDatabase = rawQuestionsDatabase.map(q => {
+        const clonedOpts = [...q.options];
+        for (let i = clonedOpts.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [clonedOpts[i], clonedOpts[j]] = [clonedOpts[j], clonedOpts[i]];
+        }
+        return {
+          question: q.question,
+          code: q.code,
+          options: clonedOpts.map(o => o.text),
+          correctIndex: clonedOpts.findIndex(o => o.isCorrect),
+          explanation: q.explanation
+        };
+      });
     }
 
     // STATE
-    let questionsList = [];
     let currentIndex = 0;
     let score = 0;
-    let timeLeft = 30;
-    let timerId = null;
     let isAnswered = false;
 
-    // DOM
+    // DOM ELEMENTS
     const qNumEl = document.getElementById('q-num');
     const liveScoreEl = document.getElementById('live-score');
-    const timerTextEl = document.getElementById('timer-text');
-    const timerBarEl = document.getElementById('timer-bar');
     const questionTextEl = document.getElementById('question-text');
-    const codeContainer = document.getElementById('code-container');
     const codeSnippetEl = document.getElementById('code-snippet');
     const optionsGrid = document.getElementById('options-grid');
     const explanationBox = document.getElementById('explanation-box');
@@ -373,161 +286,69 @@
     const quizScreen = document.getElementById('quiz-screen');
     const resultScreen = document.getElementById('result-screen');
     const finalTotalScore = document.getElementById('final-total-score');
-    const teacherFeedbackText = document.getElementById('teacher-feedback-text');
+    const tutorFeedbackText = document.getElementById('tutor-feedback-text');
     const restartBtn = document.getElementById('restart-btn');
 
-    function createFlyingUnicorns() {
-      const container = document.getElementById('unicorns-container');
-      container.innerHTML = '';
-
-      const unicornSVG = `
-        <svg width="45" height="40" viewBox="0 0 64 64" fill="none">
-          <path d="M12 40 C12 28, 28 24, 40 28 C48 30, 52 38, 48 48 C44 54, 20 54, 12 40 Z" fill="#fbcfe8" stroke="#f472b6" stroke-width="2"/>
-          <path d="M18 48 L16 60 M28 48 L28 60 M38 48 L40 60 M46 44 L48 58" stroke="#ec4899" stroke-width="3" stroke-linecap="round"/>
-          <path d="M38 30 C42 20, 48 12, 56 16 C60 18, 58 28, 50 32 Z" fill="#fbcfe8" stroke="#f472b6" stroke-width="2"/>
-          <path d="M52 14 L62 2 L56 12 Z" fill="#fde047" stroke="#eab308" stroke-width="1.5"/>
-          <path d="M36 22 C32 16, 40 10, 48 12 C44 18, 42 22, 36 22 Z" fill="#e879f9"/>
-          <circle cx="53" cy="20" r="1.5" fill="#831843"/>
-          <path d="M26 32 C20 18, 36 14, 34 30 Z" fill="#f472b6" stroke="#db2777" stroke-width="1.5"/>
-        </svg>
-      `;
-
-      for (let i = 0; i < 5; i++) {
-        const unicorn = document.createElement('div');
-        unicorn.className = 'flying-unicorn';
-        unicorn.innerHTML = unicornSVG;
-
-        const topPos = 12 + i * 18;
-        const duration = 14 + Math.random() * 8;
-        const delay = i * 3.5;
-
-        unicorn.style.top = `${topPos}%`;
-        unicorn.style.animationDuration = `${duration}s`;
-        unicorn.style.animationDelay = `${delay}s`;
-
-        container.appendChild(unicorn);
-      }
-    }
-
-    function prepareQuestions() {
-      questionsList = questionsRaw.map(q => {
-        const clonedOpts = [...q.options];
-        if (q.options.length > 2) {
-          // Shuffle options for 4-choice questions
-          for (let i = clonedOpts.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [clonedOpts[i], clonedOpts[j]] = [clonedOpts[j], clonedOpts[i]];
-          }
-        }
-        return {
-          question: q.question,
-          code: q.code || null,
-          options: clonedOpts.map(o => o.text),
-          correctIndex: clonedOpts.findIndex(o => o.isCorrect),
-          explanation: q.explanation
-        };
-      });
-    }
-
-    function startTimer() {
-      clearInterval(timerId);
-      timeLeft = 30;
-      renderTimer();
-
-      timerId = setInterval(() => {
-        timeLeft--;
-        renderTimer();
-
-        if (timeLeft <= 0) {
-          clearInterval(timerId);
-          onTimeout();
-        }
-      }, 1000);
-    }
-
-    function renderTimer() {
-      timerTextEl.textContent = timeLeft;
-      const pct = (timeLeft / 30) * 100;
-      timerBarEl.style.width = `${pct}%`;
-
-      if (timeLeft <= 7) {
-        timerTextEl.classList.add('text-rose-400', 'animate-pulse');
-        timerBarEl.classList.remove('from-pink-400', 'via-fuchsia-400', 'to-rose-400');
-        timerBarEl.classList.add('from-rose-500', 'to-red-600');
-      } else {
-        timerTextEl.classList.remove('text-rose-400', 'animate-pulse');
-        timerBarEl.classList.remove('from-rose-500', 'to-red-600');
-        timerBarEl.classList.add('from-pink-400', 'via-fuchsia-400', 'to-rose-400');
-      }
+    function escapeHTML(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
     function displayQuestion() {
       isAnswered = false;
-      const q = questionsList[currentIndex];
+      const q = questionsDatabase[currentIndex];
 
       qNumEl.textContent = currentIndex + 1;
-      liveScoreEl.textContent = `${score} / 10`;
+      liveScoreEl.textContent = `${score} / 5`;
 
       explanationBox.classList.add('hidden');
       nextBtn.classList.add('hidden');
 
       questionTextEl.textContent = q.question;
-
-      if (q.code) {
-        codeSnippetEl.textContent = q.code;
-        codeContainer.classList.remove('hidden');
-      } else {
-        codeContainer.classList.add('hidden');
-      }
-
+      codeSnippetEl.textContent = q.code;
       optionsGrid.innerHTML = '';
-
-      if (q.options.length === 2) {
-        optionsGrid.className = "grid grid-cols-2 gap-4 mb-5";
-      } else {
-        optionsGrid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5";
-      }
 
       q.options.forEach((optText, idx) => {
         const btn = document.createElement('button');
         btn.dataset.idx = idx;
 
-        btn.className = "option-btn p-4 rounded-xl border border-pink-500/30 bg-pink-900/60 hover:bg-pink-800/80 hover:border-pink-400 text-left text-pink-100 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-md";
+        btn.className = "option-btn p-4 rounded-xl border border-slate-800 bg-slate-950/80 hover:bg-slate-800/80 hover:border-cyan-500 text-left text-slate-100 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-md";
         btn.innerHTML = `
-          <span class="w-8 h-8 rounded-lg bg-pink-950/80 border border-pink-500/40 text-pink-300 font-bold text-sm flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
+          <span class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 text-cyan-400 font-bold text-sm flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
           <span class="text-xs sm:text-sm leading-snug font-code">${escapeHTML(optText)}</span>
         `;
-        btn.addEventListener('click', () => handleSingleClick(idx));
+        btn.addEventListener('click', () => handleOptionClick(idx));
 
         optionsGrid.appendChild(btn);
       });
-
-      startTimer();
     }
 
-    function handleSingleClick(selectedIdx) {
+    function handleOptionClick(selectedIdx) {
       if (isAnswered) return;
       isAnswered = true;
-      clearInterval(timerId);
 
-      const q = questionsList[currentIndex];
+      const q = questionsDatabase[currentIndex];
       const isCorrect = (selectedIdx === q.correctIndex);
 
-      const buttons = optionsGrid.querySelectorAll('.option-btn');
+      const buttons = document.querySelectorAll('.option-btn');
       buttons.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === q.correctIndex) {
-          btn.classList.remove('border-pink-500/30', 'bg-pink-900/60');
+          btn.classList.remove('border-slate-800', 'bg-slate-950/80');
           btn.classList.add('border-emerald-400', 'bg-emerald-950/90', 'text-emerald-200', 'ring-2', 'ring-emerald-400');
         } else if (idx === selectedIdx && !isCorrect) {
-          btn.classList.remove('border-pink-500/30', 'bg-pink-900/60');
+          btn.classList.remove('border-slate-800', 'bg-slate-950/80');
           btn.classList.add('border-rose-500', 'bg-rose-950/90', 'text-rose-200', 'ring-2', 'ring-rose-500');
         }
       });
 
       if (isCorrect) {
         score += 1;
-        liveScoreEl.textContent = `${score} / 10`;
+        liveScoreEl.textContent = `${score} / 5`;
         showExplanation(true, "Correct! " + q.explanation);
       } else {
         showExplanation(false, "Not quite! " + q.explanation);
@@ -536,36 +357,19 @@
       nextBtn.classList.remove('hidden');
     }
 
-    function onTimeout() {
-      if (isAnswered) return;
-      isAnswered = true;
-
-      const q = questionsList[currentIndex];
-      const buttons = optionsGrid.querySelectorAll('.option-btn');
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === q.correctIndex) {
-          btn.classList.add('border-emerald-400', 'bg-emerald-950/90', 'text-emerald-200', 'ring-2', 'ring-emerald-400');
-        }
-      });
-
-      showExplanation(false, "⏳ Time is up! You had 30 seconds for this question. " + q.explanation);
-      nextBtn.classList.remove('hidden');
-    }
-
     function showExplanation(isCorrect, message) {
       explanationBox.classList.remove('hidden', 'bg-emerald-950/80', 'border-emerald-500/50', 'bg-rose-950/80', 'border-rose-500/50');
 
       if (isCorrect) {
         explanationBox.classList.add('bg-emerald-950/80', 'border-emerald-500/50');
-        explanationIcon.textContent = "🦄";
-        explanationTitle.textContent = "Great Job!";
-        explanationTitle.className = "font-bold text-base text-emerald-300";
+        explanationIcon.textContent = "🚀";
+        explanationTitle.textContent = "Great Spot!";
+        explanationTitle.className = "font-bold text-sm sm:text-base text-emerald-300";
       } else {
         explanationBox.classList.add('bg-rose-950/80', 'border-rose-500/50');
         explanationIcon.textContent = "💡";
         explanationTitle.textContent = "Let's Learn";
-        explanationTitle.className = "font-bold text-base text-rose-300";
+        explanationTitle.className = "font-bold text-sm sm:text-base text-rose-300";
       }
 
       explanationText.textContent = message;
@@ -573,31 +377,29 @@
 
     nextBtn.addEventListener('click', () => {
       currentIndex++;
-      if (currentIndex < questionsList.length) {
+      if (currentIndex < questionsDatabase.length) {
         displayQuestion();
       } else {
-        showTeacherReport();
+        showFinalReport();
       }
     });
 
-    function showTeacherReport() {
+    function showFinalReport() {
       quizScreen.classList.add('hidden');
       resultScreen.classList.remove('hidden');
 
-      finalTotalScore.textContent = `${score} / 10`;
+      finalTotalScore.textContent = `${score} / 5`;
 
       let feedback = "";
-      if (score >= 9) {
-        feedback = `Awesome work! 🦄 You scored ${score} out of 10! You did a fantastic job understanding loops, functions, and finding errors. You are getting very good at writing Python code! Keep up the great work!`;
-      } else if (score >= 7) {
-        feedback = `Great job! 🦄 You scored ${score} out of 10! You understand how loops count and how Python checks conditions. Keep practicing to get 10 out of 10 next time!`;
-      } else if (score >= 5) {
-        feedback = `Good effort! 🦄 You scored ${score} out of 10! You got many questions right. Remember to check for colons (:) at the end of if lines and keep practicing!`;
+      if (score === 5) {
+        feedback = `Flawless execution! 🚀 You scored 5 out of 5! You mastered variable scope, exponential backoff loops, and list mutability without making a single mistake. Your Python problem-solving logic is sharp!`;
+      } else if (score >= 3) {
+        feedback = `Great job! 🎉 You scored ${score} out of 5! You showed a really strong understanding of loops, list slicing, and boolean logic. Review the scope rules to hit a perfect score next time!`;
       } else {
-        feedback = `Nice try! 🦄 You scored ${score} out of 10. Python takes time to learn! Read the key rules below and try the quiz again!`;
+        feedback = `Good effort! 💡 You scored ${score} out of 5. Software engineering logic takes time to practice. Review the takeaways below and give it another shot!`;
       }
 
-      teacherFeedbackText.textContent = feedback;
+      tutorFeedbackText.textContent = feedback;
     }
 
     restartBtn.addEventListener('click', () => {
@@ -609,7 +411,7 @@
       displayQuestion();
     });
 
-    createFlyingUnicorns();
+    // INIT
     prepareQuestions();
     displayQuestion();
   </script>
