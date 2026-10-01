@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Revision - Real-World Software Engineering Challenge</title>
+  <title>Python Revision - 12yo Challenge</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Caveat for teacher's note, Fira Code for code blocks, Outfit for UI -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -23,100 +23,132 @@
       font-family: 'Caveat', cursive;
     }
 
-    /* Ambient background grid pattern */
-    .bg-grid-pattern {
-      background-size: 36px 36px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    /* Floating Blue Snails Keyframes */
+    .floating-snail {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      animation: floatSnail linear infinite;
     }
 
-    /* Report Card Notebook Paper */
-    .report-paper {
-      background-color: #fffdf5;
-      background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
-      background-size: 100% 2.2rem;
-      border-left: 5px double #3b82f6;
+    @keyframes floatSnail {
+      0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.85;
+      }
+      50% {
+        transform: translateY(50vh) translateX(35px) rotate(12deg);
+        opacity: 0.9;
+      }
+      90% {
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-80px) translateX(-25px) rotate(-10deg);
+        opacity: 0;
+      }
+    }
+
+    /* Notebook Sheet for Tutor Feedback */
+    .feedback-sheet {
+      background-color: #f7fdf9;
+      background-image: linear-gradient(#d1fae5 1px, transparent 1px);
+      background-size: 100% 2.1rem;
+      border-left: 5px double #059669;
     }
 
     pre::-webkit-scrollbar {
       height: 6px;
     }
     pre::-webkit-scrollbar-thumb {
-      background: #0284c7;
+      background: #059669;
       border-radius: 4px;
     }
   </style>
 </head>
-<body class="bg-slate-950 bg-grid-pattern text-slate-100 min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
+<body class="bg-gradient-to-br from-emerald-50 via-green-100 to-lime-100 text-slate-800 min-h-screen relative flex flex-col justify-between selection:bg-emerald-300 selection:text-emerald-950">
 
-  <!-- Glow Accents in Background -->
-  <div class="fixed top-10 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="fixed bottom-10 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- Floating Blue Snails Background Container -->
+  <div id="snails-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
-  <!-- Main Application Wrapper -->
-  <div class="relative z-10 container mx-auto px-4 py-8 max-w-3xl flex-grow flex flex-col justify-center">
+  <!-- Main Container -->
+  <div class="relative z-10 container mx-auto px-4 py-6 max-w-3xl flex-grow flex flex-col justify-center">
 
-    <!-- Global Header -->
-    <header class="text-center mb-8">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold uppercase tracking-widest mb-2">
-        <span>⚡ Self-Paced Revision</span>
+    <!-- Global Quiz Header -->
+    <header class="text-center mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-700/10 border border-emerald-600/30 text-emerald-900 text-xs font-semibold uppercase tracking-widest mb-2">
+        <span>🐍 Python Revision Challenge</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-cyan-200 to-blue-400 tracking-tight">
-        Python Revision
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-emerald-950 tracking-tight drop-shadow-sm">
+        Python Logic & Syntax Quiz
       </h1>
-      <p class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">5 Questions • No Timer Pressure</p>
+      <p class="text-xs sm:text-sm font-semibold text-emerald-800 mt-1">10 Questions • 30 Seconds Per Question</p>
     </header>
 
     <!-- QUIZ SCREEN -->
     <div id="quiz-screen" class="w-full">
       
-      <!-- Top Status Bar -->
-      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-4 sm:p-5 mb-5 shadow-2xl">
+      <!-- Top Info Bar: Question Counter, Live Score, Timer -->
+      <div class="bg-emerald-900/95 text-white border border-emerald-700/50 rounded-2xl p-4 sm:p-5 mb-5 shadow-xl backdrop-blur-md">
         <div class="flex justify-between items-center gap-3">
           
-          <!-- Question Counter -->
+          <!-- Question Counter & Category Badge -->
           <div>
-            <span class="text-[11px] uppercase font-bold text-cyan-400 tracking-wider block">Software Engineering Logic</span>
-            <div class="text-xl sm:text-2xl font-black text-slate-100 font-code mt-0.5">
-              Question <span id="q-num" class="text-cyan-400">1</span> <span class="text-slate-500 text-base font-normal">/ 5</span>
+            <span id="section-badge" class="text-[11px] uppercase font-bold text-emerald-300 tracking-wider block">Part 1: Syntax & Methods</span>
+            <div class="text-2xl font-black text-emerald-100 font-code mt-0.5">
+              Question <span id="q-num" class="text-cyan-300">1</span> <span class="text-emerald-400 text-lg font-normal">/ 10</span>
             </div>
           </div>
 
           <!-- Live Score Badge -->
-          <div class="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-right">
-            <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block">Live Score</span>
-            <span id="live-score" class="text-xl font-extrabold text-amber-400 font-code">0 / 5</span>
+          <div class="text-center bg-emerald-950/80 px-4 py-2 rounded-xl border border-emerald-700/60 shadow-inner">
+            <span class="text-[11px] uppercase tracking-wider text-emerald-300 block font-bold">Live Score</span>
+            <span id="live-score" class="text-xl font-extrabold text-amber-300 font-code">0 / 10</span>
           </div>
 
+          <!-- 30-Second Timer -->
+          <div class="flex items-center gap-2">
+            <div class="relative w-14 h-14 flex items-center justify-center bg-emerald-950 rounded-full border-2 border-emerald-400 shadow-inner">
+              <span id="timer-text" class="text-xl font-black text-emerald-300 font-code">30</span>
+              <span class="text-[8px] text-emerald-400 absolute bottom-1 font-bold">sec</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timer Progress Bar -->
+        <div class="w-full bg-emerald-950 h-2.5 rounded-full mt-3 overflow-hidden border border-emerald-700/60">
+          <div id="timer-bar" class="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300 transition-all duration-1000 ease-linear w-full"></div>
         </div>
       </div>
 
       <!-- Question Card -->
-      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-7 shadow-2xl relative">
+      <div class="bg-white/95 backdrop-blur-md border border-emerald-200 rounded-2xl p-5 sm:p-7 shadow-xl relative">
         
-        <!-- Question Scenario / Prompt -->
-        <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-100 leading-relaxed mb-4">
-          Scenario question loading...
+        <!-- Question Scenario Text -->
+        <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed mb-4">
+          Question loading...
         </h2>
 
-        <!-- Code Snippet Area -->
-        <div id="code-container" class="mb-5">
-          <pre class="bg-slate-950 text-cyan-200 border border-cyan-500/30 rounded-xl p-4 font-code text-xs sm:text-sm overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
+        <!-- Code Snippet Area (Only used when prediction snippet is needed) -->
+        <div id="code-container" class="mb-5 hidden">
+          <pre class="bg-slate-950 text-cyan-200 border border-emerald-700/40 rounded-xl p-4 font-code text-xs sm:text-sm overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
         </div>
 
-        <!-- 4 Option Buttons Grid -->
+        <!-- 4 Options Grid -->
         <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          <!-- Rendered dynamically -->
+          <!-- Options rendered dynamically -->
         </div>
 
-        <!-- Explanation Container (Under Option Buttons) -->
-        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6 shadow-md">
+        <!-- Explanation Box (Under Buttons) -->
+        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6 shadow-sm">
           <div class="flex items-start gap-3">
             <span id="explanation-icon" class="text-2xl shrink-0">💡</span>
             <div>
-              <h4 id="explanation-title" class="font-bold text-sm sm:text-base">Explanation</h4>
-              <p id="explanation-text" class="text-xs sm:text-sm mt-1 leading-relaxed text-slate-200">
+              <h4 id="explanation-title" class="font-bold text-base">Explanation</h4>
+              <p id="explanation-text" class="text-xs sm:text-sm mt-1 leading-relaxed text-slate-800">
                 Explanation text appears here.
               </p>
             </div>
@@ -125,53 +157,57 @@
 
         <!-- Next Question Button -->
         <div class="flex justify-end">
-          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
             <span>Next Question</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
 
       </div>
     </div>
 
-    <!-- REPORT CARD SCREEN -->
+    <!-- RESULT SCREEN -->
     <div id="result-screen" class="hidden w-full my-4">
-      <div class="report-paper rounded-3xl p-6 sm:p-9 shadow-2xl text-slate-900 border-t-8 border-blue-600 relative overflow-hidden">
+      <div class="feedback-sheet rounded-2xl p-6 sm:p-9 shadow-xl text-slate-900 border-t-8 border-emerald-700 relative overflow-hidden">
         
-        <!-- Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-300 pb-4 mb-6">
+        <!-- Result Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-emerald-200 pb-4 mb-6">
           <div>
-            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-slate-950">Teacher's Feedback</h2>
-            <p class="text-xs text-slate-600 font-semibold tracking-wide uppercase mt-1">Python Engineering Logic Assessment</p>
+            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-emerald-950">Tutor Feedback</h2>
+            <p class="text-xs text-emerald-800 font-semibold tracking-wide uppercase mt-1">Python Revision Assessment</p>
           </div>
-          <div class="mt-3 sm:mt-0 bg-blue-100 border-2 border-blue-400 rounded-xl px-5 py-2.5 text-center shadow-sm">
-            <span class="text-[11px] uppercase tracking-wider text-blue-900 font-bold block">Final Score</span>
-            <span id="final-total-score" class="text-3xl font-black text-blue-950 font-code">0 / 5</span>
+          <div class="mt-3 sm:mt-0 bg-emerald-100/90 border-2 border-emerald-400 rounded-xl px-5 py-2.5 text-center shadow-sm">
+            <span class="text-[11px] uppercase tracking-wider text-emerald-950 font-bold block">Final Total Score</span>
+            <span id="final-total-score" class="text-3xl font-black text-emerald-950 font-code">0 / 10</span>
           </div>
         </div>
 
-        <!-- Handwritten Feedback Note -->
-        <div class="mb-6 bg-white/90 p-5 rounded-xl border border-slate-300 shadow-sm">
+        <!-- Tutor Feedback Note -->
+        <div class="mb-6 bg-white/95 p-6 rounded-xl border border-emerald-200 shadow-sm">
           <p id="tutor-feedback-text" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed">
-            Generating feedback note...
+            Generating tutor feedback...
           </p>
         </div>
 
-        <!-- Engineering Key Concepts Summary -->
-        <div class="mb-6 bg-blue-50/80 p-4 rounded-xl border border-blue-200 text-xs text-blue-950 leading-relaxed">
-          <span class="font-bold text-sm block mb-1">📌 Engineering Key Takeaways:</span>
-          <ul class="list-disc list-inside space-y-1">
-            <li><strong>Exponential Backoff:</strong> Doubling delay counters in loops (`delay *= 2`) prevents server overload.</li>
-            <li><strong>List Slicing Mutability:</strong> Slicing a list (`lst[:2]`) creates a new copy, leaving the original list untouched.</li>
-            <li><strong>Variable Scope:</strong> Reassigning a variable inside a function without `global` creates a local variable instead of modifying the outer variable.</li>
+        <!-- Mastered Concepts Card -->
+        <div class="mb-6 p-4 rounded-xl bg-emerald-100/60 border border-emerald-300 text-xs sm:text-sm text-emerald-950">
+          <h3 class="font-bold text-sm text-emerald-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>📌</span> Mastered Concepts Breakdown:
+          </h3>
+          <ul class="list-disc list-inside space-y-1.5 text-emerald-900 leading-relaxed">
+            <li><strong>Turtle Graphics:</strong> Using <code>pensize(5)</code> for thickness and <code>right(90)</code> to turn facing downwards.</li>
+            <li><strong>List Operations:</strong> Appending items with <code>.append()</code> and changing values by index (e.g. <code>scores[1] = 25</code>).</li>
+            <li><strong>Dictionary Elements:</strong> Adding new key-value pairs directly using <code>dict['key'] = value</code>.</li>
+            <li><strong>Inclusive Random Ranges:</strong> Remembering that <code>random.randint(a, b)</code> includes <em>both</em> endpoints.</li>
+            <li><strong>Boolean & Control Flow:</strong> Combining <code>and</code>/<code>or</code> conditions and evaluating <code>if/elif/else</code> statements.</li>
           </ul>
         </div>
 
-        <!-- Action Button -->
-        <div class="flex justify-center border-t border-slate-300 pt-5">
-          <button id="restart-btn" class="py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+        <!-- Retake Button -->
+        <div class="flex justify-center border-t border-emerald-200 pt-5">
+          <button id="restart-btn" class="py-3.5 px-8 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-md transition transform active:scale-95 flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            <span>Retake Revision</span>
+            <span>Retake Challenge</span>
           </button>
         </div>
 
@@ -181,100 +217,160 @@
   </div>
 
   <!-- Footer -->
-  <footer class="relative z-10 py-3 text-center text-xs text-slate-500 bg-slate-950 border-t border-slate-900">
-    <p>Python Revision • Software Systems & Logic</p>
+  <footer class="relative z-10 py-3 text-center text-xs text-emerald-800 bg-emerald-100/80 border-t border-emerald-200">
+    <p>Python Revision Challenge • Floating Blue Snails Edition 🐌</p>
   </footer>
 
   <script>
     // -------------------------------------------------------------
-    // 5 SHORT, ACCESSIBLE QUESTIONS FOR QUICK COMPLETION
+    // 10 ACCESSIBLE QUESTIONS FOR A 12-YEAR-OLD STUDENT
     // -------------------------------------------------------------
     const rawQuestionsDatabase = [
+      
+      // =========================================================
+      // PART 1: SYNTAX FIXES & ERROR IDENTIFICATION (Q1 - Q5)
+      // =========================================================
       {
-        question: "Exponential Backoff: An API retry loop doubles the wait delay on each step. What is the value of `delay` printed at the end?",
-        code: "delay = 1\nfor _ in range(3):\n    delay *= 2\n\nprint(delay)",
+        section: "Part 1: Syntax & Methods",
+        question: "1. Turtle Graphics: In Turtle graphics, which code correctly sets the pen thickness to 5 and turns the turtle right by 90 degrees so it faces straight DOWN?",
+        code: null,
         options: [
-          { text: "8", isCorrect: true },
-          { text: "6", isCorrect: false },
-          { text: "4", isCorrect: false },
-          { text: "16", isCorrect: false }
+          { text: "t.pensize(5)  and  t.right(90)", isCorrect: true },
+          { text: "t.thickness(5)  and  t.down(90)", isCorrect: false },
+          { text: "t.pensize(5)  and  t.turn(90)", isCorrect: false },
+          { text: "t.line_width(5)  and  t.left(90)", isCorrect: false }
         ],
-        explanation: "Loop runs 3 times. Step 1: 1 * 2 = 2. Step 2: 2 * 2 = 4. Step 3: 4 * 2 = 8!"
+        explanation: "`t.pensize(5)` sets the thickness, and `t.right(90)` turns the turtle 90° clockwise so it points straight DOWN!"
       },
       {
-        question: "API Health Scanner: A monitoring tool checks HTTP status codes (`200` = Healthy). How many healthy servers are counted?",
-        code: "statuses = [200, 500, 200]\nonline = 0\nfor status in statuses:\n    if status == 200:\n        online += 1\n\nprint(online)",
+        section: "Part 1: Syntax & Methods",
+        question: "2. Adding to a List: Given `fruits = ['apple', 'banana']`, which line of code correctly adds `'cherry'` to the end of the list?",
+        code: null,
         options: [
-          { text: "2", isCorrect: true },
-          { text: "3", isCorrect: false },
-          { text: "1", isCorrect: false },
-          { text: "0", isCorrect: false }
+          { text: "fruits.append('cherry')", isCorrect: true },
+          { text: "fruits.add('cherry')", isCorrect: false },
+          { text: "fruits.push('cherry')", isCorrect: false },
+          { text: "fruits += 'cherry'", isCorrect: false }
         ],
-        explanation: "There are two `200` status codes in the list, so `online` increments twice to output 2."
+        explanation: "In Python, we use `.append('cherry')` to add a new item to the end of a list!"
       },
       {
-        question: "List Slicing Mutability: An active user session list is created from `users[:2]`. What is `len(users)` at the end?",
-        code: "users = ['Alice', 'Bob', 'Charlie']\nactive = users[:2]\nactive.append('Dave')\n\nprint(len(users))",
+        section: "Part 1: Syntax & Methods",
+        question: "3. Changing List Items: Given `scores = [10, 20, 30]`, which line of code changes the second item (`20`) to `25`?",
+        code: null,
         options: [
-          { text: "3", isCorrect: true },
-          { text: "4", isCorrect: false },
-          { text: "2", isCorrect: false },
-          { text: "5", isCorrect: false }
+          { text: "scores[1] = 25", isCorrect: true },
+          { text: "scores[2] = 25", isCorrect: false },
+          { text: "scores.change(1, 25)", isCorrect: false },
+          { text: "scores(1) = 25", isCorrect: false }
         ],
-        explanation: "Slicing `users[:2]` creates a separate copy. Appending 'Dave' to `active` does NOT change the original `users` list, which stays 3 items long."
+        explanation: "Python list indices start at 0 (0 is the 1st item, 1 is the 2nd item). So `scores[1] = 25` updates the second item!"
       },
       {
-        question: "Variable Scope: A function creates a local variable `count`. What is output when `print(count)` runs?",
-        code: "count = 10\n\ndef update():\n    count = 5\n\nupdate()\nprint(count)",
+        section: "Part 1: Syntax & Methods",
+        question: "4. While Loop Header: Which option shows the CORRECT `while` loop syntax to run as long as `count` is greater than 0?",
+        code: null,
         options: [
-          { text: "10", isCorrect: true },
-          { text: "5", isCorrect: false },
-          { text: "15", isCorrect: false },
-          { text: "UnboundLocalError", isCorrect: false }
+          { text: "while count > 0:", isCorrect: true },
+          { text: "while count = 0:", isCorrect: false },
+          { text: "while count > 0", isCorrect: false },
+          { text: "while (count > 0)", isCorrect: false }
         ],
-        explanation: "`count = 5` inside `update()` creates a local variable. The global `count` variable outside remains 10!"
+        explanation: "Loop headers in Python MUST end with a colon `:` and use comparison operators like `>` rather than single `=`!"
       },
       {
-        question: "Feature Flag Logic: An admin portal checks access rights. What boolean value does `can_access` hold?",
-        code: "is_admin = True\nhas_key = False\n\ncan_access = is_admin or has_key\nprint(can_access)",
+        section: "Part 1: Syntax & Methods",
+        question: "5. Adding to a Dictionary: Given `player = {'name': 'Alex'}`, which line of code correctly adds a new key `'age'` with value `12`?",
+        code: null,
+        options: [
+          { text: "player['age'] = 12", isCorrect: true },
+          { text: "player.add('age', 12)", isCorrect: false },
+          { text: "player.append('age': 12)", isCorrect: false },
+          { text: "player['age'] == 12", isCorrect: false }
+        ],
+        explanation: "To add a new key and value to a dictionary, we assign it directly using square brackets: `player['age'] = 12`!"
+      },
+
+      // =========================================================
+      // PART 2: LOGIC & OUTPUT PREDICTIONS (Q6 - Q10)
+      // =========================================================
+      {
+        section: "Part 2: Logic & Predictions",
+        question: "6. Random Number Range: What are ALL the unique whole numbers that `random.randint(1, 4)` can potentially pick?",
+        code: null,
+        options: [
+          { text: "1, 2, 3, and 4", isCorrect: true },
+          { text: "1, 2, and 3 only", isCorrect: false },
+          { text: "2, 3, and 4 only", isCorrect: false },
+          { text: "0, 1, 2, 3, and 4", isCorrect: false }
+        ],
+        explanation: "Unlike `range()`, `random.randint(a, b)` includes BOTH numbers `a` and `b`! So it can generate 1, 2, 3, AND 4."
+      },
+      {
+        section: "Part 2: Logic & Predictions",
+        question: "7. Boolean Expression: What boolean value is produced when this expression is evaluated?",
+        code: "result = (10 > 5) and (4 == 4) or (2 > 8)\nprint(result)",
         options: [
           { text: "True", isCorrect: true },
           { text: "False", isCorrect: false },
-          { text: "None", isCorrect: false },
-          { text: "Error", isCorrect: false }
+          { text: "10", isCorrect: false },
+          { text: "SyntaxError", isCorrect: false }
         ],
-        explanation: "With the `or` operator, if at least one condition is `True` (`is_admin` is True), the entire expression evaluates to `True`!"
+        explanation: "`10 > 5` is True and `4 == 4` is True ➔ `True and True` is True. Since the first part of `or` is True, the result is `True`!"
+      },
+      {
+        section: "Part 2: Logic & Predictions",
+        question: "8. Loop Range Count: How many times will this `for` loop print the text `'Python'`?",
+        code: "for i in range(1, 6):\n    print('Python')",
+        options: [
+          { text: "5 times", isCorrect: true },
+          { text: "6 times", isCorrect: false },
+          { text: "4 times", isCorrect: false },
+          { text: "1 time", isCorrect: false }
+        ],
+        explanation: "`range(1, 6)` starts at 1 and stops right before 6 (numbers 1, 2, 3, 4, 5). So it runs exactly 5 times!"
+      },
+      {
+        section: "Part 2: Logic & Predictions",
+        question: "9. List Accumulator Loop: Trace the loop below. What is the value printed for `total` at the end?",
+        code: "total = 0\nnumbers = [10, 20, 30]\nfor num in numbers:\n    total = total + num\n\nprint(total)",
+        options: [
+          { text: "60", isCorrect: true },
+          { text: "30", isCorrect: false },
+          { text: "50", isCorrect: false },
+          { text: "3", isCorrect: false }
+        ],
+        explanation: "The loop adds each number step by step: 0 + 10 = 10 ➔ 10 + 20 = 30 ➔ 30 + 30 = 60!"
+      },
+      {
+        section: "Part 2: Logic & Predictions",
+        question: "10. If / Elif Condition: What will be printed when this grade checker runs?",
+        code: "score = 85\nif score >= 90:\n    print('Gold')\nelif score >= 80:\n    print('Silver')\nelse:\n    print('Bronze')",
+        options: [
+          { text: "Silver", isCorrect: true },
+          { text: "Gold", isCorrect: false },
+          { text: "Bronze", isCorrect: false },
+          { text: "Gold and Silver", isCorrect: false }
+        ],
+        explanation: "`score = 85` is not >= 90 (skips Gold). But `85 >= 80` is True, so it prints `'Silver'` and finishes!"
       }
     ];
 
     let questionsDatabase = [];
-
-    function prepareQuestions() {
-      questionsDatabase = rawQuestionsDatabase.map(q => {
-        const clonedOpts = [...q.options];
-        for (let i = clonedOpts.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [clonedOpts[i], clonedOpts[j]] = [clonedOpts[j], clonedOpts[i]];
-        }
-        return {
-          question: q.question,
-          code: q.code,
-          options: clonedOpts.map(o => o.text),
-          correctIndex: clonedOpts.findIndex(o => o.isCorrect),
-          explanation: q.explanation
-        };
-      });
-    }
-
-    // STATE
     let currentIndex = 0;
     let score = 0;
+    let timerId = null;
+    let timeLeft = 30;
     let isAnswered = false;
 
-    // DOM ELEMENTS
+    // DOM Elements
     const qNumEl = document.getElementById('q-num');
     const liveScoreEl = document.getElementById('live-score');
+    const timerTextEl = document.getElementById('timer-text');
+    const timerBarEl = document.getElementById('timer-bar');
+    const sectionBadgeEl = document.getElementById('section-badge');
     const questionTextEl = document.getElementById('question-text');
+    const codeContainer = document.getElementById('code-container');
     const codeSnippetEl = document.getElementById('code-snippet');
     const optionsGrid = document.getElementById('options-grid');
     const explanationBox = document.getElementById('explanation-box');
@@ -298,57 +394,165 @@
         .replace(/'/g, '&#039;');
     }
 
+    // Shuffle options dynamically
+    function prepareQuestions() {
+      questionsDatabase = rawQuestionsDatabase.map(q => {
+        const clonedOpts = [...q.options];
+        for (let i = clonedOpts.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [clonedOpts[i], clonedOpts[j]] = [clonedOpts[j], clonedOpts[i]];
+        }
+        return {
+          section: q.section,
+          question: q.question,
+          code: q.code || null,
+          options: clonedOpts.map(o => o.text),
+          correctIndex: clonedOpts.findIndex(o => o.isCorrect),
+          explanation: q.explanation
+        };
+      });
+    }
+
+    // FLOATING BLUE SNAILS ANIMATION
+    function createFloatingBlueSnails() {
+      const container = document.getElementById('snails-container');
+      container.innerHTML = '';
+
+      const snailSVGs = [
+        `<svg width="45" height="38" viewBox="0 0 64 52" fill="none">
+          <path d="M12 40 C12 40, 2 40, 2 45 C2 50, 10 50, 52 50 C58 50, 62 45, 58 40 C54 35, 46 38, 40 40 Z" fill="#38bdf8"/>
+          <circle cx="10" cy="35" r="2.5" fill="#0284c7"/>
+          <line x1="8" y1="35" x2="4" y2="28" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="12" y1="35" x2="10" y2="27" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="4" cy="27" r="2" fill="#0284c7"/>
+          <circle cx="10" cy="26" r="2" fill="#0284c7"/>
+          <circle cx="36" cy="30" r="18" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+          <path d="M36 18 C42 18, 46 22, 46 28 C46 34, 40 38, 34 36 C30 34, 30 28, 34 26" stroke="#bfdbfe" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        </svg>`,
+        `<svg width="40" height="34" viewBox="0 0 64 52" fill="none">
+          <path d="M12 40 C12 40, 2 40, 2 45 C2 50, 10 50, 52 50 C58 50, 62 45, 58 40 C54 35, 46 38, 40 40 Z" fill="#7dd3fc"/>
+          <line x1="8" y1="35" x2="4" y2="28" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="12" y1="35" x2="10" y2="27" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="4" cy="27" r="2" fill="#0369a1"/>
+          <circle cx="10" cy="26" r="2" fill="#0369a1"/>
+          <circle cx="36" cy="30" r="16" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+          <path d="M36 20 C41 20, 44 23, 44 28 C44 33, 39 36, 34 35" stroke="#e0f2fe" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        </svg>`
+      ];
+
+      for (let i = 0; i < 15; i++) {
+        const snail = document.createElement('div');
+        snail.className = 'floating-snail';
+        snail.innerHTML = snailSVGs[i % snailSVGs.length];
+
+        const leftPos = Math.random() * 92;
+        const duration = Math.random() * 8 + 9;
+        const delay = Math.random() * 9;
+        const scale = (Math.random() * 0.4 + 0.75).toFixed(2);
+
+        snail.style.left = `${leftPos}%`;
+        snail.style.animationDuration = `${duration}s`;
+        snail.style.animationDelay = `${delay}s`;
+        snail.style.transform = `scale(${scale})`;
+
+        container.appendChild(snail);
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timerId);
+      timeLeft = 30;
+      renderTimer();
+
+      timerId = setInterval(() => {
+        timeLeft--;
+        renderTimer();
+
+        if (timeLeft <= 0) {
+          clearInterval(timerId);
+          onTimeout();
+        }
+      }, 1000);
+    }
+
+    function renderTimer() {
+      timerTextEl.textContent = timeLeft;
+      const pct = (timeLeft / 30) * 100;
+      timerBarEl.style.width = `${pct}%`;
+
+      if (timeLeft <= 7) {
+        timerTextEl.classList.add('text-rose-500', 'animate-pulse');
+        timerBarEl.classList.remove('from-emerald-400', 'via-teal-300', 'to-cyan-300');
+        timerBarEl.classList.add('from-rose-500', 'to-red-600');
+      } else {
+        timerTextEl.classList.remove('text-rose-500', 'animate-pulse');
+        timerBarEl.classList.remove('from-rose-500', 'to-red-600');
+        timerBarEl.classList.add('from-emerald-400', 'via-teal-300', 'to-cyan-300');
+      }
+    }
+
     function displayQuestion() {
       isAnswered = false;
       const q = questionsDatabase[currentIndex];
 
       qNumEl.textContent = currentIndex + 1;
-      liveScoreEl.textContent = `${score} / 5`;
+      liveScoreEl.textContent = `${score} / 10`;
+      sectionBadgeEl.textContent = q.section;
 
       explanationBox.classList.add('hidden');
       nextBtn.classList.add('hidden');
 
       questionTextEl.textContent = q.question;
-      codeSnippetEl.textContent = q.code;
+
+      if (q.code) {
+        codeSnippetEl.textContent = q.code;
+        codeContainer.classList.remove('hidden');
+      } else {
+        codeContainer.classList.add('hidden');
+      }
+
       optionsGrid.innerHTML = '';
 
       q.options.forEach((optText, idx) => {
         const btn = document.createElement('button');
         btn.dataset.idx = idx;
 
-        btn.className = "option-btn p-4 rounded-xl border border-slate-800 bg-slate-950/80 hover:bg-slate-800/80 hover:border-cyan-500 text-left text-slate-100 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-md";
+        btn.className = "option-btn p-4 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100 hover:border-emerald-400 text-left text-slate-800 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-sm";
         btn.innerHTML = `
-          <span class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 text-cyan-400 font-bold text-sm flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
-          <span class="text-xs sm:text-sm leading-snug font-code">${escapeHTML(optText)}</span>
+          <span class="w-8 h-8 rounded-lg bg-emerald-200 border border-emerald-300 text-emerald-950 font-bold text-sm flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
+          <span class="text-xs sm:text-sm leading-snug font-code whitespace-pre-wrap">${escapeHTML(optText)}</span>
         `;
         btn.addEventListener('click', () => handleOptionClick(idx));
 
         optionsGrid.appendChild(btn);
       });
+
+      startTimer();
     }
 
     function handleOptionClick(selectedIdx) {
       if (isAnswered) return;
       isAnswered = true;
+      clearInterval(timerId);
 
       const q = questionsDatabase[currentIndex];
       const isCorrect = (selectedIdx === q.correctIndex);
 
-      const buttons = document.querySelectorAll('.option-btn');
+      const buttons = optionsGrid.querySelectorAll('.option-btn');
       buttons.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === q.correctIndex) {
-          btn.classList.remove('border-slate-800', 'bg-slate-950/80');
-          btn.classList.add('border-emerald-400', 'bg-emerald-950/90', 'text-emerald-200', 'ring-2', 'ring-emerald-400');
+          btn.classList.remove('border-emerald-200', 'bg-emerald-50/70');
+          btn.classList.add('border-emerald-500', 'bg-emerald-600', 'text-white', 'ring-2', 'ring-emerald-400');
         } else if (idx === selectedIdx && !isCorrect) {
-          btn.classList.remove('border-slate-800', 'bg-slate-950/80');
-          btn.classList.add('border-rose-500', 'bg-rose-950/90', 'text-rose-200', 'ring-2', 'ring-rose-500');
+          btn.classList.remove('border-emerald-200', 'bg-emerald-50/70');
+          btn.classList.add('border-rose-500', 'bg-rose-600', 'text-white', 'ring-2', 'ring-rose-400');
         }
       });
 
       if (isCorrect) {
         score += 1;
-        liveScoreEl.textContent = `${score} / 5`;
+        liveScoreEl.textContent = `${score} / 10`;
         showExplanation(true, "Correct! " + q.explanation);
       } else {
         showExplanation(false, "Not quite! " + q.explanation);
@@ -357,19 +561,36 @@
       nextBtn.classList.remove('hidden');
     }
 
+    function onTimeout() {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const q = questionsDatabase[currentIndex];
+      const buttons = optionsGrid.querySelectorAll('.option-btn');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.correctIndex) {
+          btn.classList.add('border-emerald-500', 'bg-emerald-600', 'text-white', 'ring-2', 'ring-emerald-400');
+        }
+      });
+
+      showExplanation(false, "⏳ Time is up! You had 30 seconds for this question. " + q.explanation);
+      nextBtn.classList.remove('hidden');
+    }
+
     function showExplanation(isCorrect, message) {
-      explanationBox.classList.remove('hidden', 'bg-emerald-950/80', 'border-emerald-500/50', 'bg-rose-950/80', 'border-rose-500/50');
+      explanationBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
 
       if (isCorrect) {
-        explanationBox.classList.add('bg-emerald-950/80', 'border-emerald-500/50');
-        explanationIcon.textContent = "🚀";
-        explanationTitle.textContent = "Great Spot!";
-        explanationTitle.className = "font-bold text-sm sm:text-base text-emerald-300";
+        explanationBox.classList.add('bg-emerald-50', 'border-emerald-400');
+        explanationIcon.textContent = "🐌";
+        explanationTitle.textContent = "Great Job!";
+        explanationTitle.className = "font-bold text-sm sm:text-base text-emerald-900";
       } else {
-        explanationBox.classList.add('bg-rose-950/80', 'border-rose-500/50');
+        explanationBox.classList.add('bg-rose-50', 'border-rose-400');
         explanationIcon.textContent = "💡";
-        explanationTitle.textContent = "Let's Learn";
-        explanationTitle.className = "font-bold text-sm sm:text-base text-rose-300";
+        explanationTitle.textContent = "Key Concept Breakdown";
+        explanationTitle.className = "font-bold text-sm sm:text-base text-rose-900";
       }
 
       explanationText.textContent = message;
@@ -380,23 +601,25 @@
       if (currentIndex < questionsDatabase.length) {
         displayQuestion();
       } else {
-        showFinalReport();
+        showTeacherReport();
       }
     });
 
-    function showFinalReport() {
+    function showTeacherReport() {
       quizScreen.classList.add('hidden');
       resultScreen.classList.remove('hidden');
 
-      finalTotalScore.textContent = `${score} / 5`;
+      finalTotalScore.textContent = `${score} / 10`;
 
       let feedback = "";
-      if (score === 5) {
-        feedback = `Flawless execution! 🚀 You scored 5 out of 5! You mastered variable scope, exponential backoff loops, and list mutability without making a single mistake. Your Python problem-solving logic is sharp!`;
-      } else if (score >= 3) {
-        feedback = `Great job! 🎉 You scored ${score} out of 5! You showed a really strong understanding of loops, list slicing, and boolean logic. Review the scope rules to hit a perfect score next time!`;
+      if (score >= 9) {
+        feedback = `Awesome work! 🌟 You scored an impressive ${score} out of 10! You showed total clarity on Turtle graphics, dictionary list mutation, randint range boundaries, and control loop logic. Fantastic computational thinking skills!`;
+      } else if (score >= 7) {
+        feedback = `Great job! 🚀 You scored ${score} out of 10! You have a really solid grasp on Python syntax and logical evaluation. Re-check how random.randint includes both endpoints to hit 10 out of 10 next time!`;
+      } else if (score >= 5) {
+        feedback = `Good effort! 🐌 You scored ${score} out of 10! You got many questions right. Review zero-based list indexing and range stops to master these questions!`;
       } else {
-        feedback = `Good effort! 💡 You scored ${score} out of 5. Software engineering logic takes time to practice. Review the takeaways below and give it another shot!`;
+        feedback = `Nice try! 💡 You scored ${score} out of 10. Python logic takes practice! Review the key concepts breakdown below and take another turn!`;
       }
 
       tutorFeedbackText.textContent = feedback;
@@ -411,7 +634,8 @@
       displayQuestion();
     });
 
-    // INIT
+    // INITIALIZATION
+    createFloatingBlueSnails();
     prepareQuestions();
     displayQuestion();
   </script>
