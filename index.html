@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Revision - 12yo Challenge</title>
+  <title>HTML Revision Quiz - Tutor Priyadarshini</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Outfit for UI, Caveat for handwriting, Fira Code for code snippets -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,131 +23,132 @@
       font-family: 'Caveat', cursive;
     }
 
-    /* Floating Blue Snails Keyframes */
-    .floating-snail {
-      position: fixed;
-      pointer-events: none;
-      z-index: 1;
-      animation: floatSnail linear infinite;
-    }
-
-    @keyframes floatSnail {
+    /* Floating Clouds Keyframe Animation */
+    @keyframes driftCloud {
       0% {
-        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        transform: translateX(-180px);
         opacity: 0;
       }
       10% {
-        opacity: 0.85;
-      }
-      50% {
-        transform: translateY(50vh) translateX(35px) rotate(12deg);
-        opacity: 0.9;
+        opacity: 0.8;
       }
       90% {
         opacity: 0.85;
       }
       100% {
-        transform: translateY(-80px) translateX(-25px) rotate(-10deg);
+        transform: translateX(115vw);
         opacity: 0;
       }
     }
 
-    /* Notebook Sheet for Tutor Feedback */
-    .feedback-sheet {
-      background-color: #f7fdf9;
-      background-image: linear-gradient(#d1fae5 1px, transparent 1px);
-      background-size: 100% 2.1rem;
-      border-left: 5px double #059669;
+    .drifting-cloud {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      animation: driftCloud linear infinite;
+    }
+
+    /* Lined Notebook Paper for Tutor Priyadarshini's handwritten note */
+    .tutor-note-paper {
+      background-color: #fffef8;
+      background-image: linear-gradient(#fed7aa 1px, transparent 1px);
+      background-size: 100% 2.3rem;
+      border-left: 6px double #f97316;
     }
 
     pre::-webkit-scrollbar {
       height: 6px;
     }
     pre::-webkit-scrollbar-thumb {
-      background: #059669;
+      background: #f97316;
       border-radius: 4px;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-emerald-50 via-green-100 to-lime-100 text-slate-800 min-h-screen relative flex flex-col justify-between selection:bg-emerald-300 selection:text-emerald-950">
+<body class="bg-gradient-to-b from-amber-50 via-orange-50 to-rose-100 text-slate-800 min-h-screen relative flex flex-col justify-between selection:bg-orange-300 selection:text-orange-950">
 
-  <!-- Floating Blue Snails Background Container -->
-  <div id="snails-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+  <!-- Ambient Sky / Floating Clouds Background -->
+  <div id="sky-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
   <!-- Main Container -->
   <div class="relative z-10 container mx-auto px-4 py-6 max-w-3xl flex-grow flex flex-col justify-center">
 
-    <!-- Global Quiz Header -->
-    <header class="text-center mb-6">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-700/10 border border-emerald-600/30 text-emerald-900 text-xs font-semibold uppercase tracking-widest mb-2">
-        <span>🐍 Python Revision Challenge</span>
+    <!-- Global Header -->
+    <header class="text-center mb-5">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-700/10 border border-orange-600/20 text-orange-900 text-xs font-bold uppercase tracking-widest mb-1.5 shadow-sm">
+        <span>🌐 HTML Quick Revision</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-emerald-950 tracking-tight drop-shadow-sm">
-        Python Logic & Syntax Quiz
+      <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight drop-shadow-sm">
+        HTML Syntax & Tags Challenge
       </h1>
-      <p class="text-xs sm:text-sm font-semibold text-emerald-800 mt-1">10 Questions • 30 Seconds Per Question</p>
+      <p class="text-xs sm:text-sm font-semibold text-orange-900/80 mt-1">
+        10 Questions • 30 Seconds Per Question • Curated by Tutor Priyadarshini
+      </p>
     </header>
 
     <!-- QUIZ SCREEN -->
     <div id="quiz-screen" class="w-full">
       
-      <!-- Top Info Bar: Question Counter, Live Score, Timer -->
-      <div class="bg-emerald-900/95 text-white border border-emerald-700/50 rounded-2xl p-4 sm:p-5 mb-5 shadow-xl backdrop-blur-md">
+      <!-- Top Info Bar -->
+      <div class="bg-white/95 backdrop-blur-md border border-orange-200/90 rounded-2xl p-4 sm:p-5 mb-5 shadow-xl">
         <div class="flex justify-between items-center gap-3">
           
-          <!-- Question Counter & Category Badge -->
+          <!-- Category & Question Number -->
           <div>
-            <span id="section-badge" class="text-[11px] uppercase font-bold text-emerald-300 tracking-wider block">Part 1: Syntax & Methods</span>
-            <div class="text-2xl font-black text-emerald-100 font-code mt-0.5">
-              Question <span id="q-num" class="text-cyan-300">1</span> <span class="text-emerald-400 text-lg font-normal">/ 10</span>
+            <span id="section-badge" class="text-[11px] uppercase font-extrabold text-orange-700 tracking-wider block">
+              Pick the Correct Syntax
+            </span>
+            <div class="text-xl sm:text-2xl font-black text-slate-900 font-code mt-0.5">
+              Question <span id="q-num" class="text-orange-600">1</span> <span class="text-slate-400 text-base font-normal">/ 10</span>
             </div>
           </div>
 
-          <!-- Live Score Badge -->
-          <div class="text-center bg-emerald-950/80 px-4 py-2 rounded-xl border border-emerald-700/60 shadow-inner">
-            <span class="text-[11px] uppercase tracking-wider text-emerald-300 block font-bold">Live Score</span>
-            <span id="live-score" class="text-xl font-extrabold text-amber-300 font-code">0 / 10</span>
+          <!-- Live Score -->
+          <div class="bg-orange-50/90 px-4 py-2 rounded-xl border border-orange-200 text-center shadow-inner">
+            <span class="text-[10px] uppercase tracking-wider text-orange-800 font-bold block">Score</span>
+            <span id="live-score" class="text-xl font-extrabold text-amber-600 font-code">0 / 10</span>
           </div>
 
-          <!-- 30-Second Timer -->
+          <!-- 30s Countdown Timer Circle -->
           <div class="flex items-center gap-2">
-            <div class="relative w-14 h-14 flex items-center justify-center bg-emerald-950 rounded-full border-2 border-emerald-400 shadow-inner">
-              <span id="timer-text" class="text-xl font-black text-emerald-300 font-code">30</span>
-              <span class="text-[8px] text-emerald-400 absolute bottom-1 font-bold">sec</span>
+            <div class="relative w-14 h-14 flex items-center justify-center bg-white rounded-full border-2 border-orange-400 shadow-md">
+              <span id="timer-text" class="text-xl font-black text-orange-600 font-code">30</span>
+              <span class="text-[8px] text-orange-950 absolute bottom-1 font-bold">sec</span>
             </div>
           </div>
+
         </div>
 
         <!-- Timer Progress Bar -->
-        <div class="w-full bg-emerald-950 h-2.5 rounded-full mt-3 overflow-hidden border border-emerald-700/60">
-          <div id="timer-bar" class="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300 transition-all duration-1000 ease-linear w-full"></div>
+        <div class="w-full bg-orange-100/70 h-2.5 rounded-full mt-3 overflow-hidden border border-orange-200">
+          <div id="timer-bar" class="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-rose-400 transition-all duration-1000 ease-linear w-full"></div>
         </div>
       </div>
 
       <!-- Question Card -->
-      <div class="bg-white/95 backdrop-blur-md border border-emerald-200 rounded-2xl p-5 sm:p-7 shadow-xl relative">
+      <div class="bg-white/95 backdrop-blur-md border border-orange-200/90 rounded-2xl p-5 sm:p-7 shadow-xl relative">
         
-        <!-- Question Scenario Text -->
+        <!-- Question Scenario / Prompt -->
         <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed mb-4">
-          Question loading...
+          Question text loading...
         </h2>
 
-        <!-- Code Snippet Area (Only used when prediction snippet is needed) -->
+        <!-- Context Code Snippet Area (if applicable) -->
         <div id="code-container" class="mb-5 hidden">
-          <pre class="bg-slate-950 text-cyan-200 border border-emerald-700/40 rounded-xl p-4 font-code text-xs sm:text-sm overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
+          <pre class="bg-slate-900 text-amber-300 border border-amber-600/40 rounded-xl p-4 font-code text-xs sm:text-sm overflow-x-auto shadow-inner"><code id="code-snippet"></code></pre>
         </div>
 
-        <!-- 4 Options Grid -->
+        <!-- Two Options Grid: Side-by-side on sm+ screens -->
         <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          <!-- Options rendered dynamically -->
+          <!-- Dynamically populated 2 options -->
         </div>
 
-        <!-- Explanation Box (Under Buttons) -->
-        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6 shadow-sm">
+        <!-- Explanation Container (Under Option Buttons) -->
+        <div id="explanation-box" class="hidden p-4 rounded-xl border transition-all duration-300 mb-6 shadow-md">
           <div class="flex items-start gap-3">
             <span id="explanation-icon" class="text-2xl shrink-0">💡</span>
             <div>
-              <h4 id="explanation-title" class="font-bold text-base">Explanation</h4>
+              <h4 id="explanation-title" class="font-bold text-sm sm:text-base">Explanation</h4>
               <p id="explanation-text" class="text-xs sm:text-sm mt-1 leading-relaxed text-slate-800">
                 Explanation text appears here.
               </p>
@@ -157,9 +158,9 @@
 
         <!-- Next Question Button -->
         <div class="flex justify-end">
-          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+          <button id="next-btn" class="hidden py-3 px-7 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
             <span>Next Question</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
 
@@ -168,193 +169,212 @@
 
     <!-- RESULT SCREEN -->
     <div id="result-screen" class="hidden w-full my-4">
-      <div class="feedback-sheet rounded-2xl p-6 sm:p-9 shadow-xl text-slate-900 border-t-8 border-emerald-700 relative overflow-hidden">
+      
+      <!-- Tutor Note Sheet -->
+      <div class="tutor-note-paper rounded-3xl p-6 sm:p-9 shadow-2xl text-slate-900 border-t-8 border-orange-600 relative overflow-hidden mb-6">
         
-        <!-- Result Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-emerald-200 pb-4 mb-6">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-orange-200 pb-4 mb-5">
           <div>
-            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-emerald-950">Tutor Feedback</h2>
-            <p class="text-xs text-emerald-800 font-semibold tracking-wide uppercase mt-1">Python Revision Assessment</p>
+            <span class="text-xs text-orange-800 font-bold uppercase tracking-widest block">Official HTML Assessment Review</span>
+            <h2 class="font-handwriting text-4xl sm:text-5xl font-bold text-orange-950 mt-0.5">Feedback from Tutor Priyadarshini</h2>
           </div>
-          <div class="mt-3 sm:mt-0 bg-emerald-100/90 border-2 border-emerald-400 rounded-xl px-5 py-2.5 text-center shadow-sm">
-            <span class="text-[11px] uppercase tracking-wider text-emerald-950 font-bold block">Final Total Score</span>
-            <span id="final-total-score" class="text-3xl font-black text-emerald-950 font-code">0 / 10</span>
+          <div class="mt-3 sm:mt-0 bg-white/95 border-2 border-orange-400 rounded-2xl px-5 py-2.5 text-center shadow-sm">
+            <span class="text-[11px] uppercase tracking-wider text-orange-900 font-bold block">Final Total Score</span>
+            <span id="final-total-score" class="text-3xl font-black text-orange-950 font-code">0 / 10</span>
           </div>
         </div>
 
-        <!-- Tutor Feedback Note -->
-        <div class="mb-6 bg-white/95 p-6 rounded-xl border border-emerald-200 shadow-sm">
-          <p id="tutor-feedback-text" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed">
-            Generating tutor feedback...
+        <!-- Handwritten Feedback Note Body -->
+        <div class="mb-5 bg-white/95 p-6 rounded-2xl border border-orange-200 shadow-sm">
+          <p id="tutor-feedback-text" class="font-handwriting text-2xl sm:text-3xl text-slate-800 leading-relaxed whitespace-pre-line">
+            Generating feedback note from Tutor Priyadarshini...
           </p>
         </div>
 
-        <!-- Mastered Concepts Card -->
-        <div class="mb-6 p-4 rounded-xl bg-emerald-100/60 border border-emerald-300 text-xs sm:text-sm text-emerald-950">
-          <h3 class="font-bold text-sm text-emerald-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <span>📌</span> Mastered Concepts Breakdown:
+        <!-- Mastered Concepts Breakdown -->
+        <div class="p-4 rounded-2xl bg-orange-50/90 border border-orange-200 text-xs sm:text-sm text-orange-950 mb-6">
+          <h3 class="font-bold text-sm text-orange-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>📌</span> Key HTML Syntax Reminders:
           </h3>
-          <ul class="list-disc list-inside space-y-1.5 text-emerald-900 leading-relaxed">
-            <li><strong>Turtle Graphics:</strong> Using <code>pensize(5)</code> for thickness and <code>right(90)</code> to turn facing downwards.</li>
-            <li><strong>List Operations:</strong> Appending items with <code>.append()</code> and changing values by index (e.g. <code>scores[1] = 25</code>).</li>
-            <li><strong>Dictionary Elements:</strong> Adding new key-value pairs directly using <code>dict['key'] = value</code>.</li>
-            <li><strong>Inclusive Random Ranges:</strong> Remembering that <code>random.randint(a, b)</code> includes <em>both</em> endpoints.</li>
-            <li><strong>Boolean & Control Flow:</strong> Combining <code>and</code>/<code>or</code> conditions and evaluating <code>if/elif/else</code> statements.</li>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-700">
+            <li><strong>Body Color Attribute:</strong> The classic HTML attribute is <code>bgcolor</code> (short for background color), not <code>backgroundcolor</code>.</li>
+            <li><strong>Font/Text Color:</strong> In CSS styling, the property is simply <code>color: ...</code>, not <code>font-color</code>.</li>
+            <li><strong>Lists Hierarchy:</strong> The container tag (<code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>) wraps around list item elements (<code>&lt;li&gt;</code>).</li>
+            <li><strong>Website Name:</strong> The text shown on the browser tab is placed inside <code>&lt;title&gt;...&lt;/title&gt;</code> in the <code>&lt;head&gt;</code>.</li>
+            <li><strong>Hyperlinks:</strong> Always use the concise <code>&lt;a href="..."&gt;</code> anchor tag, not <code>&lt;anchor&gt;</code>.</li>
+            <li><strong>Aspect Ratio:</strong> Set <code>width: 300px; height: auto;</code> so images scale proportionally without looking stretched or squished.</li>
+            <li><strong>Border Shorthand:</strong> Standard CSS order is <code>size style color</code> (e.g., <code>border: 2px solid red;</code>).</li>
           </ul>
         </div>
 
         <!-- Retake Button -->
-        <div class="flex justify-center border-t border-emerald-200 pt-5">
-          <button id="restart-btn" class="py-3.5 px-8 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-md transition transform active:scale-95 flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            <span>Retake Challenge</span>
+        <div class="flex justify-center border-t border-orange-200 pt-4">
+          <button id="restart-btn" class="py-3.5 px-8 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs sm:text-sm rounded-xl border border-slate-700 shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <span>Retake Revision Quiz</span>
           </button>
         </div>
 
       </div>
+
     </div>
 
   </div>
 
   <!-- Footer -->
-  <footer class="relative z-10 py-3 text-center text-xs text-emerald-800 bg-emerald-100/80 border-t border-emerald-200">
-    <p>Python Revision Challenge • Floating Blue Snails Edition 🐌</p>
+  <footer class="relative z-10 py-3 text-center text-xs text-orange-950/70 bg-white/60 backdrop-blur-sm border-t border-orange-200">
+    <p>HTML Revision Quiz • Curated with 🧡 by Tutor Priyadarshini</p>
   </footer>
 
   <script>
     // -------------------------------------------------------------
-    // 10 ACCESSIBLE QUESTIONS FOR A 12-YEAR-OLD STUDENT
+    // 10 ACCESSIBLE HTML QUESTIONS (2 OPTIONS EACH, SCRAMBLED)
     // -------------------------------------------------------------
     const rawQuestionsDatabase = [
-      
-      // =========================================================
-      // PART 1: SYNTAX FIXES & ERROR IDENTIFICATION (Q1 - Q5)
-      // =========================================================
+      // Q1: Body background color attribute
       {
-        section: "Part 1: Syntax & Methods",
-        question: "1. Turtle Graphics: In Turtle graphics, which code correctly sets the pen thickness to 5 and turns the turtle right by 90 degrees so it faces straight DOWN?",
+        question: "1. Adding Background Color: If you want to add color to the body using an HTML attribute, which is the correct attribute name?",
         code: null,
         options: [
-          { text: "t.pensize(5)  and  t.right(90)", isCorrect: true },
-          { text: "t.thickness(5)  and  t.down(90)", isCorrect: false },
-          { text: "t.pensize(5)  and  t.turn(90)", isCorrect: false },
-          { text: "t.line_width(5)  and  t.left(90)", isCorrect: false }
+          { text: "<body bgcolor=\"lightblue\">", isCorrect: true },
+          { text: "<body backgroundcolor=\"lightblue\">", isCorrect: false }
         ],
-        explanation: "`t.pensize(5)` sets the thickness, and `t.right(90)` turns the turtle 90° clockwise so it points straight DOWN!"
-      },
-      {
-        section: "Part 1: Syntax & Methods",
-        question: "2. Adding to a List: Given `fruits = ['apple', 'banana']`, which line of code correctly adds `'cherry'` to the end of the list?",
-        code: null,
-        options: [
-          { text: "fruits.append('cherry')", isCorrect: true },
-          { text: "fruits.add('cherry')", isCorrect: false },
-          { text: "fruits.push('cherry')", isCorrect: false },
-          { text: "fruits += 'cherry'", isCorrect: false }
-        ],
-        explanation: "In Python, we use `.append('cherry')` to add a new item to the end of a list!"
-      },
-      {
-        section: "Part 1: Syntax & Methods",
-        question: "3. Changing List Items: Given `scores = [10, 20, 30]`, which line of code changes the second item (`20`) to `25`?",
-        code: null,
-        options: [
-          { text: "scores[1] = 25", isCorrect: true },
-          { text: "scores[2] = 25", isCorrect: false },
-          { text: "scores.change(1, 25)", isCorrect: false },
-          { text: "scores(1) = 25", isCorrect: false }
-        ],
-        explanation: "Python list indices start at 0 (0 is the 1st item, 1 is the 2nd item). So `scores[1] = 25` updates the second item!"
-      },
-      {
-        section: "Part 1: Syntax & Methods",
-        question: "4. While Loop Header: Which option shows the CORRECT `while` loop syntax to run as long as `count` is greater than 0?",
-        code: null,
-        options: [
-          { text: "while count > 0:", isCorrect: true },
-          { text: "while count = 0:", isCorrect: false },
-          { text: "while count > 0", isCorrect: false },
-          { text: "while (count > 0)", isCorrect: false }
-        ],
-        explanation: "Loop headers in Python MUST end with a colon `:` and use comparison operators like `>` rather than single `=`!"
-      },
-      {
-        section: "Part 1: Syntax & Methods",
-        question: "5. Adding to a Dictionary: Given `player = {'name': 'Alex'}`, which line of code correctly adds a new key `'age'` with value `12`?",
-        code: null,
-        options: [
-          { text: "player['age'] = 12", isCorrect: true },
-          { text: "player.add('age', 12)", isCorrect: false },
-          { text: "player.append('age': 12)", isCorrect: false },
-          { text: "player['age'] == 12", isCorrect: false }
-        ],
-        explanation: "To add a new key and value to a dictionary, we assign it directly using square brackets: `player['age'] = 12`!"
+        explanation: "The standard HTML attribute for background color is `bgcolor` (short for background color), not `backgroundcolor`!"
       },
 
-      // =========================================================
-      // PART 2: LOGIC & OUTPUT PREDICTIONS (Q6 - Q10)
-      // =========================================================
+      // Q2: Font / text color with style
       {
-        section: "Part 2: Logic & Predictions",
-        question: "6. Random Number Range: What are ALL the unique whole numbers that `random.randint(1, 4)` can potentially pick?",
+        question: "2. Changing Text Color: Which code correctly changes the paragraph text color to blue using inline CSS styling?",
         code: null,
         options: [
-          { text: "1, 2, 3, and 4", isCorrect: true },
-          { text: "1, 2, and 3 only", isCorrect: false },
-          { text: "2, 3, and 4 only", isCorrect: false },
-          { text: "0, 1, 2, 3, and 4", isCorrect: false }
+          { text: "<p style=\"color: blue;\">Hello World</p>", isCorrect: true },
+          { text: "<p style=\"font-color: blue;\">Hello World</p>", isCorrect: false }
         ],
-        explanation: "Unlike `range()`, `random.randint(a, b)` includes BOTH numbers `a` and `b`! So it can generate 1, 2, 3, AND 4."
+        explanation: "In CSS, the property to change text color is simply `color: blue;`. There is no `font-color` property in CSS!"
       },
+
+      // Q3: Unordered list of fruits hierarchy
       {
-        section: "Part 2: Logic & Predictions",
-        question: "7. Boolean Expression: What boolean value is produced when this expression is evaluated?",
-        code: "result = (10 > 5) and (4 == 4) or (2 > 8)\nprint(result)",
+        question: "3. Fruit List: Which structure is the correct way to build an unordered list of fruits?",
+        code: null,
         options: [
-          { text: "True", isCorrect: true },
-          { text: "False", isCorrect: false },
-          { text: "10", isCorrect: false },
-          { text: "SyntaxError", isCorrect: false }
+          { 
+            text: "<ul>\n  <li>Apple</li>\n  <li>Banana</li>\n</ul>", 
+            isCorrect: true 
+          },
+          { 
+            text: "<li>\n  <ul>Apple</ul>\n  <ul>Banana</ul>\n</li>", 
+            isCorrect: false 
+          }
         ],
-        explanation: "`10 > 5` is True and `4 == 4` is True ➔ `True and True` is True. Since the first part of `or` is True, the result is `True`!"
+        explanation: "The container `<ul>` (unordered list) must be on the outside, and each item is wrapped in `<li>` (list item) inside it!"
       },
+
+      // Q4: Website name on browser tab
       {
-        section: "Part 2: Logic & Predictions",
-        question: "8. Loop Range Count: How many times will this `for` loop print the text `'Python'`?",
-        code: "for i in range(1, 6):\n    print('Python')",
+        question: "4. Browser Tab Name: Which tag is used to display the website's name at the very top of the browser tab when it opens?",
+        code: null,
         options: [
-          { text: "5 times", isCorrect: true },
-          { text: "6 times", isCorrect: false },
-          { text: "4 times", isCorrect: false },
-          { text: "1 time", isCorrect: false }
+          { text: "<title>My Awesome Website</title>", isCorrect: true },
+          { text: "<header>My Awesome Website</header>", isCorrect: false }
         ],
-        explanation: "`range(1, 6)` starts at 1 and stops right before 6 (numbers 1, 2, 3, 4, 5). So it runs exactly 5 times!"
+        explanation: "The `<title>` tag inside the `<head>` sets the name shown in the browser window tab. The `<header>` tag is used for visible page banner content!"
       },
+
+      // Q5: Page navigation anchor tag
       {
-        section: "Part 2: Logic & Predictions",
-        question: "9. List Accumulator Loop: Trace the loop below. What is the value printed for `total` at the end?",
-        code: "total = 0\nnumbers = [10, 20, 30]\nfor num in numbers:\n    total = total + num\n\nprint(total)",
+        question: "5. Page Navigation: Which tag is the real HTML tag used to create a clickable link to navigate from one page to another?",
+        code: null,
         options: [
-          { text: "60", isCorrect: true },
-          { text: "30", isCorrect: false },
-          { text: "50", isCorrect: false },
-          { text: "3", isCorrect: false }
+          { text: "<a href=\"about.html\">Visit About Us</a>", isCorrect: true },
+          { text: "<anchor href=\"about.html\">Visit About Us</anchor>", isCorrect: false }
         ],
-        explanation: "The loop adds each number step by step: 0 + 10 = 10 ➔ 10 + 20 = 30 ➔ 30 + 30 = 60!"
+        explanation: "HTML uses the concise letter `<a>` (which stands for Anchor), never the full spelled-out word `<anchor>`!"
       },
+
+      // Q6: Numbered list (1, 2, 3...)
       {
-        section: "Part 2: Logic & Predictions",
-        question: "10. If / Elif Condition: What will be printed when this grade checker runs?",
-        code: "score = 85\nif score >= 90:\n    print('Gold')\nelif score >= 80:\n    print('Silver')\nelse:\n    print('Bronze')",
+        question: "6. Numbered List: You want to display a numbered steps list (1, 2, 3...). Which tag should wrap your list items?",
+        code: null,
         options: [
-          { text: "Silver", isCorrect: true },
-          { text: "Gold", isCorrect: false },
-          { text: "Bronze", isCorrect: false },
-          { text: "Gold and Silver", isCorrect: false }
+          { 
+            text: "<ol>\n  <li>Step 1: Start</li>\n  <li>Step 2: Code</li>\n</ol>", 
+            isCorrect: true 
+          },
+          { 
+            text: "<ul>\n  <li>Step 1: Start</li>\n  <li>Step 2: Code</li>\n</ul>", 
+            isCorrect: false 
+          }
         ],
-        explanation: "`score = 85` is not >= 90 (skips Gold). But `85 >= 80` is True, so it prints `'Silver'` and finishes!"
+        explanation: "`<ol>` stands for Ordered List and automatically adds numbers (1, 2, 3...), whereas `<ul>` creates bullet points!"
+      },
+
+      // Q7: Image sizing without skewing
+      {
+        question: "7. Responsive Image: You want to give an image a width of 300px without distorting or skewing its natural proportions. Which styling should you choose?",
+        code: null,
+        options: [
+          { text: "<img src=\"cat.jpg\" style=\"width: 300px; height: auto;\">", isCorrect: true },
+          { text: "<img src=\"cat.jpg\" style=\"width: 300px; height: 300px;\">", isCorrect: false }
+        ],
+        explanation: "Setting `height: auto;` tells the browser to scale the height proportionally with the width so the picture doesn't get stretched or squished!"
+      },
+
+      // Q8: CSS border shorthand syntax order
+      {
+        question: "8. Adding a Border: Which option shows the standard CSS shorthand syntax order (width, style, color) to draw a red line around an element?",
+        code: null,
+        options: [
+          { text: "style=\"border: 2px solid red;\"", isCorrect: true },
+          { text: "style=\"border: red 2px solid;\"", isCorrect: false }
+        ],
+        explanation: "The standard and clean CSS shorthand convention is `border: [size] [style] [color];` (e.g., `2px solid red`)."
+      },
+
+      // Q9: Image file source attribute
+      {
+        question: "9. Showing an Image: Which attribute is used inside the `<img>` tag to tell the browser where the image file is located?",
+        code: null,
+        options: [
+          { text: "<img src=\"robot.png\" alt=\"Cool Robot\">", isCorrect: true },
+          { text: "<img href=\"robot.png\" alt=\"Cool Robot\">", isCorrect: false }
+        ],
+        explanation: "`<img>` tags use `src` (Source) to locate pictures. The `href` attribute belongs to clickable links (`<a>`)!"
+      },
+
+      // Q10: Line break tag
+      {
+        question: "10. Line Break: How do you add an empty line break to push the next text down to a new line?",
+        code: null,
+        options: [
+          { text: "<p>First line<br>Second line</p>", isCorrect: true },
+          { text: "<p>First line<break>Second line</p>", isCorrect: false }
+        ],
+        explanation: "HTML uses the self-closing empty tag `<br>` for line breaks, never the word `<break>`!"
       }
     ];
+
+    function initSkyBackground() {
+      const container = document.getElementById('sky-container');
+      container.innerHTML = '';
+
+      const cloudSVG = `
+        <svg width="150" height="65" viewBox="0 0 150 65" fill="none" class="opacity-60">
+          <path d="M25 50 C15 50 5 42 5 32 C5 20 16 14 28 16 C34 6 50 3 66 10 C78 3 98 6 104 17 C115 14 130 20 130 32 C138 34 145 40 142 50 C138 60 120 58 25 50 Z" fill="#ffffff"/>
+        </svg>
+      `;
+
+      for (let i = 0; i < 4; i++) {
+        const cloud = document.createElement('div');
+        cloud.className = 'drifting-cloud';
+        cloud.innerHTML = cloudSVG;
+        cloud.style.top = `${6 + (i * 24)}%`;
+        cloud.style.animationDuration = `${32 + (i * 10)}s`;
+        cloud.style.animationDelay = `${i * 7}s`;
+        container.appendChild(cloud);
+      }
+    }
 
     let questionsDatabase = [];
     let currentIndex = 0;
@@ -386,6 +406,7 @@
     const restartBtn = document.getElementById('restart-btn');
 
     function escapeHTML(str) {
+      if (!str) return '';
       return str
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -394,16 +415,15 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Shuffle options dynamically
     function prepareQuestions() {
-      questionsDatabase = rawQuestionsDatabase.map(q => {
+      questionsDatabase = rawQuestionsDatabase.map((q) => {
         const clonedOpts = [...q.options];
+        // Scramble the two options dynamically so A and B swap randomly
         for (let i = clonedOpts.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [clonedOpts[i], clonedOpts[j]] = [clonedOpts[j], clonedOpts[i]];
         }
         return {
-          section: q.section,
           question: q.question,
           code: q.code || null,
           options: clonedOpts.map(o => o.text),
@@ -411,52 +431,6 @@
           explanation: q.explanation
         };
       });
-    }
-
-    // FLOATING BLUE SNAILS ANIMATION
-    function createFloatingBlueSnails() {
-      const container = document.getElementById('snails-container');
-      container.innerHTML = '';
-
-      const snailSVGs = [
-        `<svg width="45" height="38" viewBox="0 0 64 52" fill="none">
-          <path d="M12 40 C12 40, 2 40, 2 45 C2 50, 10 50, 52 50 C58 50, 62 45, 58 40 C54 35, 46 38, 40 40 Z" fill="#38bdf8"/>
-          <circle cx="10" cy="35" r="2.5" fill="#0284c7"/>
-          <line x1="8" y1="35" x2="4" y2="28" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="12" y1="35" x2="10" y2="27" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="4" cy="27" r="2" fill="#0284c7"/>
-          <circle cx="10" cy="26" r="2" fill="#0284c7"/>
-          <circle cx="36" cy="30" r="18" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
-          <path d="M36 18 C42 18, 46 22, 46 28 C46 34, 40 38, 34 36 C30 34, 30 28, 34 26" stroke="#bfdbfe" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        </svg>`,
-        `<svg width="40" height="34" viewBox="0 0 64 52" fill="none">
-          <path d="M12 40 C12 40, 2 40, 2 45 C2 50, 10 50, 52 50 C58 50, 62 45, 58 40 C54 35, 46 38, 40 40 Z" fill="#7dd3fc"/>
-          <line x1="8" y1="35" x2="4" y2="28" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="12" y1="35" x2="10" y2="27" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="4" cy="27" r="2" fill="#0369a1"/>
-          <circle cx="10" cy="26" r="2" fill="#0369a1"/>
-          <circle cx="36" cy="30" r="16" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
-          <path d="M36 20 C41 20, 44 23, 44 28 C44 33, 39 36, 34 35" stroke="#e0f2fe" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        </svg>`
-      ];
-
-      for (let i = 0; i < 15; i++) {
-        const snail = document.createElement('div');
-        snail.className = 'floating-snail';
-        snail.innerHTML = snailSVGs[i % snailSVGs.length];
-
-        const leftPos = Math.random() * 92;
-        const duration = Math.random() * 8 + 9;
-        const delay = Math.random() * 9;
-        const scale = (Math.random() * 0.4 + 0.75).toFixed(2);
-
-        snail.style.left = `${leftPos}%`;
-        snail.style.animationDuration = `${duration}s`;
-        snail.style.animationDelay = `${delay}s`;
-        snail.style.transform = `scale(${scale})`;
-
-        container.appendChild(snail);
-      }
     }
 
     function startTimer() {
@@ -481,13 +455,13 @@
       timerBarEl.style.width = `${pct}%`;
 
       if (timeLeft <= 7) {
-        timerTextEl.classList.add('text-rose-500', 'animate-pulse');
-        timerBarEl.classList.remove('from-emerald-400', 'via-teal-300', 'to-cyan-300');
+        timerTextEl.classList.add('text-rose-600', 'animate-pulse');
+        timerBarEl.classList.remove('from-orange-500', 'via-amber-400', 'to-rose-400');
         timerBarEl.classList.add('from-rose-500', 'to-red-600');
       } else {
-        timerTextEl.classList.remove('text-rose-500', 'animate-pulse');
+        timerTextEl.classList.remove('text-rose-600', 'animate-pulse');
         timerBarEl.classList.remove('from-rose-500', 'to-red-600');
-        timerBarEl.classList.add('from-emerald-400', 'via-teal-300', 'to-cyan-300');
+        timerBarEl.classList.add('from-orange-500', 'via-amber-400', 'to-rose-400');
       }
     }
 
@@ -497,7 +471,6 @@
 
       qNumEl.textContent = currentIndex + 1;
       liveScoreEl.textContent = `${score} / 10`;
-      sectionBadgeEl.textContent = q.section;
 
       explanationBox.classList.add('hidden');
       nextBtn.classList.add('hidden');
@@ -517,10 +490,10 @@
         const btn = document.createElement('button');
         btn.dataset.idx = idx;
 
-        btn.className = "option-btn p-4 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100 hover:border-emerald-400 text-left text-slate-800 font-medium transition transform active:scale-98 flex items-center gap-3 shadow-sm";
+        btn.className = "option-btn p-4 rounded-xl border-2 border-orange-200/90 bg-white hover:bg-orange-50 hover:border-orange-400 text-left text-slate-800 font-medium transition transform active:scale-98 flex items-start gap-3 shadow-sm";
         btn.innerHTML = `
-          <span class="w-8 h-8 rounded-lg bg-emerald-200 border border-emerald-300 text-emerald-950 font-bold text-sm flex items-center justify-center font-code shrink-0">${String.fromCharCode(65 + idx)}</span>
-          <span class="text-xs sm:text-sm leading-snug font-code whitespace-pre-wrap">${escapeHTML(optText)}</span>
+          <span class="w-8 h-8 rounded-lg bg-orange-100 border border-orange-300 text-orange-950 font-bold text-sm flex items-center justify-center font-code shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span>
+          <span class="text-xs sm:text-sm leading-relaxed font-code whitespace-pre-wrap flex-grow">${escapeHTML(optText)}</span>
         `;
         btn.addEventListener('click', () => handleOptionClick(idx));
 
@@ -542,11 +515,11 @@
       buttons.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === q.correctIndex) {
-          btn.classList.remove('border-emerald-200', 'bg-emerald-50/70');
-          btn.classList.add('border-emerald-500', 'bg-emerald-600', 'text-white', 'ring-2', 'ring-emerald-400');
+          btn.classList.remove('border-orange-200/90', 'bg-white');
+          btn.classList.add('border-emerald-500', 'bg-emerald-100/90', 'text-emerald-950', 'ring-2', 'ring-emerald-500');
         } else if (idx === selectedIdx && !isCorrect) {
-          btn.classList.remove('border-emerald-200', 'bg-emerald-50/70');
-          btn.classList.add('border-rose-500', 'bg-rose-600', 'text-white', 'ring-2', 'ring-rose-400');
+          btn.classList.remove('border-orange-200/90', 'bg-white');
+          btn.classList.add('border-rose-400', 'bg-rose-100/90', 'text-rose-950', 'ring-2', 'ring-rose-400');
         }
       });
 
@@ -570,7 +543,7 @@
       buttons.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === q.correctIndex) {
-          btn.classList.add('border-emerald-500', 'bg-emerald-600', 'text-white', 'ring-2', 'ring-emerald-400');
+          btn.classList.add('border-emerald-500', 'bg-emerald-100/90', 'text-emerald-950', 'ring-2', 'ring-emerald-500');
         }
       });
 
@@ -582,14 +555,14 @@
       explanationBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
 
       if (isCorrect) {
-        explanationBox.classList.add('bg-emerald-50', 'border-emerald-400');
-        explanationIcon.textContent = "🐌";
-        explanationTitle.textContent = "Great Job!";
+        explanationBox.classList.add('bg-emerald-50', 'border-emerald-300');
+        explanationIcon.textContent = "🌟";
+        explanationTitle.textContent = "Great Spot!";
         explanationTitle.className = "font-bold text-sm sm:text-base text-emerald-900";
       } else {
-        explanationBox.classList.add('bg-rose-50', 'border-rose-400');
+        explanationBox.classList.add('bg-rose-50', 'border-rose-300');
         explanationIcon.textContent = "💡";
-        explanationTitle.textContent = "Key Concept Breakdown";
+        explanationTitle.textContent = "Key Takeaway";
         explanationTitle.className = "font-bold text-sm sm:text-base text-rose-900";
       }
 
@@ -611,15 +584,16 @@
 
       finalTotalScore.textContent = `${score} / 10`;
 
+      // Handwritten note customized for the student signed by Tutor Priyadarshini
       let feedback = "";
       if (score >= 9) {
-        feedback = `Awesome work! 🌟 You scored an impressive ${score} out of 10! You showed total clarity on Turtle graphics, dictionary list mutation, randint range boundaries, and control loop logic. Fantastic computational thinking skills!`;
+        feedback = `“Incredible achievement! You scored ${score} out of 10! You have demonstrated exceptional precision in HTML tags and styling properties. You clearly understand that the bgcolor attribute colors the body, color changes text without any 'font-' prefix, lists nest cleanly inside <ol> or <ul>, and setting height to auto protects images from distorting. Keep building fantastic webpages!”\n\nWarmly,\nTutor Priyadarshini 🌸✨`;
       } else if (score >= 7) {
-        feedback = `Great job! 🚀 You scored ${score} out of 10! You have a really solid grasp on Python syntax and logical evaluation. Re-check how random.randint includes both endpoints to hit 10 out of 10 next time!`;
+        feedback = `“Wonderful job! You scored ${score} out of 10! You have a really solid grasp on key HTML structures like anchor links, unordered and ordered lists, and the <title> tag. Review the few small styling syntax rules like 'border: 2px solid red;' and 'height: auto' for images, and you will hit 10 out of 10 with ease next time!”\n\nWarmly,\nTutor Priyadarshini 🌸✨`;
       } else if (score >= 5) {
-        feedback = `Good effort! 🐌 You scored ${score} out of 10! You got many questions right. Review zero-based list indexing and range stops to master these questions!`;
+        feedback = `“Good effort on this revision! You scored ${score} out of 10! You got several core questions right, especially with image tags and navigation links. Take a careful look at the syntax reminders below for bgcolor, ordered lists, and CSS color styling—you are very close to mastering every single one!”\n\nWarmly,\nTutor Priyadarshini 🌸✨`;
       } else {
-        feedback = `Nice try! 💡 You scored ${score} out of 10. Python logic takes practice! Review the key concepts breakdown below and take another turn!`;
+        feedback = `“Nice effort tackling this revision challenge! You scored ${score} out of 10. HTML tag syntax and CSS styling properties take some practice to memorize. Go through the key reminders listed below, take another turn on the quiz, and let's get those tags mastered together!”\n\nWarmly,\nTutor Priyadarshini 🌸✨`;
       }
 
       tutorFeedbackText.textContent = feedback;
@@ -634,8 +608,7 @@
       displayQuestion();
     });
 
-    // INITIALIZATION
-    createFloatingBlueSnails();
+    initSkyBackground();
     prepareQuestions();
     displayQuestion();
   </script>
