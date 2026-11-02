@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python revision</title>
+    <title>Pygame revision</title>
     <!-- Fonts: Clean Inter, Arcade Heading, and Handwritten Font for Teacher's Note -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-light-blue: #E0F2FE;
-            --blue-card-bg: #FFFFFF;
-            --blue-accent: #38BDF8;
-            --blue-accent-hover: #0EA5E9;
-            --border-dark: #0F172A;
+            --bg-light-yellow: #FEF08A;
+            --yellow-card-bg: #FFFFFF;
+            --yellow-accent: #FDE047;
+            --yellow-accent-hover: #EAB308;
+            --border-dark: #1C1917;
             --color-correct: #4ADE80;
             --color-wrong: #F87171;
-            --text-dark: #0F172A;
+            --text-dark: #1C1917;
         }
 
         * {
@@ -29,7 +29,7 @@
         }
 
         body {
-            background-color: var(--bg-light-blue);
+            background-color: var(--bg-light-yellow);
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
@@ -40,8 +40,8 @@
             position: relative;
         }
 
-        /* --- BACKGROUND CANVAS: FLOATING CANDY SPIRALS --- */
-        #spiralCanvas {
+        /* --- BACKGROUND CANVAS: FALLING TETRIS BLOCKS --- */
+        #tetrisCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -55,7 +55,7 @@
         .quiz-card {
             width: 100%;
             max-width: 880px;
-            background: var(--blue-card-bg);
+            background: var(--yellow-card-bg);
             border: 4px solid var(--border-dark);
             border-radius: 24px;
             box-shadow: 8px 8px 0px var(--border-dark);
@@ -66,7 +66,7 @@
 
         /* --- HUD / TOP BAR --- */
         .hud-topbar {
-            background: #BAE6FD;
+            background: #FDE047;
             border-bottom: 4px solid var(--border-dark);
             padding: 16px 24px;
             display: flex;
@@ -105,11 +105,11 @@
             color: var(--text-dark);
             margin-bottom: 40px;
             line-height: 1.5;
-            text-shadow: 3px 3px 0px #7DD3FC;
+            text-shadow: 3px 3px 0px #EAB308;
         }
 
         .btn-start, .btn-restart {
-            background: var(--blue-accent);
+            background: var(--yellow-accent);
             color: var(--text-dark);
             border: 3px solid var(--border-dark);
             padding: 16px 40px;
@@ -122,7 +122,7 @@
         }
 
         .btn-start:hover, .btn-restart:hover {
-            background: var(--blue-accent-hover);
+            background: var(--yellow-accent-hover);
         }
 
         .btn-start:active, .btn-restart:active {
@@ -143,7 +143,7 @@
         .level-headline {
             font-weight: 700;
             font-size: 14px;
-            color: #0369A1;
+            color: #854D0E;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -161,13 +161,13 @@
         .timer-progress-fill {
             width: 100%;
             height: 100%;
-            background: var(--blue-accent);
+            background: #EAB308;
             transition: width 0.1s linear;
         }
 
         /* --- QUESTION PROMPT CARD --- */
         .problem-description-card {
-            background-color: #F0F9FF;
+            background-color: #FEFCE8;
             border: 3px solid var(--border-dark);
             border-radius: 16px;
             padding: 22px;
@@ -182,19 +182,19 @@
         }
 
         .python-syntax-box {
-            background: #0F172A;
+            background: #1C1917;
             border: 2px solid var(--border-dark);
             border-radius: 12px;
             padding: 16px;
             font-family: 'Courier New', Courier, monospace;
             font-size: 15px;
-            color: #BAE6FD;
+            color: #FEF08A;
             white-space: pre-wrap;
             margin-top: 14px;
             line-height: 1.5;
         }
 
-        /* --- CHOICE OPTIONS (CODE BOXES / MCQS) --- */
+        /* --- CHOICE OPTIONS (CODE BOXES / MCQS 2x2) --- */
         .choices-stack-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -223,7 +223,7 @@
         }
 
         .choice-item-btn:hover {
-            background: #F0F9FF;
+            background: #FEFCE8;
             transform: translate(-1px, -1px);
             box-shadow: 5px 5px 0px var(--border-dark);
         }
@@ -274,7 +274,7 @@
         }
 
         .report-score-board {
-            background: #F0F9FF;
+            background: #FEFCE8;
             border: 3px solid var(--border-dark);
             border-radius: 16px;
             padding: 22px;
@@ -289,7 +289,7 @@
             margin-bottom: 12px;
             font-weight: 600;
             font-size: 14px;
-            border-bottom: 2px dashed #BAE6FD;
+            border-bottom: 2px dashed #FDE047;
             padding-bottom: 6px;
         }
 
@@ -332,7 +332,7 @@
         }
 
         .tab-btn.active {
-            background: var(--blue-accent);
+            background: var(--yellow-accent);
         }
 
         .tab-content {
@@ -389,23 +389,22 @@
 </head>
 <body>
 
-    <!-- ANIMATED CANDY SPIRALS BACKGROUND -->
-    <canvas id="spiralCanvas"></canvas>
+    <!-- ANIMATED TETRIS BLOCKS BACKGROUND CANVAS -->
+    <canvas id="tetrisCanvas"></canvas>
 
     <div class="quiz-card">
         <!-- TOP HUD -->
         <div class="hud-topbar">
-            <div id="hud-index-tracker" class="hud-badge">Question 1/30</div>
+            <div id="hud-index-tracker" class="hud-badge">Question 1/10</div>
             <div id="hud-score-tracker" class="hud-badge">⭐ Score: 0</div>
         </div>
 
-        <!-- SCREEN 1: HOME COVER (ONLY "Python revision" & start) -->
+        <!-- SCREEN 1: HOME COVER -->
         <div id="view-home" class="game-view active">
             <div class="home-layout">
-                <h1 class="home-title">Python revision</h1>
+                <h1 class="home-title">Pygame revision</h1>
                 <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
                     <button id="btn-start-quiz" class="btn-start">Start with the revision 🚀</button>
-                    
                 </div>
             </div>
         </div>
@@ -413,7 +412,7 @@
         <!-- SCREEN 2: ACTIVE QUESTION ARENA -->
         <div id="view-arena" class="game-view">
             <div class="arena-subbar">
-                <div id="arena-level-header" class="level-headline">Level 1: Choose the Correct Syntax</div>
+                <div id="arena-level-header" class="level-headline">Pygame Core Concepts</div>
                 <div class="progress-timer-bar">
                     <div id="arena-timer-fill" class="timer-progress-fill"></div>
                 </div>
@@ -424,7 +423,7 @@
                 <div id="arena-syntax-terminal" class="python-syntax-box" style="display: none;"></div>
             </div>
 
-            <!-- Four Syntax/Option Box Stack -->
+            <!-- Four Syntax/Option Box Stack (2x2 Grid) -->
             <div id="arena-choices-stack" class="choices-stack-grid"></div>
 
             <!-- Explanation Box -->
@@ -444,22 +443,10 @@
 
             <div class="report-score-board">
                 <div class="report-score-row">
-                    <span>Part 1: Syntax Identification (Q1-10)</span>
-                    <span id="rep-p1-score" style="color: #0284C7;">0 / 10</span>
+                    <span>Pygame Fundamentals &amp; Controls</span>
+                    <span id="rep-grand-total" style="color: #16A34A; font-weight: 700;">0 / 10</span>
                 </div>
-                <div class="report-score-row">
-                    <span>Part 2: Predict the Output (Q11-20)</span>
-                    <span id="rep-p2-score" style="color: #0284C7;">0 / 10</span>
-                </div>
-                <div class="report-score-row">
-                    <span>Part 3: Turtle Graphics &amp; Pygame Zero (Q21-30)</span>
-                    <span id="rep-p3-score" style="color: #0284C7;">0 / 10</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 18px; padding-top: 10px; color: #16A34A;">
-                    <span>FINAL TOTAL SCORE</span>
-                    <span id="rep-grand-total">0 / 30</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; padding-top: 6px; color: #0284C7;">
+                <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; padding-top: 6px; color: #854D0E;">
                     <span>ACCURACY</span>
                     <span id="rep-percentage">0%</span>
                 </div>
@@ -467,11 +454,11 @@
 
             <!-- HANDWRITTEN NOTE FROM TUTOR PRIYADARSHINI -->
             <div class="note-card">
-                <div style="font-weight: 700; margin-bottom: 8px; color: #92400E; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                <div style="font-weight: 700; margin-bottom: 8px; color: #78350F; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
                     📝 A Note from Tutor Priyadarshini:
                 </div>
                 <div id="tutor-note-content" class="note-signature">
-                    "Dear student, you worked through every loop, condition, turtle angle, and Pygame Zero concept with great curiosity today. Keep experimenting, coding with confidence, and having fun with Python!"
+                    "Dear student, let's see how much of Pygame you remembered today!"
                     <br><br>
                     Warmly,<br>
                     Tutor Priyadarshini ✨
@@ -482,7 +469,7 @@
             <div style="margin-top: 24px;">
                 <h3 style="text-align: center; margin-bottom: 12px; font-size: 16px; font-weight: 700;">Check Your Answers:</h3>
                 <div class="review-tabs">
-                    <button class="tab-btn active" onclick="showReviewTab('all')">All (30)</button>
+                    <button class="tab-btn active" onclick="showReviewTab('all')">All (10)</button>
                     <button class="tab-btn" onclick="showReviewTab('correct')">Correct (✔️)</button>
                     <button class="tab-btn" onclick="showReviewTab('wrong')">Review Needed (❌)</button>
                 </div>
@@ -494,322 +481,130 @@
 
             <div style="text-align: center; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
                 <button id="btn-restart-quiz" class="btn-restart">Try Again 🔄</button>
-                <button id="btn-download-report" class="btn-restart" style="background: #FFFFFF;">💾 Download HTML</button>
             </div>
         </div>
     </div>
 
     <script>
-        // MASTER 30 PYTHON QUESTIONS DATA
+        // MASTER 10 PYGAME REVISION QUESTIONS
         const quizQuestions = [
-            // --- Q1 to Q10: SYNTAX IDENTIFICATION IN 4 BOXES ---
             {
-                part: 1,
-                prompt: "Question 1: Ben wants to count from 1 to 5 using a for loop. Which box has the correct Python syntax?",
+                prompt: "Question 1: In a standard Pygame program, how many loops are typically used together to keep the game running?",
                 choices: [
-                    "for i in range(1, 6):\n    print(i)",
-                    "for (i = 1; i <= 5; i++):\n    print(i)",
-                    "for i from 1 to 5:\n    print(i)",
-                    "loop i in range(1, 5)\n    print(i)"
+                    "Two loops (a while loop for the main game and a for loop for events)",
+                    "Only one single while loop",
+                    "Three loops (for, while, and do-while)",
+                    "Only one for loop that runs 100 times"
                 ],
                 correctIdx: 0,
-                explanation: "range(1, 6) starts at 1 and stops right before 6, giving numbers 1, 2, 3, 4, 5."
+                explanation: "Pygame uses two loops: a main 'while' loop that keeps the whole game alive, and an inner 'for' loop that checks incoming player events."
             },
             {
-                part: 1,
-                prompt: "Question 2: Maya wants to keep adding apples to a basket while her apple count is less than 4. Which while loop is written correctly?",
+                prompt: "Question 2: Which function must be called at the very beginning of your program to initialize Pygame?",
                 choices: [
-                    "while apples < 4:\n    apples += 1",
-                    "while (apples < 4) do:\n    apples += 1",
-                    "while apples < 4\n    apples += 1",
-                    "repeat while apples < 4:\n    apples += 1"
+                    "pygame.init()",
+                    "pygame.start()",
+                    "pygame.create()",
+                    "pygame.setup()"
                 ],
                 correctIdx: 0,
-                explanation: "Python while loops need the keyword 'while', followed by the condition and a colon ':'."
+                explanation: "pygame.init() starts up and prepares all the internal Pygame modules before you create windows or load sounds."
             },
             {
-                part: 1,
-                prompt: "Question 3: Leo needs to check if his score is 50 or higher to pass a game stage. Which if-else block has correct syntax?",
+                prompt: "Question 3: What is the main difference between a plain image and a sprite in Pygame?",
                 choices: [
-                    "if score >= 50:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")",
-                    "if score >= 50 then:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")",
-                    "if (score >= 50) {\n    print(\"Pass\")\n} else {\n    print(\"Try again\")\n}",
-                    "if score >= 50:\n    print(\"Pass\")\notherwise:\n    print(\"Try again\")"
+                    "An image cannot be controlled directly, but a sprite can be controlled and moved around",
+                    "An image has color, but a sprite is always black and white",
+                    "An image is drawn automatically, but a sprite never appears on screen",
+                    "There is no difference; they are completely identical"
                 ],
                 correctIdx: 0,
-                explanation: "Python uses 'if condition:' and 'else:' with indented code underneath. It does not use 'then' or 'otherwise'."
+                explanation: "A plain image is just a static graphic, whereas a sprite is an active game character that has positions and can be controlled."
             },
             {
-                part: 1,
-                prompt: "Question 4: Sam wants to create a fruit basket list and add 'grape' to the end of it. Which box does this properly?",
+                prompt: "Question 4: To convert a loaded image into a controllable sprite with collision and position boundaries, what do we do?",
                 choices: [
-                    "fruits = [\"apple\", \"banana\"]\nfruits.append(\"grape\")",
-                    "fruits = (\"apple\", \"banana\")\nfruits.add_end(\"grape\")",
-                    "fruits = {\"apple\", \"banana\"}\nfruits.push(\"grape\")",
-                    "fruits = [\"apple\", \"banana\"]\nfruits.insert_last(\"grape\")"
+                    "We get its rectangle boundary using image.get_rect()",
+                    "We convert the image into a string variable",
+                    "We draw a circle around the screen",
+                    "We save the image as a text file"
                 ],
                 correctIdx: 0,
-                explanation: "Lists are made using square brackets [ ] and new items are added to the end using .append()."
+                explanation: "Calling .get_rect() creates a rectangle matching the image's dimensions, allowing us to move its x, y coordinates and detect collisions."
             },
             {
-                part: 1,
-                prompt: "Question 5: Zara wants to store player ages using their names as keys in a dictionary. Which syntax is valid?",
+                prompt: "Question 5: Which syntax is correct for the for loop event check to close the game window when clicking the exit button?",
                 choices: [
-                    "ages = {\"Alex\": 11, \"Bella\": 12}",
-                    "ages = [\"Alex\" = 11, \"Bella\" = 12]",
-                    "ages = (\"Alex\": 11, \"Bella\": 12)",
-                    "ages = <\"Alex\": 11, \"Bella\": 12>"
+                    "for event in pygame.event.get():\n    if event.type == pygame.QUIT:\n        running = False",
+                    "for event in pygame.events:\n    if event == \"exit\":\n        stop()",
+                    "while pygame.event.check():\n    if close_window == True:\n        end()",
+                    "for event in pygame.quit():\n    close()"
                 ],
                 correctIdx: 0,
-                explanation: "Dictionaries use curly braces { } with key: value pairs separated by colons."
+                explanation: "We loop through pygame.event.get() and check if event.type is equal to pygame.QUIT to safely stop the game loop."
             },
             {
-                part: 1,
-                prompt: "Question 6: Liam wants to define a greeting function that prints a message directly without returning any value. Which syntax is right?",
+                prompt: "Question 6: To draw an image or sprite surface onto the display window, which function do we use?",
                 choices: [
-                    "def greet(name):\n    print(\"Hello\", name)",
-                    "function greet(name):\n    print(\"Hello\", name)",
-                    "def greet(name)\n    print(\"Hello\", name)",
-                    "create greet(name):\n    print(\"Hello\", name)"
+                    "screen.blit(image, position)",
+                    "screen.draw_image(image)",
+                    "screen.paste(image, position)",
+                    "screen.show(image)"
                 ],
                 correctIdx: 0,
-                explanation: "In Python, functions start with the 'def' keyword, end with a colon ':', and do not require a return statement to print."
+                explanation: "screen.blit() copies the pixels of an image or sprite onto the game window at the given coordinates."
             },
             {
-                part: 1,
-                prompt: "Question 7: Nora needs to test if a student passed both test1 and test2 (both scores 50 or above). Which is the correct syntax?",
+                prompt: "Question 7: Which syntax is correct for moving a sprite upwards when the UP arrow key is pressed?",
                 choices: [
-                    "if test1 >= 50 and test2 >= 50:\n    print(\"Passed both\")",
-                    "if test1 >= 50 && test2 >= 50:\n    print(\"Passed both\")",
-                    "if test1 >= 50 & and test2 >= 50:\n    print(\"Passed both\")",
-                    "if test1 >= 50 plus test2 >= 50:\n    print(\"Passed both\")"
+                    "if keys[pygame.K_UP]:\n    sprite_rect.y -= speed",
+                    "if keys[pygame.K_UP]:\n    sprite_rect.y += speed",
+                    "if keys[pygame.K_UP]:\n    sprite_rect.x -= speed",
+                    "if keys == \"UP\":\n    sprite_rect.move_up()"
                 ],
                 correctIdx: 0,
-                explanation: "Python uses the clear English word 'and' to check that two conditions are true at the same time."
+                explanation: "In Pygame, the top of the window is y = 0. To move a sprite up, you decrease its y coordinate (y -= speed)."
             },
             {
-                part: 1,
-                prompt: "Question 8: Oliver wants to print numbers backwards like 3, 2, 1 using a range loop. Which box shows the correct range syntax?",
+                prompt: "Question 8: Which function is used to transform and resize or scale an image in Pygame?",
                 choices: [
-                    "for i in range(3, 0, -1):\n    print(i)",
-                    "for i in range(3, 1, -1):\n    print(i)",
-                    "for i in range(1, 3, -1):\n    print(i)",
-                    "for i in range(3, 0, 1):\n    print(i)"
+                    "pygame.transform.scale(image, (width, height))",
+                    "pygame.image.resize(image, size)",
+                    "pygame.display.scale(image, width, height)",
+                    "pygame.size.change(image, (width, height))"
                 ],
                 correctIdx: 0,
-                explanation: "range(3, 0, -1) starts at 3, counts down with step -1, and stops right before 0, printing 3, 2, 1."
+                explanation: "pygame.transform.scale() takes your image and a tuple of (width, height) to return a resized version."
             },
             {
-                part: 1,
-                prompt: "Question 9: Emma wants to check if a secret code is either 1234 OR 9999 to unlock a vault. Which box has the right condition?",
+                prompt: "Question 9: After blitting images onto the screen, how do you update the display window so changes become visible?",
                 choices: [
-                    "if code == 1234 or code == 9999:\n    print(\"Unlocked\")",
-                    "if code == 1234 || code == 9999:\n    print(\"Unlocked\")",
-                    "if code == 1234 or 9999:\n    print(\"Unlocked\")",
-                    "if code = 1234 or code = 9999:\n    print(\"Unlocked\")"
+                    "pygame.display.update()",
+                    "pygame.screen.refresh()",
+                    "pygame.window.reload()",
+                    "pygame.draw.show()"
                 ],
                 correctIdx: 0,
-                explanation: "Use double equals '==' to check values and the word 'or' to test if at least one side is True."
+                explanation: "pygame.display.update() (or pygame.display.flip()) refreshes the screen so that all newly blitted graphics appear."
             },
             {
-                part: 1,
-                prompt: "Question 10: Ava wants to write a function called cheer() that prints 'Go Team!' twice. Which function definition is written properly?",
+                prompt: "Question 10: If a player sprite moves horizontally to the RIGHT across the screen, what happens to its coordinate values?",
                 choices: [
-                    "def cheer():\n    print(\"Go Team!\")\n    print(\"Go Team!\")",
-                    "def cheer:\n    print(\"Go Team!\")\n    print(\"Go Team!\")",
-                    "def cheer[]:\n    print(\"Go Team!\")\n    print(\"Go Team!\")",
-                    "function cheer():\n    print(\"Go Team!\")\n    print(\"Go Team!\")"
+                    "Its rect.x value increases",
+                    "Its rect.x value decreases",
+                    "Its rect.y value increases",
+                    "Its rect.y value decreases"
                 ],
                 correctIdx: 0,
-                explanation: "Even if a function takes no inputs, parentheses '()' and a colon ':' are always required after the name."
-            },
-
-            // --- Q11 to Q20: PREDICT THE OUTPUT ---
-            {
-                part: 2,
-                prompt: "Question 11: A treasure chest list is updated. Predict what prints at the end:",
-                code: "chest = [\"gold\", \"gem\"]\nchest.append(\"silver\")\nprint(len(chest))",
-                choices: ["3", "2", "4", "gold, gem, silver"],
-                correctIdx: 0,
-                explanation: "The chest starts with 2 items. After adding 'silver', len(chest) counts 3 total items."
-            },
-            {
-                part: 2,
-                prompt: "Question 12: Predict the output of this power (**) calculation:",
-                code: "base = 2\npower = 3\nresult = base ** power\nprint(result)",
-                choices: ["8", "6", "9", "5"],
-                correctIdx: 0,
-                explanation: "The ** operator means power. 2 ** 3 means 2 × 2 × 2, which equals 8."
-            },
-            {
-                part: 2,
-                prompt: "Question 13: Predict the output when finding the remainder using the modulus (%) operator:",
-                code: "candies = 14\nfriends = 4\nleftover = candies % friends\nprint(leftover)",
-                choices: ["2", "3", "3.5", "0"],
-                correctIdx: 0,
-                explanation: "14 divided by 4 is 3 with 2 left over. The % operator gives that remainder (2)."
-            },
-            {
-                part: 2,
-                prompt: "Question 14: Trace this ticket price checker. What gets printed?",
-                code: "age = 10\nif age < 5:\n    price = 0\nelif age <= 12:\n    price = 10\nelse:\n    price = 20\nprint(price)",
-                choices: ["10", "0", "20", "None"],
-                correctIdx: 0,
-                explanation: "age is 10. That's not < 5, but it is <= 12, so price becomes 10."
-            },
-            {
-                part: 2,
-                prompt: "Question 15: Notice there is no return statement in this helper function. What does ans receive?",
-                code: "def say_score(points):\n    total = points + 5\n\nans = say_score(10)\nprint(ans)",
-                choices: ["None", "15", "10", "Error"],
-                correctIdx: 0,
-                explanation: "In Python, if a function does not use a return statement, calling it always produces 'None'."
-            },
-            {
-                part: 2,
-                prompt: "Question 16: Predict the output of this while loop counter:",
-                code: "k = 1\nwhile k < 4:\n    k = k + 1\nprint(k)",
-                choices: ["4", "3", "5", "1"],
-                correctIdx: 0,
-                explanation: "k starts at 1, increases to 2, then 3, then 4. Once k is 4, 4 < 4 is False and the loop ends, printing 4."
-            },
-            {
-                part: 2,
-                prompt: "Question 17: Predict what prints when looking up this dictionary value:",
-                code: "hero = {\"name\": \"Knight\", \"hearts\": 5}\nprint(hero[\"hearts\"])",
-                choices: ["5", "Knight", "hearts", "0"],
-                correctIdx: 0,
-                explanation: "Looking up hero[\"hearts\"] finds the value paired with 'hearts', which is 5."
-            },
-            {
-                part: 2,
-                prompt: "Question 18: What value will be printed after the loop adds up list items?",
-                code: "total = 0\nfor x in [3, 2, 5]:\n    total = total + x\nprint(total)",
-                choices: ["10", "325", "15", "5"],
-                correctIdx: 0,
-                explanation: "0 + 3 = 3, then 3 + 2 = 5, then 5 + 5 = 10. The final sum is 10."
-            },
-            {
-                part: 2,
-                prompt: "Question 19: Predict the output of this math expression:",
-                code: "val = 2 + 3 * 4\nprint(val)",
-                choices: ["14", "20", "24", "10"],
-                correctIdx: 0,
-                explanation: "Multiplication happens before addition! 3 × 4 = 12, and 2 + 12 = 14."
-            },
-            {
-                part: 2,
-                prompt: "Question 20: Predict the output of this greeting helper function:",
-                code: "def show_alert(msg):\n    print(\"Alert: \" + msg)\n\nshow_alert(\"Dragon!\")",
-                choices: ["Alert: Dragon!", "Dragon!", "Alert: msg", "None"],
-                correctIdx: 0,
-                explanation: "The function joins 'Alert: ' and 'Dragon!' together and prints 'Alert: Dragon!'."
-            },
-
-            // --- Q21 to Q25: TURTLE GRAPHICS ---
-            {
-                part: 3,
-                prompt: "Question 21: You want turtle to draw a regular pentagon. Without anyone telling you the sides, how many times must your loop repeat?",
-                choices: ["5 times", "6 times", "4 times", "8 times"],
-                correctIdx: 0,
-                explanation: "A pentagon has 5 equal sides and corners, so the loop needs to run exactly 5 times."
-            },
-            {
-                part: 3,
-                prompt: "Question 22: You want to draw a regular hexagon using turtle. How many degrees must the turtle turn at each corner?",
-                choices: ["60 degrees", "72 degrees", "90 degrees", "120 degrees"],
-                correctIdx: 0,
-                explanation: "All exterior turns in a closed shape add to 360°. For a 6-sided hexagon, 360° ÷ 6 = 60°."
-            },
-            {
-                part: 3,
-                prompt: "Question 23: After lifting your pen with pen.penup() to jump to a new spot, which command puts the pen back down to draw lines again?",
-                choices: ["pen.pendown()", "pen.draw()", "pen.start()", "pen.down()"],
-                correctIdx: 0,
-                explanation: "pen.pendown() places the pen back on the canvas so lines appear when it moves."
-            },
-            {
-                part: 3,
-                prompt: "Question 24: When a turtle canvas first opens, where is the (0, 0) coordinate located?",
-                choices: [
-                    "At the exact center of the screen",
-                    "At the top-left corner",
-                    "At the bottom-left corner",
-                    "At the top-right corner"
-                ],
-                correctIdx: 0,
-                explanation: "In turtle graphics, (0, 0) is the home coordinate right in the dead center of the window."
-            },
-            {
-                part: 3,
-                prompt: "Question 25: Turtle has finished drawing! Which command keeps the graphics window open until you click to close it?",
-                choices: ["turtle.exitonclick()", "turtle.stop()", "turtle.pause()", "turtle.hold()"],
-                correctIdx: 0,
-                explanation: "turtle.exitonclick() keeps the window visible and smoothly closes it when you click."
-            },
-
-            // --- Q26 to Q30: PYGAME ZERO ---
-            {
-                part: 3,
-                prompt: "Question 26: In Pygame Zero, what are game characters or sprites with images called?",
-                choices: ["Actor", "SpriteObject", "PlayerModel", "Avatar"],
-                correctIdx: 0,
-                explanation: "Pygame Zero calls game characters and sprites 'Actor' (for example: alien = Actor('alien'))."
-            },
-            {
-                part: 3,
-                prompt: "Question 27: Look at this Pygame Zero window setup code. What is the mistake here?",
-                code: "WIDTH = \"800\"\nHEIGHT = \"600\"",
-                choices: [
-                    "WIDTH and HEIGHT must be whole numbers (integers), not text strings with quotes.",
-                    "The words WIDTH and HEIGHT must be lowercase.",
-                    "You cannot make a window with size 800 by 600.",
-                    "WIDTH and HEIGHT must be separated with colons."
-                ],
-                correctIdx: 0,
-                explanation: "Screen dimensions must be numbers like WIDTH = 800 and HEIGHT = 600, without quotation marks."
-            },
-            {
-                part: 3,
-                prompt: "Question 28: In Pygame Zero, which special function name does the computer automatically call over and over to draw everything on the screen?",
-                choices: ["def draw():", "def paint():", "def screen_show():", "def render():"],
-                correctIdx: 0,
-                explanation: "Pygame Zero specifically looks for the function named def draw(): to display backgrounds, text, and actors."
-            },
-            {
-                part: 3,
-                prompt: "Question 29: You want to draw a filled circle in Pygame Zero. Which parameters does screen.draw.filled_circle() need?",
-                choices: [
-                    "center (x, y), radius, and color",
-                    "width, height, and angle",
-                    "start (x, y) and end (x, y) only",
-                    "image name and speed"
-                ],
-                correctIdx: 0,
-                explanation: "filled_circle((x, y), radius, color) needs where the center is, how big the radius is, and what color to fill it."
-            },
-            {
-                part: 3,
-                prompt: "Question 30: You want to draw a line between two points in Pygame Zero. What parameters does screen.draw.line() need?",
-                choices: [
-                    "start position (x1, y1), end position (x2, y2), and color",
-                    "radius, thickness, and image name",
-                    "actor name and jump speed",
-                    "angle and scale percentage"
-                ],
-                correctIdx: 0,
-                explanation: "screen.draw.line((x1, y1), (x2, y2), color) needs the starting coordinate, ending coordinate, and line color."
+                explanation: "The x-axis goes from 0 on the left to maximum width on the right, so moving right increases rect.x."
             }
         ];
 
         let activeQuestionIndex = 0;
         let score = 0;
-        let p1Score = 0;
-        let p2Score = 0;
-        let p3Score = 0;
 
         let clockInterval = null;
-        let timeLeft = 50;
+        let timeLeft = 30;
         let questionLocked = false;
         let userAnswersLog = [];
 
@@ -831,10 +626,10 @@
         const explanationBodyText = document.getElementById("explanation-body-text");
         const btnNextStep = document.getElementById("btn-next-step");
 
-        // --- BACKGROUND CANVAS: ANIMATED FLOATING CANDY SPIRALS ---
-        const canvas = document.getElementById("spiralCanvas");
+        // --- BACKGROUND CANVAS: ANIMATED FALLING TETRIS BLOCKS ---
+        const canvas = document.getElementById("tetrisCanvas");
         const ctx = canvas.getContext("2d");
-        let spirals = [];
+        let tetrisPieces = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -843,53 +638,66 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        const candyColors = ["#38BDF8", "#818CF8", "#F472B6", "#FBBF24", "#34D399"];
-        for (let i = 0; i < 24; i++) {
-            spirals.push({
+        const tetrominoShapes = [
+            { color: "#06B6D4", blocks: [[0, 0], [0, 1], [0, 2], [0, 3]] },
+            { color: "#EAB308", blocks: [[0, 0], [1, 0], [0, 1], [1, 1]] },
+            { color: "#A855F7", blocks: [[0, 0], [-1, 0], [1, 0], [0, 1]] },
+            { color: "#F97316", blocks: [[0, 0], [0, 1], [0, 2], [1, 2]] },
+            { color: "#EF4444", blocks: [[0, 0], [-1, 0], [0, 1], [1, 1]] },
+            { color: "#10B981", blocks: [[0, 0], [1, 0], [0, 1], [-1, 1]] }
+        ];
+
+        for (let i = 0; i < 18; i++) {
+            const template = tetrominoShapes[Math.floor(Math.random() * tetrominoShapes.length)];
+            tetrisPieces.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                radius: Math.random() * 12 + 10,
-                speedY: Math.random() * 0.6 + 0.3,
+                blockSize: Math.random() * 6 + 12,
+                speedY: Math.random() * 0.7 + 0.3,
                 angle: Math.random() * Math.PI * 2,
-                spinSpeed: (Math.random() * 0.02 + 0.01) * (Math.random() > 0.5 ? 1 : -1),
-                color: candyColors[Math.floor(Math.random() * candyColors.length)]
+                spinSpeed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
+                color: template.color,
+                blocks: template.blocks
             });
         }
 
-        function drawCandySpiral(c, x, y, r, rotation, color) {
+        function drawTetrisPiece(c, piece) {
             c.save();
-            c.translate(x, y);
-            c.rotate(rotation);
-            c.strokeStyle = color;
-            c.lineWidth = 3;
-            c.beginPath();
+            c.translate(piece.x, piece.y);
+            c.rotate(piece.angle);
+            c.fillStyle = piece.color;
+            c.strokeStyle = "#1C1917";
+            c.lineWidth = 2;
 
-            for (let a = 0; a < Math.PI * 4; a += 0.2) {
-                const dist = (r / (Math.PI * 4)) * a;
-                const px = Math.cos(a) * dist;
-                const py = Math.sin(a) * dist;
-                if (a === 0) c.moveTo(px, py);
-                else c.lineTo(px, py);
-            }
-            c.stroke();
+            piece.blocks.forEach(([bx, by]) => {
+                const px = bx * piece.blockSize;
+                const py = by * piece.blockSize;
+                c.fillRect(px, py, piece.blockSize, piece.blockSize);
+                c.strokeRect(px, py, piece.blockSize, piece.blockSize);
+
+                c.fillStyle = "rgba(255, 255, 255, 0.35)";
+                c.fillRect(px + 2, py + 2, piece.blockSize - 4, 3);
+                c.fillStyle = piece.color;
+            });
+
             c.restore();
         }
 
-        function animateSpirals() {
+        function animateTetris() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            spirals.forEach(s => {
-                s.y -= s.speedY;
-                s.angle += s.spinSpeed;
+            tetrisPieces.forEach(p => {
+                p.y += p.speedY;
+                p.angle += p.spinSpeed;
 
-                if (s.y < -40) {
-                    s.y = canvas.height + 40;
-                    s.x = Math.random() * canvas.width;
+                if (p.y > canvas.height + 60) {
+                    p.y = -60;
+                    p.x = Math.random() * canvas.width;
                 }
-                drawCandySpiral(ctx, s.x, s.y, s.radius, s.angle, s.color);
+                drawTetrisPiece(ctx, p);
             });
-            requestAnimationFrame(animateSpirals);
+            requestAnimationFrame(animateTetris);
         }
-        animateSpirals();
+        animateTetris();
 
         // --- QUIZ NAVIGATION & LOGIC ---
         function switchView(target) {
@@ -899,28 +707,21 @@
             target.classList.add("active");
         }
 
-        // --- SHUFFLE FUNCTION FOR CHOICES ---
         function shuffleQuestionChoices(question) {
             const correctAnswerText = question.choices[question.correctIdx];
-            // Fisher-Yates shuffle algorithm
             for (let i = question.choices.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [question.choices[i], question.choices[j]] = [question.choices[j], question.choices[i]];
             }
-            // Update correctIdx to point to the new location of the correct answer
             question.correctIdx = question.choices.indexOf(correctAnswerText);
         }
 
         function startQuiz() {
             activeQuestionIndex = 0;
             score = 0;
-            p1Score = 0;
-            p2Score = 0;
-            p3Score = 0;
             userAnswersLog = [];
             hudScoreTracker.innerText = "⭐ Score: 0";
 
-            // Randomize choices for all questions each time the quiz starts
             quizQuestions.forEach(q => shuffleQuestionChoices(q));
 
             switchView(viewArena);
@@ -935,15 +736,8 @@
             arenaSyntaxTerminal.style.display = "none";
 
             const current = quizQuestions[activeQuestionIndex];
-            hudIndexTracker.innerText = `Question ${activeQuestionIndex + 1}/30`;
-
-            if (current.part === 1) {
-                arenaLevelHeader.innerText = "Level 1: Choose the Correct Syntax 🧩";
-            } else if (current.part === 2) {
-                arenaLevelHeader.innerText = "Level 2: Predict the Output 🔍";
-            } else {
-                arenaLevelHeader.innerText = "Level 3: Turtle & Pygame Zero 🐢🎮";
-            }
+            hudIndexTracker.innerText = `Question ${activeQuestionIndex + 1}/10`;
+            arenaLevelHeader.innerText = "Pygame Fundamentals 🎮";
 
             arenaQuestionText.innerText = current.prompt;
 
@@ -965,12 +759,12 @@
 
         function startTimer() {
             clearInterval(clockInterval);
-            timeLeft = 50;
+            timeLeft = 30; // 30 seconds per question
             arenaTimerFill.style.width = "100%";
 
             clockInterval = setInterval(() => {
                 timeLeft -= 0.1;
-                let pct = (timeLeft / 50) * 100;
+                let pct = (timeLeft / 30) * 100;
                 arenaTimerFill.style.width = `${pct}%`;
 
                 if (timeLeft <= 0) {
@@ -992,10 +786,6 @@
             if (isCorrect) {
                 btnElement.classList.add("flash-green");
                 score++;
-                if (current.part === 1) p1Score++;
-                else if (current.part === 2) p2Score++;
-                else p3Score++;
-
                 hudScoreTracker.innerText = `⭐ Score: ${score}`;
             } else {
                 btnElement.classList.add("flash-red");
@@ -1056,21 +846,18 @@
 
         function showReportCard() {
             switchView(viewReport);
-            document.getElementById("rep-p1-score").innerText = `${p1Score} / 10`;
-            document.getElementById("rep-p2-score").innerText = `${p2Score} / 10`;
-            document.getElementById("rep-p3-score").innerText = `${p3Score} / 10`;
-            document.getElementById("rep-grand-total").innerText = `${score} / 30`;
+            document.getElementById("rep-grand-total").innerText = `${score} / 10`;
 
-            const percentage = Math.round((score / 30) * 100);
+            const percentage = Math.round((score / 10) * 100);
             document.getElementById("rep-percentage").innerText = `${percentage}%`;
 
             const noteContent = document.getElementById("tutor-note-content");
-            if (score >= 26) {
-                noteContent.innerHTML = `"Dear student, what an extraordinary performance! You solved the loops, output traces, Turtle geometry, and Pygame Zero questions with fantastic accuracy. You are turning into a brilliant programmer!"<br><br>With proud smiles,<br>Tutor Priyadarshini 🌟`;
-            } else if (score >= 18) {
-                noteContent.innerHTML = `"Dear student, fantastic effort! You have a really strong grasp of Python loops, lists, and game basics. A little review of the tricky questions and you will master everything in no time!"<br><br>Keep shining,<br>Tutor Priyadarshini 🚀`;
+            if (score >= 9) {
+                noteContent.innerHTML = `"Dear student, wonderful job! You remembered almost all of Pygame's core mechanics—loops, rects, blitting, and key controls. You're ready to build some exciting games!"<br><br>Super proud of you,<br>Tutor Priyadarshini 🌟`;
+            } else if (score >= 6) {
+                noteContent.innerHTML = `"Dear student, great effort! You remembered most of how Pygame works. Keep in mind that blit puts images on screen and get_rect() gives your sprite controls!"<br><br>Keep coding,<br>Tutor Priyadarshini 🚀`;
             } else {
-                noteContent.innerHTML = `"Dear student, great effort completing all 30 questions today! Python has a lot of little rules with colons, symbols, and coordinates, but you are learning quickly. Let's practice the tricky parts together and try again!"<br><br>Warmly,<br>Tutor Priyadarshini ✨`;
+                noteContent.innerHTML = `"Dear student, good try today! Pygame can be tricky at first with its loops and rects. Review how screen.blit() and event checks work, and let's try again!"<br><br>Warmly,<br>Tutor Priyadarshini ✨`;
             }
 
             renderReviewTabs();
@@ -1142,26 +929,10 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // DOWNLOAD HANDLER (Allows saving the complete standalone file)
-        function downloadCurrentHTML() {
-            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
-            const downloadUrl = URL.createObjectURL(blob);
-            const downloadLink = document.createElement("a");
-            downloadLink.href = downloadUrl;
-            downloadLink.download = "python_revision_quiz.html";
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(downloadUrl);
-        }
-
         // EVENT ATTACHMENTS
         document.getElementById("btn-start-quiz").addEventListener("click", startQuiz);
         document.getElementById("btn-next-step").addEventListener("click", nextQuestion);
         document.getElementById("btn-restart-quiz").addEventListener("click", () => switchView(viewHome));
-        document.getElementById("btn-download-html").addEventListener("click", downloadCurrentHTML);
-        document.getElementById("btn-download-report").addEventListener("click", downloadCurrentHTML);
     </script>
 </body>
 </html>
