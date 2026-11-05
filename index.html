@@ -3,45 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pygame revision</title>
-    <!-- Fonts: Clean Inter, Arcade Heading, and Handwritten Font for Teacher's Note -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>HTML Revision Quiz</title>
+    <!-- Fonts: Retro Gamer Header, Handwritten Note, and Clean Interface font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Caveat:wght@600;700&family=Segoe+UI:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-light-yellow: #FEF08A;
-            --yellow-card-bg: #FFFFFF;
-            --yellow-accent: #FDE047;
-            --yellow-accent-hover: #EAB308;
-            --border-dark: #1C1917;
-            --color-correct: #4ADE80;
-            --color-wrong: #F87171;
-            --text-dark: #1C1917;
+            --bg-blue: #E0F2FE;        /* Soft candy light-blue background */
+            --blue-accent: #38BDF8;    /* Bright Sky Blue */
+            --blue-dark: #0284C7;      /* Primary control border/hover */
+            --border-dark: #0F172A;    /* Slate-900 border */
+            --color-correct: #4ADE80;  /* Vibrant Green */
+            --color-wrong: #F87171;    /* Vibrant Red */
+            --color-missed: #BBF7D0;   /* Light soft green for missed items */
+            --text-main: #0F172A;
+            --note-bg: #FEF9C3;        /* Warm yellowish post-it note */
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
         }
 
         body {
-            background-color: var(--bg-light-yellow);
-            color: var(--text-dark);
+            background-color: var(--bg-blue);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* --- BACKGROUND CANVAS: FALLING TETRIS BLOCKS --- */
-        #tetrisCanvas {
+        /* --- BACKGROUND CANVAS: FLOATING CANDY SPIRALS --- */
+        #spiralCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -54,8 +53,8 @@
         /* --- MAIN CARD --- */
         .quiz-card {
             width: 100%;
-            max-width: 880px;
-            background: var(--yellow-card-bg);
+            max-width: 900px;
+            background: #FFFFFF;
             border: 4px solid var(--border-dark);
             border-radius: 24px;
             box-shadow: 8px 8px 0px var(--border-dark);
@@ -64,11 +63,10 @@
             z-index: 10;
         }
 
-        /* --- HUD / TOP BAR --- */
         .hud-topbar {
-            background: #FDE047;
+            background: #BAE6FD;
             border-bottom: 4px solid var(--border-dark);
-            padding: 16px 24px;
+            padding: 14px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -77,16 +75,16 @@
         .hud-badge {
             background: #FFFFFF;
             border: 2px solid var(--border-dark);
-            padding: 8px 16px;
-            border-radius: 12px;
+            padding: 6px 14px;
+            border-radius: 10px;
             font-weight: 700;
             font-size: 14px;
-            box-shadow: 3px 3px 0px var(--border-dark);
+            box-shadow: 2px 2px 0px var(--border-dark);
         }
 
         .game-view {
             display: none;
-            padding: 28px;
+            padding: 26px;
         }
 
         .game-view.active {
@@ -96,64 +94,55 @@
         /* --- COVER SCREEN --- */
         .home-layout {
             text-align: center;
-            padding: 60px 16px;
+            padding: 50px 20px;
         }
 
-        .home-title {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 32px;
-            color: var(--text-dark);
-            margin-bottom: 40px;
+        .main-heading {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 26px;
+            color: var(--text-main);
+            margin-bottom: 24px;
             line-height: 1.5;
-            text-shadow: 3px 3px 0px #EAB308;
+            text-shadow: 3px 3px 0px #7DD3FC;
         }
 
-        .btn-start, .btn-restart {
-            background: var(--yellow-accent);
-            color: var(--text-dark);
+        .btn-gameplay {
+            background: var(--blue-accent);
+            color: var(--text-main);
             border: 3px solid var(--border-dark);
-            padding: 16px 40px;
+            padding: 14px 44px;
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 800;
             border-radius: 16px;
             cursor: pointer;
             box-shadow: 4px 4px 0px var(--border-dark);
             transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
         }
 
-        .btn-start:hover, .btn-restart:hover {
-            background: var(--yellow-accent-hover);
+        .btn-gameplay:hover {
+            background: var(--blue-dark);
+            color: #FFFFFF;
         }
 
-        .btn-start:active, .btn-restart:active {
+        .btn-gameplay:active {
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0px var(--border-dark);
         }
 
-        /* --- QUESTION ARENA SUBBAR & TIMER --- */
+        /* --- ARENA SUBBAR & TIMER --- */
         .arena-subbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .level-headline {
-            font-weight: 700;
-            font-size: 14px;
-            color: #854D0E;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
         .progress-timer-bar {
-            width: 200px;
+            width: 180px;
             background: #FFFFFF;
             border: 2px solid var(--border-dark);
-            border-radius: 12px;
-            height: 24px;
+            border-radius: 10px;
+            height: 22px;
             overflow: hidden;
             box-shadow: 2px 2px 0px var(--border-dark);
         }
@@ -161,71 +150,65 @@
         .timer-progress-fill {
             width: 100%;
             height: 100%;
-            background: #EAB308;
+            background: var(--blue-accent);
             transition: width 0.1s linear;
         }
 
-        /* --- QUESTION PROMPT CARD --- */
+        .level-headline {
+            font-weight: 800;
+            font-size: 13px;
+            color: #0369A1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- QUESTION PROMPT FRAME --- */
         .problem-description-card {
-            background-color: #FEFCE8;
+            background-color: #F0F9FF;
             border: 3px solid var(--border-dark);
             border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 22px;
+            padding: 18px;
+            margin-bottom: 18px;
             box-shadow: 4px 4px 0px var(--border-dark);
         }
 
         .problem-prompt-text {
-            font-size: 17px;
-            font-weight: 600;
-            line-height: 1.6;
-        }
-
-        .python-syntax-box {
-            background: #1C1917;
-            border: 2px solid var(--border-dark);
-            border-radius: 12px;
-            padding: 16px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 15px;
-            color: #FEF08A;
-            white-space: pre-wrap;
-            margin-top: 14px;
+            font-size: 16px;
+            font-weight: 700;
             line-height: 1.5;
         }
 
-        /* --- CHOICE OPTIONS (CODE BOXES / MCQS 2x2) --- */
+        /* --- 2x2 SELECTION GRID FOR MCQS --- */
         .choices-stack-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-bottom: 22px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .choice-item-btn {
             background: #FFFFFF;
-            border: 3px solid var(--border-dark);
-            border-radius: 14px;
-            padding: 14px 16px;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 12px 14px;
             font-size: 14px;
             font-weight: 600;
-            color: var(--text-dark);
+            color: var(--text-main);
             cursor: pointer;
             text-align: left;
-            box-shadow: 4px 4px 0px var(--border-dark);
-            transition: transform 0.05s, box-shadow 0.05s, background-color 0.1s;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: transform 0.05s, box-shadow 0.05s;
             white-space: pre-wrap;
             font-family: 'Courier New', Courier, monospace;
-            line-height: 1.45;
+            min-height: 58px;
             display: flex;
             align-items: center;
-            min-height: 58px;
         }
 
         .choice-item-btn:hover {
-            background: #FEFCE8;
+            background: #E0F2FE;
             transform: translate(-1px, -1px);
-            box-shadow: 5px 5px 0px var(--border-dark);
+            box-shadow: 4px 4px 0px var(--border-dark);
         }
 
         .choice-item-btn.flash-green {
@@ -240,698 +223,1124 @@
             color: #7F1D1D;
         }
 
-        /* --- EXPLANATION SYSTEM --- */
+        /* --- MULTI-SELECT CHIPS --- */
+        .multi-select-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .multi-chip {
+            background: #FFFFFF;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 14px 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: all 0.1s;
+        }
+
+        .multi-chip:hover {
+            background: #E0F2FE;
+        }
+
+        .multi-chip.selected {
+            background: #7DD3FC;
+            border-color: #0369A1;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--border-dark);
+        }
+
+        .multi-chip.chip-correct {
+            background: var(--color-correct) !important;
+            border-color: #15803D !important;
+            color: #064E3B !important;
+        }
+
+        .multi-chip.chip-wrong {
+            background: var(--color-wrong) !important;
+            border-color: #B91C1C !important;
+            color: #7F1D1D !important;
+        }
+
+        .multi-chip.chip-missed {
+            background: var(--color-missed) !important;
+            border-color: #15803D !important;
+            color: #14532D !important;
+            border-style: dashed !important;
+        }
+
+        /* --- DRAG AND DROP SECTIONS --- */
+        .interactive-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .drag-source-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #FFFFFF;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 12px;
+            min-height: 60px;
+            box-shadow: 3px 3px 0px var(--border-dark);
+        }
+
+        .drag-source-item {
+            background: #F0F9FF;
+            border: 2px solid var(--border-dark);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            cursor: grab;
+            box-shadow: 2px 2px 0px var(--border-dark);
+            transition: transform 0.1s;
+        }
+
+        .drag-source-item:active {
+            cursor: grabbing;
+        }
+
+        .drag-source-item.missed-green {
+            background-color: var(--color-missed) !important;
+            border-color: #16A34A !important;
+            color: #14532D !important;
+            box-shadow: 0 0 0 2px #4ADE80;
+        }
+
+        .drag-targets-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .drag-bucket {
+            flex: 1;
+            min-width: 220px;
+            background: #FFFFFF;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 3px 3px 0px var(--border-dark);
+        }
+
+        .drag-bucket-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0369A1;
+            text-transform: uppercase;
+        }
+
+        .drop-zone {
+            min-height: 65px;
+            background: #F8FAFC;
+            border: 2px dashed #94A3B8;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-content: flex-start;
+        }
+
+        .drop-zone.dragover {
+            background: #E0F2FE;
+            border-color: #0284C7;
+        }
+
+        .dropped-chip {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid var(--border-dark);
+            cursor: pointer;
+        }
+
+        .dropped-chip.correct {
+            background-color: var(--color-correct) !important;
+            color: #064E3B;
+            border-color: #15803D;
+        }
+
+        .dropped-chip.wrong {
+            background-color: var(--color-wrong) !important;
+            color: #7F1D1D;
+            border-color: #B91C1C;
+        }
+
+        /* --- EXPLANATION & ACTION BUTTONS --- */
         .explanation-review-box {
             display: none;
-            background: #F0FDF4;
-            border: 3px solid var(--border-dark);
-            border-radius: 14px;
-            padding: 18px 22px;
-            margin-bottom: 22px;
+            background: #ECFDF5;
+            border: 2px solid #059669;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
             box-shadow: 3px 3px 0px var(--border-dark);
         }
 
         .explanation-label-tag {
-            font-weight: 700;
-            color: #166534;
-            margin-bottom: 6px;
-            font-size: 15px;
+            font-weight: 800;
+            color: #047857;
+            font-size: 13px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
         }
 
         .explanation-body-text {
-            font-size: 15px;
-            line-height: 1.5;
-            color: #1F2937;
-        }
-
-        /* --- REPORT SCREEN & HANDWRITTEN NOTE --- */
-        .report-header {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 22px;
-            color: var(--text-dark);
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .report-score-board {
-            background: #FEFCE8;
-            border: 3px solid var(--border-dark);
-            border-radius: 16px;
-            padding: 22px;
-            max-width: 580px;
-            margin: 0 auto 28px auto;
-            box-shadow: 4px 4px 0px var(--border-dark);
-        }
-
-        .report-score-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-weight: 600;
             font-size: 14px;
-            border-bottom: 2px dashed #FDE047;
-            padding-bottom: 6px;
+            line-height: 1.5;
+            color: #064E3B;
         }
 
-        .note-card {
-            background: #FFFBEB;
-            border: 3px solid #78350F;
-            border-radius: 16px;
-            padding: 24px;
-            max-width: 640px;
-            margin: 0 auto 28px auto;
-            box-shadow: 5px 5px 0px #78350F;
-            position: relative;
-        }
-
-        .note-signature {
-            font-family: 'Caveat', cursive;
-            font-size: 24px;
-            color: #92400E;
-            line-height: 1.4;
-            text-align: left;
-        }
-
-        .review-tabs {
+        .footer-action-row {
             display: flex;
+            justify-content: flex-end;
             gap: 10px;
-            justify-content: center;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
         }
 
-        .tab-btn {
-            background: #FFFFFF;
+        .btn-submit-action {
+            background: #FACC15;
+            color: var(--text-main);
             border: 2px solid var(--border-dark);
-            padding: 10px 18px;
+            padding: 10px 22px;
+            font-size: 14px;
+            font-weight: 800;
             border-radius: 12px;
-            font-weight: 700;
-            font-size: 13px;
             cursor: pointer;
             box-shadow: 3px 3px 0px var(--border-dark);
         }
 
-        .tab-btn.active {
-            background: var(--yellow-accent);
+        .btn-submit-action:hover {
+            background: #EAB308;
         }
 
-        .tab-content {
-            display: none;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 2px solid var(--border-dark);
+        /* --- POST-IT HANDWRITTEN NOTE --- */
+        .postit-note-card {
+            background: var(--note-bg);
+            border: 3px solid var(--border-dark);
             border-radius: 14px;
-            padding: 16px;
+            padding: 22px;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            text-align: left;
+            box-shadow: 6px 6px 0px var(--border-dark);
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        .postit-note-card::before {
+            content: '📌';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+
+        .postit-note-text {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            line-height: 1.4;
+            color: #713F12;
+            font-weight: 700;
+        }
+
+        .postit-signature {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            text-align: right;
+            margin-top: 12px;
+            font-weight: 700;
+            color: #B45309;
+        }
+
+        /* --- REVIEW TAB COMPONENT --- */
+        .review-tabs-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .tab-btn-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tab-btn {
+            background: #E2E8F0;
+            border: 2px solid var(--border-dark);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--border-dark);
+        }
+
+        .tab-btn.active {
+            background: var(--blue-accent);
+            color: var(--text-main);
+        }
+
+        .review-list {
+            max-height: 250px;
+            overflow-y: auto;
             background: #F8FAFC;
-            margin-bottom: 24px;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .review-item {
+        .review-card {
             background: #FFFFFF;
             border: 2px solid var(--border-dark);
             border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 10px;
-            font-size: 14px;
+            padding: 10px 14px;
+            font-size: 13px;
         }
 
-        .review-item.is-correct {
-            border-left: 8px solid var(--color-correct);
-        }
-
-        .review-item.is-wrong {
-            border-left: 8px solid var(--color-wrong);
-        }
+        .review-card.correct { border-left: 8px solid var(--color-correct); }
+        .review-card.wrong { border-left: 8px solid var(--color-wrong); }
 
         @media (max-width: 640px) {
-            .choices-stack-grid {
-                grid-template-columns: 1fr;
-            }
-            .home-title {
-                font-size: 22px;
-            }
-            .hud-topbar {
-                padding: 12px 16px;
-            }
-            .hud-badge {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            .progress-timer-bar {
-                width: 140px;
-            }
+            .choices-stack-grid { grid-template-columns: 1fr; }
+            .multi-select-grid { grid-template-columns: repeat(2, 1fr); }
+            .main-heading { font-size: 20px; }
+            .drag-targets-row { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ANIMATED TETRIS BLOCKS BACKGROUND CANVAS -->
-    <canvas id="tetrisCanvas"></canvas>
+    <!-- CANVAS BACKGROUND: FLOATING CANDY SPIRALS -->
+    <canvas id="spiralCanvas"></canvas>
 
     <div class="quiz-card">
-        <!-- TOP HUD -->
+        <!-- HUD TOPBAR -->
         <div class="hud-topbar">
             <div id="hud-index-tracker" class="hud-badge">Question 1/10</div>
             <div id="hud-score-tracker" class="hud-badge">⭐ Score: 0</div>
         </div>
 
-        <!-- SCREEN 1: HOME COVER -->
+        <!-- VIEW 1: COVER SCREEN -->
         <div id="view-home" class="game-view active">
             <div class="home-layout">
-                <h1 class="home-title">Pygame revision</h1>
-                <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-                    <button id="btn-start-quiz" class="btn-start">Start with the revision 🚀</button>
-                </div>
+                <h1 class="main-heading">HTML revision</h1>
+                <button id="btn-start-quiz" class="btn-gameplay">Start Revision 🚀</button>
             </div>
         </div>
 
-        <!-- SCREEN 2: ACTIVE QUESTION ARENA -->
+        <!-- VIEW 2: ARENA PLAYSPACE -->
         <div id="view-arena" class="game-view">
             <div class="arena-subbar">
-                <div id="arena-level-header" class="level-headline">Pygame Core Concepts</div>
+                <div id="arena-level-header" class="level-headline">Level 1: Web Structure</div>
                 <div class="progress-timer-bar">
                     <div id="arena-timer-fill" class="timer-progress-fill"></div>
                 </div>
             </div>
 
             <div id="arena-prompt-frame" class="problem-description-card">
-                <p id="arena-question-text" class="problem-prompt-text">Loading question...</p>
-                <div id="arena-syntax-terminal" class="python-syntax-box" style="display: none;"></div>
+                <p id="arena-question-text" class="problem-prompt-text">Loading prompt...</p>
+                <!-- INTERACTIVE RENDER SLOT FOR MULTI-SELECT & DRAG AND DROP -->
+                <div id="interactive-area" style="display: none;"></div>
             </div>
 
-            <!-- Four Syntax/Option Box Stack (2x2 Grid) -->
+            <!-- 2x2 SELECTION GRID FOR STANDARD MCQs -->
             <div id="arena-choices-stack" class="choices-stack-grid"></div>
 
-            <!-- Explanation Box -->
             <div id="arena-explanation-drawer" class="explanation-review-box">
                 <div class="explanation-label-tag">Explanation 💡</div>
-                <p id="explanation-body-text" class="explanation-body-text">Explanation text...</p>
+                <p id="explanation-body-text" class="explanation-body-text">Explanation details...</p>
             </div>
 
-            <div style="display: flex; justify-content: flex-end;">
-                <button id="btn-next-step" class="btn-start" style="display: none; font-size: 15px; padding: 12px 26px;">Next Question ➡️</button>
+            <div class="footer-action-row">
+                <button id="btn-submit-answer" class="btn-submit-action" style="display: none;">Submit Answer ✔️</button>
+                <button id="btn-next-step" class="btn-gameplay" style="display: none; font-size: 15px; padding: 10px 24px;">Next Question ➡️</button>
             </div>
         </div>
 
-        <!-- SCREEN 3: REPORT CARD & PRIYADARSHINI NOTE -->
+        <!-- VIEW 3: REPORT CARD -->
         <div id="view-report" class="game-view">
-            <h2 class="report-header">Revision Complete! 🌟</h2>
+            <div class="home-layout" style="padding: 10px 0;">
+                <h2 class="main-heading" style="font-size: 20px; margin-bottom: 20px;">🎉 REVISION COMPLETE!</h2>
 
-            <div class="report-score-board">
-                <div class="report-score-row">
-                    <span>Pygame Fundamentals &amp; Controls</span>
-                    <span id="rep-grand-total" style="color: #16A34A; font-weight: 700;">0 / 10</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; padding-top: 6px; color: #854D0E;">
-                    <span>ACCURACY</span>
-                    <span id="rep-percentage">0%</span>
-                </div>
-            </div>
-
-            <!-- HANDWRITTEN NOTE FROM TUTOR PRIYADARSHINI -->
-            <div class="note-card">
-                <div style="font-weight: 700; margin-bottom: 8px; color: #78350F; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
-                    📝 A Note from Tutor Priyadarshini:
-                </div>
-                <div id="tutor-note-content" class="note-signature">
-                    "Dear student, let's see how much of Pygame you remembered today!"
-                    <br><br>
-                    Warmly,<br>
-                    Tutor Priyadarshini ✨
-                </div>
-            </div>
-
-            <!-- DETAILED QUESTION-BY-QUESTION REVIEW TABS -->
-            <div style="margin-top: 24px;">
-                <h3 style="text-align: center; margin-bottom: 12px; font-size: 16px; font-weight: 700;">Check Your Answers:</h3>
-                <div class="review-tabs">
-                    <button class="tab-btn active" onclick="showReviewTab('all')">All (10)</button>
-                    <button class="tab-btn" onclick="showReviewTab('correct')">Correct (✔️)</button>
-                    <button class="tab-btn" onclick="showReviewTab('wrong')">Review Needed (❌)</button>
+                <div class="postit-note-card">
+                    <p id="handwritten-body" class="postit-note-text">
+                        "Great effort on your HTML revision today! You did a fantastic job reviewing how web pages are built from tags, attributes, and styles. Keep building awesome web pages!"
+                    </p>
+                    <div class="postit-signature">~ Tutor Priyadarshini 🌟</div>
                 </div>
 
-                <div id="tab-all" class="tab-content active"></div>
-                <div id="tab-correct" class="tab-content"></div>
-                <div id="tab-wrong" class="tab-content"></div>
-            </div>
+                <div style="background: #F0F9FF; border: 3px solid var(--border-dark); border-radius: 14px; padding: 14px; max-width: 500px; margin: 0 auto 16px auto; font-weight: 700; font-size: 16px; display: flex; justify-content: space-around;">
+                    <div>Score: <span id="final-score" style="color: #0284C7;">0 / 10</span></div>
+                    <div>Accuracy: <span id="final-pct" style="color: #16A34A;">0%</span></div>
+                </div>
 
-            <div style="text-align: center; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
-                <button id="btn-restart-quiz" class="btn-restart">Try Again 🔄</button>
+                <!-- REVIEW TABS -->
+                <div class="review-tabs-container">
+                    <div class="tab-btn-row">
+                        <button class="tab-btn active" onclick="switchReviewTab('all')">All Questions</button>
+                        <button class="tab-btn" onclick="switchReviewTab('correct')">Correct (✅)</button>
+                        <button class="tab-btn" onclick="switchReviewTab('wrong')">Review (❌)</button>
+                    </div>
+                    <div id="review-list-box" class="review-list"></div>
+                </div>
+
+                <button id="btn-restart-quiz" class="btn-gameplay" style="font-size: 15px; padding: 12px 30px; margin-top: 20px;">Try Again 🔄</button>
             </div>
         </div>
     </div>
 
     <script>
-        // MASTER 10 PYGAME REVISION QUESTIONS
+        // MASTER 10 HTML REVISION QUESTIONS
         const quizQuestions = [
             {
-                prompt: "Question 1: In a standard Pygame program, how many loops are typically used together to keep the game running?",
-                choices: [
-                    "Two loops (a while loop for the main game and a for loop for events)",
-                    "Only one single while loop",
-                    "Three loops (for, while, and do-while)",
-                    "Only one for loop that runs 100 times"
+                type: "multi_select",
+                prompt: "Question 1: Click on all the Container Tags from the options below and click Submit Answer.",
+                options: [
+                    { id: "opt1", text: "<html>", isCorrect: true },
+                    { id: "opt2", text: "<p>", isCorrect: true },
+                    { id: "opt3", text: "<img>", isCorrect: false },
+                    { id: "opt4", text: "<br>", isCorrect: false },
+                    { id: "opt5", text: "<li>", isCorrect: true },
+                    { id: "opt6", text: "<title>", isCorrect: true }
                 ],
-                correctIdx: 0,
-                explanation: "Pygame uses two loops: a main 'while' loop that keeps the whole game alive, and an inner 'for' loop that checks incoming player events."
+                explanation: "Container tags require both an opening tag and a closing tag (like <html>, <p>, <li>, and <title>). Empty tags like <img> and <br> do not enclose content and have no closing tag."
             },
             {
-                prompt: "Question 2: Which function must be called at the very beginning of your program to initialize Pygame?",
+                type: "mcq",
+                prompt: "Question 2: Which is the correct HTML snippet to create an Ordered List of fruits?",
                 choices: [
-                    "pygame.init()",
-                    "pygame.start()",
-                    "pygame.create()",
-                    "pygame.setup()"
+                    "<ol>\n  <li>Apple</li>\n  <li>Banana</li>\n</ol>",
+                    "<ul>\n  <li>Apple</li>\n  <li>Banana</li>\n</ul>",
+                    "<list type=\"ordered\">\n  <item>Apple</item>\n</list>",
+                    "<dl>\n  <dt>Apple</dt>\n  <dd>Banana</dd>\n</dl>"
                 ],
                 correctIdx: 0,
-                explanation: "pygame.init() starts up and prepares all the internal Pygame modules before you create windows or load sounds."
+                explanation: "An ordered list is created with the <ol> tag, and each list item is wrapped inside <li> tags."
             },
             {
-                prompt: "Question 3: What is the main difference between a plain image and a sprite in Pygame?",
-                choices: [
-                    "An image cannot be controlled directly, but a sprite can be controlled and moved around",
-                    "An image has color, but a sprite is always black and white",
-                    "An image is drawn automatically, but a sprite never appears on screen",
-                    "There is no difference; they are completely identical"
+                type: "drag_match",
+                prompt: "Question 3: Match each Table Tag from the bank to its correct description below. (Watch out for tricky fake tags!)",
+                topics: [
+                    { id: "row", label: "Table Row" },
+                    { id: "header", label: "Table Header" },
+                    { id: "data", label: "Table Data / Cell" }
                 ],
-                correctIdx: 0,
-                explanation: "A plain image is just a static graphic, whereas a sprite is an active game character that has positions and can be controlled."
+                items: [
+                    { id: "tag_tr", text: "<tr>", targetTopic: "row" },
+                    { id: "tag_th", text: "<th>", targetTopic: "header" },
+                    { id: "tag_td", text: "<td>", targetTopic: "data" },
+                    { id: "tag_tw", text: "<tw>", targetTopic: "none" },
+                    { id: "tag_tx", text: "<tx>", targetTopic: "none" },
+                    { id: "tag_tb", text: "<tb>", targetTopic: "none" }
+                ],
+                explanation: "<tr> defines a table row, <th> defines a table header cell, and <td> defines a standard table data cell. Fake tags like <tw>, <tx>, and <tb> do not exist in HTML."
             },
             {
-                prompt: "Question 4: To convert a loaded image into a controllable sprite with collision and position boundaries, what do we do?",
-                choices: [
-                    "We get its rectangle boundary using image.get_rect()",
-                    "We convert the image into a string variable",
-                    "We draw a circle around the screen",
-                    "We save the image as a text file"
+                type: "drag_buckets",
+                prompt: "Question 4: Drag the valid list styling types into their correct list bucket. (Watch out: invalid styles do not belong to either bucket!)",
+                buckets: [
+                    { id: "ordered", label: "Ordered List Styles (<ol>)" },
+                    { id: "unordered", label: "Unordered List Styles (<ul>)" }
                 ],
-                correctIdx: 0,
-                explanation: "Calling .get_rect() creates a rectangle matching the image's dimensions, allowing us to move its x, y coordinates and detect collisions."
+                items: [
+                    { id: "s1", text: "Numbers", correctBucket: "ordered" },
+                    { id: "s2", text: "Roman numerals", correctBucket: "ordered" },
+                    { id: "s3", text: "Capital alphabets", correctBucket: "ordered" },
+                    { id: "s4", text: "Small alphabets", correctBucket: "ordered" },
+                    { id: "s5", text: "Bullets (Disc)", correctBucket: "unordered" },
+                    { id: "s6", text: "Squares", correctBucket: "unordered" },
+                    { id: "s7", text: "Circles", correctBucket: "unordered" },
+                    { id: "s8", text: "Triangles", correctBucket: "none" },
+                    { id: "s9", text: "Stars", correctBucket: "none" },
+                    { id: "s10", text: "AA, BB, CC", correctBucket: "none" }
+                ],
+                explanation: "Ordered lists (<ol>) use numbers (1, 2, 3), letters (A, B, C / a, b, c), and Roman numerals (I, II, III). Unordered lists (<ul>) use disc, circle, and square bullet styles. Triangles, stars, and AA/BB sequences are not standard HTML list types."
             },
             {
-                prompt: "Question 5: Which syntax is correct for the for loop event check to close the game window when clicking the exit button?",
+                type: "mcq",
+                prompt: "Question 5: Which is the correct way to set the entire webpage background color to yellow using the body tag?",
                 choices: [
-                    "for event in pygame.event.get():\n    if event.type == pygame.QUIT:\n        running = False",
-                    "for event in pygame.events:\n    if event == \"exit\":\n        stop()",
-                    "while pygame.event.check():\n    if close_window == True:\n        end()",
-                    "for event in pygame.quit():\n    close()"
+                    "<body bgcolor=\"yellow\">",
+                    "<body background=\"color: yellow\">",
+                    "<body bg=\"yellow\">",
+                    "<body color=\"yellow\">"
                 ],
                 correctIdx: 0,
-                explanation: "We loop through pygame.event.get() and check if event.type is equal to pygame.QUIT to safely stop the game loop."
+                explanation: "The bgcolor attribute on the <body> tag sets the entire webpage's background color: <body bgcolor=\"yellow\">."
             },
             {
-                prompt: "Question 6: To draw an image or sprite surface onto the display window, which function do we use?",
+                type: "mcq",
+                prompt: "Question 6: Which is the correct way to make paragraph text blue and 20px in size using inline CSS styling?",
                 choices: [
-                    "screen.blit(image, position)",
-                    "screen.draw_image(image)",
-                    "screen.paste(image, position)",
-                    "screen.show(image)"
+                    "<p style=\"color: blue; font-size: 20px;\">Hello World</p>",
+                    "<p color=\"blue\" size=\"20px\">Hello World</p>",
+                    "<p font=\"color: blue, size: 20px\">Hello World</p>",
+                    "<p style=\"font-color: blue; text-size: 20px;\">Hello World</p>"
                 ],
                 correctIdx: 0,
-                explanation: "screen.blit() copies the pixels of an image or sprite onto the game window at the given coordinates."
+                explanation: "Inline CSS uses the style attribute with property-value pairs separated by colons and semicolons: style=\"color: blue; font-size: 20px;\"."
             },
             {
-                prompt: "Question 7: Which syntax is correct for moving a sprite upwards when the UP arrow key is pressed?",
-                choices: [
-                    "if keys[pygame.K_UP]:\n    sprite_rect.y -= speed",
-                    "if keys[pygame.K_UP]:\n    sprite_rect.y += speed",
-                    "if keys[pygame.K_UP]:\n    sprite_rect.x -= speed",
-                    "if keys == \"UP\":\n    sprite_rect.move_up()"
+                type: "drag_buckets",
+                prompt: "Question 7: Drag each item into its correct box: Is it an HTML Attribute or a CSS Property?",
+                buckets: [
+                    { id: "attrs", label: "HTML Attributes" },
+                    { id: "props", label: "CSS Properties" }
                 ],
-                correctIdx: 0,
-                explanation: "In Pygame, the top of the window is y = 0. To move a sprite up, you decrease its y coordinate (y -= speed)."
+                items: [
+                    { id: "b1", text: "bgcolor", correctBucket: "attrs" },
+                    { id: "b2", text: "src", correctBucket: "attrs" },
+                    { id: "b3", text: "style", correctBucket: "attrs" },
+                    { id: "b4", text: "type", correctBucket: "attrs" },
+                    { id: "b5", text: "color", correctBucket: "props" },
+                    { id: "b6", text: "background-color", correctBucket: "props" },
+                    { id: "b7", text: "text-align", correctBucket: "props" },
+                    { id: "b8", text: "border", correctBucket: "props" }
+                ],
+                explanation: "Attributes like bgcolor, src, style, and type belong directly inside HTML opening tags. Properties like color, background-color, text-align, and border are CSS style rules."
             },
             {
-                prompt: "Question 8: Which function is used to transform and resize or scale an image in Pygame?",
+                type: "mcq",
+                prompt: "Question 8: Which is the correct anchor tag syntax to create a clickable link that navigates to 'page2.html'?",
                 choices: [
-                    "pygame.transform.scale(image, (width, height))",
-                    "pygame.image.resize(image, size)",
-                    "pygame.display.scale(image, width, height)",
-                    "pygame.size.change(image, (width, height))"
+                    "<a href=\"page2.html\">Click Here</a>",
+                    "<a link=\"page2.html\">Click Here</a>",
+                    "<a src=\"page2.html\">Click Here</a>",
+                    "<link to=\"page2.html\">Click Here</link>"
                 ],
                 correctIdx: 0,
-                explanation: "pygame.transform.scale() takes your image and a tuple of (width, height) to return a resized version."
+                explanation: "The <a> tag creates hyperlinks, and the href (hypertext reference) attribute specifies the destination URL or file path: <a href=\"page2.html\">."
             },
             {
-                prompt: "Question 9: After blitting images onto the screen, how do you update the display window so changes become visible?",
+                type: "mcq",
+                prompt: "Question 9: Which is the correct way to set the webpage title that appears on the browser tab?",
                 choices: [
-                    "pygame.display.update()",
-                    "pygame.screen.refresh()",
-                    "pygame.window.reload()",
-                    "pygame.draw.show()"
+                    "<head>\n  <title>My Webpage</title>\n</head>",
+                    "<title>\n  <head>My Webpage</head>\n</title>",
+                    "<body>\n  <title>My Webpage</title>\n</body>",
+                    "<header>\n  <title>My Webpage</title>\n</header>"
                 ],
                 correctIdx: 0,
-                explanation: "pygame.display.update() (or pygame.display.flip()) refreshes the screen so that all newly blitted graphics appear."
+                explanation: "The <title> tag defines the browser tab title and must always be placed inside the <head> section of an HTML document."
             },
             {
-                prompt: "Question 10: If a player sprite moves horizontally to the RIGHT across the screen, what happens to its coordinate values?",
+                type: "mcq",
+                prompt: "Question 10: Which HTML heading tag produces the biggest sized heading on the webpage?",
                 choices: [
-                    "Its rect.x value increases",
-                    "Its rect.x value decreases",
-                    "Its rect.y value increases",
-                    "Its rect.y value decreases"
+                    "<h1>Main Title</h1>",
+                    "<h6>Main Title</h6>",
+                    "<heading-1>Main Title</heading-1>",
+                    "<header size=\"big\">Main Title</header>"
                 ],
                 correctIdx: 0,
-                explanation: "The x-axis goes from 0 on the left to maximum width on the right, so moving right increases rect.x."
+                explanation: "HTML heading tags range from <h1> to <h6>, where <h1> produces the largest and most important heading, while <h6> produces the smallest."
             }
         ];
 
-        let activeQuestionIndex = 0;
+        let activeIndex = 0;
         let score = 0;
+        let timerRef = null;
+        let secondsLeft = 30;
+        let isLocked = false;
+        let userQuizHistory = [];
 
-        let clockInterval = null;
-        let timeLeft = 30;
-        let questionLocked = false;
-        let userAnswersLog = [];
+        // Interactive temporary state
+        let selectedChips = new Set();
+        let currentDragState = {};
 
-        // DOM REFERENCES
+        // DOM Caches
         const viewHome = document.getElementById("view-home");
         const viewArena = document.getElementById("view-arena");
         const viewReport = document.getElementById("view-report");
 
-        const hudIndexTracker = document.getElementById("hud-index-tracker");
-        const hudScoreTracker = document.getElementById("hud-score-tracker");
-        const arenaTimerFill = document.getElementById("arena-timer-fill");
+        const hudIndex = document.getElementById("hud-index-tracker");
+        const hudScore = document.getElementById("hud-score-tracker");
+        const timerFill = document.getElementById("arena-timer-fill");
         
-        const arenaLevelHeader = document.getElementById("arena-level-header");
-        const arenaQuestionText = document.getElementById("arena-question-text");
-        const arenaSyntaxTerminal = document.getElementById("arena-syntax-terminal");
-        const arenaChoicesStack = document.getElementById("arena-choices-stack");
+        const promptText = document.getElementById("arena-question-text");
+        const interactiveArea = document.getElementById("interactive-area");
+        const choicesGrid = document.getElementById("arena-choices-stack");
         
-        const arenaExplanationDrawer = document.getElementById("arena-explanation-drawer");
-        const explanationBodyText = document.getElementById("explanation-body-text");
-        const btnNextStep = document.getElementById("btn-next-step");
+        const explanationDrawer = document.getElementById("arena-explanation-drawer");
+        const explanationText = document.getElementById("explanation-body-text");
+        const btnSubmit = document.getElementById("btn-submit-answer");
+        const btnNext = document.getElementById("btn-next-step");
 
-        // --- BACKGROUND CANVAS: ANIMATED FALLING TETRIS BLOCKS ---
-        const canvas = document.getElementById("tetrisCanvas");
-        const ctx = canvas.getContext("2d");
-        let tetrisPieces = [];
+        // --- FISHER-YATES SHUFFLE HELPER ---
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function shuffleMcqChoices(q) {
+            if (q.type === "mcq" && q.choices) {
+                const correctText = q.choices[q.correctIdx];
+                shuffleArray(q.choices);
+                q.correctIdx = q.choices.indexOf(correctText);
+            }
+        }
+
+        // --- FLOATING CANDY SPIRAL CANVAS ANIMATION ---
+        const spiralCanvas = document.getElementById("spiralCanvas");
+        const spiralCtx = spiralCanvas.getContext("2d");
+        let candies = [];
 
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            spiralCanvas.width = window.innerWidth;
+            spiralCanvas.height = window.innerHeight;
         }
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        const tetrominoShapes = [
-            { color: "#06B6D4", blocks: [[0, 0], [0, 1], [0, 2], [0, 3]] },
-            { color: "#EAB308", blocks: [[0, 0], [1, 0], [0, 1], [1, 1]] },
-            { color: "#A855F7", blocks: [[0, 0], [-1, 0], [1, 0], [0, 1]] },
-            { color: "#F97316", blocks: [[0, 0], [0, 1], [0, 2], [1, 2]] },
-            { color: "#EF4444", blocks: [[0, 0], [-1, 0], [0, 1], [1, 1]] },
-            { color: "#10B981", blocks: [[0, 0], [1, 0], [0, 1], [-1, 1]] }
-        ];
+        const candyColors = ["#38BDF8", "#818CF8", "#F472B6", "#FBBF24", "#34D399"];
 
-        for (let i = 0; i < 18; i++) {
-            const template = tetrominoShapes[Math.floor(Math.random() * tetrominoShapes.length)];
-            tetrisPieces.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                blockSize: Math.random() * 6 + 12,
-                speedY: Math.random() * 0.7 + 0.3,
+        for (let i = 0; i < 20; i++) {
+            candies.push({
+                x: Math.random() * spiralCanvas.width,
+                y: Math.random() * spiralCanvas.height,
+                radius: Math.random() * 12 + 10,
+                color: candyColors[Math.floor(Math.random() * candyColors.length)],
+                speedY: Math.random() * 0.6 + 0.3,
                 angle: Math.random() * Math.PI * 2,
-                spinSpeed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
-                color: template.color,
-                blocks: template.blocks
+                rotationSpeed: (Math.random() - 0.5) * 0.04
             });
         }
 
-        function drawTetrisPiece(c, piece) {
-            c.save();
-            c.translate(piece.x, piece.y);
-            c.rotate(piece.angle);
-            c.fillStyle = piece.color;
-            c.strokeStyle = "#1C1917";
-            c.lineWidth = 2;
+        function drawCandySpirals() {
+            spiralCtx.clearRect(0, 0, spiralCanvas.width, spiralCanvas.height);
 
-            piece.blocks.forEach(([bx, by]) => {
-                const px = bx * piece.blockSize;
-                const py = by * piece.blockSize;
-                c.fillRect(px, py, piece.blockSize, piece.blockSize);
-                c.strokeRect(px, py, piece.blockSize, piece.blockSize);
-
-                c.fillStyle = "rgba(255, 255, 255, 0.35)";
-                c.fillRect(px + 2, py + 2, piece.blockSize - 4, 3);
-                c.fillStyle = piece.color;
-            });
-
-            c.restore();
-        }
-
-        function animateTetris() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            tetrisPieces.forEach(p => {
-                p.y += p.speedY;
-                p.angle += p.spinSpeed;
-
-                if (p.y > canvas.height + 60) {
-                    p.y = -60;
-                    p.x = Math.random() * canvas.width;
+            candies.forEach(c => {
+                c.y -= c.speedY;
+                c.angle += c.rotationSpeed;
+                if (c.y < -30) {
+                    c.y = spiralCanvas.height + 30;
+                    c.x = Math.random() * spiralCanvas.width;
                 }
-                drawTetrisPiece(ctx, p);
-            });
-            requestAnimationFrame(animateTetris);
-        }
-        animateTetris();
 
-        // --- QUIZ NAVIGATION & LOGIC ---
-        function switchView(target) {
+                spiralCtx.save();
+                spiralCtx.translate(c.x, c.y);
+                spiralCtx.rotate(c.angle);
+
+                // Draw Spiral Candy Swirl
+                spiralCtx.beginPath();
+                spiralCtx.arc(0, 0, c.radius, 0, Math.PI * 2);
+                spiralCtx.fillStyle = "#FFFFFF";
+                spiralCtx.fill();
+                spiralCtx.lineWidth = 3;
+                spiralCtx.strokeStyle = c.color;
+                spiralCtx.stroke();
+
+                // Swirl curves
+                spiralCtx.beginPath();
+                spiralCtx.moveTo(-c.radius * 0.7, 0);
+                spiralCtx.quadraticCurveTo(0, -c.radius * 0.8, c.radius * 0.7, 0);
+                spiralCtx.quadraticCurveTo(0, c.radius * 0.8, -c.radius * 0.7, 0);
+                spiralCtx.fillStyle = c.color;
+                spiralCtx.fill();
+
+                spiralCtx.restore();
+            });
+
+            requestAnimationFrame(drawCandySpirals);
+        }
+        drawCandySpirals();
+
+        // --- GAME CONTROLLER ---
+        function switchView(view) {
             viewHome.classList.remove("active");
             viewArena.classList.remove("active");
             viewReport.classList.remove("active");
-            target.classList.add("active");
-        }
-
-        function shuffleQuestionChoices(question) {
-            const correctAnswerText = question.choices[question.correctIdx];
-            for (let i = question.choices.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [question.choices[i], question.choices[j]] = [question.choices[j], question.choices[i]];
-            }
-            question.correctIdx = question.choices.indexOf(correctAnswerText);
+            view.classList.add("active");
         }
 
         function startQuiz() {
-            activeQuestionIndex = 0;
+            activeIndex = 0;
             score = 0;
-            userAnswersLog = [];
-            hudScoreTracker.innerText = "⭐ Score: 0";
-
-            quizQuestions.forEach(q => shuffleQuestionChoices(q));
+            userQuizHistory = [];
+            hudScore.innerText = "⭐ Score: 0";
+            
+            // Randomize options for questions
+            quizQuestions.forEach(q => {
+                shuffleMcqChoices(q);
+                if (q.options) shuffleArray(q.options);
+                if (q.items) shuffleArray(q.items);
+            });
 
             switchView(viewArena);
-            loadQuestion();
+            loadCurrentQuestion();
         }
 
-        function loadQuestion() {
-            questionLocked = false;
-            arenaExplanationDrawer.style.display = "none";
-            btnNextStep.style.display = "none";
-            arenaChoicesStack.innerHTML = "";
-            arenaSyntaxTerminal.style.display = "none";
+        function loadCurrentQuestion() {
+            isLocked = false;
+            explanationDrawer.style.display = "none";
+            btnNext.style.display = "none";
+            btnSubmit.style.display = "none";
+            
+            interactiveArea.innerHTML = "";
+            interactiveArea.style.display = "none";
+            choicesGrid.innerHTML = "";
+            choicesGrid.style.display = "none";
 
-            const current = quizQuestions[activeQuestionIndex];
-            hudIndexTracker.innerText = `Question ${activeQuestionIndex + 1}/10`;
-            arenaLevelHeader.innerText = "Pygame Fundamentals 🎮";
+            const q = quizQuestions[activeIndex];
+            hudIndex.innerText = `Question ${activeIndex + 1}/${quizQuestions.length}`;
+            promptText.innerText = q.prompt;
 
-            arenaQuestionText.innerText = current.prompt;
-
-            if (current.code) {
-                arenaSyntaxTerminal.innerText = current.code;
-                arenaSyntaxTerminal.style.display = "block";
+            if (q.type === "mcq") {
+                choicesGrid.style.display = "grid";
+                renderMcqOptions(q);
+            } else if (q.type === "multi_select") {
+                interactiveArea.style.display = "block";
+                btnSubmit.style.display = "inline-block";
+                renderMultiSelect(q);
+            } else if (q.type === "drag_match") {
+                interactiveArea.style.display = "block";
+                btnSubmit.style.display = "inline-block";
+                renderDragMatch(q);
+            } else if (q.type === "drag_buckets") {
+                interactiveArea.style.display = "block";
+                btnSubmit.style.display = "inline-block";
+                renderDragBuckets(q);
             }
-
-            current.choices.forEach((choiceText, index) => {
-                const btn = document.createElement("button");
-                btn.className = "choice-item-btn";
-                btn.innerText = choiceText;
-                btn.onclick = () => selectChoice(index, btn);
-                arenaChoicesStack.appendChild(btn);
-            });
 
             startTimer();
         }
 
         function startTimer() {
-            clearInterval(clockInterval);
-            timeLeft = 30; // 30 seconds per question
-            arenaTimerFill.style.width = "100%";
+            clearInterval(timerRef);
+            secondsLeft = 30;
+            timerFill.style.width = "100%";
 
-            clockInterval = setInterval(() => {
-                timeLeft -= 0.1;
-                let pct = (timeLeft / 30) * 100;
-                arenaTimerFill.style.width = `${pct}%`;
+            timerRef = setInterval(() => {
+                secondsLeft -= 0.1;
+                const pct = (secondsLeft / 30) * 100;
+                timerFill.style.width = `${pct}%`;
 
-                if (timeLeft <= 0) {
-                    clearInterval(clockInterval);
+                if (secondsLeft <= 0) {
+                    clearInterval(timerRef);
                     handleTimeOut();
                 }
             }, 100);
         }
 
-        function selectChoice(chosenIdx, btnElement) {
-            if (questionLocked) return;
-            questionLocked = true;
-            clearInterval(clockInterval);
+        /* --- 1. MCQ RENDERER --- */
+        function renderMcqOptions(q) {
+            q.choices.forEach((choiceText, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "choice-item-btn";
+                btn.innerText = choiceText;
+                btn.onclick = () => selectMcqAnswer(idx, btn);
+                choicesGrid.appendChild(btn);
+            });
+        }
 
-            const current = quizQuestions[activeQuestionIndex];
-            const buttons = arenaChoicesStack.children;
-            const isCorrect = (chosenIdx === current.correctIdx);
+        function selectMcqAnswer(selectedIdx, btnElement) {
+            if (isLocked) return;
+            isLocked = true;
+            clearInterval(timerRef);
+
+            const q = quizQuestions[activeIndex];
+            const isCorrect = (selectedIdx === q.correctIdx);
 
             if (isCorrect) {
                 btnElement.classList.add("flash-green");
                 score++;
-                hudScoreTracker.innerText = `⭐ Score: ${score}`;
+                hudScore.innerText = `⭐ Score: ${score}`;
             } else {
                 btnElement.classList.add("flash-red");
-                if (buttons[current.correctIdx]) {
-                    buttons[current.correctIdx].classList.add("flash-green");
+                if (choicesGrid.children[q.correctIdx]) {
+                    choicesGrid.children[q.correctIdx].classList.add("flash-green");
                 }
             }
 
-            userAnswersLog.push({
-                index: activeQuestionIndex + 1,
-                prompt: current.prompt,
-                code: current.code || null,
-                userChoiceText: current.choices[chosenIdx],
-                correctChoiceText: current.choices[current.correctIdx],
-                explanation: current.explanation,
-                isCorrect: isCorrect
+            userQuizHistory.push({
+                question: q.prompt,
+                userChoice: q.choices[selectedIdx],
+                correctAnswer: q.choices[q.correctIdx],
+                isCorrect: isCorrect,
+                explanation: q.explanation
             });
 
-            showExplanation(current.explanation);
+            showExplanation(q.explanation);
         }
 
-        function handleTimeOut() {
-            questionLocked = true;
-            const current = quizQuestions[activeQuestionIndex];
-            const buttons = arenaChoicesStack.children;
+        /* --- 2. MULTI-SELECT RENDERER (Q1) --- */
+        function renderMultiSelect(q) {
+            selectedChips.clear();
+            const grid = document.createElement("div");
+            grid.className = "multi-select-grid";
 
-            if (buttons[current.correctIdx]) {
-                buttons[current.correctIdx].classList.add("flash-green");
-            }
-
-            userAnswersLog.push({
-                index: activeQuestionIndex + 1,
-                prompt: current.prompt,
-                code: current.code || null,
-                userChoiceText: "Timed Out ⏳",
-                correctChoiceText: current.choices[current.correctIdx],
-                explanation: current.explanation,
-                isCorrect: false
+            q.options.forEach(opt => {
+                const chip = document.createElement("div");
+                chip.className = "multi-chip";
+                chip.innerText = opt.text;
+                chip.dataset.id = opt.id;
+                chip.onclick = () => {
+                    if (isLocked) return;
+                    if (selectedChips.has(opt.id)) {
+                        selectedChips.delete(opt.id);
+                        chip.classList.remove("selected");
+                    } else {
+                        selectedChips.add(opt.id);
+                        chip.classList.add("selected");
+                    }
+                };
+                grid.appendChild(chip);
             });
 
-            showExplanation("Time is up! " + current.explanation);
+            interactiveArea.appendChild(grid);
+            btnSubmit.onclick = () => evaluateMultiSelect(q);
+        }
+
+        function evaluateMultiSelect(q) {
+            if (isLocked) return;
+            isLocked = true;
+            clearInterval(timerRef);
+
+            let allCorrect = true;
+            const chips = interactiveArea.querySelectorAll(".multi-chip");
+
+            q.options.forEach((opt, idx) => {
+                const chip = chips[idx];
+                const wasSelected = selectedChips.has(opt.id);
+
+                if (opt.isCorrect && wasSelected) {
+                    chip.className = "multi-chip chip-correct";
+                } else if (!opt.isCorrect && wasSelected) {
+                    chip.className = "multi-chip chip-wrong";
+                    allCorrect = false;
+                } else if (opt.isCorrect && !wasSelected) {
+                    chip.className = "multi-chip chip-missed";
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect && selectedChips.size > 0) {
+                score++;
+                hudScore.innerText = `⭐ Score: ${score}`;
+            }
+
+            userQuizHistory.push({
+                question: q.prompt,
+                userChoice: Array.from(selectedChips).map(id => q.options.find(o => o.id === id).text).join(", ") || "None",
+                correctAnswer: q.options.filter(o => o.isCorrect).map(o => o.text).join(", "),
+                isCorrect: allCorrect,
+                explanation: q.explanation
+            });
+
+            showExplanation(q.explanation);
+        }
+
+        /* --- 3. DRAG MATCH RENDERER (Q3) --- */
+        function renderDragMatch(q) {
+            currentDragState = {};
+            const container = document.createElement("div");
+            container.className = "interactive-container";
+
+            // Tag bank
+            const pool = document.createElement("div");
+            pool.className = "drag-source-pool";
+            pool.id = "match-source-pool";
+
+            q.items.forEach(item => {
+                const tagEl = document.createElement("div");
+                tagEl.className = "drag-source-item";
+                tagEl.innerText = item.text;
+                tagEl.id = item.id;
+                tagEl.draggable = true;
+                tagEl.ondragstart = (e) => e.dataTransfer.setData("text/plain", item.id);
+                pool.appendChild(tagEl);
+            });
+
+            container.appendChild(pool);
+
+            // Target Drop Slots
+            const row = document.createElement("div");
+            row.className = "drag-targets-row";
+
+            q.topics.forEach(t => {
+                const bucket = document.createElement("div");
+                bucket.className = "drag-bucket";
+                bucket.innerHTML = `<div class="drag-bucket-title">${t.label}</div>`;
+
+                const dropZone = document.createElement("div");
+                dropZone.className = "drop-zone";
+                dropZone.dataset.targetId = t.id;
+
+                dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add("dragover"); };
+                dropZone.ondragleave = () => dropZone.classList.remove("dragover");
+                dropZone.ondrop = (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove("dragover");
+                    const itemId = e.dataTransfer.getData("text/plain");
+                    const itemEl = document.getElementById(itemId);
+                    if (itemEl && !dropZone.contains(itemEl)) {
+                        dropZone.appendChild(itemEl);
+                        currentDragState[itemId] = t.id;
+                    }
+                };
+
+                bucket.appendChild(dropZone);
+                row.appendChild(bucket);
+            });
+
+            container.appendChild(row);
+            interactiveArea.appendChild(container);
+            btnSubmit.onclick = () => evaluateDragMatch(q);
+        }
+
+        function evaluateDragMatch(q) {
+            if (isLocked) return;
+            isLocked = true;
+            clearInterval(timerRef);
+
+            let allCorrect = true;
+            const validItems = q.items.filter(i => i.targetTopic !== "none");
+
+            q.items.forEach(item => {
+                const el = document.getElementById(item.id);
+                const assigned = currentDragState[item.id];
+
+                if (assigned) {
+                    if (assigned === item.targetTopic) {
+                        el.className = "dropped-chip correct";
+                    } else {
+                        el.className = "dropped-chip wrong";
+                        allCorrect = false;
+                    }
+                } else if (item.targetTopic !== "none") {
+                    // Missed valid item left in source pool: highlight soft green!
+                    el.classList.add("missed-green");
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect && Object.keys(currentDragState).length === validItems.length) {
+                score++;
+                hudScore.innerText = `⭐ Score: ${score}`;
+            }
+
+            userQuizHistory.push({
+                question: q.prompt,
+                userChoice: Object.entries(currentDragState).map(([k, v]) => `${q.items.find(i => i.id === k).text} -> ${v}`).join(", ") || "None",
+                correctAnswer: q.items.filter(i => i.targetTopic !== "none").map(i => `${i.text} -> ${i.targetTopic}`).join(", "),
+                isCorrect: allCorrect,
+                explanation: q.explanation
+            });
+
+            showExplanation(q.explanation);
+        }
+
+        /* --- 4. DRAG BUCKETS RENDERER (Q4 & Q7) --- */
+        function renderDragBuckets(q) {
+            currentDragState = {};
+            const container = document.createElement("div");
+            container.className = "interactive-container";
+
+            const pool = document.createElement("div");
+            pool.className = "drag-source-pool";
+            pool.id = "bucket-source-pool";
+
+            q.items.forEach(item => {
+                const el = document.createElement("div");
+                el.className = "drag-source-item";
+                el.innerText = item.text;
+                el.id = item.id;
+                el.draggable = true;
+                el.ondragstart = (e) => e.dataTransfer.setData("text/plain", item.id);
+                pool.appendChild(el);
+            });
+
+            container.appendChild(pool);
+
+            const row = document.createElement("div");
+            row.className = "drag-targets-row";
+
+            q.buckets.forEach(b => {
+                const bucket = document.createElement("div");
+                bucket.className = "drag-bucket";
+                bucket.innerHTML = `<div class="drag-bucket-title">${b.label}</div>`;
+
+                const dropZone = document.createElement("div");
+                dropZone.className = "drop-zone";
+                dropZone.dataset.bucketId = b.id;
+
+                dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add("dragover"); };
+                dropZone.ondragleave = () => dropZone.classList.remove("dragover");
+                dropZone.ondrop = (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove("dragover");
+                    const itemId = e.dataTransfer.getData("text/plain");
+                    const itemEl = document.getElementById(itemId);
+                    if (itemEl && !dropZone.contains(itemEl)) {
+                        dropZone.appendChild(itemEl);
+                        currentDragState[itemId] = b.id;
+                    }
+                };
+
+                bucket.appendChild(dropZone);
+                row.appendChild(bucket);
+            });
+
+            container.appendChild(row);
+            interactiveArea.appendChild(container);
+            btnSubmit.onclick = () => evaluateDragBuckets(q);
+        }
+
+        function evaluateDragBuckets(q) {
+            if (isLocked) return;
+            isLocked = true;
+            clearInterval(timerRef);
+
+            let allCorrect = true;
+            const validItems = q.items.filter(i => i.correctBucket !== "none");
+
+            q.items.forEach(item => {
+                const el = document.getElementById(item.id);
+                const assigned = currentDragState[item.id];
+
+                if (assigned) {
+                    if (assigned === item.correctBucket) {
+                        el.className = "dropped-chip correct";
+                    } else {
+                        el.className = "dropped-chip wrong";
+                        allCorrect = false;
+                    }
+                } else if (item.correctBucket !== "none") {
+                    // Missed valid item left in source pool: highlight soft green!
+                    el.classList.add("missed-green");
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect && Object.keys(currentDragState).length === validItems.length) {
+                score++;
+                hudScore.innerText = `⭐ Score: ${score}`;
+            }
+
+            userQuizHistory.push({
+                question: q.prompt,
+                userChoice: Object.entries(currentDragState).map(([k, v]) => `${q.items.find(i => i.id === k).text} in ${v}`).join(", ") || "None",
+                correctAnswer: q.items.filter(i => i.correctBucket !== "none").map(i => `${i.text} -> ${i.correctBucket}`).join(", "),
+                isCorrect: allCorrect,
+                explanation: q.explanation
+            });
+
+            showExplanation(q.explanation);
+        }
+
+        /* --- COMMON EXPLANATION & TIMEOUT --- */
+        function handleTimeOut() {
+            if (isLocked) return;
+            isLocked = true;
+            const q = quizQuestions[activeIndex];
+
+            if (q.type === "mcq" && choicesGrid.children[q.correctIdx]) {
+                choicesGrid.children[q.correctIdx].classList.add("flash-green");
+            }
+
+            userQuizHistory.push({
+                question: q.prompt,
+                userChoice: "Time Out (No answer submitted)",
+                correctAnswer: q.type === "mcq" ? q.choices[q.correctIdx] : "Check explanation below",
+                isCorrect: false,
+                explanation: q.explanation
+            });
+
+            showExplanation("Time's up! " + q.explanation);
         }
 
         function showExplanation(text) {
-            explanationBodyText.innerText = text;
-            arenaExplanationDrawer.style.display = "block";
-            btnNextStep.style.display = "inline-block";
+            explanationText.innerText = text;
+            explanationDrawer.style.display = "block";
+            btnSubmit.style.display = "none";
+            btnNext.style.display = "inline-block";
         }
 
-        function nextQuestion() {
-            activeQuestionIndex++;
-            if (activeQuestionIndex < quizQuestions.length) {
-                loadQuestion();
+        function advanceQuestion() {
+            activeIndex++;
+            if (activeIndex < quizQuestions.length) {
+                loadCurrentQuestion();
             } else {
-                showReportCard();
+                renderFinalReport();
             }
         }
 
-        function showReportCard() {
+        /* --- FINAL REPORT CARD & TABS --- */
+        function renderFinalReport() {
             switchView(viewReport);
-            document.getElementById("rep-grand-total").innerText = `${score} / 10`;
+            document.getElementById("final-score").innerText = `${score} / 10`;
+            const accuracy = Math.round((score / 10) * 100);
+            document.getElementById("final-pct").innerText = `${accuracy}%`;
 
-            const percentage = Math.round((score / 10) * 100);
-            document.getElementById("rep-percentage").innerText = `${percentage}%`;
-
-            const noteContent = document.getElementById("tutor-note-content");
-            if (score >= 9) {
-                noteContent.innerHTML = `"Dear student, wonderful job! You remembered almost all of Pygame's core mechanics—loops, rects, blitting, and key controls. You're ready to build some exciting games!"<br><br>Super proud of you,<br>Tutor Priyadarshini 🌟`;
-            } else if (score >= 6) {
-                noteContent.innerHTML = `"Dear student, great effort! You remembered most of how Pygame works. Keep in mind that blit puts images on screen and get_rect() gives your sprite controls!"<br><br>Keep coding,<br>Tutor Priyadarshini 🚀`;
+            const noteBody = document.getElementById("handwritten-body");
+            if (score >= 8) {
+                noteBody.innerText = `"Outstanding job! You have completely mastered HTML tags, ordered/unordered lists, attributes, and table structures. You're ready to design fantastic web pages!"`;
+            } else if (score >= 5) {
+                noteBody.innerText = `"Great effort on your revision! You have a solid grasp of container tags and basic styles. Take a look at the review tab below to master the table and attribute questions!"`;
             } else {
-                noteContent.innerHTML = `"Dear student, good try today! Pygame can be tricky at first with its loops and rects. Review how screen.blit() and event checks work, and let's try again!"<br><br>Warmly,<br>Tutor Priyadarshini ✨`;
+                noteBody.innerText = `"Good practice session! Revising tags and attributes takes time. Read through the explanations below and give it another try to boost your score!"`;
             }
 
-            renderReviewTabs();
+            switchReviewTab("all");
         }
 
-        function renderReviewTabs() {
-            const tabAll = document.getElementById("tab-all");
-            const tabCorrect = document.getElementById("tab-correct");
-            const tabWrong = document.getElementById("tab-wrong");
+        function switchReviewTab(filter) {
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+            const targetBtn = Array.from(document.querySelectorAll(".tab-btn")).find(b => b.innerText.toLowerCase().includes(filter));
+            if (targetBtn) targetBtn.classList.add("active");
 
-            tabAll.innerHTML = "";
-            tabCorrect.innerHTML = "";
-            tabWrong.innerHTML = "";
+            const container = document.getElementById("review-list-box");
+            container.innerHTML = "";
 
-            userAnswersLog.forEach(item => {
-                const itemDiv = document.createElement("div");
-                itemDiv.className = `review-item ${item.isCorrect ? 'is-correct' : 'is-wrong'}`;
+            let list = userQuizHistory;
+            if (filter === "correct") list = userQuizHistory.filter(h => h.isCorrect);
+            if (filter === "wrong") list = userQuizHistory.filter(h => !h.isCorrect);
 
-                itemDiv.innerHTML = `
-                    <div style="font-weight: 700; margin-bottom: 4px;">
-                        ${item.isCorrect ? '✅' : '❌'} Q${item.index}: ${item.prompt}
-                    </div>
-                    ${item.code ? `<div style="background:#F1F5F9; padding:6px 10px; border-radius:6px; font-family:monospace; font-size:12px; margin:6px 0; white-space:pre-wrap;">${escapeHtml(item.code)}</div>` : ''}
-                    <div style="font-size: 13px; margin-top: 4px;">
-                        <strong>Your Answer:</strong> <span style="color: ${item.isCorrect ? '#16A34A' : '#DC2626'};">${escapeHtml(item.userChoiceText)}</span>
-                    </div>
-                    ${!item.isCorrect ? `<div style="font-size: 13px; color: #16A34A;"><strong>Correct Answer:</strong> ${escapeHtml(item.correctChoiceText)}</div>` : ''}
-                    <div style="font-size: 12px; color: #475569; margin-top: 4px;">
-                        <em>💡 ${escapeHtml(item.explanation)}</em>
-                    </div>
+            if (list.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: #64748B; padding: 16px;">No questions to show in this filter.</div>`;
+                return;
+            }
+
+            list.forEach(h => {
+                const card = document.createElement("div");
+                card.className = `review-card ${h.isCorrect ? "correct" : "wrong"}`;
+                card.innerHTML = `
+                    <div style="font-weight: 700; margin-bottom: 4px;">${h.question}</div>
+                    <div style="color: ${h.isCorrect ? "#16A34A" : "#DC2626"}; font-weight: 600;">Your answer: ${h.userChoice}</div>
+                    ${!h.isCorrect ? `<div style="color: #0369A1; font-weight: 600;">Correct answer: ${h.correctAnswer}</div>` : ""}
+                    <div style="font-size: 12px; color: #475569; margin-top: 4px;">💡 ${h.explanation}</div>
                 `;
-
-                tabAll.appendChild(itemDiv.cloneNode(true));
-                if (item.isCorrect) tabCorrect.appendChild(itemDiv.cloneNode(true));
-                else tabWrong.appendChild(itemDiv.cloneNode(true));
+                container.appendChild(card);
             });
-
-            if (tabCorrect.children.length === 0) {
-                tabCorrect.innerHTML = "<p style='text-align:center; color:#64748B; font-size:14px; padding:12px;'>No correct answers yet. Give it another try!</p>";
-            }
-            if (tabWrong.children.length === 0) {
-                tabWrong.innerHTML = "<p style='text-align:center; color:#16A34A; font-size:14px; font-weight:700; padding:12px;'>🎉 Perfect! No wrong answers to review!</p>";
-            }
         }
 
-        function showReviewTab(tabName) {
-            document.querySelectorAll(".review-tabs .tab-btn").forEach(btn => btn.classList.remove("active"));
-            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
-            if (tabName === 'all') {
-                document.querySelector(".review-tabs .tab-btn:nth-child(1)").classList.add("active");
-                document.getElementById("tab-all").classList.add("active");
-            } else if (tabName === 'correct') {
-                document.querySelector(".review-tabs .tab-btn:nth-child(2)").classList.add("active");
-                document.getElementById("tab-correct").classList.add("active");
-            } else {
-                document.querySelector(".review-tabs .tab-btn:nth-child(3)").classList.add("active");
-                document.getElementById("tab-wrong").classList.add("active");
-            }
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        // EVENT ATTACHMENTS
+        // --- ATTACH EVENT LISTENERS ---
         document.getElementById("btn-start-quiz").addEventListener("click", startQuiz);
-        document.getElementById("btn-next-step").addEventListener("click", nextQuestion);
+        document.getElementById("btn-next-step").addEventListener("click", advanceQuestion);
         document.getElementById("btn-restart-quiz").addEventListener("click", () => switchView(viewHome));
     </script>
 </body>
