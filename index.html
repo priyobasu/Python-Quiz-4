@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Revision Quiz</title>
-    <!-- Fonts: Retro Gamer Header, Handwritten Note, and Clean Interface font -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Caveat:wght@600;700&family=Segoe+UI:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Python Revision Quiz</title>
+    <!-- Pixel Header Font & Handwritten Note Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-blue: #E0F2FE;        /* Soft candy light-blue background */
-            --blue-accent: #38BDF8;    /* Bright Sky Blue */
-            --blue-dark: #0284C7;      /* Primary control border/hover */
-            --border-dark: #0F172A;    /* Slate-900 border */
-            --color-correct: #4ADE80;  /* Vibrant Green */
-            --color-wrong: #F87171;    /* Vibrant Red */
-            --color-missed: #BBF7D0;   /* Light soft green for missed items */
+            --bg-blue: #E0F2FE;        /* Soft Sky Blue */
+            --blue-accent: #BAE6FD;    /* Light Blue Card Accent */
+            --blue-dark: #0284C7;      /* Primary Accent Blue */
+            --border-dark: #0F172A;    /* Deep Slate Border */
+            --color-correct: #4ADE80;  /* Response Green */
+            --color-wrong: #F87171;    /* Response Red */
             --text-main: #0F172A;
-            --note-bg: #FEF9C3;        /* Warm yellowish post-it note */
         }
 
         * {
@@ -34,7 +32,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 16px;
+            padding: 20px;
             overflow-x: hidden;
             position: relative;
         }
@@ -50,13 +48,13 @@
             pointer-events: none;
         }
 
-        /* --- MAIN CARD --- */
+        /* --- MAIN QUIZ CARD --- */
         .quiz-card {
             width: 100%;
             max-width: 900px;
             background: #FFFFFF;
             border: 4px solid var(--border-dark);
-            border-radius: 24px;
+            border-radius: 20px;
             box-shadow: 8px 8px 0px var(--border-dark);
             overflow: hidden;
             position: relative;
@@ -64,7 +62,7 @@
         }
 
         .hud-topbar {
-            background: #BAE6FD;
+            background: var(--blue-accent);
             border-bottom: 4px solid var(--border-dark);
             padding: 14px 24px;
             display: flex;
@@ -75,16 +73,16 @@
         .hud-badge {
             background: #FFFFFF;
             border: 2px solid var(--border-dark);
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 10px;
-            font-weight: 700;
+            font-weight: bold;
+            box-shadow: 3px 3px 0px var(--border-dark);
             font-size: 14px;
-            box-shadow: 2px 2px 0px var(--border-dark);
         }
 
         .game-view {
             display: none;
-            padding: 26px;
+            padding: 26px 30px;
         }
 
         .game-view.active {
@@ -94,33 +92,33 @@
         /* --- COVER SCREEN --- */
         .home-layout {
             text-align: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
         }
 
         .main-heading {
             font-family: 'Press Start 2P', cursive;
-            font-size: 26px;
+            font-size: 32px;
             color: var(--text-main);
-            margin-bottom: 24px;
-            line-height: 1.5;
-            text-shadow: 3px 3px 0px #7DD3FC;
+            margin-bottom: 36px;
+            line-height: 1.4;
+            text-shadow: 4px 4px 0px #7DD3FC;
         }
 
         .btn-gameplay {
-            background: var(--blue-accent);
-            color: var(--text-main);
+            background: #38BDF8;
+            color: #0F172A;
             border: 3px solid var(--border-dark);
-            padding: 14px 44px;
+            padding: 14px 42px;
             font-size: 18px;
-            font-weight: 800;
-            border-radius: 16px;
+            font-weight: bold;
+            border-radius: 14px;
             cursor: pointer;
             box-shadow: 4px 4px 0px var(--border-dark);
             transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
         }
 
         .btn-gameplay:hover {
-            background: var(--blue-dark);
+            background: #0284C7;
             color: #FFFFFF;
         }
 
@@ -129,7 +127,7 @@
             box-shadow: 2px 2px 0px var(--border-dark);
         }
 
-        /* --- ARENA SUBBAR & TIMER --- */
+        /* --- ARENA SUBBAR --- */
         .arena-subbar {
             display: flex;
             justify-content: space-between;
@@ -137,25 +135,8 @@
             margin-bottom: 16px;
         }
 
-        .progress-timer-bar {
-            width: 180px;
-            background: #FFFFFF;
-            border: 2px solid var(--border-dark);
-            border-radius: 10px;
-            height: 22px;
-            overflow: hidden;
-            box-shadow: 2px 2px 0px var(--border-dark);
-        }
-
-        .timer-progress-fill {
-            width: 100%;
-            height: 100%;
-            background: var(--blue-accent);
-            transition: width 0.1s linear;
-        }
-
         .level-headline {
-            font-weight: 800;
+            font-weight: bold;
             font-size: 13px;
             color: #0369A1;
             text-transform: uppercase;
@@ -166,24 +147,38 @@
         .problem-description-card {
             background-color: #F0F9FF;
             border: 3px solid var(--border-dark);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 18px;
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
             box-shadow: 4px 4px 0px var(--border-dark);
         }
 
         .problem-prompt-text {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 600;
             line-height: 1.5;
         }
 
-        /* --- 2x2 SELECTION GRID FOR MCQS --- */
+        .python-syntax-box {
+            background: #0F172A;
+            border: 2px solid var(--border-dark);
+            border-radius: 10px;
+            padding: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #BAE6FD;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin-top: 12px;
+            line-height: 1.45;
+        }
+
+        /* --- 2x2 SELECTION GRID --- */
         .choices-stack-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .choice-item-btn {
@@ -191,8 +186,8 @@
             border: 2px solid var(--border-dark);
             border-radius: 12px;
             padding: 12px 14px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
             color: var(--text-main);
             cursor: pointer;
             text-align: left;
@@ -200,7 +195,7 @@
             transition: transform 0.05s, box-shadow 0.05s;
             white-space: pre-wrap;
             font-family: 'Courier New', Courier, monospace;
-            min-height: 58px;
+            min-height: 70px;
             display: flex;
             align-items: center;
         }
@@ -211,1137 +206,723 @@
             box-shadow: 4px 4px 0px var(--border-dark);
         }
 
-        .choice-item-btn.flash-green {
-            background-color: var(--color-correct) !important;
-            font-weight: 700;
+        .choice-item-btn.flash-green { 
+            background-color: var(--color-correct) !important; 
+            font-weight: bold; 
             color: #064E3B;
         }
 
-        .choice-item-btn.flash-red {
-            background-color: var(--color-wrong) !important;
-            font-weight: 700;
+        .choice-item-btn.flash-red { 
+            background-color: var(--color-wrong) !important; 
+            font-weight: bold; 
             color: #7F1D1D;
         }
 
-        /* --- MULTI-SELECT CHIPS --- */
-        .multi-select-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 14px;
-        }
-
-        .multi-chip {
-            background: #FFFFFF;
-            border: 2px solid var(--border-dark);
-            border-radius: 12px;
-            padding: 14px 10px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-dark);
-            transition: all 0.1s;
-        }
-
-        .multi-chip:hover {
-            background: #E0F2FE;
-        }
-
-        .multi-chip.selected {
-            background: #7DD3FC;
-            border-color: #0369A1;
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px var(--border-dark);
-        }
-
-        .multi-chip.chip-correct {
-            background: var(--color-correct) !important;
-            border-color: #15803D !important;
-            color: #064E3B !important;
-        }
-
-        .multi-chip.chip-wrong {
-            background: var(--color-wrong) !important;
-            border-color: #B91C1C !important;
-            color: #7F1D1D !important;
-        }
-
-        .multi-chip.chip-missed {
-            background: var(--color-missed) !important;
-            border-color: #15803D !important;
-            color: #14532D !important;
-            border-style: dashed !important;
-        }
-
-        /* --- DRAG AND DROP SECTIONS --- */
-        .interactive-container {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 10px;
-        }
-
-        .drag-source-pool {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            background: #FFFFFF;
-            border: 2px solid var(--border-dark);
-            border-radius: 12px;
-            padding: 12px;
-            min-height: 60px;
-            box-shadow: 3px 3px 0px var(--border-dark);
-        }
-
-        .drag-source-item {
-            background: #F0F9FF;
-            border: 2px solid var(--border-dark);
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 700;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            cursor: grab;
-            box-shadow: 2px 2px 0px var(--border-dark);
-            transition: transform 0.1s;
-        }
-
-        .drag-source-item:active {
-            cursor: grabbing;
-        }
-
-        .drag-source-item.missed-green {
-            background-color: var(--color-missed) !important;
-            border-color: #16A34A !important;
-            color: #14532D !important;
-            box-shadow: 0 0 0 2px #4ADE80;
-        }
-
-        .drag-targets-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .drag-bucket {
-            flex: 1;
-            min-width: 220px;
-            background: #FFFFFF;
-            border: 2px solid var(--border-dark);
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            box-shadow: 3px 3px 0px var(--border-dark);
-        }
-
-        .drag-bucket-title {
-            font-size: 13px;
-            font-weight: 800;
-            color: #0369A1;
-            text-transform: uppercase;
-        }
-
-        .drop-zone {
-            min-height: 65px;
-            background: #F8FAFC;
-            border: 2px dashed #94A3B8;
-            border-radius: 8px;
-            padding: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-content: flex-start;
-        }
-
-        .drop-zone.dragover {
-            background: #E0F2FE;
-            border-color: #0284C7;
-        }
-
-        .dropped-chip {
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            border: 2px solid var(--border-dark);
-            cursor: pointer;
-        }
-
-        .dropped-chip.correct {
-            background-color: var(--color-correct) !important;
-            color: #064E3B;
-            border-color: #15803D;
-        }
-
-        .dropped-chip.wrong {
-            background-color: var(--color-wrong) !important;
-            color: #7F1D1D;
-            border-color: #B91C1C;
-        }
-
-        /* --- EXPLANATION & ACTION BUTTONS --- */
+        /* --- EXPLANATION DRAWER --- */
         .explanation-review-box {
             display: none;
-            background: #ECFDF5;
-            border: 2px solid #059669;
+            background: #F0FDF4;
+            border: 2px solid var(--border-dark);
             border-radius: 12px;
-            padding: 14px;
+            padding: 14px 18px;
             margin-bottom: 16px;
             box-shadow: 3px 3px 0px var(--border-dark);
         }
 
         .explanation-label-tag {
-            font-weight: 800;
-            color: #047857;
-            font-size: 13px;
+            font-weight: bold;
+            color: #166534;
             margin-bottom: 4px;
-            text-transform: uppercase;
+            font-size: 14px;
         }
 
         .explanation-body-text {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #064E3B;
+            font-size: 13px;
+            line-height: 1.45;
+            color: #1F2937;
         }
 
         .footer-action-row {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
         }
 
-        .btn-submit-action {
-            background: #FACC15;
-            color: var(--text-main);
-            border: 2px solid var(--border-dark);
-            padding: 10px 22px;
-            font-size: 14px;
-            font-weight: 800;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-dark);
-        }
-
-        .btn-submit-action:hover {
-            background: #EAB308;
-        }
-
-        /* --- POST-IT HANDWRITTEN NOTE --- */
-        .postit-note-card {
-            background: var(--note-bg);
+        /* --- REPORT CARD & HANDWRITTEN NOTE --- */
+        .score-metrics-card {
+            background: #F0F9FF;
             border: 3px solid var(--border-dark);
             border-radius: 14px;
-            padding: 22px;
-            max-width: 600px;
+            padding: 18px;
+            max-width: 580px;
             margin: 0 auto 20px auto;
             text-align: left;
-            box-shadow: 6px 6px 0px var(--border-dark);
-            transform: rotate(-1deg);
+            box-shadow: 4px 4px 0px var(--border-dark);
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            border-bottom: 2px dashed #93C5FD;
+            padding-bottom: 5px;
+        }
+
+        .handwritten-note-card {
+            background: #FEF9C3;
+            border: 3px solid #854D0E;
+            border-radius: 14px;
+            padding: 20px 24px;
+            max-width: 620px;
+            margin: 0 auto 24px auto;
+            text-align: left;
+            box-shadow: 5px 5px 0px #854D0E;
             position: relative;
         }
 
-        .postit-note-card::before {
-            content: '📌';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-        }
-
-        .postit-note-text {
-            font-family: 'Caveat', cursive;
-            font-size: 24px;
-            line-height: 1.4;
-            color: #713F12;
-            font-weight: 700;
-        }
-
-        .postit-signature {
+        .handwritten-title {
             font-family: 'Caveat', cursive;
             font-size: 26px;
-            text-align: right;
-            margin-top: 12px;
+            color: #713F12;
+            margin-bottom: 6px;
             font-weight: 700;
-            color: #B45309;
         }
 
-        /* --- REVIEW TAB COMPONENT --- */
-        .review-tabs-container {
-            margin-top: 20px;
+        .handwritten-body {
+            font-family: 'Caveat', cursive;
+            font-size: 21px;
+            line-height: 1.35;
+            color: #451A03;
+        }
+
+        .handwritten-signature {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            text-align: right;
+            color: #713F12;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        /* --- DETAILED REVIEW TABS --- */
+        .review-section {
+            margin-top: 24px;
+            border-top: 3px solid var(--border-dark);
+            padding-top: 20px;
             text-align: left;
         }
 
-        .tab-btn-row {
+        .review-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 16px;
+            justify-content: center;
         }
 
         .tab-btn {
-            background: #E2E8F0;
+            background: #FFFFFF;
             border: 2px solid var(--border-dark);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
             cursor: pointer;
             box-shadow: 2px 2px 0px var(--border-dark);
         }
 
         .tab-btn.active {
-            background: var(--blue-accent);
-            color: var(--text-main);
+            background: #0284C7;
+            color: #FFFFFF;
         }
 
-        .review-list {
-            max-height: 250px;
-            overflow-y: auto;
-            background: #F8FAFC;
-            border: 2px solid var(--border-dark);
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .review-card {
+        .review-item {
             background: #FFFFFF;
             border: 2px solid var(--border-dark);
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
             font-size: 13px;
+            box-shadow: 2px 2px 0px var(--border-dark);
         }
 
-        .review-card.correct { border-left: 8px solid var(--color-correct); }
-        .review-card.wrong { border-left: 8px solid var(--color-wrong); }
+        .review-item.correct {
+            border-left: 8px solid var(--color-correct);
+        }
+
+        .review-item.wrong {
+            border-left: 8px solid var(--color-wrong);
+        }
 
         @media (max-width: 640px) {
-            .choices-stack-grid { grid-template-columns: 1fr; }
-            .multi-select-grid { grid-template-columns: repeat(2, 1fr); }
-            .main-heading { font-size: 20px; }
-            .drag-targets-row { flex-direction: column; }
+            .choices-stack-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-heading {
+                font-size: 22px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- CANVAS BACKGROUND: FLOATING CANDY SPIRALS -->
+    <!-- ANIMATED FLOATING SPIRALS CANVAS -->
     <canvas id="spiralCanvas"></canvas>
 
     <div class="quiz-card">
-        <!-- HUD TOPBAR -->
+        <!-- TOP HUD -->
         <div class="hud-topbar">
             <div id="hud-index-tracker" class="hud-badge">Question 1/10</div>
             <div id="hud-score-tracker" class="hud-badge">⭐ Score: 0</div>
         </div>
 
-        <!-- VIEW 1: COVER SCREEN -->
+        <!-- VIEW 1: HOME COVER -->
         <div id="view-home" class="game-view active">
             <div class="home-layout">
-                <h1 class="main-heading">HTML revision</h1>
-                <button id="btn-start-quiz" class="btn-gameplay">Start Revision 🚀</button>
+                <h1 class="main-heading">Python revision</h1>
+                <p style="color: #0369A1; font-weight: 600; margin-bottom: 24px;">Applied Conditions &amp; Loop Tracing • 30s per question</p>
+                <button id="btn-start-quiz" class="btn-gameplay">Start with the revision 🚀</button>
             </div>
         </div>
 
-        <!-- VIEW 2: ARENA PLAYSPACE -->
+        <!-- VIEW 2: QUIZ ARENA -->
         <div id="view-arena" class="game-view">
             <div class="arena-subbar">
-                <div id="arena-level-header" class="level-headline">Level 1: Web Structure</div>
+                <div id="arena-level-header" class="level-headline">Applied Logic Tracing</div>
                 <div class="progress-timer-bar">
                     <div id="arena-timer-fill" class="timer-progress-fill"></div>
+                    <span id="arena-timer-text" class="timer-text-overlay">30s</span>
                 </div>
             </div>
 
             <div id="arena-prompt-frame" class="problem-description-card">
-                <p id="arena-question-text" class="problem-prompt-text">Loading prompt...</p>
-                <!-- INTERACTIVE RENDER SLOT FOR MULTI-SELECT & DRAG AND DROP -->
-                <div id="interactive-area" style="display: none;"></div>
+                <p id="arena-question-text" class="problem-prompt-text">Loading question prompt...</p>
+                <div id="arena-syntax-terminal" class="python-syntax-box" style="display: none;"></div>
             </div>
 
-            <!-- 2x2 SELECTION GRID FOR STANDARD MCQs -->
+            <!-- 2x2 SELECTION GRID -->
             <div id="arena-choices-stack" class="choices-stack-grid"></div>
 
+            <!-- EXPLANATION DRAWER -->
             <div id="arena-explanation-drawer" class="explanation-review-box">
                 <div class="explanation-label-tag">Explanation 💡</div>
                 <p id="explanation-body-text" class="explanation-body-text">Explanation details...</p>
             </div>
 
             <div class="footer-action-row">
-                <button id="btn-submit-answer" class="btn-submit-action" style="display: none;">Submit Answer ✔️</button>
-                <button id="btn-next-step" class="btn-gameplay" style="display: none; font-size: 15px; padding: 10px 24px;">Next Question ➡️</button>
+                <button id="btn-next-step" class="btn-gameplay" style="display: none; font-size: 14px; padding: 10px 22px;">Next Question ➡️</button>
             </div>
         </div>
 
-        <!-- VIEW 3: REPORT CARD -->
+        <!-- VIEW 3: REPORT & REVIEW CARD -->
         <div id="view-report" class="game-view">
-            <div class="home-layout" style="padding: 10px 0;">
-                <h2 class="main-heading" style="font-size: 20px; margin-bottom: 20px;">🎉 REVISION COMPLETE!</h2>
+            <div class="home-layout" style="padding: 10px 0px;">
+                <h2 class="main-heading" style="font-size: 22px; margin-bottom: 18px;">📊 REVISION REPORT CARD</h2>
 
-                <div class="postit-note-card">
-                    <p id="handwritten-body" class="postit-note-text">
-                        "Great effort on your HTML revision today! You did a fantastic job reviewing how web pages are built from tags, attributes, and styles. Keep building awesome web pages!"
-                    </p>
-                    <div class="postit-signature">~ Tutor Priyadarshini 🌟</div>
-                </div>
-
-                <div style="background: #F0F9FF; border: 3px solid var(--border-dark); border-radius: 14px; padding: 14px; max-width: 500px; margin: 0 auto 16px auto; font-weight: 700; font-size: 16px; display: flex; justify-content: space-around;">
-                    <div>Score: <span id="final-score" style="color: #0284C7;">0 / 10</span></div>
-                    <div>Accuracy: <span id="final-pct" style="color: #16A34A;">0%</span></div>
-                </div>
-
-                <!-- REVIEW TABS -->
-                <div class="review-tabs-container">
-                    <div class="tab-btn-row">
-                        <button class="tab-btn active" onclick="switchReviewTab('all')">All Questions</button>
-                        <button class="tab-btn" onclick="switchReviewTab('correct')">Correct (✅)</button>
-                        <button class="tab-btn" onclick="switchReviewTab('wrong')">Review (❌)</button>
+                <!-- SCORE METRICS -->
+                <div class="score-metrics-card">
+                    <div class="score-row">
+                        <span>Applied Conditions Tracing (Q1-5)</span>
+                        <span id="rep-l1-score" style="color: #0369A1;">0 / 5</span>
                     </div>
-                    <div id="review-list-box" class="review-list"></div>
+                    <div class="score-row">
+                        <span>Loop Flow &amp; Control Tracing (Q6-10)</span>
+                        <span id="rep-l2-score" style="color: #0369A1;">0 / 5</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 17px; padding-top: 6px; color: #15803D;">
+                        <span>TOTAL SCORE</span>
+                        <span id="rep-grand-total">0 / 10</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; padding-top: 4px; color: #0284C7;">
+                        <span>PERCENTAGE</span>
+                        <span id="rep-percentage">0%</span>
+                    </div>
                 </div>
 
-                <button id="btn-restart-quiz" class="btn-gameplay" style="font-size: 15px; padding: 12px 30px; margin-top: 20px;">Try Again 🔄</button>
+                <!-- HANDWRITTEN NOTE FROM TUTOR PRIYADARSHINI -->
+                <div class="handwritten-note-card">
+                    <div class="handwritten-title">Dear Student,</div>
+                    <p id="handwritten-note-body" class="handwritten-body">
+                        Great work on these real-world Python logic traces! Tracing nested conditions, loop limits, and state flags under a timer requires sharp analytical thinking. Keep sharpening these core skills!
+                    </p>
+                    <div class="handwritten-signature">— Tutor Priyadarshini 💛</div>
+                </div>
+
+                <!-- DETAILED QUESTION LOG TABS -->
+                <div class="review-section">
+                    <div class="review-tabs">
+                        <button class="tab-btn active" onclick="filterReviewLogs('all', this)">All (10)</button>
+                        <button class="tab-btn" onclick="filterReviewLogs('correct', this)">Correct ✅</button>
+                        <button class="tab-btn" onclick="filterReviewLogs('wrong', this)">Needs Review ❌</button>
+                    </div>
+                    <div id="review-items-container"></div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button id="btn-restart-quiz" class="btn-gameplay" style="font-size: 15px; padding: 12px 30px;">Restart Revision 🔄</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // MASTER 10 HTML REVISION QUESTIONS
-        const quizQuestions = [
+        // 10 APPLICATION-ORIENTED PYTHON QUESTIONS (Ages 16, Condition & Loop Tracing)
+        const fullQuizChallengesRepo = [
             {
-                type: "multi_select",
-                prompt: "Question 1: Click on all the Container Tags from the options below and click Submit Answer.",
-                options: [
-                    { id: "opt1", text: "<html>", isCorrect: true },
-                    { id: "opt2", text: "<p>", isCorrect: true },
-                    { id: "opt3", text: "<img>", isCorrect: false },
-                    { id: "opt4", text: "<br>", isCorrect: false },
-                    { id: "opt5", text: "<li>", isCorrect: true },
-                    { id: "opt6", text: "<title>", isCorrect: true }
-                ],
-                explanation: "Container tags require both an opening tag and a closing tag (like <html>, <p>, <li>, and <title>). Empty tags like <img> and <br> do not enclose content and have no closing tag."
-            },
-            {
-                type: "mcq",
-                prompt: "Question 2: Which is the correct HTML snippet to create an Ordered List of fruits?",
+                prompt: "Question 1: An e-commerce checkout calculates shipping and discounts. What will be the final bill printed?",
+                code: "cart_total = 85\nis_premium = True\n\nif cart_total > 100 or is_premium:\n    cart_total -= 15\n\nif cart_total < 75:\n    cart_total += 10\nelse:\n    cart_total += 5\n\nprint(cart_total)",
                 choices: [
-                    "<ol>\n  <li>Apple</li>\n  <li>Banana</li>\n</ol>",
-                    "<ul>\n  <li>Apple</li>\n  <li>Banana</li>\n</ul>",
-                    "<list type=\"ordered\">\n  <item>Apple</item>\n</list>",
-                    "<dl>\n  <dt>Apple</dt>\n  <dd>Banana</dd>\n</dl>"
+                    "80",
+                    "75",
+                    "85",
+                    "70"
                 ],
                 correctIdx: 0,
-                explanation: "An ordered list is created with the <ol> tag, and each list item is wrapped inside <li> tags."
+                explanation: "Since is_premium is True, the first condition matches: cart_total becomes 85 - 15 = 70. In the second check, 70 < 75 is True, so cart_total becomes 70 + 10 = 80."
             },
             {
-                type: "drag_match",
-                prompt: "Question 3: Match each Table Tag from the bank to its correct description below. (Watch out for tricky fake tags!)",
-                topics: [
-                    { id: "row", label: "Table Row" },
-                    { id: "header", label: "Table Header" },
-                    { id: "data", label: "Table Data / Cell" }
-                ],
-                items: [
-                    { id: "tag_tr", text: "<tr>", targetTopic: "row" },
-                    { id: "tag_th", text: "<th>", targetTopic: "header" },
-                    { id: "tag_td", text: "<td>", targetTopic: "data" },
-                    { id: "tag_tw", text: "<tw>", targetTopic: "none" },
-                    { id: "tag_tx", text: "<tx>", targetTopic: "none" },
-                    { id: "tag_tb", text: "<tb>", targetTopic: "none" }
-                ],
-                explanation: "<tr> defines a table row, <th> defines a table header cell, and <td> defines a standard table data cell. Fake tags like <tw>, <tx>, and <tb> do not exist in HTML."
-            },
-            {
-                type: "drag_buckets",
-                prompt: "Question 4: Drag the valid list styling types into their correct list bucket. (Watch out: invalid styles do not belong to either bucket!)",
-                buckets: [
-                    { id: "ordered", label: "Ordered List Styles (<ol>)" },
-                    { id: "unordered", label: "Unordered List Styles (<ul>)" }
-                ],
-                items: [
-                    { id: "s1", text: "Numbers", correctBucket: "ordered" },
-                    { id: "s2", text: "Roman numerals", correctBucket: "ordered" },
-                    { id: "s3", text: "Capital alphabets", correctBucket: "ordered" },
-                    { id: "s4", text: "Small alphabets", correctBucket: "ordered" },
-                    { id: "s5", text: "Bullets (Disc)", correctBucket: "unordered" },
-                    { id: "s6", text: "Squares", correctBucket: "unordered" },
-                    { id: "s7", text: "Circles", correctBucket: "unordered" },
-                    { id: "s8", text: "Triangles", correctBucket: "none" },
-                    { id: "s9", text: "Stars", correctBucket: "none" },
-                    { id: "s10", text: "AA, BB, CC", correctBucket: "none" }
-                ],
-                explanation: "Ordered lists (<ol>) use numbers (1, 2, 3), letters (A, B, C / a, b, c), and Roman numerals (I, II, III). Unordered lists (<ul>) use disc, circle, and square bullet styles. Triangles, stars, and AA/BB sequences are not standard HTML list types."
-            },
-            {
-                type: "mcq",
-                prompt: "Question 5: Which is the correct way to set the entire webpage background color to yellow using the body tag?",
+                prompt: "Question 2: An API client performs exponential retries on failed network requests. What is the value of 'delay' after the loop terminates?",
+                code: "delay = 1\nattempts = 0\nmax_attempts = 4\n\nwhile attempts < max_attempts:\n    attempts += 1\n    delay *= 2\n    if delay >= 8:\n        break\n\nprint(delay)",
                 choices: [
-                    "<body bgcolor=\"yellow\">",
-                    "<body background=\"color: yellow\">",
-                    "<body bg=\"yellow\">",
-                    "<body color=\"yellow\">"
+                    "8",
+                    "16",
+                    "4",
+                    "2"
                 ],
                 correctIdx: 0,
-                explanation: "The bgcolor attribute on the <body> tag sets the entire webpage's background color: <body bgcolor=\"yellow\">."
+                explanation: "Attempt 1: delay = 2. Attempt 2: delay = 4. Attempt 3: delay = 8. Since delay >= 8 is now True, break terminates the while loop immediately with delay = 8."
             },
             {
-                type: "mcq",
-                prompt: "Question 6: Which is the correct way to make paragraph text blue and 20px in size using inline CSS styling?",
+                prompt: "Question 3: An IoT telemetry processor filters noisy sensor readings. What is the final value of 'valid_count'?",
+                code: "readings = [12, -1, 45, 0, 88, 102, 33]\nvalid_count = 0\n\nfor r in readings:\n    if r <= 0 or r > 100:\n        continue\n    if r % 2 == 0:\n        valid_count += 1\n\nprint(valid_count)",
                 choices: [
-                    "<p style=\"color: blue; font-size: 20px;\">Hello World</p>",
-                    "<p color=\"blue\" size=\"20px\">Hello World</p>",
-                    "<p font=\"color: blue, size: 20px\">Hello World</p>",
-                    "<p style=\"font-color: blue; text-size: 20px;\">Hello World</p>"
+                    "2",
+                    "3",
+                    "4",
+                    "1"
                 ],
                 correctIdx: 0,
-                explanation: "Inline CSS uses the style attribute with property-value pairs separated by colons and semicolons: style=\"color: blue; font-size: 20px;\"."
+                explanation: "Values <= 0 or > 100 are skipped (-1, 0, 102). Valid set remaining: [12, 45, 88, 33]. Of these, only 12 and 88 are even (r % 2 == 0), giving valid_count = 2."
             },
             {
-                type: "drag_buckets",
-                prompt: "Question 7: Drag each item into its correct box: Is it an HTML Attribute or a CSS Property?",
-                buckets: [
-                    { id: "attrs", label: "HTML Attributes" },
-                    { id: "props", label: "CSS Properties" }
-                ],
-                items: [
-                    { id: "b1", text: "bgcolor", correctBucket: "attrs" },
-                    { id: "b2", text: "src", correctBucket: "attrs" },
-                    { id: "b3", text: "style", correctBucket: "attrs" },
-                    { id: "b4", text: "type", correctBucket: "attrs" },
-                    { id: "b5", text: "color", correctBucket: "props" },
-                    { id: "b6", text: "background-color", correctBucket: "props" },
-                    { id: "b7", text: "text-align", correctBucket: "props" },
-                    { id: "b8", text: "border", correctBucket: "props" }
-                ],
-                explanation: "Attributes like bgcolor, src, style, and type belong directly inside HTML opening tags. Properties like color, background-color, text-align, and border are CSS style rules."
-            },
-            {
-                type: "mcq",
-                prompt: "Question 8: Which is the correct anchor tag syntax to create a clickable link that navigates to 'page2.html'?",
+                prompt: "Question 4: A solar battery power manager balances power modes. What status is printed for the grid?",
+                code: "battery_pct = 35\nsolar_active = False\nbackup_gen = True\n\nif battery_pct > 50 or (solar_active and battery_pct > 20):\n    mode = \"ECO\"\nelif not solar_active and backup_gen and battery_pct < 40:\n    mode = \"GENERATOR\"\nelse:\n    mode = \"STANDBY\"\n\nprint(mode)",
                 choices: [
-                    "<a href=\"page2.html\">Click Here</a>",
-                    "<a link=\"page2.html\">Click Here</a>",
-                    "<a src=\"page2.html\">Click Here</a>",
-                    "<link to=\"page2.html\">Click Here</link>"
+                    "GENERATOR",
+                    "ECO",
+                    "STANDBY",
+                    "OFFLINE"
                 ],
                 correctIdx: 0,
-                explanation: "The <a> tag creates hyperlinks, and the href (hypertext reference) attribute specifies the destination URL or file path: <a href=\"page2.html\">."
+                explanation: "First check: 35 > 50 is False; solar_active is False, so entire if is False. Elif check: not solar_active is True, backup_gen is True, and 35 < 40 is True. Thus, mode = 'GENERATOR'."
             },
             {
-                type: "mcq",
-                prompt: "Question 9: Which is the correct way to set the webpage title that appears on the browser tab?",
+                prompt: "Question 5: A security gate scans a candidate password. What value does 'score' reach?",
+                code: "password = \"Code9!\"\nscore = 0\n\nfor ch in password:\n    if ch.isupper():\n        score += 2\n    elif ch.isdigit():\n        score += 3\n    elif not ch.isalnum():\n        score += 4\n\nprint(score)",
                 choices: [
-                    "<head>\n  <title>My Webpage</title>\n</head>",
-                    "<title>\n  <head>My Webpage</head>\n</title>",
-                    "<body>\n  <title>My Webpage</title>\n</body>",
-                    "<header>\n  <title>My Webpage</title>\n</header>"
+                    "9",
+                    "5",
+                    "7",
+                    "11"
                 ],
                 correctIdx: 0,
-                explanation: "The <title> tag defines the browser tab title and must always be placed inside the <head> section of an HTML document."
+                explanation: "'C' is uppercase (+2). 'o','d','e' are lowercase (no match). '9' is digit (+3). '!' is not alphanumeric (+4). Total = 2 + 3 + 4 = 9."
             },
             {
-                type: "mcq",
-                prompt: "Question 10: Which HTML heading tag produces the biggest sized heading on the webpage?",
+                prompt: "Question 6: A fintech risk algorithm evaluates loan eligibility flags. What does this code print?",
+                code: "credit_score = 680\nincome = 48000\nhas_debt = True\n\nif credit_score >= 700:\n    approved = True\nelif credit_score >= 650 and income >= 45000:\n    approved = not has_debt or income >= 50000\nelse:\n    approved = False\n\nprint(approved)",
                 choices: [
-                    "<h1>Main Title</h1>",
-                    "<h6>Main Title</h6>",
-                    "<heading-1>Main Title</heading-1>",
-                    "<header size=\"big\">Main Title</header>"
+                    "False",
+                    "True",
+                    "None",
+                    "Error"
                 ],
                 correctIdx: 0,
-                explanation: "HTML heading tags range from <h1> to <h6>, where <h1> produces the largest and most important heading, while <h6> produces the smallest."
+                explanation: "Credit score is 680 (matches elif). Inside: not has_debt is False (since has_debt=True); income >= 50000 is False (48000 < 50000). False or False evaluates to False."
+            },
+            {
+                prompt: "Question 7: An auction bot dynamically bids against competitors in $20 increments up to its ceiling. What is the final bid?",
+                code: "current_bid = 110\nmax_limit = 175\nbid_step = 20\n\nwhile current_bid + bid_step <= max_limit:\n    current_bid += bid_step\n\nprint(current_bid)",
+                choices: [
+                    "170",
+                    "150",
+                    "175",
+                    "190"
+                ],
+                correctIdx: 0,
+                explanation: "Round 1: 110 + 20 <= 175 -> bid = 130. Round 2: 130 + 20 <= 175 -> bid = 150. Round 3: 150 + 20 <= 175 -> bid = 170. Round 4: 170 + 20 = 190 (which is > 175), loop stops. Final bid = 170."
+            },
+            {
+                prompt: "Question 8: A warehouse dispatch updates stock quantities. What is the value of 'critical_count' after scanning?",
+                code: "inventory = {\"chips\": 8, \"drives\": 2, \"cables\": 0, \"fans\": 4}\ncritical_count = 0\n\nfor item, qty in inventory.items():\n    if qty == 0:\n        critical_count += 2\n    elif qty < 5:\n        critical_count += 1\n\nprint(critical_count)",
+                choices: [
+                    "4",
+                    "3",
+                    "5",
+                    "2"
+                ],
+                correctIdx: 0,
+                explanation: "'chips': 8 (no match). 'drives': 2 (qty < 5 -> +1). 'cables': 0 (qty == 0 -> +2). 'fans': 4 (qty < 5 -> +1). Total critical_count = 1 + 2 + 1 = 4."
+            },
+            {
+                prompt: "Question 9: A network router simulates transmission retries across 2 channels. How many total packet pings are dispatched?",
+                code: "pings = 0\nchannels = 2\n\nfor ch in range(channels):\n    retry = 0\n    while retry < 3:\n        pings += 1\n        if retry == 1:\n            break\n        retry += 1\n\nprint(pings)",
+                choices: [
+                    "4",
+                    "6",
+                    "2",
+                    "3"
+                ],
+                correctIdx: 0,
+                explanation: "For each channel: retry=0 -> pings + 1 (retry becomes 1). Loop repeats with retry=1: pings + 1 -> retry==1 triggers break! Each channel emits 2 pings. 2 channels * 2 = 4 pings."
+            },
+            {
+                prompt: "Question 10: A game engine awards XP and handles level promotion thresholds. What is the final (level, xp) state?",
+                code: "xp = 260\nlevel = 1\n\nwhile xp >= 100:\n    xp -= 100\n    level += 1\n    if level == 3:\n        xp += 20\n\nprint(f\"{level}-{xp}\")",
+                choices: [
+                    "3-80",
+                    "3-60",
+                    "2-160",
+                    "4-0"
+                ],
+                correctIdx: 0,
+                explanation: "Start: xp=260, level=1. Loop 1: xp becomes 160, level=2. Loop 2: xp becomes 60, level=3. Since level==3, xp += 20 -> xp=80. Now 80 < 100, loop stops. Output: 3-80."
             }
         ];
 
         let activeIndex = 0;
-        let score = 0;
-        let timerRef = null;
-        let secondsLeft = 30;
-        let isLocked = false;
-        let userQuizHistory = [];
+        let runningScore = 0;
+        let l1Points = 0; 
+        let l2Points = 0; 
 
-        // Interactive temporary state
-        let selectedChips = new Set();
-        let currentDragState = {};
+        let clockIntervalRef = null;
+        let secondsRemaining = 30;
+        let phaseLocked = false;
+        let userResponsesLog = [];
 
-        // DOM Caches
+        // DOM elements
         const viewHome = document.getElementById("view-home");
         const viewArena = document.getElementById("view-arena");
         const viewReport = document.getElementById("view-report");
 
-        const hudIndex = document.getElementById("hud-index-tracker");
-        const hudScore = document.getElementById("hud-score-tracker");
-        const timerFill = document.getElementById("arena-timer-fill");
+        const hudIndexTracker = document.getElementById("hud-index-tracker");
+        const hudScoreTracker = document.getElementById("hud-score-tracker");
+        const arenaTimerFill = document.getElementById("arena-timer-fill");
+        const arenaTimerText = document.getElementById("arena-timer-text");
         
-        const promptText = document.getElementById("arena-question-text");
-        const interactiveArea = document.getElementById("interactive-area");
-        const choicesGrid = document.getElementById("arena-choices-stack");
+        const arenaLevelHeader = document.getElementById("arena-level-header");
+        const arenaQuestionText = document.getElementById("arena-question-text");
+        const arenaSyntaxTerminal = document.getElementById("arena-syntax-terminal");
+        const arenaChoicesStack = document.getElementById("arena-choices-stack");
         
-        const explanationDrawer = document.getElementById("arena-explanation-drawer");
-        const explanationText = document.getElementById("explanation-body-text");
-        const btnSubmit = document.getElementById("btn-submit-answer");
-        const btnNext = document.getElementById("btn-next-step");
+        const arenaExplanationDrawer = document.getElementById("arena-explanation-drawer");
+        const explanationBodyText = document.getElementById("explanation-body-text");
+        const btnNextStep = document.getElementById("btn-next-step");
 
-        // --- FISHER-YATES SHUFFLE HELPER ---
-        function shuffleArray(arr) {
-            for (let i = arr.length - 1; i > 0; i--) {
+        // --- DYNAMIC SHUFFLE HELPER (Fisher-Yates) ---
+        function shuffleQuestionChoices(question) {
+            const correctAnswerText = question.choices[question.correctIdx];
+            for (let i = question.choices.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
+                [question.choices[i], question.choices[j]] = [question.choices[j], question.choices[i]];
             }
-            return arr;
+            question.correctIdx = question.choices.indexOf(correctAnswerText);
         }
 
-        function shuffleMcqChoices(q) {
-            if (q.type === "mcq" && q.choices) {
-                const correctText = q.choices[q.correctIdx];
-                shuffleArray(q.choices);
-                q.correctIdx = q.choices.indexOf(correctText);
-            }
-        }
-
-        // --- FLOATING CANDY SPIRAL CANVAS ANIMATION ---
+        // --- FLOATING CANDY SPIRALS ANIMATION ---
         const spiralCanvas = document.getElementById("spiralCanvas");
         const spiralCtx = spiralCanvas.getContext("2d");
-        let candies = [];
+        let spiralItems = [];
 
-        function resizeCanvas() {
+        function resizeSpiralCanvas() {
             spiralCanvas.width = window.innerWidth;
             spiralCanvas.height = window.innerHeight;
         }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
+        window.addEventListener('resize', resizeSpiralCanvas);
+        resizeSpiralCanvas();
 
         const candyColors = ["#38BDF8", "#818CF8", "#F472B6", "#FBBF24", "#34D399"];
 
-        for (let i = 0; i < 20; i++) {
-            candies.push({
+        for (let i = 0; i < 24; i++) {
+            spiralItems.push({
                 x: Math.random() * spiralCanvas.width,
                 y: Math.random() * spiralCanvas.height,
                 radius: Math.random() * 12 + 10,
-                color: candyColors[Math.floor(Math.random() * candyColors.length)],
                 speedY: Math.random() * 0.6 + 0.3,
-                angle: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.04
+                rot: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() * 0.04) - 0.02,
+                color: candyColors[i % candyColors.length]
             });
         }
 
-        function drawCandySpirals() {
+        function drawFloatingSpirals() {
             spiralCtx.clearRect(0, 0, spiralCanvas.width, spiralCanvas.height);
 
-            candies.forEach(c => {
-                c.y -= c.speedY;
-                c.angle += c.rotationSpeed;
-                if (c.y < -30) {
-                    c.y = spiralCanvas.height + 30;
-                    c.x = Math.random() * spiralCanvas.width;
+            spiralItems.forEach(sp => {
+                sp.y -= sp.speedY;
+                sp.rot += sp.rotSpeed;
+
+                if (sp.y < -30) {
+                    sp.y = spiralCanvas.height + 30;
+                    sp.x = Math.random() * spiralCanvas.width;
                 }
 
                 spiralCtx.save();
-                spiralCtx.translate(c.x, c.y);
-                spiralCtx.rotate(c.angle);
-
-                // Draw Spiral Candy Swirl
+                spiralCtx.translate(sp.x, sp.y);
+                spiralCtx.rotate(sp.rot);
+                spiralCtx.strokeStyle = sp.color;
+                spiralCtx.lineWidth = 2.5;
                 spiralCtx.beginPath();
-                spiralCtx.arc(0, 0, c.radius, 0, Math.PI * 2);
-                spiralCtx.fillStyle = "#FFFFFF";
-                spiralCtx.fill();
-                spiralCtx.lineWidth = 3;
-                spiralCtx.strokeStyle = c.color;
+
+                for (let a = 0; a < Math.PI * 3.5; a += 0.2) {
+                    let r = (a / (Math.PI * 3.5)) * sp.radius;
+                    let px = r * Math.cos(a);
+                    let py = r * Math.sin(a);
+                    if (a === 0) spiralCtx.moveTo(px, py);
+                    else spiralCtx.lineTo(px, py);
+                }
                 spiralCtx.stroke();
-
-                // Swirl curves
-                spiralCtx.beginPath();
-                spiralCtx.moveTo(-c.radius * 0.7, 0);
-                spiralCtx.quadraticCurveTo(0, -c.radius * 0.8, c.radius * 0.7, 0);
-                spiralCtx.quadraticCurveTo(0, c.radius * 0.8, -c.radius * 0.7, 0);
-                spiralCtx.fillStyle = c.color;
-                spiralCtx.fill();
-
                 spiralCtx.restore();
             });
 
-            requestAnimationFrame(drawCandySpirals);
+            requestAnimationFrame(drawFloatingSpirals);
         }
-        drawCandySpirals();
+        drawFloatingSpirals();
 
-        // --- GAME CONTROLLER ---
-        function switchView(view) {
+        // --- VIEW SWITCHER ---
+        function switchGameView(targetPanel) {
             viewHome.classList.remove("active");
             viewArena.classList.remove("active");
             viewReport.classList.remove("active");
-            view.classList.add("active");
+            targetPanel.classList.add("active");
         }
 
-        function startQuiz() {
+        // --- QUIZ LIFECYCLE ---
+        function initializeQuizArena() {
             activeIndex = 0;
-            score = 0;
-            userQuizHistory = [];
-            hudScore.innerText = "⭐ Score: 0";
+            runningScore = 0;
+            l1Points = 0; 
+            l2Points = 0; 
+            userResponsesLog = [];
+            hudScoreTracker.innerText = "⭐ Score: 0";
             
-            // Randomize options for questions
-            quizQuestions.forEach(q => {
-                shuffleMcqChoices(q);
-                if (q.options) shuffleArray(q.options);
-                if (q.items) shuffleArray(q.items);
-            });
+            fullQuizChallengesRepo.forEach(shuffleQuestionChoices);
 
-            switchView(viewArena);
-            loadCurrentQuestion();
+            switchGameView(viewArena);
+            displayActiveChallengeCard();
         }
 
-        function loadCurrentQuestion() {
-            isLocked = false;
-            explanationDrawer.style.display = "none";
-            btnNext.style.display = "none";
-            btnSubmit.style.display = "none";
+        function displayActiveChallengeCard() {
+            phaseLocked = false;
+            arenaExplanationDrawer.style.display = "none";
+            btnNextStep.style.display = "none";
             
-            interactiveArea.innerHTML = "";
-            interactiveArea.style.display = "none";
-            choicesGrid.innerHTML = "";
-            choicesGrid.style.display = "none";
+            arenaChoicesStack.innerHTML = "";
+            arenaSyntaxTerminal.style.display = "none";
 
-            const q = quizQuestions[activeIndex];
-            hudIndex.innerText = `Question ${activeIndex + 1}/${quizQuestions.length}`;
-            promptText.innerText = q.prompt;
+            const currentObj = fullQuizChallengesRepo[activeIndex];
+            
+            hudIndexTracker.innerText = `Question ${activeIndex + 1}/10`;
+            arenaQuestionText.innerText = currentObj.prompt;
 
-            if (q.type === "mcq") {
-                choicesGrid.style.display = "grid";
-                renderMcqOptions(q);
-            } else if (q.type === "multi_select") {
-                interactiveArea.style.display = "block";
-                btnSubmit.style.display = "inline-block";
-                renderMultiSelect(q);
-            } else if (q.type === "drag_match") {
-                interactiveArea.style.display = "block";
-                btnSubmit.style.display = "inline-block";
-                renderDragMatch(q);
-            } else if (q.type === "drag_buckets") {
-                interactiveArea.style.display = "block";
-                btnSubmit.style.display = "inline-block";
-                renderDragBuckets(q);
+            if (activeIndex < 5) {
+                arenaLevelHeader.innerText = "Part 1: Conditional Logic Tracing 🧠";
+            } else {
+                arenaLevelHeader.innerText = "Part 2: Loop Control Flow Tracing 🔄";
             }
 
-            startTimer();
+            if (currentObj.code) {
+                arenaSyntaxTerminal.innerText = currentObj.code;
+                arenaSyntaxTerminal.style.display = "block";
+            }
+
+            buildSelectionGrid(currentObj);
+            triggerCountdownClock();
         }
 
-        function startTimer() {
-            clearInterval(timerRef);
-            secondsLeft = 30;
-            timerFill.style.width = "100%";
+        function triggerCountdownClock() {
+            clearInterval(clockIntervalRef);
+            secondsRemaining = 30;
+            arenaTimerFill.style.width = "100%";
+            arenaTimerText.innerText = "30s";
 
-            timerRef = setInterval(() => {
-                secondsLeft -= 0.1;
-                const pct = (secondsLeft / 30) * 100;
-                timerFill.style.width = `${pct}%`;
+            clockIntervalRef = setInterval(() => {
+                secondsRemaining -= 0.1;
+                let pct = (secondsRemaining / 30) * 100;
+                arenaTimerFill.style.width = `${Math.max(0, pct)}%`;
+                arenaTimerText.innerText = `${Math.ceil(secondsRemaining)}s`;
 
-                if (secondsLeft <= 0) {
-                    clearInterval(timerRef);
-                    handleTimeOut();
+                if (secondsRemaining <= 0) {
+                    clearInterval(clockIntervalRef);
+                    processRoundTimeout();
                 }
             }, 100);
         }
 
-        /* --- 1. MCQ RENDERER --- */
-        function renderMcqOptions(q) {
-            q.choices.forEach((choiceText, idx) => {
+        function buildSelectionGrid(dataObj) {
+            dataObj.choices.forEach((textStr, iKey) => {
                 const btn = document.createElement("button");
                 btn.className = "choice-item-btn";
-                btn.innerText = choiceText;
-                btn.onclick = () => selectMcqAnswer(idx, btn);
-                choicesGrid.appendChild(btn);
+                btn.innerText = textStr;
+                btn.onclick = () => parseSelectionChoiceInput(iKey, btn);
+                arenaChoicesStack.appendChild(btn);
             });
         }
 
-        function selectMcqAnswer(selectedIdx, btnElement) {
-            if (isLocked) return;
-            isLocked = true;
-            clearInterval(timerRef);
+        function parseSelectionChoiceInput(userClickedIdx, elementNodeRef) {
+            if (phaseLocked) return;
+            phaseLocked = true;
+            clearInterval(clockIntervalRef);
 
-            const q = quizQuestions[activeIndex];
-            const isCorrect = (selectedIdx === q.correctIdx);
+            const questObj = fullQuizChallengesRepo[activeIndex];
+            const optionsArray = arenaChoicesStack.children;
+            const isCorrect = (userClickedIdx === questObj.correctIdx);
+
+            userResponsesLog.push({
+                index: activeIndex + 1,
+                prompt: questObj.prompt,
+                code: questObj.code || null,
+                userChoiceText: questObj.choices[userClickedIdx],
+                correctChoiceText: questObj.choices[questObj.correctIdx],
+                isCorrect: isCorrect,
+                explanation: questObj.explanation
+            });
 
             if (isCorrect) {
-                btnElement.classList.add("flash-green");
-                score++;
-                hudScore.innerText = `⭐ Score: ${score}`;
+                elementNodeRef.classList.add("flash-green");
+                runningScore++;
+                tallyCategoryPerformanceMetrics();
+                hudScoreTracker.innerText = `⭐ Score: ${runningScore}`;
             } else {
-                btnElement.classList.add("flash-red");
-                if (choicesGrid.children[q.correctIdx]) {
-                    choicesGrid.children[q.correctIdx].classList.add("flash-green");
-                }
+                elementNodeRef.classList.add("flash-red");
+                optionsArray[questObj.correctIdx].classList.add("flash-green");
             }
 
-            userQuizHistory.push({
-                question: q.prompt,
-                userChoice: q.choices[selectedIdx],
-                correctAnswer: q.choices[q.correctIdx],
-                isCorrect: isCorrect,
-                explanation: q.explanation
-            });
-
-            showExplanation(q.explanation);
+            displayExplanationDrawer(questObj.explanation);
         }
 
-        /* --- 2. MULTI-SELECT RENDERER (Q1) --- */
-        function renderMultiSelect(q) {
-            selectedChips.clear();
-            const grid = document.createElement("div");
-            grid.className = "multi-select-grid";
-
-            q.options.forEach(opt => {
-                const chip = document.createElement("div");
-                chip.className = "multi-chip";
-                chip.innerText = opt.text;
-                chip.dataset.id = opt.id;
-                chip.onclick = () => {
-                    if (isLocked) return;
-                    if (selectedChips.has(opt.id)) {
-                        selectedChips.delete(opt.id);
-                        chip.classList.remove("selected");
-                    } else {
-                        selectedChips.add(opt.id);
-                        chip.classList.add("selected");
-                    }
-                };
-                grid.appendChild(chip);
-            });
-
-            interactiveArea.appendChild(grid);
-            btnSubmit.onclick = () => evaluateMultiSelect(q);
-        }
-
-        function evaluateMultiSelect(q) {
-            if (isLocked) return;
-            isLocked = true;
-            clearInterval(timerRef);
-
-            let allCorrect = true;
-            const chips = interactiveArea.querySelectorAll(".multi-chip");
-
-            q.options.forEach((opt, idx) => {
-                const chip = chips[idx];
-                const wasSelected = selectedChips.has(opt.id);
-
-                if (opt.isCorrect && wasSelected) {
-                    chip.className = "multi-chip chip-correct";
-                } else if (!opt.isCorrect && wasSelected) {
-                    chip.className = "multi-chip chip-wrong";
-                    allCorrect = false;
-                } else if (opt.isCorrect && !wasSelected) {
-                    chip.className = "multi-chip chip-missed";
-                    allCorrect = false;
-                }
-            });
-
-            if (allCorrect && selectedChips.size > 0) {
-                score++;
-                hudScore.innerText = `⭐ Score: ${score}`;
+        function tallyCategoryPerformanceMetrics() {
+            if (activeIndex < 5) {
+                l1Points++;
+            } else {
+                l2Points++;
             }
-
-            userQuizHistory.push({
-                question: q.prompt,
-                userChoice: Array.from(selectedChips).map(id => q.options.find(o => o.id === id).text).join(", ") || "None",
-                correctAnswer: q.options.filter(o => o.isCorrect).map(o => o.text).join(", "),
-                isCorrect: allCorrect,
-                explanation: q.explanation
-            });
-
-            showExplanation(q.explanation);
         }
 
-        /* --- 3. DRAG MATCH RENDERER (Q3) --- */
-        function renderDragMatch(q) {
-            currentDragState = {};
-            const container = document.createElement("div");
-            container.className = "interactive-container";
+        function processRoundTimeout() {
+            phaseLocked = true;
+            const currentObj = fullQuizChallengesRepo[activeIndex];
+            const optionsArray = arenaChoicesStack.children;
 
-            // Tag bank
-            const pool = document.createElement("div");
-            pool.className = "drag-source-pool";
-            pool.id = "match-source-pool";
-
-            q.items.forEach(item => {
-                const tagEl = document.createElement("div");
-                tagEl.className = "drag-source-item";
-                tagEl.innerText = item.text;
-                tagEl.id = item.id;
-                tagEl.draggable = true;
-                tagEl.ondragstart = (e) => e.dataTransfer.setData("text/plain", item.id);
-                pool.appendChild(tagEl);
-            });
-
-            container.appendChild(pool);
-
-            // Target Drop Slots
-            const row = document.createElement("div");
-            row.className = "drag-targets-row";
-
-            q.topics.forEach(t => {
-                const bucket = document.createElement("div");
-                bucket.className = "drag-bucket";
-                bucket.innerHTML = `<div class="drag-bucket-title">${t.label}</div>`;
-
-                const dropZone = document.createElement("div");
-                dropZone.className = "drop-zone";
-                dropZone.dataset.targetId = t.id;
-
-                dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add("dragover"); };
-                dropZone.ondragleave = () => dropZone.classList.remove("dragover");
-                dropZone.ondrop = (e) => {
-                    e.preventDefault();
-                    dropZone.classList.remove("dragover");
-                    const itemId = e.dataTransfer.getData("text/plain");
-                    const itemEl = document.getElementById(itemId);
-                    if (itemEl && !dropZone.contains(itemEl)) {
-                        dropZone.appendChild(itemEl);
-                        currentDragState[itemId] = t.id;
-                    }
-                };
-
-                bucket.appendChild(dropZone);
-                row.appendChild(bucket);
-            });
-
-            container.appendChild(row);
-            interactiveArea.appendChild(container);
-            btnSubmit.onclick = () => evaluateDragMatch(q);
-        }
-
-        function evaluateDragMatch(q) {
-            if (isLocked) return;
-            isLocked = true;
-            clearInterval(timerRef);
-
-            let allCorrect = true;
-            const validItems = q.items.filter(i => i.targetTopic !== "none");
-
-            q.items.forEach(item => {
-                const el = document.getElementById(item.id);
-                const assigned = currentDragState[item.id];
-
-                if (assigned) {
-                    if (assigned === item.targetTopic) {
-                        el.className = "dropped-chip correct";
-                    } else {
-                        el.className = "dropped-chip wrong";
-                        allCorrect = false;
-                    }
-                } else if (item.targetTopic !== "none") {
-                    // Missed valid item left in source pool: highlight soft green!
-                    el.classList.add("missed-green");
-                    allCorrect = false;
-                }
-            });
-
-            if (allCorrect && Object.keys(currentDragState).length === validItems.length) {
-                score++;
-                hudScore.innerText = `⭐ Score: ${score}`;
-            }
-
-            userQuizHistory.push({
-                question: q.prompt,
-                userChoice: Object.entries(currentDragState).map(([k, v]) => `${q.items.find(i => i.id === k).text} -> ${v}`).join(", ") || "None",
-                correctAnswer: q.items.filter(i => i.targetTopic !== "none").map(i => `${i.text} -> ${i.targetTopic}`).join(", "),
-                isCorrect: allCorrect,
-                explanation: q.explanation
-            });
-
-            showExplanation(q.explanation);
-        }
-
-        /* --- 4. DRAG BUCKETS RENDERER (Q4 & Q7) --- */
-        function renderDragBuckets(q) {
-            currentDragState = {};
-            const container = document.createElement("div");
-            container.className = "interactive-container";
-
-            const pool = document.createElement("div");
-            pool.className = "drag-source-pool";
-            pool.id = "bucket-source-pool";
-
-            q.items.forEach(item => {
-                const el = document.createElement("div");
-                el.className = "drag-source-item";
-                el.innerText = item.text;
-                el.id = item.id;
-                el.draggable = true;
-                el.ondragstart = (e) => e.dataTransfer.setData("text/plain", item.id);
-                pool.appendChild(el);
-            });
-
-            container.appendChild(pool);
-
-            const row = document.createElement("div");
-            row.className = "drag-targets-row";
-
-            q.buckets.forEach(b => {
-                const bucket = document.createElement("div");
-                bucket.className = "drag-bucket";
-                bucket.innerHTML = `<div class="drag-bucket-title">${b.label}</div>`;
-
-                const dropZone = document.createElement("div");
-                dropZone.className = "drop-zone";
-                dropZone.dataset.bucketId = b.id;
-
-                dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add("dragover"); };
-                dropZone.ondragleave = () => dropZone.classList.remove("dragover");
-                dropZone.ondrop = (e) => {
-                    e.preventDefault();
-                    dropZone.classList.remove("dragover");
-                    const itemId = e.dataTransfer.getData("text/plain");
-                    const itemEl = document.getElementById(itemId);
-                    if (itemEl && !dropZone.contains(itemEl)) {
-                        dropZone.appendChild(itemEl);
-                        currentDragState[itemId] = b.id;
-                    }
-                };
-
-                bucket.appendChild(dropZone);
-                row.appendChild(bucket);
-            });
-
-            container.appendChild(row);
-            interactiveArea.appendChild(container);
-            btnSubmit.onclick = () => evaluateDragBuckets(q);
-        }
-
-        function evaluateDragBuckets(q) {
-            if (isLocked) return;
-            isLocked = true;
-            clearInterval(timerRef);
-
-            let allCorrect = true;
-            const validItems = q.items.filter(i => i.correctBucket !== "none");
-
-            q.items.forEach(item => {
-                const el = document.getElementById(item.id);
-                const assigned = currentDragState[item.id];
-
-                if (assigned) {
-                    if (assigned === item.correctBucket) {
-                        el.className = "dropped-chip correct";
-                    } else {
-                        el.className = "dropped-chip wrong";
-                        allCorrect = false;
-                    }
-                } else if (item.correctBucket !== "none") {
-                    // Missed valid item left in source pool: highlight soft green!
-                    el.classList.add("missed-green");
-                    allCorrect = false;
-                }
-            });
-
-            if (allCorrect && Object.keys(currentDragState).length === validItems.length) {
-                score++;
-                hudScore.innerText = `⭐ Score: ${score}`;
-            }
-
-            userQuizHistory.push({
-                question: q.prompt,
-                userChoice: Object.entries(currentDragState).map(([k, v]) => `${q.items.find(i => i.id === k).text} in ${v}`).join(", ") || "None",
-                correctAnswer: q.items.filter(i => i.correctBucket !== "none").map(i => `${i.text} -> ${i.correctBucket}`).join(", "),
-                isCorrect: allCorrect,
-                explanation: q.explanation
-            });
-
-            showExplanation(q.explanation);
-        }
-
-        /* --- COMMON EXPLANATION & TIMEOUT --- */
-        function handleTimeOut() {
-            if (isLocked) return;
-            isLocked = true;
-            const q = quizQuestions[activeIndex];
-
-            if (q.type === "mcq" && choicesGrid.children[q.correctIdx]) {
-                choicesGrid.children[q.correctIdx].classList.add("flash-green");
-            }
-
-            userQuizHistory.push({
-                question: q.prompt,
-                userChoice: "Time Out (No answer submitted)",
-                correctAnswer: q.type === "mcq" ? q.choices[q.correctIdx] : "Check explanation below",
+            userResponsesLog.push({
+                index: activeIndex + 1,
+                prompt: currentObj.prompt,
+                code: currentObj.code || null,
+                userChoiceText: "Time ran out (No response)",
+                correctChoiceText: currentObj.choices[currentObj.correctIdx],
                 isCorrect: false,
-                explanation: q.explanation
+                explanation: currentObj.explanation
             });
 
-            showExplanation("Time's up! " + q.explanation);
+            optionsArray[currentObj.correctIdx].classList.add("flash-green");
+            displayExplanationDrawer(currentObj.explanation);
         }
 
-        function showExplanation(text) {
-            explanationText.innerText = text;
-            explanationDrawer.style.display = "block";
-            btnSubmit.style.display = "none";
-            btnNext.style.display = "inline-block";
+        function displayExplanationDrawer(summaryText) {
+            explanationBodyText.innerText = summaryText;
+            arenaExplanationDrawer.style.display = "block";
+            btnNextStep.style.display = "inline-block";
         }
 
-        function advanceQuestion() {
+        function advanceToNextQuestCard() {
             activeIndex++;
-            if (activeIndex < quizQuestions.length) {
-                loadCurrentQuestion();
+            if (activeIndex < fullQuizChallengesRepo.length) {
+                displayActiveChallengeCard();
             } else {
-                renderFinalReport();
+                compileFinalReportCardSummary();
             }
         }
 
-        /* --- FINAL REPORT CARD & TABS --- */
-        function renderFinalReport() {
-            switchView(viewReport);
-            document.getElementById("final-score").innerText = `${score} / 10`;
-            const accuracy = Math.round((score / 10) * 100);
-            document.getElementById("final-pct").innerText = `${accuracy}%`;
+        function compileFinalReportCardSummary() {
+            switchGameView(viewReport);
+            document.getElementById("rep-l1-score").innerText = `${l1Points} / 5`;
+            document.getElementById("rep-l2-score").innerText = `${l2Points} / 5`;
+            document.getElementById("rep-grand-total").innerText = `${runningScore} / 10`;
 
-            const noteBody = document.getElementById("handwritten-body");
-            if (score >= 8) {
-                noteBody.innerText = `"Outstanding job! You have completely mastered HTML tags, ordered/unordered lists, attributes, and table structures. You're ready to design fantastic web pages!"`;
-            } else if (score >= 5) {
-                noteBody.innerText = `"Great effort on your revision! You have a solid grasp of container tags and basic styles. Take a look at the review tab below to master the table and attribute questions!"`;
+            const percentageVal = Math.round((runningScore / 10) * 100);
+            document.getElementById("rep-percentage").innerText = `${percentageVal}%`;
+
+            const noteElement = document.getElementById("handwritten-note-body");
+            if (runningScore >= 8) {
+                noteElement.innerText = "Outstanding analytical work! You traced real-world conditions, retry loops, and state changes with precision under timed conditions. Your software engineering logic is sharp!";
+            } else if (runningScore >= 5) {
+                noteElement.innerText = "Solid effort on these applied challenges! You handled several complex control flows well. Review the short traces below for edge cases like break vs continue and compound booleans!";
             } else {
-                noteBody.innerText = `"Good practice session! Revising tags and attributes takes time. Read through the explanations below and give it another try to boost your score!"`;
+                noteElement.innerText = "Good try! Tracing applied state changes under 30-second intervals takes practice. Take a moment to review each solution trace below and try again—you've got this!";
             }
 
-            switchReviewTab("all");
+            renderDetailedReviewLog("all");
         }
 
-        function switchReviewTab(filter) {
-            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-            const targetBtn = Array.from(document.querySelectorAll(".tab-btn")).find(b => b.innerText.toLowerCase().includes(filter));
-            if (targetBtn) targetBtn.classList.add("active");
-
-            const container = document.getElementById("review-list-box");
+        // --- DETAILED LOG RENDERING ---
+        function renderDetailedReviewLog(filter) {
+            const container = document.getElementById("review-items-container");
             container.innerHTML = "";
 
-            let list = userQuizHistory;
-            if (filter === "correct") list = userQuizHistory.filter(h => h.isCorrect);
-            if (filter === "wrong") list = userQuizHistory.filter(h => !h.isCorrect);
+            const filteredLogs = userResponsesLog.filter(item => {
+                if (filter === "correct") return item.isCorrect;
+                if (filter === "wrong") return !item.isCorrect;
+                return true;
+            });
 
-            if (list.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: #64748B; padding: 16px;">No questions to show in this filter.</div>`;
+            if (filteredLogs.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: #64748B; padding: 16px; font-weight: 600;">No questions in this section!</div>`;
                 return;
             }
 
-            list.forEach(h => {
-                const card = document.createElement("div");
-                card.className = `review-card ${h.isCorrect ? "correct" : "wrong"}`;
-                card.innerHTML = `
-                    <div style="font-weight: 700; margin-bottom: 4px;">${h.question}</div>
-                    <div style="color: ${h.isCorrect ? "#16A34A" : "#DC2626"}; font-weight: 600;">Your answer: ${h.userChoice}</div>
-                    ${!h.isCorrect ? `<div style="color: #0369A1; font-weight: 600;">Correct answer: ${h.correctAnswer}</div>` : ""}
-                    <div style="font-size: 12px; color: #475569; margin-top: 4px;">💡 ${h.explanation}</div>
+            filteredLogs.forEach(log => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = `review-item ${log.isCorrect ? 'correct' : 'wrong'}`;
+
+                let html = `
+                    <div style="font-weight: 700; margin-bottom: 4px;">
+                        <span>Q${log.index}: ${log.prompt}</span>
+                        <span style="float: right;">${log.isCorrect ? '✅ Correct' : '❌ Needs Review'}</span>
+                    </div>
                 `;
-                container.appendChild(card);
+
+                if (log.code) {
+                    html += `<pre style="background: #F1F5F9; padding: 6px 10px; border-radius: 6px; font-size: 11px; margin: 4px 0;">${log.code}</pre>`;
+                }
+
+                html += `
+                    <div style="font-size: 12px; margin-top: 4px;">
+                        <div><strong>Your choice:</strong> <span style="color: ${log.isCorrect ? '#166534' : '#991B1B'};">${log.userChoiceText}</span></div>
+                        ${!log.isCorrect ? `<div><strong>Correct answer:</strong> <span style="color: #166534;">${log.correctChoiceText}</span></div>` : ''}
+                        <div style="color: #475569; margin-top: 4px;"><em>💡 ${log.explanation}</em></div>
+                    </div>
+                `;
+
+                itemDiv.innerHTML = html;
+                container.appendChild(itemDiv);
             });
         }
 
-        // --- ATTACH EVENT LISTENERS ---
-        document.getElementById("btn-start-quiz").addEventListener("click", startQuiz);
-        document.getElementById("btn-next-step").addEventListener("click", advanceQuestion);
-        document.getElementById("btn-restart-quiz").addEventListener("click", () => switchView(viewHome));
+        function filterReviewLogs(type, btnElement) {
+            const allTabs = document.querySelectorAll(".tab-btn");
+            allTabs.forEach(b => b.classList.remove("active"));
+            btnElement.classList.add("active");
+            renderDetailedReviewLog(type);
+        }
+
+        function returnToCoverSplash() {
+            switchGameView(viewHome);
+        }
+
+        // Event listeners
+        document.getElementById("btn-start-quiz").addEventListener("click", initializeQuizArena);
+        document.getElementById("btn-next-step").addEventListener("click", advanceToNextQuestCard);
+        document.getElementById("btn-restart-quiz").addEventListener("click", returnToCoverSplash);
     </script>
 </body>
 </html>
