@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Revision Quiz</title>
+    <title>HTML & CSS Revision Quiz</title>
     <!-- Pixel Header Font & Handwritten Note Font -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <style>
@@ -51,7 +51,7 @@
         /* --- MAIN QUIZ CARD --- */
         .quiz-card {
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
             background: #FFFFFF;
             border: 4px solid var(--border-dark);
             border-radius: 20px;
@@ -82,7 +82,7 @@
 
         .game-view {
             display: none;
-            padding: 26px 30px;
+            padding: 24px 28px;
         }
 
         .game-view.active {
@@ -97,9 +97,9 @@
 
         .main-heading {
             font-family: 'Press Start 2P', cursive;
-            font-size: 32px;
+            font-size: 30px;
             color: var(--text-main);
-            margin-bottom: 36px;
+            margin-bottom: 24px;
             line-height: 1.4;
             text-shadow: 4px 4px 0px #7DD3FC;
         }
@@ -108,8 +108,8 @@
             background: #38BDF8;
             color: #0F172A;
             border: 3px solid var(--border-dark);
-            padding: 14px 42px;
-            font-size: 18px;
+            padding: 13px 36px;
+            font-size: 16px;
             font-weight: bold;
             border-radius: 14px;
             cursor: pointer;
@@ -132,8 +132,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             gap: 12px;
+            min-height: 28px;
         }
 
         .level-headline {
@@ -177,32 +178,331 @@
             background-color: #F0F9FF;
             border: 3px solid var(--border-dark);
             border-radius: 14px;
-            padding: 18px 20px;
+            padding: 16px 20px;
             margin-bottom: 16px;
             box-shadow: 4px 4px 0px var(--border-dark);
         }
 
         .problem-prompt-text {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             line-height: 1.5;
+            color: #0F172A;
         }
 
-        .python-syntax-box {
-            background: #0F172A;
+        .hl-blue {
+            color: #0284C7;
+            background: #E0F2FE;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1.5px solid #0284C7;
+        }
+
+        .hl-purple {
+            color: #7C3AED;
+            background: #EDE9FE;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1.5px solid #7C3AED;
+        }
+
+        .hl-teal {
+            color: #0D9488;
+            background: #CCFBF1;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1.5px solid #0D9488;
+        }
+
+        .hl-orange {
+            color: #C2410C;
+            background: #FFEDD5;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1.5px solid #C2410C;
+        }
+
+        /* --- SAMPLE BROWSER MOCKUP --- */
+        .sample-mockup-box {
+            margin-top: 12px;
+            background: #FFFFFF;
             border: 2px solid var(--border-dark);
             border-radius: 10px;
-            padding: 14px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            color: #BAE6FD;
-            white-space: pre-wrap;
-            overflow-x: auto;
-            margin-top: 12px;
-            line-height: 1.45;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px var(--border-dark);
         }
 
-        /* --- 2x2 SELECTION GRID --- */
+        .sample-mockup-bar {
+            background: #E2E8F0;
+            border-bottom: 2px solid var(--border-dark);
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sample-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .sample-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94A3B8;
+            display: inline-block;
+        }
+
+        .sample-mockup-body {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        /* --- INTERACTIVE WORKSPACE --- */
+        .interactive-workspace {
+            margin-bottom: 16px;
+        }
+
+        .token-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px;
+            background: #F8FAFC;
+            border: 2px dashed #64748B;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            min-height: 60px;
+            align-items: center;
+        }
+
+        .token-pool.vertical-pool {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .token-pool.vertical-pool .drag-chip {
+            width: 100%;
+            text-align: center;
+        }
+
+        .drag-chip {
+            background: #FFFFFF;
+            border: 2px solid var(--border-dark);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0F172A;
+            cursor: grab;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: transform 0.1s, background-color 0.15s;
+        }
+
+        .drag-chip:hover {
+            background: #E0F2FE;
+            transform: translateY(-2px);
+        }
+
+        .drag-chip:active {
+            cursor: grabbing;
+        }
+
+        .drag-chip.chip-correct {
+            background: var(--color-correct) !important;
+            color: #064E3B !important;
+            border-color: #064E3B !important;
+        }
+
+        .drag-chip.chip-wrong {
+            background: var(--color-wrong) !important;
+            color: #7F1D1D !important;
+            border-color: #7F1D1D !important;
+        }
+
+        /* --- TWO-BUCKET LAYOUT (Q1 & Q5) --- */
+        .buckets-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .drop-bucket {
+            background: #FFFFFF;
+            border: 3px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 14px;
+            min-height: 170px;
+            box-shadow: 4px 4px 0px var(--border-dark);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drop-bucket.drag-over {
+            background: #E0F2FE;
+            border-color: #0284C7;
+        }
+
+        .bucket-header {
+            font-weight: 800;
+            font-size: 14px;
+            text-align: center;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #CBD5E1;
+        }
+
+        .bucket-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+            align-content: flex-start;
+        }
+
+        /* --- Q2 THREE-COLUMN LAYOUT (SAMPLE | VERTICAL OPTIONS | BUILDER) --- */
+        .q2-layout-grid {
+            display: grid;
+            grid-template-columns: 200px 210px 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .side-panel-card {
+            background: #F8FAFC;
+            border: 3px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 4px 4px 0px var(--border-dark);
+        }
+
+        .side-panel-title {
+            font-weight: 800;
+            font-size: 13px;
+            color: #0369A1;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* --- CODE BUILDER & FILL-IN-THE-BLANKS --- */
+        .code-builder-box {
+            background: #0F172A;
+            color: #E2E8F0;
+            border: 3px solid var(--border-dark);
+            border-radius: 14px;
+            padding: 16px 18px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.9;
+            box-shadow: 4px 4px 0px var(--border-dark);
+        }
+
+        .code-slot {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+            min-height: 32px;
+            padding: 2px 10px;
+            margin: 2px 4px;
+            background: #1E293B;
+            border: 2px dashed #38BDF8;
+            border-radius: 8px;
+            color: #7DD3FC;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .code-slot.drag-over {
+            background: #0369A1;
+            border-style: solid;
+        }
+
+        .code-slot.filled {
+            background: #E0F2FE;
+            color: #0F172A;
+            border: 2px solid #38BDF8;
+        }
+
+        .code-slot.slot-correct {
+            background: var(--color-correct) !important;
+            color: #064E3B !important;
+            border: 2px solid #064E3B !important;
+        }
+
+        .code-slot.slot-wrong {
+            background: var(--color-wrong) !important;
+            color: #7F1D1D !important;
+            border: 2px solid #7F1D1D !important;
+        }
+
+        .paired-block-wrapper {
+            border: 2px solid #38BDF8;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin: 6px 0;
+            background: rgba(30, 41, 59, 0.85);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .paired-tag-line {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            color: #BAE6FD;
+        }
+
+        .paired-inner-placeholder {
+            padding-left: 16px;
+            font-size: 12px;
+            color: #94A3B8;
+            font-style: italic;
+        }
+
+        .paired-block-wrapper.slot-correct {
+            background: rgba(74, 222, 128, 0.25) !important;
+            border-color: var(--color-correct) !important;
+        }
+
+        .paired-block-wrapper.slot-correct .paired-tag-line {
+            color: #86EFAC !important;
+        }
+
+        .paired-block-wrapper.slot-wrong {
+            background: rgba(248, 113, 113, 0.25) !important;
+            border-color: var(--color-wrong) !important;
+        }
+
+        .paired-block-wrapper.slot-wrong .paired-tag-line {
+            color: #FCA5A5 !important;
+        }
+
+        .syntax-reveal-banner {
+            display: none;
+            margin-top: 12px;
+            background: #0F172A;
+            border: 2px solid #38BDF8;
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: #BAE6FD;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+
+        /* --- 2x2 SELECTION GRID (Q8-Q10) --- */
         .choices-stack-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -216,7 +516,7 @@
             border-radius: 12px;
             padding: 12px 14px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-main);
             cursor: pointer;
             text-align: left;
@@ -224,7 +524,7 @@
             transition: transform 0.05s, box-shadow 0.05s;
             white-space: pre-wrap;
             font-family: 'Courier New', Courier, monospace;
-            min-height: 70px;
+            min-height: 64px;
             display: flex;
             align-items: center;
         }
@@ -247,7 +547,7 @@
             color: #7F1D1D;
         }
 
-        /* --- EXPLANATION DRAWER --- */
+        /* --- UNIFORM EXPLANATION DRAWER --- */
         .explanation-review-box {
             display: none;
             background: #F0FDF4;
@@ -259,21 +559,41 @@
         }
 
         .explanation-label-tag {
-            font-weight: bold;
+            font-weight: 700;
             color: #166534;
             margin-bottom: 4px;
             font-size: 14px;
         }
 
         .explanation-body-text {
-            font-size: 13px;
-            line-height: 1.45;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.5;
             color: #1F2937;
+            white-space: pre-line;
         }
 
         .footer-action-row {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            background: #E2E8F0;
+            color: #0F172A;
+            border: 2px solid var(--border-dark);
+            padding: 9px 18px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #CBD5E1;
         }
 
         /* --- REPORT CARD & HANDWRITTEN NOTE --- */
@@ -383,8 +703,8 @@
             border-left: 8px solid var(--color-wrong);
         }
 
-        @media (max-width: 640px) {
-            .choices-stack-grid {
+        @media (max-width: 768px) {
+            .buckets-grid, .q2-layout-grid, .choices-stack-grid {
                 grid-template-columns: 1fr;
             }
             .main-heading {
@@ -402,60 +722,64 @@
         <!-- TOP HUD -->
         <div class="hud-topbar">
             <div id="hud-index-tracker" class="hud-badge">Question 1/10</div>
-            <div id="hud-score-tracker" class="hud-badge">⭐ Score: 0</div>
+            <div id="hud-score-tracker" class="hud-badge">Score: 0</div>
         </div>
 
         <!-- VIEW 1: HOME COVER -->
         <div id="view-home" class="game-view active">
             <div class="home-layout">
-                <h1 class="main-heading">Python revision</h1>
-                <p style="color: #0369A1; font-weight: 600; margin-bottom: 24px;">10 Teen Coding Challenges • Loops, Functions &amp; Conditions</p>
-                <button id="btn-start-quiz" class="btn-gameplay">Start with the revision 🚀</button>
+                <h1 class="main-heading">HTML &amp; CSS Revision</h1>
+                <p style="color: #0369A1; font-weight: 600; margin-bottom: 28px;">10 Interactive Challenges • Drag-and-Drop Builders &amp; Core Concepts</p>
+                <button id="btn-start-quiz" class="btn-gameplay">Start Revision</button>
             </div>
         </div>
 
         <!-- VIEW 2: QUIZ ARENA -->
         <div id="view-arena" class="game-view">
             <div class="arena-subbar">
-                <div id="arena-level-header" class="level-headline">Part 1: Spot Syntax &amp; Logic Errors</div>
-                <div class="progress-timer-bar">
+                <div id="arena-level-header" class="level-headline">Part 1: Interactive HTML &amp; CSS Builders</div>
+                <div id="arena-timer-container" class="progress-timer-bar">
                     <div id="arena-timer-fill" class="timer-progress-fill"></div>
                     <span id="arena-timer-text" class="timer-text-overlay">60s</span>
                 </div>
             </div>
 
             <div id="arena-prompt-frame" class="problem-description-card">
-                <p id="arena-question-text" class="problem-prompt-text">Loading question prompt...</p>
-                <div id="arena-syntax-terminal" class="python-syntax-box" style="display: none;"></div>
+                <div id="arena-question-text" class="problem-prompt-text">Loading question prompt...</div>
+                <div id="arena-sample-preview"></div>
             </div>
 
-            <!-- 2x2 SELECTION GRID -->
-            <div id="arena-choices-stack" class="choices-stack-grid"></div>
+            <!-- DYNAMIC INTERACTIVE WORKSPACE -->
+            <div id="arena-interactive-workspace" class="interactive-workspace"></div>
 
             <!-- EXPLANATION DRAWER -->
             <div id="arena-explanation-drawer" class="explanation-review-box">
-                <div class="explanation-label-tag">Explanation 💡</div>
+                <div class="explanation-label-tag">Explanation</div>
                 <p id="explanation-body-text" class="explanation-body-text">Explanation details...</p>
             </div>
 
             <div class="footer-action-row">
-                <button id="btn-next-step" class="btn-gameplay" style="display: none; font-size: 14px; padding: 10px 22px;">Next Question ➡️</button>
+                <button id="btn-reset-board" class="btn-secondary" style="display: none;">Reset Blocks</button>
+                <div style="margin-left: auto; display: flex; gap: 10px;">
+                    <button id="btn-submit-answer" class="btn-gameplay" style="display: none; font-size: 14px; padding: 10px 24px;">Submit Answer</button>
+                    <button id="btn-next-step" class="btn-gameplay" style="display: none; font-size: 14px; padding: 10px 24px;">Next Question</button>
+                </div>
             </div>
         </div>
 
         <!-- VIEW 3: REPORT & REVIEW CARD -->
         <div id="view-report" class="game-view">
             <div class="home-layout" style="padding: 10px 0px;">
-                <h2 class="main-heading" style="font-size: 22px; margin-bottom: 18px;">📊 REVISION REPORT CARD</h2>
+                <h2 class="main-heading" style="font-size: 22px; margin-bottom: 18px;">REVISION REPORT CARD</h2>
 
                 <!-- SCORE METRICS -->
                 <div class="score-metrics-card">
                     <div class="score-row">
-                        <span>Part 1: Syntax &amp; Logic Bug Hunt (Q1-5)</span>
+                        <span>Part 1: Interactive Tag &amp; Style Builders (Q1-5)</span>
                         <span id="rep-l1-score" style="color: #0369A1;">0 / 5</span>
                     </div>
                     <div class="score-row">
-                        <span>Part 2: Missing &amp; Broken Logic Analysis (Q6-10)</span>
+                        <span>Part 2: Page Structure, Styling &amp; Tags (Q6-10)</span>
                         <span id="rep-l2-score" style="color: #0369A1;">0 / 5</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; padding-top: 4px; color: #15803D;">
@@ -478,195 +802,244 @@
 
                 <!-- HANDWRITTEN NOTE FROM TUTOR PRIYADARSHINI -->
                 <div class="handwritten-note-card">
-                    <div class="handwritten-title">Dear Coder,</div>
+                    <div class="handwritten-title">Dear Web Designer,</div>
                     <p id="handwritten-note-body" class="handwritten-body">
-                        Awesome job working through all 10 real-world Python challenges! Finding hidden logic bugs and figuring out what's missing in a program are true developer superpowers. Keep coding and building!
+                        Awesome job completing your HTML &amp; CSS revision! Building lists, linking pages, structuring tables, and styling text are the core building blocks of every website on the internet. Keep coding and creating!
                     </p>
-                    <div class="handwritten-signature">— Tutor Priyadarshini 💛</div>
+                    <div class="handwritten-signature">— Tutor Priyadarshini</div>
                 </div>
 
                 <!-- DETAILED QUESTION LOG TABS -->
                 <div class="review-section">
                     <div class="review-tabs">
                         <button class="tab-btn active" onclick="filterReviewLogs('all', this)">All (10)</button>
-                        <button class="tab-btn" onclick="filterReviewLogs('correct', this)">Correct ✅</button>
-                        <button class="tab-btn" onclick="filterReviewLogs('wrong', this)">Needs Review ❌</button>
+                        <button class="tab-btn" onclick="filterReviewLogs('correct', this)">Correct</button>
+                        <button class="tab-btn" onclick="filterReviewLogs('wrong', this)">Needs Review</button>
                     </div>
                     <div id="review-items-container"></div>
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <button id="btn-restart-quiz" class="btn-gameplay" style="font-size: 15px; padding: 12px 30px;">Restart Revision 🔄</button>
+                    <button id="btn-restart-quiz" class="btn-gameplay" style="font-size: 15px; padding: 12px 30px;">Restart Revision</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 10 CHALLENGING PYTHON REVISION QUESTIONS FOR 14-YEAR-OLD STUDENTS
+        // 10 INTERACTIVE HTML & CSS REVISION QUESTIONS
         const fullQuizChallengesRepo = [
-            // --- PART 1: Q1 - Q5 (FINDING SYNTACTICAL OR LOGICAL ERRORS IN LOOPS, FUNCTIONS & CONDITIONS) ---
+            // --- Q1: TWO-BUCKET SORTING (HTML TAGS VS CSS PROPERTIES) ---
             {
-                prompt: "Question 1 (Game Rank System): A tournament bot checks a player's XP to assign a rank. Even when a player has 1800 XP, it always prints 'Silver'! What is the logical error?",
-                code: "def get_rank(xp):\n    if xp >= 500:\n        print(\"Silver\")\n    elif xp >= 1500:\n        print(\"Gold\")\n    else:\n        print(\"Bronze\")\n\nget_rank(1800)",
-                choices: [
-                    "xp >= 500 is checked first, so 1800 stops at 'Silver' and never reaches elif",
-                    "elif cannot be used inside a function",
-                    "1800 must be written in quotes as \"1800\"",
-                    "The function is missing a while loop"
+                type: "buckets",
+                promptHtml: `Question 1: Sort the items into <span class="hl-blue">HTML Tags</span> and <span class="hl-purple">CSS Properties</span>.`,
+                plainPrompt: "Question 1: Sort the items into HTML Tags and CSS Properties.",
+                bucketA: { id: "tags", title: "HTML Tags", colorClass: "hl-blue" },
+                bucketB: { id: "props", title: "CSS Properties", colorClass: "hl-purple" },
+                items: [
+                    { id: "i1", label: "<ul>", target: "tags" },
+                    { id: "i2", label: "<p>", target: "tags" },
+                    { id: "i3", label: "<h1>", target: "tags" },
+                    { id: "i4", label: "background-color", target: "props" },
+                    { id: "i5", label: "border", target: "props" },
+                    { id: "i6", label: "color", target: "props" },
+                    { id: "i7", label: "text-align", target: "props" }
                 ],
-                correctIdx: 0,
-                explanation: "Python checks if/elif from top to bottom, so check the highest value (xp >= 1500) first."
-            },
-            {
-                prompt: "Question 2 (Arcade Timer): You wrote a countdown function for a multiplayer match lobby, but when you run it, the loop freezes forever on 5! Why?",
-                code: "def lobby_countdown():\n    seconds = 5\n    while seconds > 0:\n        print(\"Starting in\", seconds)\n        seconds + 1\n\nlobby_countdown()",
-                choices: [
-                    "seconds + 1 does not update seconds, and it adds instead of subtracting",
-                    "while loops cannot use > 0",
-                    "print() cannot combine text and numbers with a comma",
-                    "seconds = 5 must be outside the function"
-                ],
-                correctIdx: 0,
-                explanation: "You must save the updated value and count down using 'seconds -= 1'."
-            },
-            {
-                prompt: "Question 3 (Spotify Playlist Filter): You want a function that prints only songs shorter than 3 minutes, but Python refuses to run with a SyntaxError. Where is the syntax mistake?",
-                code: "def short_songs(lengths):\n    for mins in lengths\n        if mins < 3:\n            print(mins, \"mins\")",
-                choices: [
-                    "The for loop line is missing a colon (:) at the end",
-                    "if mins < 3 should use = instead of <",
-                    "mins cannot be used inside a loop",
-                    "print() needs a semicolon at the end"
-                ],
-                correctIdx: 0,
-                explanation: "Every 'for', 'while', 'if', and 'def' header line in Python must end with a colon (:)."
-            },
-            {
-                prompt: "Question 4 (Exam Pass Checker): A school portal checks if a student passed BOTH Math and Science (passing score is 50). A student got 90 in Math and 30 in Science, yet it says 'Passed'! Why?",
-                code: "def check_pass(math, science):\n    if math >= 50 or science >= 50:\n        return \"Passed\"\n    return \"Retake Needed\"\n\nprint(check_pass(90, 30))",
-                choices: [
-                    "It uses 'or' instead of 'and', so passing just one subject passes both",
-                    "return cannot send back text strings",
-                    "90 and 30 should be inside a list",
-                    "An else keyword is mandatory before return \"Retake Needed\""
-                ],
-                correctIdx: 0,
-                explanation: "Use 'and' instead of 'or' when both conditions must be True at the same time."
-            },
-            {
-                prompt: "Question 5 (Daily Step Streak): You want to count how many days you hit your 10,000-step goal this week, but the function always prints 1 instead of the real total! What is the logical bug?",
-                code: "def count_goal_days(steps_list):\n    for steps in steps_list:\n        streak = 0\n        if steps >= 10000:\n            streak += 1\n    print(streak)",
-                choices: [
-                    "streak = 0 is inside the loop, so it resets back to 0 on every single day",
-                    "streak += 1 should be written as streak =+ 1",
-                    "for loops cannot loop through lists of big numbers",
-                    "if steps >= 10000 needs an else block"
-                ],
-                correctIdx: 0,
-                explanation: "Place 'streak = 0' before the 'for' loop so it doesn't reset back to zero on every iteration."
+                explanation: "HTML Tags (<ul>, <p>, <h1>) use angle brackets, while CSS Properties (background-color, border, color, text-align) style elements."
             },
 
-            // --- PART 2: Q6 - Q10 (DETERMINE MISSING LOGIC & SPOT THE ERROR IN EXISTING CODE) ---
+            // --- Q2: SQUARE GROCERY LIST BUILDER ---
             {
-                prompt: "Question 6 (Group Pizza Split): Friends are splitting a bill, and anyone with a VIP coupon gets $5 off the total before dividing. Find the ERROR in the existing code and the MISSING line!",
-                code: "def split_bill(total, friends, has_coupon):\n    if has_coupon == True:\n        total - 5\n    # MISSING\n    return each_share",
-                choices: [
-                    "Error: 'total - 5' doesn't update total (needs total -= 5); Missing: each_share = total / friends",
-                    "Error: has_coupon cannot be True; Missing: print(total)",
-                    "Error: return should be inside the if block; Missing: total = 0",
-                    "Error: friends cannot be a parameter; Missing: for loop"
+                type: "grocery_list",
+                promptHtml: `Question 2: Build the HTML code to match the square-bulleted grocery list shown on the left.`,
+                plainPrompt: "Question 2: Build the HTML code to match the square-bulleted grocery list.",
+                tokens: [
+                    "<ul", "type=\"square\">", "<li>Milk</li>", "<li>Eggs</li>", "<li>Bread</li>", "</ul>",
+                    "<ol", "<list>", "type=\"circle\">", "type=\"triangle\">"
                 ],
-                correctIdx: 0,
-                explanation: "Use 'total -= 5' to save the discount and define 'each_share = total / friends' before returning it."
+                expectedSlots: [
+                    "<ul", "type=\"square\">", "<li>Milk</li>", "<li>Eggs</li>", "<li>Bread</li>", "</ul>"
+                ],
+                correctSyntax: `<ul type="square">\n  <li>Milk</li>\n  <li>Eggs</li>\n  <li>Bread</li>\n</ul>`,
+                explanation: "An unordered list uses <ul> with type=\"square\" and wraps each item inside <li>...</li> tags."
             },
+
+            // --- Q3: COMPLETE THE <IMG> TAG ---
             {
-                prompt: "Question 7 (Roblox Robux Saver): You want to calculate how many weeks it takes to save 800 Robux if you save 'weekly' each week. Find the ERROR in the existing code and the MISSING line!",
-                code: "def weeks_to_save(weekly):\n    saved = 0\n    weeks = 0\n    while saved >= 800:\n        saved += weekly\n        # MISSING\n    return weeks",
-                choices: [
-                    "Error: condition should be 'saved < 800' (not >=); Missing: weeks += 1 inside the loop",
-                    "Error: saved = 0 should be 800; Missing: break after saved += weekly",
-                    "Error: return weeks should be inside the while loop; Missing: print(saved)",
-                    "Error: while cannot compare variables; Missing: weekly = 0"
-                ],
-                correctIdx: 0,
-                explanation: "Loop while 'saved < 800' and increment 'weeks += 1' inside the loop to count each week."
+                type: "img_tag",
+                promptHtml: `Question 3: Complete the image tag by dragging the correct attribute and image file into the blanks.`,
+                plainPrompt: "Question 3: Complete the image tag using the right attribute and image file.",
+                tokens: ["src", "href", "\"cat.jpg\"", "\"notes.doc\"", "\"story.txt\""],
+                expectedSlots: ["src", "\"cat.jpg\""],
+                explanation: "The <img> tag uses the src attribute pointing to a valid image file such as \"cat.jpg\"."
             },
+
+            // --- Q4: COMPLETE THE <A> ANCHOR TAG ---
             {
-                prompt: "Question 8 (Discord Spam Filter): A bot checks a list of chat messages and stops checking as soon as it sees 'spam', returning True. Find the ERROR in the existing code and the MISSING line!",
-                code: "def has_spam(messages):\n    for msg in messages:\n        if msg = \"spam\":\n            return True\n    # MISSING",
-                choices: [
-                    "Error: 'msg = \"spam\"' uses = instead of ==; Missing: 'return False' after the loop finishes",
-                    "Error: return True stops the loop too early; Missing: break inside the if",
-                    "Error: messages cannot hold text; Missing: else: return False inside the loop",
-                    "Error: for loop needs range(); Missing: print(msg)"
-                ],
-                correctIdx: 0,
-                explanation: "Use '==' to compare strings and add 'return False' after the loop when no spam is found."
+                type: "anchor_tag",
+                promptHtml: `Question 4: Complete the link tag to match the sample output shown below.`,
+                plainPrompt: "Question 4: Complete the link tag so it displays 'Click here to open'.",
+                sampleHtml: `
+                    <div class="sample-mockup-box">
+                        <div class="sample-mockup-bar"><span class="sample-dots"><span></span><span></span><span></span></span> Sample Output</div>
+                        <div class="sample-mockup-body">
+                            <a href="javascript:void(0)" style="color:#0284C7; text-decoration:underline; font-weight:600;">Click here to open</a>
+                        </div>
+                    </div>
+                `,
+                tokens: ["href", "src", "\"https://example.com\"", "Click here to open", "Open image"],
+                expectedSlots: ["href", "\"https://example.com\"", "Click here to open"],
+                explanation: "Anchor tags use href=\"url\" inside the opening <a> tag and place the clickable text between <a> and </a>."
             },
+
+            // --- Q5: TABLE TAGS VS NORMAL TAGS ---
             {
-                prompt: "Question 9 (Mobile Data Saver): You have a 5 GB data cap. This function adds up daily app usage and stops once total usage would exceed 5 GB. Find the ERROR and the MISSING line!",
-                code: "def safe_usage(daily_list):\n    used = 0\n    for gb in daily_list:\n        if used + gb > 5:\n            # MISSING\n        used = gb\n    return used",
-                choices: [
-                    "Error: 'used = gb' overwrites instead of adding (needs used += gb); Missing: 'break' inside the if",
-                    "Error: used = 0 should be 5; Missing: 'continue' inside the if",
-                    "Error: > 5 should be < 5; Missing: 'return gb' inside the if",
-                    "Error: daily_list cannot have decimals; Missing: used = 0 inside the loop"
+                type: "buckets",
+                promptHtml: `Question 5: Separate the <span class="hl-teal">HTML Table Tags</span> from the <span class="hl-orange">Normal HTML Tags</span>.`,
+                plainPrompt: "Question 5: Separate the HTML Table Tags from the Normal HTML Tags.",
+                bucketA: { id: "table", title: "HTML Table Tags", colorClass: "hl-teal" },
+                bucketB: { id: "normal", title: "Normal HTML Tags", colorClass: "hl-orange" },
+                items: [
+                    { id: "t1", label: "<table>", target: "table" },
+                    { id: "t2", label: "<tr>", target: "table" },
+                    { id: "t3", label: "<td>", target: "table" },
+                    { id: "t4", label: "<th>", target: "table" },
+                    { id: "t5", label: "<p>", target: "normal" },
+                    { id: "t6", label: "<h1>", target: "normal" },
+                    { id: "t7", label: "<html>", target: "normal" }
                 ],
-                correctIdx: 0,
-                explanation: "Use 'break' to exit the loop at the 5 GB limit and 'used += gb' to add each day's usage."
+                explanation: "<table>, <tr>, <td>, and <th> build tables, whereas <p>, <h1>, and <html> are general page tags."
             },
+
+            // --- Q6: HTML PAGE WITH RED BACKGROUND (PAIRED TAGS) ---
             {
-                prompt: "Question 10 (Highest Boss Score): This function should find and return the HIGHEST score from a player's match history. Find the ERROR in the existing code and the MISSING line!",
-                code: "def top_score(scores):\n    best = 0\n    for s in scores:\n        if s < best:\n            # MISSING\n    return best",
+                type: "red_page",
+                promptHtml: `Question 6: Build the HTML page structure to match the red webpage sample shown below.`,
+                plainPrompt: "Question 6: Build the HTML page structure with a red background.",
+                sampleHtml: `
+                    <div class="sample-mockup-box">
+                        <div class="sample-mockup-bar"><span class="sample-dots"><span></span><span></span><span></span></span> Tab: My Red Page</div>
+                        <div class="sample-mockup-body" style="background:#EF4444; color:#FFFFFF; font-weight:700; min-height:48px; display:flex; align-items:center;">
+                            Welcome to my red webpage!
+                        </div>
+                    </div>
+                `,
+                blocks: [
+                    { id: "b_html", open: "<html>", close: "</html>", innerHint: "... page content ...", targetSlot: 0 },
+                    { id: "b_head", open: "<head>", close: "</head>", innerHint: "... page title ...", targetSlot: 1 },
+                    { id: "b_title", open: "<title>My Red Page", close: "</title>", innerHint: "", targetSlot: 2 },
+                    { id: "b_body_red", open: "<body bgcolor=\"red\">", close: "</body>", innerHint: "Welcome to my red webpage!", targetSlot: 3 },
+                    { id: "b_body_blue", open: "<body bgcolor=\"blue\">", close: "</body>", innerHint: "Welcome to my blue webpage!", targetSlot: -1 },
+                    { id: "b_p", open: "<p>", close: "</p>", innerHint: "Paragraph block", targetSlot: -1 }
+                ],
+                explanation: "A webpage wraps everything in <html>...</html>, puts <title> inside <head>, and sets bgcolor=\"red\" on <body>."
+            },
+
+            // --- Q7: STYLE A <P> TAG (MULTI-LINE FILL IN THE BLANKS) ---
+            {
+                type: "style_p",
+                promptHtml: `Question 7: Style the paragraph tag by dragging the right CSS properties to match the sample output shown below.`,
+                plainPrompt: "Question 7: Style the paragraph tag to match the sample output.",
+                sampleHtml: `
+                    <div class="sample-mockup-box">
+                        <div class="sample-mockup-bar"><span class="sample-dots"><span></span><span></span><span></span></span> Sample Output (Navy, 18px, Arial)</div>
+                        <div class="sample-mockup-body">
+                            <p style="color: navy; font-size: 18px; font-family: Arial, sans-serif; margin: 0;">Styled paragraph text</p>
+                        </div>
+                    </div>
+                `,
+                tokens: ["color", "font-size", "font-family", "bgcolor", "text-style", "align-text"],
+                validSet: ["color", "font-size", "font-family"],
+                explanation: "To match the sample text style, use color: navy;, font-size: 18px;, and font-family: Arial;."
+            },
+
+            // --- Q8: CENTER ALIGN TEXT (MULTIPLE CHOICE - NO TIMER) ---
+            {
+                type: "mcq",
+                promptHtml: `Question 8: I want to put my text in the center of the screen. Which CSS property should I use?`,
+                plainPrompt: "Question 8: I want to put my text in the center of the screen. Which CSS property should I use?",
                 choices: [
-                    "Error: 's < best' finds smaller numbers instead of 's > best'; Missing: 'best = s' inside the if",
-                    "Error: best = 0 should be 1000; Missing: 'best += s' inside the if",
-                    "Error: return best should be indented inside the loop; Missing: else: break",
-                    "Error: for s in scores needs a colon after scores[0]; Missing: print(s)"
+                    "text-align: center;",
+                    "align-center: text;",
+                    "font-align: middle;",
+                    "center-text: true;"
                 ],
                 correctIdx: 0,
-                explanation: "Check if 's > best' and update 'best = s' whenever a higher score is found."
+                explanation: "The text-align: center; property aligns text horizontally to the center of its container."
+            },
+
+            // --- Q9: MOVE TO THE NEXT LINE / GAP (MULTIPLE CHOICE - NO TIMER) ---
+            {
+                type: "mcq",
+                promptHtml: `Question 9: After completing a paragraph, I want to add a line break and move to the next line. Which tag am I going to use?`,
+                plainPrompt: "Question 9: Which tag adds a line break to move to the next line?",
+                choices: [
+                    "<br>",
+                    "<lb>",
+                    "<breakline>",
+                    "<next>"
+                ],
+                correctIdx: 0,
+                explanation: "The <br> tag inserts a single line break so content moves onto the next line."
+            },
+
+            // --- Q10: BROWSER TAB TITLE (MULTIPLE CHOICE - NO TIMER) ---
+            {
+                type: "mcq",
+                promptHtml: `Question 10: When I open my webpage in a browser, I want the browser tab to show "My Favorite Subject". Which tag should I use?`,
+                plainPrompt: "Question 10: Which tag sets the text shown on the browser tab?",
+                choices: [
+                    "<title>My Favorite Subject</title>",
+                    "<header>My Favorite Subject</header>",
+                    "<caption>My Favorite Subject</caption>",
+                    "<tab>My Favorite Subject</tab>"
+                ],
+                correctIdx: 0,
+                explanation: "The <title> tag placed inside the <head> section sets the title shown on the browser tab."
             }
         ];
 
         let activeIndex = 0;
         let runningScore = 0;
-        let l1Points = 0; 
-        let l2Points = 0; 
+        let l1Points = 0;
+        let l2Points = 0;
 
         let clockIntervalRef = null;
         let secondsRemaining = 60;
         let phaseLocked = false;
         let userResponsesLog = [];
+        let activeQuestionState = {};
 
-        // DOM elements
+        // DOM references
         const viewHome = document.getElementById("view-home");
         const viewArena = document.getElementById("view-arena");
         const viewReport = document.getElementById("view-report");
 
         const hudIndexTracker = document.getElementById("hud-index-tracker");
         const hudScoreTracker = document.getElementById("hud-score-tracker");
+        const arenaTimerContainer = document.getElementById("arena-timer-container");
         const arenaTimerFill = document.getElementById("arena-timer-fill");
         const arenaTimerText = document.getElementById("arena-timer-text");
-        
+
         const arenaLevelHeader = document.getElementById("arena-level-header");
         const arenaQuestionText = document.getElementById("arena-question-text");
-        const arenaSyntaxTerminal = document.getElementById("arena-syntax-terminal");
-        const arenaChoicesStack = document.getElementById("arena-choices-stack");
-        
+        const arenaSamplePreview = document.getElementById("arena-sample-preview");
+        const arenaWorkspace = document.getElementById("arena-interactive-workspace");
+
         const arenaExplanationDrawer = document.getElementById("arena-explanation-drawer");
         const explanationBodyText = document.getElementById("explanation-body-text");
+        const btnResetBoard = document.getElementById("btn-reset-board");
+        const btnSubmitAnswer = document.getElementById("btn-submit-answer");
         const btnNextStep = document.getElementById("btn-next-step");
 
-        // --- DYNAMIC SHUFFLE HELPER (Fisher-Yates) ---
-        function shuffleQuestionChoices(question) {
-            const correctAnswerText = question.choices[question.correctIdx];
-            for (let i = question.choices.length - 1; i > 0; i--) {
+        // --- UTILITY: SHUFFLE ARRAY ---
+        function shuffledCopy(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [question.choices[i], question.choices[j]] = [question.choices[j], question.choices[i]];
+                [copy[i], copy[j]] = [copy[j], copy[i]];
             }
-            question.correctIdx = question.choices.indexOf(correctAnswerText);
+            return copy;
         }
 
         // --- FLOATING CANDY SPIRALS ANIMATION ---
@@ -678,11 +1051,10 @@
             spiralCanvas.width = window.innerWidth;
             spiralCanvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resizeSpiralCanvas);
+        window.addEventListener("resize", resizeSpiralCanvas);
         resizeSpiralCanvas();
 
         const candyColors = ["#38BDF8", "#818CF8", "#F472B6", "#FBBF24", "#34D399"];
-
         for (let i = 0; i < 24; i++) {
             spiralItems.push({
                 x: Math.random() * spiralCanvas.width,
@@ -697,23 +1069,19 @@
 
         function drawFloatingSpirals() {
             spiralCtx.clearRect(0, 0, spiralCanvas.width, spiralCanvas.height);
-
             spiralItems.forEach(sp => {
                 sp.y -= sp.speedY;
                 sp.rot += sp.rotSpeed;
-
                 if (sp.y < -30) {
                     sp.y = spiralCanvas.height + 30;
                     sp.x = Math.random() * spiralCanvas.width;
                 }
-
                 spiralCtx.save();
                 spiralCtx.translate(sp.x, sp.y);
                 spiralCtx.rotate(sp.rot);
                 spiralCtx.strokeStyle = sp.color;
                 spiralCtx.lineWidth = 2.5;
                 spiralCtx.beginPath();
-
                 for (let a = 0; a < Math.PI * 3.5; a += 0.2) {
                     let r = (a / (Math.PI * 3.5)) * sp.radius;
                     let px = r * Math.cos(a);
@@ -724,7 +1092,6 @@
                 spiralCtx.stroke();
                 spiralCtx.restore();
             });
-
             requestAnimationFrame(drawFloatingSpirals);
         }
         drawFloatingSpirals();
@@ -737,47 +1104,79 @@
             targetPanel.classList.add("active");
         }
 
-        // --- QUIZ LIFECYCLE ---
+        // --- INITIALIZE QUIZ ---
         function initializeQuizArena() {
             activeIndex = 0;
             runningScore = 0;
-            l1Points = 0; 
-            l2Points = 0; 
+            l1Points = 0;
+            l2Points = 0;
             userResponsesLog = [];
-            hudScoreTracker.innerText = "⭐ Score: 0";
-            
-            fullQuizChallengesRepo.forEach(shuffleQuestionChoices);
-
+            hudScoreTracker.innerText = "Score: 0";
             switchGameView(viewArena);
             displayActiveChallengeCard();
         }
 
+        // --- RENDER CURRENT QUESTION ---
         function displayActiveChallengeCard() {
             phaseLocked = false;
+            clearInterval(clockIntervalRef);
+
             arenaExplanationDrawer.style.display = "none";
             btnNextStep.style.display = "none";
-            
-            arenaChoicesStack.innerHTML = "";
-            arenaSyntaxTerminal.style.display = "none";
+            btnSubmitAnswer.style.display = "none";
+            btnResetBoard.style.display = "none";
+            arenaWorkspace.innerHTML = "";
+            arenaSamplePreview.innerHTML = "";
 
-            const currentObj = fullQuizChallengesRepo[activeIndex];
-            
+            const qObj = fullQuizChallengesRepo[activeIndex];
             hudIndexTracker.innerText = `Question ${activeIndex + 1}/10`;
-            arenaQuestionText.innerText = currentObj.prompt;
+            arenaQuestionText.innerHTML = qObj.promptHtml;
 
             if (activeIndex < 5) {
-                arenaLevelHeader.innerText = "Part 1: Spot Syntax & Logic Errors 🛠️";
+                arenaLevelHeader.innerText = "Part 1: Interactive HTML & CSS Builders";
             } else {
-                arenaLevelHeader.innerText = "Part 2: Find Missing Logic & Code Errors 🔍";
+                arenaLevelHeader.innerText = "Part 2: Page Structure, Styling & Tags";
             }
 
-            if (currentObj.code) {
-                arenaSyntaxTerminal.innerText = currentObj.code;
-                arenaSyntaxTerminal.style.display = "block";
+            if (qObj.sampleHtml) {
+                arenaSamplePreview.innerHTML = qObj.sampleHtml;
             }
 
-            buildSelectionGrid(currentObj);
-            triggerCountdownClock();
+            if (qObj.type === "buckets") {
+                renderBucketsQuestion(qObj);
+                btnResetBoard.style.display = "inline-block";
+                btnSubmitAnswer.style.display = "inline-block";
+            } else if (qObj.type === "grocery_list") {
+                renderGroceryListQuestion(qObj);
+                btnResetBoard.style.display = "inline-block";
+                btnSubmitAnswer.style.display = "inline-block";
+            } else if (qObj.type === "img_tag") {
+                renderImgTagQuestion(qObj);
+                btnResetBoard.style.display = "inline-block";
+                btnSubmitAnswer.style.display = "inline-block";
+            } else if (qObj.type === "anchor_tag") {
+                renderAnchorTagQuestion(qObj);
+                btnResetBoard.style.display = "inline-block";
+                btnSubmitAnswer.style.display = "inline-block";
+            } else if (qObj.type === "red_page") {
+                renderRedPageQuestion(qObj);
+                btnResetBoard.style.display = "inline-block";
+                btnSubmitAnswer.style.display = "inline-block";
+            } else if (qObj.type === "style_p") {
+                renderStylePQuestion(qObj);
+                btnResetBoard.style.display = "inline-block";
+                btnSubmitAnswer.style.display = "inline-block";
+            } else if (qObj.type === "mcq") {
+                renderMcqQuestion(qObj);
+            }
+
+            // Timer only for Q1–Q7 (no timer for Q8, Q9, Q10)
+            if (activeIndex < 7) {
+                arenaTimerContainer.style.display = "block";
+                triggerCountdownClock();
+            } else {
+                arenaTimerContainer.style.display = "none";
+            }
         }
 
         function triggerCountdownClock() {
@@ -795,51 +1194,666 @@
 
                 if (secondsRemaining <= 0) {
                     clearInterval(clockIntervalRef);
-                    processRoundTimeout();
+                    if (!phaseLocked) {
+                        evaluateCurrentInteractive(true);
+                    }
                 }
             }, 100);
         }
 
-        function buildSelectionGrid(dataObj) {
-            dataObj.choices.forEach((textStr, iKey) => {
-                const btn = document.createElement("button");
-                btn.className = "choice-item-btn";
-                btn.innerText = textStr;
-                btn.onclick = () => parseSelectionChoiceInput(iKey, btn);
-                arenaChoicesStack.appendChild(btn);
+        // ==========================================
+        // 1. TWO-BUCKET SORTING (Q1 & Q5)
+        // ==========================================
+        function renderBucketsQuestion(qObj) {
+            const shuffledItems = shuffledCopy(qObj.items);
+            const placements = {};
+            qObj.items.forEach(item => { placements[item.id] = "pool"; });
+            activeQuestionState = { placements };
+
+            const poolDiv = document.createElement("div");
+            poolDiv.className = "token-pool";
+            poolDiv.id = "bucket-pool-zone";
+
+            shuffledItems.forEach(item => {
+                const chip = document.createElement("div");
+                chip.className = "drag-chip";
+                chip.id = `chip-${item.id}`;
+                chip.innerText = item.label;
+                chip.draggable = true;
+
+                chip.addEventListener("dragstart", e => {
+                    e.dataTransfer.setData("text/plain", JSON.stringify({ itemId: item.id }));
+                });
+
+                chip.addEventListener("click", () => {
+                    if (phaseLocked) return;
+                    const currentZone = activeQuestionState.placements[item.id];
+                    const nextZone = currentZone === "pool"
+                        ? qObj.bucketA.id
+                        : (currentZone === qObj.bucketA.id ? qObj.bucketB.id : "pool");
+                    moveBucketChip(item.id, nextZone);
+                });
+
+                poolDiv.appendChild(chip);
             });
+
+            const bucketsGrid = document.createElement("div");
+            bucketsGrid.className = "buckets-grid";
+
+            [qObj.bucketA, qObj.bucketB].forEach(bkt => {
+                const bucketEl = document.createElement("div");
+                bucketEl.className = "drop-bucket";
+                bucketEl.innerHTML = `
+                    <div class="bucket-header"><span class="${bkt.colorClass}">${bkt.title}</span></div>
+                    <div class="bucket-items" id="bucket-zone-${bkt.id}"></div>
+                `;
+
+                bucketEl.addEventListener("dragover", e => {
+                    e.preventDefault();
+                    if (!phaseLocked) bucketEl.classList.add("drag-over");
+                });
+                bucketEl.addEventListener("dragleave", () => bucketEl.classList.remove("drag-over"));
+                bucketEl.addEventListener("drop", e => {
+                    e.preventDefault();
+                    bucketEl.classList.remove("drag-over");
+                    if (phaseLocked) return;
+                    try {
+                        const payload = JSON.parse(e.dataTransfer.getData("text/plain"));
+                        if (payload.itemId) moveBucketChip(payload.itemId, bkt.id);
+                    } catch (err) {}
+                });
+
+                bucketsGrid.appendChild(bucketEl);
+            });
+
+            poolDiv.addEventListener("dragover", e => {
+                e.preventDefault();
+            });
+            poolDiv.addEventListener("drop", e => {
+                e.preventDefault();
+                if (phaseLocked) return;
+                try {
+                    const payload = JSON.parse(e.dataTransfer.getData("text/plain"));
+                    if (payload.itemId) moveBucketChip(payload.itemId, "pool");
+                } catch (err) {}
+            });
+
+            arenaWorkspace.appendChild(poolDiv);
+            arenaWorkspace.appendChild(bucketsGrid);
         }
 
-        function parseSelectionChoiceInput(userClickedIdx, elementNodeRef) {
+        function moveBucketChip(itemId, targetZoneId) {
+            const chip = document.getElementById(`chip-${itemId}`);
+            if (!chip) return;
+            activeQuestionState.placements[itemId] = targetZoneId;
+            if (targetZoneId === "pool") {
+                document.getElementById("bucket-pool-zone").appendChild(chip);
+            } else {
+                document.getElementById(`bucket-zone-${targetZoneId}`).appendChild(chip);
+            }
+        }
+
+        // ==========================================
+        // 2. SQUARE GROCERY LIST BUILDER (Q2)
+        // ==========================================
+        function renderGroceryListQuestion(qObj) {
+            const tokens = shuffledCopy(qObj.tokens);
+            activeQuestionState = { slots: new Array(qObj.expectedSlots.length).fill(null) };
+
+            const grid = document.createElement("div");
+            grid.className = "q2-layout-grid";
+
+            const sampleCard = document.createElement("div");
+            sampleCard.className = "side-panel-card";
+            sampleCard.innerHTML = `
+                <div class="side-panel-title">Sample Output</div>
+                <div style="background:#FFFFFF; border:2px solid var(--border-dark); border-radius:10px; padding:12px 16px;">
+                    <ul style="list-style-type:square; padding-left:20px; font-weight:600; line-height:1.8;">
+                        <li>Milk</li>
+                        <li>Eggs</li>
+                        <li>Bread</li>
+                    </ul>
+                </div>
+            `;
+
+            const optionsCard = document.createElement("div");
+            optionsCard.className = "side-panel-card";
+            optionsCard.innerHTML = `<div class="side-panel-title">Code Blocks</div>`;
+            const verticalPool = document.createElement("div");
+            verticalPool.className = "token-pool vertical-pool";
+            verticalPool.style.marginBottom = "0";
+            tokens.forEach((tok, idx) => {
+                verticalPool.appendChild(createDraggableTokenChip(tok, `q2-tok-${idx}`));
+            });
+            optionsCard.appendChild(verticalPool);
+
+            const builderWrapper = document.createElement("div");
+            const builderBox = document.createElement("div");
+            builderBox.className = "code-builder-box";
+            builderBox.innerHTML = `
+                <div>${makeSlotHtml(0, "open list tag")} ${makeSlotHtml(1, "list style")}</div>
+                <div style="padding-left:24px;">${makeSlotHtml(2, "item 1")}</div>
+                <div style="padding-left:24px;">${makeSlotHtml(3, "item 2")}</div>
+                <div style="padding-left:24px;">${makeSlotHtml(4, "item 3")}</div>
+                <div>${makeSlotHtml(5, "close list tag")}</div>
+            `;
+
+            const revealBanner = document.createElement("div");
+            revealBanner.id = "q2-syntax-reveal";
+            revealBanner.className = "syntax-reveal-banner";
+
+            builderWrapper.appendChild(builderBox);
+            builderWrapper.appendChild(revealBanner);
+
+            grid.appendChild(sampleCard);
+            grid.appendChild(optionsCard);
+            grid.appendChild(builderWrapper);
+            arenaWorkspace.appendChild(grid);
+            bindSlotEvents(builderBox);
+        }
+
+        // ==========================================
+        // 3. COMPLETE THE <IMG> TAG (Q3)
+        // ==========================================
+        function renderImgTagQuestion(qObj) {
+            const tokens = shuffledCopy(qObj.tokens);
+            activeQuestionState = { slots: new Array(qObj.expectedSlots.length).fill(null) };
+
+            const poolDiv = document.createElement("div");
+            poolDiv.className = "token-pool";
+            tokens.forEach((tok, idx) => {
+                poolDiv.appendChild(createDraggableTokenChip(tok, `q3-tok-${idx}`));
+            });
+
+            const builderBox = document.createElement("div");
+            builderBox.className = "code-builder-box";
+            builderBox.innerHTML = `
+                <div>&lt;img ${makeSlotHtml(0, "attribute")}=${makeSlotHtml(1, "image file")} alt="Cute cat"&gt;</div>
+            `;
+
+            arenaWorkspace.appendChild(poolDiv);
+            arenaWorkspace.appendChild(builderBox);
+            bindSlotEvents(builderBox);
+        }
+
+        // ==========================================
+        // 4. COMPLETE THE <A> ANCHOR TAG (Q4)
+        // ==========================================
+        function renderAnchorTagQuestion(qObj) {
+            const tokens = shuffledCopy(qObj.tokens);
+            activeQuestionState = { slots: new Array(qObj.expectedSlots.length).fill(null) };
+
+            const poolDiv = document.createElement("div");
+            poolDiv.className = "token-pool";
+            tokens.forEach((tok, idx) => {
+                poolDiv.appendChild(createDraggableTokenChip(tok, `q4-tok-${idx}`));
+            });
+
+            const builderBox = document.createElement("div");
+            builderBox.className = "code-builder-box";
+            builderBox.innerHTML = `
+                <div>&lt;a ${makeSlotHtml(0, "attribute")}=${makeSlotHtml(1, "website link")}&gt;${makeSlotHtml(2, "clickable text")}&lt;/a&gt;</div>
+            `;
+
+            arenaWorkspace.appendChild(poolDiv);
+            arenaWorkspace.appendChild(builderBox);
+            bindSlotEvents(builderBox);
+        }
+
+        // ==========================================
+        // 6. RED BACKGROUND HTML PAGE (Q6 - TRUE NESTED CONTAINERS)
+        // ==========================================
+        function renderRedPageQuestion(qObj) {
+            const shuffledBlocks = shuffledCopy(qObj.blocks);
+            activeQuestionState = {
+                slots: new Array(4).fill(null) // stores blockId
+            };
+
+            const poolDiv = document.createElement("div");
+            poolDiv.className = "token-pool";
+            shuffledBlocks.forEach(blk => {
+                const chip = document.createElement("div");
+                chip.className = "drag-chip";
+                chip.style.display = "flex";
+                chip.style.flexDirection = "column";
+                chip.style.alignItems = "flex-start";
+                chip.style.gap = "2px";
+                chip.innerHTML = `<span>${escapeHtml(blk.open)}</span><span style="opacity:0.75;">${escapeHtml(blk.close)}</span>`;
+                chip.draggable = true;
+                chip.addEventListener("dragstart", e => {
+                    e.dataTransfer.setData("text/plain", JSON.stringify({ blockId: blk.id }));
+                });
+                chip.addEventListener("click", () => {
+                    if (phaseLocked) return;
+                    const emptyIdx = activeQuestionState.slots.findIndex(v => v === null);
+                    if (emptyIdx !== -1) {
+                        placePairedBlockInSlot(emptyIdx, blk.id, qObj);
+                    }
+                });
+                poolDiv.appendChild(chip);
+            });
+
+            const builderBox = document.createElement("div");
+            builderBox.className = "code-builder-box";
+            builderBox.innerHTML = `
+                <div style="font-size:12px; color:#94A3B8; margin-bottom:8px;">Drop the paired tags so each container wraps around its inner tags:</div>
+                <div id="q6-nest-0" class="paired-block-wrapper" style="border-style:dashed; border-color:#38BDF8;">
+                    <div id="q6-slot-0" class="code-slot" data-slot="0" style="display:flex; width:100%; justify-content:flex-start; padding:6px 12px; margin:0;">[ 1. Outer Document Tag ]</div>
+                    <div style="padding-left: 22px; display:flex; flex-direction:column; gap:6px;">
+                        <div id="q6-nest-1" class="paired-block-wrapper" style="border-style:dashed; border-color:#38BDF8; margin:0;">
+                            <div id="q6-slot-1" class="code-slot" data-slot="1" style="display:flex; width:100%; justify-content:flex-start; padding:6px 12px; margin:0;">[ 2. Header Section Tag ]</div>
+                            <div style="padding-left: 22px;">
+                                <div id="q6-nest-2" class="paired-block-wrapper" style="border-style:dashed; border-color:#38BDF8; margin:0;">
+                                    <div id="q6-slot-2" class="code-slot" data-slot="2" style="display:flex; width:100%; justify-content:flex-start; padding:6px 12px; margin:0;">[ 3. Browser Tab Title Tag ]</div>
+                                    <div id="q6-close-2" class="paired-tag-line" style="display:none;"></div>
+                                </div>
+                            </div>
+                            <div id="q6-close-1" class="paired-tag-line" style="display:none;"></div>
+                        </div>
+                        <div id="q6-nest-3" class="paired-block-wrapper" style="border-style:dashed; border-color:#38BDF8; margin:0;">
+                            <div id="q6-slot-3" class="code-slot" data-slot="3" style="display:flex; width:100%; justify-content:flex-start; padding:6px 12px; margin:0;">[ 4. Red Body Section Tag ]</div>
+                            <div id="q6-inner-3" class="paired-inner-placeholder" style="display:none;"></div>
+                            <div id="q6-close-3" class="paired-tag-line" style="display:none;"></div>
+                        </div>
+                    </div>
+                    <div id="q6-close-0" class="paired-tag-line" style="display:none;"></div>
+                </div>
+            `;
+
+            arenaWorkspace.appendChild(poolDiv);
+            arenaWorkspace.appendChild(builderBox);
+
+            for (let s = 0; s < 4; s++) {
+                const slotEl = document.getElementById(`q6-slot-${s}`);
+                const nestEl = document.getElementById(`q6-nest-${s}`);
+
+                [slotEl, nestEl].forEach(dropTarget => {
+                    dropTarget.addEventListener("dragover", e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!phaseLocked) nestEl.classList.add("drag-over");
+                    });
+                    dropTarget.addEventListener("dragleave", e => {
+                        e.stopPropagation();
+                        nestEl.classList.remove("drag-over");
+                    });
+                    dropTarget.addEventListener("drop", e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        nestEl.classList.remove("drag-over");
+                        if (phaseLocked) return;
+                        try {
+                            const payload = JSON.parse(e.dataTransfer.getData("text/plain"));
+                            if (payload.blockId) placePairedBlockInSlot(s, payload.blockId, qObj);
+                        } catch (err) {}
+                    });
+                });
+
+                slotEl.addEventListener("click", e => {
+                    e.stopPropagation();
+                    if (phaseLocked) return;
+                    if (activeQuestionState.slots[s] !== null) {
+                        clearPairedBlockSlot(s);
+                    }
+                });
+            }
+        }
+
+        function placePairedBlockInSlot(slotIdx, blockId, qObj) {
+            const blk = qObj.blocks.find(b => b.id === blockId);
+            if (!blk) return;
+            activeQuestionState.slots[slotIdx] = blockId;
+
+            const nestEl = document.getElementById(`q6-nest-${slotIdx}`);
+            const slotEl = document.getElementById(`q6-slot-${slotIdx}`);
+            const closeEl = document.getElementById(`q6-close-${slotIdx}`);
+            const inner3El = document.getElementById("q6-inner-3");
+
+            nestEl.style.borderStyle = "solid";
+            slotEl.classList.add("filled");
+            slotEl.style.background = "transparent";
+            slotEl.style.border = "none";
+            slotEl.style.padding = "0";
+            slotEl.style.minHeight = "auto";
+            slotEl.style.color = "#BAE6FD";
+            slotEl.innerText = blk.open;
+
+            if (slotIdx === 3 && inner3El) {
+                if (blk.innerHint) {
+                    inner3El.style.display = "block";
+                    inner3El.innerText = blk.innerHint;
+                } else {
+                    inner3El.style.display = "none";
+                }
+            }
+
+            if (closeEl) {
+                closeEl.style.display = "block";
+                closeEl.innerText = blk.close;
+            }
+        }
+
+        function clearPairedBlockSlot(slotIdx) {
+            const labels = [
+                "[ 1. Outer Document Tag ]",
+                "[ 2. Header Section Tag ]",
+                "[ 3. Browser Tab Title Tag ]",
+                "[ 4. Red Body Section Tag ]"
+            ];
+            activeQuestionState.slots[slotIdx] = null;
+
+            const nestEl = document.getElementById(`q6-nest-${slotIdx}`);
+            const slotEl = document.getElementById(`q6-slot-${slotIdx}`);
+            const closeEl = document.getElementById(`q6-close-${slotIdx}`);
+            const inner3El = document.getElementById("q6-inner-3");
+
+            nestEl.style.borderStyle = "dashed";
+            slotEl.className = "code-slot";
+            slotEl.style.cssText = "display:flex; width:100%; justify-content:flex-start; padding:6px 12px; margin:0;";
+            slotEl.innerText = labels[slotIdx];
+
+            if (slotIdx === 3 && inner3El) {
+                inner3El.style.display = "none";
+                inner3El.innerText = "";
+            }
+            if (closeEl) {
+                closeEl.style.display = "none";
+                closeEl.innerText = "";
+            }
+        }
+
+        // ==========================================
+        // 7. STYLE A <P> TAG (SEPARATE LINES FILL IN THE BLANKS)
+        // ==========================================
+        function renderStylePQuestion(qObj) {
+            const tokens = shuffledCopy(qObj.tokens);
+            activeQuestionState = { slots: new Array(3).fill(null) };
+
+            const poolDiv = document.createElement("div");
+            poolDiv.className = "token-pool";
+            tokens.forEach((tok, idx) => {
+                poolDiv.appendChild(createDraggableTokenChip(tok, `q7-tok-${idx}`));
+            });
+
+            const builderBox = document.createElement("div");
+            builderBox.className = "code-builder-box";
+            builderBox.innerHTML = `
+                <div>&lt;p style="</div>
+                <div style="padding-left: 24px;">${makeSlotHtml(0, "property 1")}: navy;</div>
+                <div style="padding-left: 24px;">${makeSlotHtml(1, "property 2")}: 18px;</div>
+                <div style="padding-left: 24px;">${makeSlotHtml(2, "property 3")}: Arial;</div>
+                <div>"&gt;</div>
+                <div style="padding-left: 24px; color: #94A3B8;">Styled paragraph text</div>
+                <div>&lt;/p&gt;</div>
+            `;
+
+            arenaWorkspace.appendChild(poolDiv);
+            arenaWorkspace.appendChild(builderBox);
+            bindSlotEvents(builderBox);
+        }
+
+        // ==========================================
+        // 8-10. MULTIPLE CHOICE (Q8, Q9, Q10)
+        // ==========================================
+        function renderMcqQuestion(qObj) {
+            const indexedChoices = qObj.choices.map((text, idx) => ({
+                text,
+                isCorrect: idx === qObj.correctIdx
+            }));
+            const shuffled = shuffledCopy(indexedChoices);
+            activeQuestionState = { choices: shuffled };
+
+            const gridDiv = document.createElement("div");
+            gridDiv.className = "choices-stack-grid";
+
+            shuffled.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "choice-item-btn";
+                btn.innerText = opt.text;
+                btn.onclick = () => handleMcqSelection(idx, btn);
+                gridDiv.appendChild(btn);
+            });
+
+            arenaWorkspace.appendChild(gridDiv);
+        }
+
+        function handleMcqSelection(selectedIdx, btnElement) {
             if (phaseLocked) return;
             phaseLocked = true;
             clearInterval(clockIntervalRef);
 
-            const questObj = fullQuizChallengesRepo[activeIndex];
-            const optionsArray = arenaChoicesStack.children;
-            const isCorrect = (userClickedIdx === questObj.correctIdx);
+            const qObj = fullQuizChallengesRepo[activeIndex];
+            const choices = activeQuestionState.choices;
+            const isCorrect = choices[selectedIdx].isCorrect;
+            const correctChoiceObj = choices.find(c => c.isCorrect);
+
+            const allBtns = arenaWorkspace.querySelectorAll(".choice-item-btn");
+            if (isCorrect) {
+                btnElement.classList.add("flash-green");
+                runningScore++;
+                tallyCategoryPerformanceMetrics();
+                hudScoreTracker.innerText = `Score: ${runningScore}`;
+            } else {
+                btnElement.classList.add("flash-red");
+                choices.forEach((c, i) => {
+                    if (c.isCorrect) allBtns[i].classList.add("flash-green");
+                });
+            }
 
             userResponsesLog.push({
                 index: activeIndex + 1,
-                prompt: questObj.prompt,
-                code: questObj.code || null,
-                userChoiceText: questObj.choices[userClickedIdx],
-                correctChoiceText: questObj.choices[questObj.correctIdx],
+                prompt: qObj.plainPrompt,
+                userChoiceText: choices[selectedIdx].text,
+                correctChoiceText: correctChoiceObj.text,
                 isCorrect: isCorrect,
-                explanation: questObj.explanation
+                explanation: qObj.explanation
             });
 
-            if (isCorrect) {
-                elementNodeRef.classList.add("flash-green");
-                runningScore++;
-                tallyCategoryPerformanceMetrics();
-                hudScoreTracker.innerText = `⭐ Score: ${runningScore}`;
-            } else {
-                elementNodeRef.classList.add("flash-red");
-                optionsArray[questObj.correctIdx].classList.add("flash-green");
+            displayExplanationDrawer(qObj.explanation);
+        }
+
+        // --- SHARED SLOT & TOKEN HELPERS ---
+        function createDraggableTokenChip(textStr, idStr) {
+            const chip = document.createElement("div");
+            chip.className = "drag-chip";
+            chip.id = idStr;
+            chip.innerText = textStr;
+            chip.draggable = true;
+            chip.addEventListener("dragstart", e => {
+                e.dataTransfer.setData("text/plain", JSON.stringify({ text: textStr }));
+            });
+            chip.addEventListener("click", () => {
+                if (phaseLocked) return;
+                const emptyIdx = activeQuestionState.slots.findIndex(v => v === null);
+                if (emptyIdx !== -1) {
+                    fillSlot(emptyIdx, textStr);
+                }
+            });
+            return chip;
+        }
+
+        function makeSlotHtml(slotIndex, placeholderText) {
+            return `<span class="code-slot" data-slot="${slotIndex}" data-placeholder="${placeholderText}">[ ${placeholderText} ]</span>`;
+        }
+
+        function bindSlotEvents(container) {
+            const slots = container.querySelectorAll(".code-slot");
+            slots.forEach(slotEl => {
+                const sIdx = parseInt(slotEl.dataset.slot, 10);
+                slotEl.addEventListener("dragover", e => {
+                    e.preventDefault();
+                    if (!phaseLocked) slotEl.classList.add("drag-over");
+                });
+                slotEl.addEventListener("dragleave", () => slotEl.classList.remove("drag-over"));
+                slotEl.addEventListener("drop", e => {
+                    e.preventDefault();
+                    slotEl.classList.remove("drag-over");
+                    if (phaseLocked) return;
+                    try {
+                        const payload = JSON.parse(e.dataTransfer.getData("text/plain"));
+                        if (payload.text !== undefined) fillSlot(sIdx, payload.text);
+                    } catch (err) {}
+                });
+                slotEl.addEventListener("click", () => {
+                    if (phaseLocked) return;
+                    if (activeQuestionState.slots[sIdx] !== null) {
+                        clearSlot(sIdx);
+                    }
+                });
+            });
+        }
+
+        function fillSlot(slotIdx, textStr) {
+            activeQuestionState.slots[slotIdx] = textStr;
+            const slotEl = arenaWorkspace.querySelector(`.code-slot[data-slot="${slotIdx}"]`);
+            if (slotEl) {
+                slotEl.innerText = textStr;
+                slotEl.classList.add("filled");
+            }
+        }
+
+        function clearSlot(slotIdx) {
+            activeQuestionState.slots[slotIdx] = null;
+            const slotEl = arenaWorkspace.querySelector(`.code-slot[data-slot="${slotIdx}"]`);
+            if (slotEl) {
+                slotEl.innerText = `[ ${slotEl.dataset.placeholder} ]`;
+                slotEl.classList.remove("filled");
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // --- EVALUATE INTERACTIVE QUESTIONS (Q1–Q7) ---
+        function evaluateCurrentInteractive(isTimeout = false) {
+            if (phaseLocked) return;
+            phaseLocked = true;
+            clearInterval(clockIntervalRef);
+
+            btnSubmitAnswer.style.display = "none";
+            btnResetBoard.style.display = "none";
+
+            const qObj = fullQuizChallengesRepo[activeIndex];
+            let isAllCorrect = false;
+            let userSummary = "";
+            let correctSummary = "";
+            let finalExplanation = qObj.explanation;
+
+            if (qObj.type === "buckets") {
+                let correctCount = 0;
+                const placedSummary = [];
+
+                qObj.items.forEach(item => {
+                    const placedZone = activeQuestionState.placements[item.id];
+                    const chip = document.getElementById(`chip-${item.id}`);
+                    if (placedZone === item.target) {
+                        correctCount++;
+                        if (chip) chip.classList.add("chip-correct");
+                    } else if (placedZone !== "pool") {
+                        if (chip) chip.classList.add("chip-wrong");
+                    }
+                    if (placedZone !== "pool") {
+                        const bucketTitle = placedZone === qObj.bucketA.id ? qObj.bucketA.title : qObj.bucketB.title;
+                        placedSummary.push(`${item.label} -> ${bucketTitle}`);
+                    }
+                });
+
+                isAllCorrect = (correctCount === qObj.items.length);
+                userSummary = isTimeout && placedSummary.length === 0
+                    ? "Time ran out (No response)"
+                    : (placedSummary.length ? placedSummary.join(", ") : "No items placed");
+                correctSummary = qObj.items.map(i => `${i.label} -> ${i.target === qObj.bucketA.id ? qObj.bucketA.title : qObj.bucketB.title}`).join(", ");
+
+            } else if (qObj.type === "grocery_list" || qObj.type === "img_tag" || qObj.type === "anchor_tag") {
+                let correctSlots = 0;
+                qObj.expectedSlots.forEach((expectedVal, idx) => {
+                    const userVal = activeQuestionState.slots[idx];
+                    const slotEl = arenaWorkspace.querySelector(`.code-slot[data-slot="${idx}"]`);
+                    if (userVal === expectedVal) {
+                        correctSlots++;
+                        if (slotEl) slotEl.classList.add("slot-correct");
+                    } else {
+                        if (slotEl) slotEl.classList.add("slot-wrong");
+                    }
+                });
+
+                isAllCorrect = (correctSlots === qObj.expectedSlots.length);
+                userSummary = isTimeout && activeQuestionState.slots.every(s => s === null)
+                    ? "Time ran out (No response)"
+                    : activeQuestionState.slots.map(s => s || "[blank]").join(" ");
+                correctSummary = qObj.expectedSlots.join(" ");
+
+                if (qObj.type === "grocery_list") {
+                    const revealBox = document.getElementById("q2-syntax-reveal");
+                    if (revealBox) {
+                        revealBox.style.display = "block";
+                        revealBox.innerText = "Correct HTML Syntax:\n" + qObj.correctSyntax;
+                    }
+                }
+
+            } else if (qObj.type === "red_page") {
+                let correctSlots = 0;
+                for (let s = 0; s < 4; s++) {
+                    const chosenBlockId = activeQuestionState.slots[s];
+                    const chosenBlock = qObj.blocks.find(b => b.id === chosenBlockId);
+                    const nestEl = document.getElementById(`q6-nest-${s}`);
+                    if (chosenBlock && chosenBlock.targetSlot === s) {
+                        correctSlots++;
+                        if (nestEl) nestEl.classList.add("slot-correct");
+                    } else {
+                        if (nestEl) nestEl.classList.add("slot-wrong");
+                    }
+                }
+
+                isAllCorrect = (correctSlots === 4);
+                userSummary = isTimeout && activeQuestionState.slots.every(s => s === null)
+                    ? "Time ran out (No response)"
+                    : activeQuestionState.slots.map(id => {
+                        const b = qObj.blocks.find(x => x.id === id);
+                        return b ? `${b.open}...${b.close}` : "[blank]";
+                    }).join(" > ");
+                correctSummary = "<html>...</html> > <head>...</head> > <title>My Red Page</title> > <body bgcolor=\"red\">...</body>";
+
+            } else if (qObj.type === "style_p") {
+                const chosen = activeQuestionState.slots;
+                const usedSet = new Set();
+                let validCount = 0;
+
+                chosen.forEach((val, idx) => {
+                    const slotEl = arenaWorkspace.querySelector(`.code-slot[data-slot="${idx}"]`);
+                    if (val && qObj.validSet.includes(val) && !usedSet.has(val)) {
+                        usedSet.add(val);
+                        validCount++;
+                        if (slotEl) slotEl.classList.add("slot-correct");
+                    } else {
+                        if (slotEl) slotEl.classList.add("slot-wrong");
+                    }
+                });
+
+                isAllCorrect = (validCount === 3);
+                userSummary = isTimeout && chosen.every(s => s === null)
+                    ? "Time ran out (No response)"
+                    : chosen.map(s => s || "[blank]").join(", ");
+                correctSummary = "color, font-size, font-family";
             }
 
-            displayExplanationDrawer(questObj.explanation);
+            if (isAllCorrect) {
+                runningScore++;
+                tallyCategoryPerformanceMetrics();
+                hudScoreTracker.innerText = `Score: ${runningScore}`;
+            }
+
+            userResponsesLog.push({
+                index: activeIndex + 1,
+                prompt: qObj.plainPrompt,
+                userChoiceText: userSummary,
+                correctChoiceText: correctSummary,
+                isCorrect: isAllCorrect,
+                explanation: finalExplanation
+            });
+
+            displayExplanationDrawer(finalExplanation);
         }
 
         function tallyCategoryPerformanceMetrics() {
@@ -848,25 +1862,6 @@
             } else {
                 l2Points++;
             }
-        }
-
-        function processRoundTimeout() {
-            phaseLocked = true;
-            const currentObj = fullQuizChallengesRepo[activeIndex];
-            const optionsArray = arenaChoicesStack.children;
-
-            userResponsesLog.push({
-                index: activeIndex + 1,
-                prompt: currentObj.prompt,
-                code: currentObj.code || null,
-                userChoiceText: "Time ran out (No response)",
-                correctChoiceText: currentObj.choices[currentObj.correctIdx],
-                isCorrect: false,
-                explanation: currentObj.explanation
-            });
-
-            optionsArray[currentObj.correctIdx].classList.add("flash-green");
-            displayExplanationDrawer(currentObj.explanation);
         }
 
         function displayExplanationDrawer(summaryText) {
@@ -900,11 +1895,11 @@
 
             const noteElement = document.getElementById("handwritten-note-body");
             if (runningScore >= 8) {
-                noteElement.innerText = `Impressive work! You scored ${runningScore} out of 10 (${percentageVal}%), catching sneaky logic bugs and filling in missing code like a pro game developer. Ready for the next level!`;
+                noteElement.innerText = `Fantastic work! You scored ${runningScore} out of 10 (${percentageVal}%), building lists, image tags, links, tables, and styled webpages like a pro. Keep creating awesome sites!`;
             } else if (runningScore >= 5) {
-                noteElement.innerText = `Solid effort completing all 10 challenges! You got ${runningScore} right and ${wrongAnswersCount} to review. Check the breakdown below—spotting loop resets and missing steps gets easier every time!`;
+                noteElement.innerText = `Great effort completing all 10 challenges! You got ${runningScore} right and ${wrongAnswersCount} to review. Check the notes below to sharpen your HTML tags and CSS properties!`;
             } else {
-                noteElement.innerText = `Good effort tackling these real-world Python challenges! You got ${runningScore} right and ${wrongAnswersCount} to review. Walk through the explanations below step-by-step and try another round to level up your debugging skills!`;
+                noteElement.innerText = `Good practice on your HTML & CSS revision! You got ${runningScore} right and ${wrongAnswersCount} to review. Read the explanations below and try another round to build confidence!`;
             }
 
             renderDetailedReviewLog("all");
@@ -930,22 +1925,15 @@
                 const itemDiv = document.createElement("div");
                 itemDiv.className = `review-item ${log.isCorrect ? 'correct' : 'wrong'}`;
 
-                let html = `
+                const html = `
                     <div style="font-weight: 700; margin-bottom: 4px;">
-                        <span>Q${log.index}: ${log.prompt}</span>
-                        <span style="float: right;">${log.isCorrect ? '✅ Correct' : '❌ Needs Review'}</span>
+                        <span>${log.prompt}</span>
+                        <span style="float: right;">${log.isCorrect ? 'Correct' : 'Needs Review'}</span>
                     </div>
-                `;
-
-                if (log.code) {
-                    html += `<pre style="background: #F1F5F9; padding: 6px 10px; border-radius: 6px; font-size: 11px; margin: 4px 0;">${log.code}</pre>`;
-                }
-
-                html += `
-                    <div style="font-size: 12px; margin-top: 4px;">
-                        <div><strong>Your choice:</strong> <span style="color: ${log.isCorrect ? '#166534' : '#991B1B'};">${log.userChoiceText}</span></div>
-                        ${!log.isCorrect ? `<div><strong>Correct answer:</strong> <span style="color: #166534;">${log.correctChoiceText}</span></div>` : ''}
-                        <div style="color: #475569; margin-top: 4px;"><em>💡 ${log.explanation}</em></div>
+                    <div style="font-size: 13px; margin-top: 6px; line-height: 1.45;">
+                        <div><strong>Your answer:</strong> <span style="color: ${log.isCorrect ? '#166534' : '#991B1B'};">${escapeHtml(log.userChoiceText)}</span></div>
+                        ${!log.isCorrect ? `<div><strong>Correct answer:</strong> <span style="color: #166534;">${escapeHtml(log.correctChoiceText)}</span></div>` : ''}
+                        <div style="color: #475569; margin-top: 4px;"><em>${escapeHtml(log.explanation)}</em></div>
                     </div>
                 `;
 
@@ -967,6 +1955,10 @@
 
         // Event listeners
         document.getElementById("btn-start-quiz").addEventListener("click", initializeQuizArena);
+        document.getElementById("btn-reset-board").addEventListener("click", () => {
+            if (!phaseLocked) displayActiveChallengeCard();
+        });
+        document.getElementById("btn-submit-answer").addEventListener("click", () => evaluateCurrentInteractive(false));
         document.getElementById("btn-next-step").addEventListener("click", advanceToNextQuestCard);
         document.getElementById("btn-restart-quiz").addEventListener("click", returnToCoverSplash);
     </script>
